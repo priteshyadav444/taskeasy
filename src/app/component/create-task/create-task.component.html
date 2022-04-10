@@ -1,0 +1,103 @@
+<p-dialog
+  header="Create Task"
+  [(visible)]="displayBasic"
+  [style]="{ width: '44rem' }"
+  class="subtask"
+>
+  <div class="field col-12 p-0 mb-0">
+    <div class="col-8 p-0">
+      <p-splitButton
+        label="No Category"
+        [model]="this.category"
+        styleClass="p-button-raised p-button-plain p-button-text mr-2 mb-2"
+      ></p-splitButton>
+    </div>
+  </div>
+
+  <div class="p-fluid p-0">
+    <div class="col-12 p-0">
+      <input type="text" class="inputtext" placeholder="Enter Title" />
+    </div>
+    <hr class="m-0" />
+
+    <div class="col-12 p-0 mt-2">
+      <textarea
+        rows="5"
+        cols="30"
+        placeholder="Add Description"
+        class="inputtext"
+        pInputTextarea
+      ></textarea>
+    </div>
+    <hr />
+    <div class="field col-12 mt-1 mb-0 p-0">
+      <div class="col-6 p-0">
+        <div class="p-inputgroup">
+          <input type="text" class="inputtext" placeholder="Add Sub Task" />
+          <button
+            type="button"
+            class="p-button-text p-button-plain"
+            pButton
+            pRipple
+            icon="pi pi-plus"
+          ></button>
+        </div>
+      </div>
+    </div>
+
+    <div class="field col-12 p-0">
+      <div
+        cdkDropList
+        #todoList="cdkDropList"
+        class="example-list-create"
+        (cdkDropListDropped)="drop($event)"
+      >
+        <div class="example-box" *ngFor="let item of todo" cdkDrag>
+          <div class="example-box flex justify-content-between">
+            <p-checkbox name="groupname" value="false"></p-checkbox>
+          </div>
+
+          <div class="example-td mr-auto">
+            <span class="text-900 font-medium text-md example-title">
+              {{ item }}</span
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+    <hr class="m-0" />
+
+    <div class="field col-12 p-0 subtask">
+      <div class="col-6">
+        <div class="p-inputgroup">
+          <span class="p-inputgroup-addon">
+            <i class="pi pi-calendar"></i>
+          </span>
+          <span class="p-float-label">
+            <label for="basic">Basic</label>
+            <p-calendar
+              class="selectdate"
+              inputId="basic"
+              [showButtonBar]="true"
+              placeholder="Select Date"
+            ></p-calendar>
+          </span>
+        </div>
+        <div style="width: 100%;">
+          <span>Repeat</span><p-inputSwitch styleClass="block"></p-inputSwitch>
+        </div>
+      </div>
+
+     
+    </div>
+  </div>
+
+  <!-- <ng-template pTemplate="footer">
+    <p-button
+      icon="pi pi-check"
+      (click)="displayBasic = false"
+      label="Ok"
+      styleClass="p-button-text"
+    ></p-button>
+  </ng-template> -->
+</p-dialog>

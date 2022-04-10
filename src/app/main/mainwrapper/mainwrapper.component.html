@@ -1,0 +1,20 @@
+<div
+  class="layout-wrapper"
+  [ngClass]="{
+    'layout-overlay': isOverlay(),
+    'layout-static': isStatic(),
+    'layout-overlay-sidebar-active': overlayMenuActive,
+    'layout-static-sidebar-inactive': staticMenuInactive,
+    'layout-mobile-sidebar-active': menuActiveMobile
+  }"
+>
+  <app-navbar></app-navbar>
+  <div class="layout-sidebar">
+    <app-sidemenu> </app-sidemenu>
+  </div>
+  <div class="layout-main-container">
+    <div class="layout-main">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</div>

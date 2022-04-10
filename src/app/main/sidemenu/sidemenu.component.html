@@ -1,0 +1,54 @@
+<div class="layout-menu-container">
+  
+  <ul class="layout-menu" role="menu" (keydown)="onKeydown($event)">
+    <li
+      class="layout-menuitem-category"
+      *ngFor="let item of model; let i = index"
+      role="none"
+    >
+      <div class="layout-menuitem-root-text" [attr.aria-label]="item.label">
+        <i class="{{ item.icon }}"></i> {{ item.label }}
+      </div>
+      <ul role="menu">
+        <h6 *ngIf="item.label == 'Task'" style="margin: 1rem 0.5rem 0 1rem">
+          <i class="pi pi-th-large"> </i>
+          Category
+        </h6>
+        <hr class="p-0 m-2" />
+        <li
+          app-menuitem
+          *ngFor="let child of item.items"
+          [item]="child"
+          [index]="i"
+          role="none"
+        ></li>
+      </ul>
+      <hr *ngIf="item.label == 'Task'" class="m-2" />
+      <a
+        *ngIf="item.label == 'Task'"
+        [routerLink]="['taskoverview']"
+        routerLinkActive="router-link-active"
+        ><h6>
+          <i class="pi pi-chart-bar"> </i>
+          Task Overview
+        </h6>
+      </a>
+      <a *ngIf="item.label == 'Task'"
+      [routerLink]="['calender']"
+      routerLinkActive="router-link-active"
+        ><h6>
+          <i class="pi pi-calendar"> </i>
+          Calender
+        </h6>
+      </a>
+      <a *ngIf="item.label == 'Task'"
+      [routerLink]="['completed']"
+      routerLinkActive="router-link-active"
+        ><h6>
+          <i class="pi pi-check-circle"> </i>
+          Completed Task
+        </h6>
+      </a>
+    </li>
+  </ul>
+</div>

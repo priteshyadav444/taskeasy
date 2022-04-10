@@ -1,0 +1,45 @@
+<div class="card">
+    <h5>Customized</h5>
+    <p-timeline
+      [value]="events1"
+      align="alternate"
+      styleClass="customized-timeline"
+    >
+      <ng-template pTemplate="marker" let-event>
+        <span
+          class="custom-marker shadow-2 p-4"
+          [style.backgroundColor]="event.color"
+        >
+          25/50
+        </span>
+      </ng-template>
+      <ng-template pTemplate="content" let-event>
+        <p-card [header]="event.status" [subheader]="event.date">
+          
+            <h5>Completion Rate</h5>
+            <p-knob [size]="50" valueColor="#5bf906" value="{value}%"></p-knob>
+     
+
+          <div class="example-list-create">
+            <div class="example-box" *ngFor="let item of todo">
+              <div class="flex justify-content-between">
+                <p-checkbox name="groupname" value="true"></p-checkbox>
+              </div>
+
+              <div class="example-td ml-2">
+                <del class="text-800 font text-md example-title">
+                  {{ item }}</del
+                >
+                <div class="block text-500 font-medium mb-1">
+                  26-4
+                  <i class="pi pi-sync ml-2" style="font-size: 1rem"></i>
+                  <i class="pi pi-star-fill ml-2" style="font-size: 1rem"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+        </p-card>
+      </ng-template>
+    </p-timeline>
+  </div>
+

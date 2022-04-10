@@ -1,0 +1,21 @@
+@import "~primeng/resources/themes/bootstrap4-light-blue/theme.css";
+@import "~primeicons/primeicons.css";
+@import "~primeng/resources/themes/lara-light-indigo/theme.css";
+@import "~primeng/resources/primeng.min.css";
+
+@import "../node_modules/prismjs/themes/prism-coy.css";
+@import "../node_modules/primeflex/primeflex.scss";
+
+@import "assets/demo/flags/flags.css";
+@import "assets/demo/documentation.scss";
+@import "assets/sass/layout/_variables";
+@import "assets/sass/layout/_layout";
+@import "assets/sass/overrides/_overrides";
+
+*{
+    box-sizing: border-box;
+    margin: 0; 
+    padding: 0;
+}
+
+
