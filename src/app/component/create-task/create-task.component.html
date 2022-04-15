@@ -1,13 +1,14 @@
 <p-dialog
   header="Create Task"
-  [(visible)]="displayBasic"
+  [(visible)]="showDailog"
   [style]="{ width: '44rem' }"
   class="subtask"
+  (onHide)="close()"
 >
-  <div class="field col-12 p-0 mb-0">
+  <div class="field col-12 p-0 mb-0 mt-1">
     <div class="col-8 p-0">
       <p-splitButton
-        label="No Category"
+        label="{{ selectedCategory }}"
         [model]="this.category"
         styleClass="p-button-raised p-button-plain p-button-text mr-2 mb-2"
       ></p-splitButton>
@@ -33,12 +34,18 @@
     <div class="field col-12 mt-1 mb-0 p-0">
       <div class="col-6 p-0">
         <div class="p-inputgroup">
-          <input type="text" class="inputtext" placeholder="Add Sub Task" />
+          <input
+            type="text"
+            class="inputtext"
+            placeholder="Add Sub Task"
+            [(ngModel)]="subtaskele"
+          />
           <button
             type="button"
             class="p-button-text p-button-plain"
             pButton
             pRipple
+            (click)="addSubTask(subtaskele)"
             icon="pi pi-plus"
           ></button>
         </div>
@@ -48,11 +55,11 @@
     <div class="field col-12 p-0">
       <div
         cdkDropList
-        #todoList="cdkDropList"
+        #subList="cdkDropList"
         class="example-list-create"
         (cdkDropListDropped)="drop($event)"
       >
-        <div class="example-box" *ngFor="let item of todo" cdkDrag>
+        <div class="example-box" *ngFor="let item of subTask" cdkDrag>
           <div class="example-box flex justify-content-between">
             <p-checkbox name="groupname" value="false"></p-checkbox>
           </div>
@@ -62,11 +69,18 @@
               {{ item }}</span
             >
           </div>
+          <button
+            type="button"
+            class="p-button-text p-button-plain ml-auto"
+            pButton
+            pRipple
+            (click)="removeSubTask(item)"
+            icon="pi pi-times"
+          ></button>
         </div>
       </div>
     </div>
     <hr class="m-0" />
-
     <div class="field col-12 p-0 subtask">
       <div class="col-6">
         <div class="p-inputgroup">
@@ -79,16 +93,20 @@
               class="selectdate"
               inputId="basic"
               [showButtonBar]="true"
+              [(ngModel)]="selectedDate"
               placeholder="Select Date"
             ></p-calendar>
           </span>
         </div>
-        <div style="width: 100%;">
+        <!-- <div style="width: 100%">
           <span>Repeat</span><p-inputSwitch styleClass="block"></p-inputSwitch>
+        </div> -->
+        <div class="w-100 mt-2">
+          <button pButton type="button" label="Create Task" ></button>
         </div>
-      </div>
+        
 
-     
+      </div>
     </div>
   </div>
 
@@ -100,4 +118,20 @@
       styleClass="p-button-text"
     ></p-button>
   </ng-template> -->
+</p-dialog>
+
+<p-dialog
+  header="Create Category"
+  [(visible)]="displayCategory"
+  [style]="{ width: '20rem' }"
+  class="subtask"
+>
+  <div class="p-fluid p-0">
+    <div class="col-12 p-0">
+      <input type="text" class="inputtext" placeholder="Enter Title" />
+    </div>
+    <div class="col-12 m-2">
+      <p-button label="Create"></p-button>
+    </div>
+  </div>
 </p-dialog>

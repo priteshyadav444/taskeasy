@@ -27,7 +27,6 @@ import dayGridPlugin from '@fullcalendar/daygrid'; // a plugin!
 import interactionPlugin from '@fullcalendar/interaction';
 import { CalenderComponent } from './component/calender/calender.component';
 import { HomeComponent } from './component/home/home.component';
-import { TaskComponent } from './component/task/task.component';
 import { CheckboxModule } from 'primeng/checkbox';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { SplitButtonModule } from 'primeng/splitbutton';
@@ -44,6 +43,7 @@ import {DropdownModule} from 'primeng/dropdown';
 import {TimelineModule} from 'primeng/timeline';
 import { CompletedComponent } from './component/completed/completed.component';
 import { CreateTaskComponent } from './component/create-task/create-task.component';
+import { FormsModule } from '@angular/forms';
 
 FullCalendarModule.registerPlugins([
   // register FullCalendar plugins
@@ -62,7 +62,6 @@ FullCalendarModule.registerPlugins([
     AppConfigComponent,
     CalenderComponent,
     HomeComponent,
-    TaskComponent,
     CompletedComponent,
     CreateTaskComponent
   ],
@@ -91,7 +90,8 @@ FullCalendarModule.registerPlugins([
     InputTextModule,
     InputSwitchModule,
     DropdownModule,
-    TimelineModule
+    TimelineModule,
+    FormsModule
   ],
   providers: [MenuService, ConfigService],
   bootstrap: [AppComponent],

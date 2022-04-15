@@ -50,22 +50,12 @@ export class HomeComponent implements OnInit {
       { label: 'Angular.io', icon: 'pi pi-info', url: 'http://angular.io' },
     ];
 
-    this.category = [
-      { label: 'Study' },
-      { label: 'Work' },
-      { label: 'Others' },
-      { separator: true },
-      { label: 'Create Category', icon: 'pi pi-plus',command: () => {
-        this.showCreateDialog();
-    } },
-    ];
+    
   }
   showBasicDialog() {
     this.displayBasic = true;
   }
-  showCreateDialog() {
-    this.displayCategory = true;
-  }
+  
 
   drop(event: CdkDragDrop<string[]>) {
     if (event.previousContainer === event.container) {
