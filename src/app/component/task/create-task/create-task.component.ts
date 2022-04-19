@@ -1,9 +1,16 @@
-import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { FormGroup } from '@angular/forms';
+import { Store } from '@ngrx/store';
 import { MenuItem } from 'primeng/api';
-import { UiService } from 'src/app/main/service/ui.service';
-import { Task } from 'src/app/Models/task';
-
+import { AppState } from 'src/app/app-store/app.state';
+import { UiService } from 'src/app/service/ui.service';
+import { Task } from 'src/app/Models/task.models';
+import { addTask } from '../state/task.action';
+import {
+  CdkDragDrop,
+  moveItemInArray,
+  transferArrayItem,
+} from '@angular/cdk/drag-drop';
 @Component({
   selector: 'app-create-task',
   templateUrl: './create-task.component.html',
@@ -19,14 +26,21 @@ export class CreateTaskComponent implements OnInit {
   knobvalue: number = 50;
   value2!: string;
   selectedCategory:any=null
-  subtaskele:string=""
-  selectedDate!:Date 
+  subtaskele!:string
+  selectedDate:any = null
+  addtaskForm!:FormGroup
+  title!:string
+  description:string=""
+  categorytitle!:string
   @Output() btnClick:EventEmitter <Task> = new EventEmitter();
+  
 
-  constructor(private uiService:UiService) {
+  constructor(private uiService:UiService, private store: Store<AppState>) {
     this.uiService.onToggle().subscribe((value)=> (this.showDailog = value))
-    this.selectedCategory = this.selectedCategory==null?"No Category":this.selectedCategory
+    this.selectedCategory = this.selectedCategory==null?"None":this.selectedCategory
     this.category = [
+      {label:"None" ,command: () => {
+        this.selectCategory("None");} },
       {label:"Study" ,command: () => {
         this.selectCategory("Study");} },
       { separator: true },
@@ -65,13 +79,15 @@ export class CreateTaskComponent implements OnInit {
     this.btnClick.emit()
   }
   addSubTask(stask:any){
-    console.log(stask)
+    console.log(this.subTask)
+ 
     if(stask==''){
       return
     }
-    this.subTask.push(stask)
-    this.subtaskele = ""
+    const newstask = { "stitle":stask, "checked": false };
+    this.subTask = [ ...this.subTask, newstask]
     console.log(this.subTask)
+    this.subtaskele = ""
   }
   removeSubTask(idx:any)
   {
@@ -82,5 +98,31 @@ export class CreateTaskComponent implements OnInit {
   }
   selectCategory(category: string){
     this.selectedCategory = category 
+  }
+
+
+  onAddTask(){
+    console.log(this.title)
+    console.log(this.description)
+    console.log(this.selectedCategory)
+    console.log(this.subTask)
+    console.log(this.selectedDate)
+   
+    if(this.title==undefined || this.title==''){
+      alert("Enter Title");
+      return
+    }
+    const task:Task = {
+      title :this.title,
+      scheduled_date : this.selectedDate,
+      category : this.selectedCategory,
+      description : this.description,
+      subtasklist : 
+             this.subTask
+    }
+    
+    this.store.dispatch(addTask({task}))
+    
+
   }
 }

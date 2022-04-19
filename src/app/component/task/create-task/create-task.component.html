@@ -5,6 +5,7 @@
   class="subtask"
   (onHide)="close()"
 >
+<form (ngSubmit)="onAddTask()"> 
   <div class="field col-12 p-0 mb-0 mt-1">
     <div class="col-8 p-0">
       <p-splitButton
@@ -17,8 +18,11 @@
 
   <div class="p-fluid p-0">
     <div class="col-12 p-0">
-      <input type="text" class="inputtext" placeholder="Enter Title" />
+      <input type="text" class="inputtext" placeholder="Enter Title"  [(ngModel)]="title"  name="title" id="text" />
     </div>
+    <!-- <div *ngIf="addtaskForm.get('title')!.errors?.['required']">
+      Title is required
+    </div> -->
     <hr class="m-0" />
 
     <div class="col-12 p-0 mt-2">
@@ -28,8 +32,11 @@
         placeholder="Add Description"
         class="inputtext"
         pInputTextarea
+        [(ngModel)]="description"
+        name="description"
       ></textarea>
     </div>
+
     <hr />
     <div class="field col-12 mt-1 mb-0 p-0">
       <div class="col-6 p-0">
@@ -39,6 +46,7 @@
             class="inputtext"
             placeholder="Add Sub Task"
             [(ngModel)]="subtaskele"
+            name="subtaskele"
           />
           <button
             type="button"
@@ -55,9 +63,7 @@
     <div class="field col-12 p-0">
       <div
         cdkDropList
-        #subList="cdkDropList"
         class="example-list-create"
-        (cdkDropListDropped)="drop($event)"
       >
         <div class="example-box" *ngFor="let item of subTask" cdkDrag>
           <div class="example-box flex justify-content-between">
@@ -66,7 +72,7 @@
 
           <div class="example-td mr-auto">
             <span class="text-900 font-medium text-md example-title">
-              {{ item }}</span
+              {{ item.stitle }}</span
             >
           </div>
           <button
@@ -84,32 +90,25 @@
     <div class="field col-12 p-0 subtask">
       <div class="col-6">
         <div class="p-inputgroup">
-          <span class="p-inputgroup-addon">
-            <i class="pi pi-calendar"></i>
-          </span>
-          <span class="p-float-label">
-            <label for="basic">Basic</label>
-            <p-calendar
-              class="selectdate"
-              inputId="basic"
-              [showButtonBar]="true"
-              [(ngModel)]="selectedDate"
-              placeholder="Select Date"
-            ></p-calendar>
-          </span>
+        
+
+           
+
+            <p-calendar  class="selectdate"  inputId="basic"   [showIcon]="true" [showButtonBar]="true" [(ngModel)]="selectedDate"  name="selectedDate" placeholder="Scheduled Date"></p-calendar>
+      
         </div>
         <!-- <div style="width: 100%">
           <span>Repeat</span><p-inputSwitch styleClass="block"></p-inputSwitch>
         </div> -->
         <div class="w-100 mt-2">
-          <button pButton type="button" label="Create Task" ></button>
+          <button pButton type="submit" label="Create Task" ></button>
         </div>
         
 
       </div>
     </div>
   </div>
-
+</form>
   <!-- <ng-template pTemplate="footer">
     <p-button
       icon="pi pi-check"
@@ -128,7 +127,7 @@
 >
   <div class="p-fluid p-0">
     <div class="col-12 p-0">
-      <input type="text" class="inputtext" placeholder="Enter Title" />
+      <input type="text" class="inputtext"  [(ngModel)]="categorytitle"   name="categorytitle" placeholder="Enter Title" />
     </div>
     <div class="col-12 m-2">
       <p-button label="Create"></p-button>

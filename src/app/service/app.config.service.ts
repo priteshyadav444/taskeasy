@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
-import { AppConfig } from '../../api/appconfig';
+import { AppConfig } from '../api/appconfig';
 
 @Injectable()
 export class ConfigService {
