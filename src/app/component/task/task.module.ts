@@ -20,6 +20,7 @@ import { CardModule } from 'primeng/card';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { InputSwitchModule } from 'primeng/inputswitch';
 import { CalendarModule } from 'primeng/calendar';
+import { CommonModule } from '@angular/common';
 
 const routes: Routes = [
   {
@@ -44,6 +45,7 @@ const routes: Routes = [
     DragDropModule,
     InputSwitchModule,
     CalendarModule,
+    CommonModule,
     RouterModule.forChild(routes),
     StoreModule.forFeature('tasks', tasksReducer),
     EffectsModule.forFeature([TaskEffects])

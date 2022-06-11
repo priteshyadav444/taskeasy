@@ -13,13 +13,14 @@
       </p-divider>
       <div
         cdkDropList
-        #todoList="cdkDropList"
-        [cdkDropListData]="todo"
-        [cdkDropListConnectedTo]="[doneList]"
+        #pendingList="cdkDropList"
+        [cdkDropListData]="pending"
         class="example-list"
-        (cdkDropListDropped)="drop($event)"
+        [cdkDropListConnectedTo]="[activeList, todayList, unsheduledList]"
+         (cdkDropListDropped)="drop($event)"
       >
-        <div class="example-box" *ngFor="let item of todo" cdkDrag>
+     
+        <div class="example-box" *ngFor="let item of pending  | async" cdkDrag>
           <div class="example-box flex justify-content-between">
             <p-checkbox name="groupname" value="false"></p-checkbox>
             <button
@@ -35,10 +36,10 @@
 
           <div class="example-td mr-auto">
             <span class="font-medium text-xl example-title">
-              {{ item }}</span
+              {{ item.title }}</span
             >
             <div class="block font-medium mb-1 pending">
-              26-4 <i class="pi pi-sync ml-2" style="font-size: 1rem"></i>
+              {{ item.scheduled_date | date:'dd-MM'}}     <i class="pi pi-sync ml-2" style="font-size: 1rem"></i>
             </div>
           </div>
           <div class="example-indicators">
@@ -71,13 +72,13 @@
 
       <div
         cdkDropList
-        #doneList="cdkDropList"
-        [cdkDropListData]="done"
-        [cdkDropListConnectedTo]="[todoList]"
+        #activeList="cdkDropList"
+        [cdkDropListData]="active"
+        [cdkDropListConnectedTo]="[todayCompletedList]"
         class="example-list"
         (cdkDropListDropped)="drop($event)"
       >
-        <div class="example-box" *ngFor="let item of todo" cdkDrag>
+        <div class="example-box" *ngFor="let item of active | async" cdkDrag>
           <div class="example-box flex justify-content-between">
             <p-checkbox name="groupname" value="false"></p-checkbox>
             <button
@@ -93,10 +94,10 @@
 
           <div class="example-td mr-auto">
             <span class="font-medium text-md example-title-active">
-              {{ item }}</span
+              {{ item.title }}</span
             >
             <div class="block text-500 font-medium mb-1">
-              26-4 <i class="pi pi-sitemap ml-2" style="font-size: 1rem"></i>
+              {{ item.scheduled_date | date:'dd-MM'}} <i class="pi pi-sitemap ml-2" style="font-size: 1rem"></i>
             </div>
           </div>
           <div class="example-indicators">
@@ -123,13 +124,13 @@
 
       <div
         cdkDropList
-        #doneList="cdkDropList"
-        [cdkDropListData]="done"
-        [cdkDropListConnectedTo]="[todoList]"
+        #todayList="cdkDropList"
+        [cdkDropListData]="today"
+        [cdkDropListConnectedTo]="[todayCompletedList, scheduledList, unsheduledList, activeList]"
         class="example-list"
         (cdkDropListDropped)="drop($event)"
       >
-        <div class="example-box" *ngFor="let item of todo" cdkDrag>
+        <div class="example-box" *ngFor="let item of today | async" cdkDrag>
           <div class="example-box flex justify-content-between">
             <p-checkbox name="groupname" value="false"></p-checkbox>
             <button
@@ -145,10 +146,10 @@
 
           <div class="example-td mr-auto">
             <span class="text-900 font-medium text-md example-title">
-              {{ item }}</span
+              {{ item.title }}</span
             >
             <div class="block text-500 font-medium mb-1">
-              26-4 <i class="pi pi-sitemap ml-2" style="font-size: 1rem"></i>
+              {{ item.scheduled_date | date:'dd-MM'}}<i class="pi pi-sitemap ml-2" style="font-size: 1rem"></i>
             </div>
           </div>
           <div class="example-indicators">
@@ -175,13 +176,13 @@
 
       <div
         cdkDropList
-        #doneList="cdkDropList"
-        [cdkDropListData]="done"
-        [cdkDropListConnectedTo]="[todoList]"
+        #todayCompletedList="cdkDropList"
+        [cdkDropListData]="todaycompleted"
+        [cdkDropListConnectedTo]="[activeList, todayList, activeList, scheduledList]"
         class="example-list"
         (cdkDropListDropped)="drop($event)"
       >
-        <div class="example-box" *ngFor="let item of todo" cdkDrag>
+        <div class="example-box" *ngFor="let item of todaycompleted | async" cdkDrag>
           <div class="example-box flex justify-content-between">
             <p-checkbox name="groupname" value="false"></p-checkbox>
             <button
@@ -197,10 +198,10 @@
 
           <div class="example-td mr-auto">
             <span class="text-900 font-medium text-md example-title">
-              {{ item }}</span
+              {{ item.title }}</span
             >
             <div class="block text-500 font-medium mb-1">
-              26-4 <i class="pi pi-sitemap ml-2" style="font-size: 1rem"></i>
+              {{ item.scheduled_date | date:'dd-MM'}} <i class="pi pi-sitemap ml-2" style="font-size: 1rem"></i>
             </div>
           </div>
           <div class="example-indicators">
@@ -237,13 +238,13 @@
       </p-divider>
       <div
         cdkDropList
-        #todoList="cdkDropList"
-        [cdkDropListData]="todo"
-        [cdkDropListConnectedTo]="[doneList]"
+        #scheduledList="cdkDropList"
+        [cdkDropListData]="scheduled"
+        [cdkDropListConnectedTo]="[todayCompletedList, todayList, todayCompletedList, activeList, unsheduledList]"
         class="example-list"
         (cdkDropListDropped)="drop($event)"
       >
-        <div class="example-box" *ngFor="let item of todo" cdkDrag>
+        <div class="example-box" *ngFor="let item of scheduled | async" cdkDrag>
           <div class="example-box flex justify-content-between">
             <p-checkbox name="groupname" value="false"></p-checkbox>
             <button
@@ -259,10 +260,10 @@
 
           <div (click)="showBasicDialog()" class="example-td mr-auto">
             <span class="text-900 font-medium text-md example-title">
-              {{ item }}</span
+              {{ item.title }}</span
             >
             <div class="block text-500 font-medium mb-1">
-              26-4
+              {{ item.scheduled_date | date:'dd-MM'}}
               <i class="pi pi-sync ml-2" style="font-size: 1rem"></i>
               <i class="pi pi-star-fill ml-2" style="font-size: 1rem"></i>
             </div>
@@ -285,13 +286,13 @@
       </p-divider>
       <div
         cdkDropList
-        #todoList="cdkDropList"
-        [cdkDropListData]="todo"
-        [cdkDropListConnectedTo]="[doneList]"
+        #unsheduledList="cdkDropList"
+        [cdkDropListData]="unsheduled"
+        [cdkDropListConnectedTo]="[todayCompletedList, scheduledList, todayList, todayCompletedList]"
         class="example-list"
         (cdkDropListDropped)="drop($event)"
       >
-        <div class="example-box" *ngFor="let item of todo" cdkDrag>
+        <div class="example-box" *ngFor="let item of unsheduled | async" cdkDrag>
           <div class="example-box flex justify-content-between">
             <p-checkbox name="groupname" value="false"></p-checkbox>
             <button
@@ -307,7 +308,7 @@
 
           <div (click)="showBasicDialog()" class="example-td mr-auto">
             <span class="text-900 font-medium text-md example-title">
-              {{ item }}</span
+              {{ item.title }}</span
             >
             <div class="block text-500 font-medium mb-1">
               <p-tag value="No Date"></p-tag>
