@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { MainwrapperComponent } from '../mainwrapper/mainwrapper.component';
+import { UiService } from '../../service/ui.service';
 
 @Component({
   selector: 'app-navbar',
@@ -7,10 +9,17 @@ import { MainwrapperComponent } from '../mainwrapper/mainwrapper.component';
   styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent implements OnInit {
+  showAddTask: boolean = false;
+  subscription!: Subscription;
 
-  constructor(public appMain: MainwrapperComponent) { }
+  constructor(public appMain: MainwrapperComponent,private uiService: UiService) { 
+  }
 
   ngOnInit(): void {
+  }
+
+  addTask(){
+    this.uiService.toggleAddTask();
   }
 
 }

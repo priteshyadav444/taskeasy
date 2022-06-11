@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { AppConfig } from '../../../app/api/appconfig';
-import { ConfigService } from 'src/app/main/service/app.config.service';
+import { ConfigService } from 'src/app/service/app.config.service';
 
 @Component({
   selector: 'app-taskoverview',

@@ -11,9 +11,13 @@
     <a class="p-link layout-topbar-menu-button layout-topbar-button" href="#" (click)="appMain.toggleTopMenu($event)">
         <i class="pi pi-ellipsis-v"></i>
     </a>
+   
 
     <div class="layout-topbar-menu" [ngClass]="{'layout-topbar-menu-mobile-active':appMain.topMenuActive}">
-         <a href="#" class="p-link layout-topbar-button">
+        <p-button label="Create New Task" (click)="addTask()" icon="pi pi-plus" class="mr-2"></p-button>
+
+
+        <a href="#" class="p-link layout-topbar-button">
             <i class="pi pi-calendar"></i>
             <span>Calendar</span>
         </a>
@@ -26,4 +30,5 @@
             <span>Profile</span>
         </a>
     </div>
+    <app-create-task (btnClick)="addTask()"></app-create-task>
 </div>

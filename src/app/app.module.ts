@@ -13,12 +13,12 @@ import { MainwrapperComponent } from './main/mainwrapper/mainwrapper.component';
 import { SidemenuComponent } from './main/sidemenu/sidemenu.component';
 
 import { AppMenuitemComponent } from './main/sidemenu/app.menuitem.component';
-import { MenuService } from './main/service/app.menu.service';
+import { MenuService } from './service/app.menu.service';
 import { TaskoverviewComponent } from './component/taskoverview/taskoverview.component';
 import { DividerModule } from 'primeng/divider';
 import { ChartModule } from 'primeng/chart';
 import { AppConfigComponent } from './app.config.component';
-import { ConfigService } from './main/service/app.config.service';
+import { ConfigService } from './service/app.config.service';
 import { ProgressBarModule } from 'primeng/progressbar';
 import { CalendarModule } from 'primeng/calendar';
 
@@ -26,10 +26,8 @@ import { FullCalendarModule } from '@fullcalendar/angular'; // must go before pl
 import dayGridPlugin from '@fullcalendar/daygrid'; // a plugin!
 import interactionPlugin from '@fullcalendar/interaction';
 import { CalenderComponent } from './component/calender/calender.component';
-import { HomeComponent } from './component/home/home.component';
-import { TaskComponent } from './component/task/task.component';
 import { CheckboxModule } from 'primeng/checkbox';
-import { DragDropModule } from '@angular/cdk/drag-drop';
+
 import { SplitButtonModule } from 'primeng/splitbutton';
 import { ButtonModule } from 'primeng/button';
 import { MenuModule } from 'primeng/menu';
@@ -40,10 +38,22 @@ import { TagModule } from 'primeng/tag';
 import {DialogModule} from 'primeng/dialog';
 import {InputTextModule} from 'primeng/inputtext';
 import {InputSwitchModule} from 'primeng/inputswitch';
-import {DropdownModule} from 'primeng/dropdown';
 import {TimelineModule} from 'primeng/timeline';
 import { CompletedComponent } from './component/completed/completed.component';
-import { CreateTaskComponent } from './component/create-task/create-task.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { appReducer } from './app-store/app.state';
+import { StoreModule } from '@ngrx/store';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { environment } from 'src/environments/environment';
+import { CreateTaskComponent } from './component/task/create-task/create-task.component';
+import { EffectsModule } from '@ngrx/effects';
+import { UiService } from './service/ui.service';
+import { TasksService } from './service/task.services';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { AuthwrapperComponent } from './main/authwrapper/authwrapper/authwrapper.component';
+import {ToastModule} from 'primeng/toast';
+import { MessageService } from 'primeng/api';
+import { LoadingSpinnerComponent } from './app-store/loading-spinner/loading-spinner.component';
 
 FullCalendarModule.registerPlugins([
   // register FullCalendar plugins
@@ -61,10 +71,10 @@ FullCalendarModule.registerPlugins([
     TaskoverviewComponent,
     AppConfigComponent,
     CalenderComponent,
-    HomeComponent,
-    TaskComponent,
     CompletedComponent,
-    CreateTaskComponent
+    CreateTaskComponent,
+    AuthwrapperComponent,
+    LoadingSpinnerComponent
   ],
   imports: [
     BrowserModule,
@@ -74,11 +84,10 @@ FullCalendarModule.registerPlugins([
     AvatarGroupModule,
     CardModule,
     DividerModule,
+    CalendarModule,
     ChartModule,
     ProgressBarModule,
-    CalendarModule,
     FullCalendarModule,
-    DragDropModule,
     CheckboxModule,
     SplitButtonModule,
     ButtonModule,
@@ -90,10 +99,18 @@ FullCalendarModule.registerPlugins([
     DialogModule,
     InputTextModule,
     InputSwitchModule,
-    DropdownModule,
-    TimelineModule
+    TimelineModule,
+    FormsModule,
+    HttpClientModule,
+    ReactiveFormsModule,
+    ToastModule,
+    StoreModule.forRoot(appReducer),
+    EffectsModule.forRoot([]),
+    StoreDevtoolsModule.instrument({
+      logOnly: environment.production, // Restrict extension to log-only mode
+    }),
   ],
-  providers: [MenuService, ConfigService],
+  providers: [MenuService, ConfigService,UiService,TasksService,MessageService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

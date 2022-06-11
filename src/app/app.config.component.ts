@@ -4,7 +4,7 @@ import { Subscription } from 'rxjs';
 import { AppConfig } from './api/appconfig';
 import { AppComponent } from './app.component';
 import { MainwrapperComponent } from "./main/mainwrapper/mainwrapper.component"
-import { ConfigService } from './main/service/app.config.service';
+import { ConfigService } from './service/app.config.service';
 
 @Component({
     selector: 'app-config',
