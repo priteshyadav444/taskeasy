@@ -9,7 +9,6 @@ import {ButtonModule} from 'primeng/button';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AuthEffects } from './state/auth.effects';
 import { EffectsModule } from '@ngrx/effects';
-import {ToastModule} from 'primeng/toast';
 
 const routes: Routes = [
   {
@@ -30,10 +29,9 @@ const routes: Routes = [
     PasswordModule,
     ButtonModule,
     FormsModule,
-    ToastModule,
     ReactiveFormsModule,
     RouterModule.forChild(routes),
-    EffectsModule.forFeature([AuthEffects])
+    EffectsModule.forFeature([])
   ],
 })
 export class AuthModule {}

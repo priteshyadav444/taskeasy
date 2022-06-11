@@ -54,6 +54,8 @@ import { AuthwrapperComponent } from './main/authwrapper/authwrapper/authwrapper
 import {ToastModule} from 'primeng/toast';
 import { MessageService } from 'primeng/api';
 import { LoadingSpinnerComponent } from './app-store/loading-spinner/loading-spinner.component';
+import { AuthEffects } from './component/auth/state/auth.effects';
+import { MainComponent } from './lending/main/main.component';
 
 FullCalendarModule.registerPlugins([
   // register FullCalendar plugins
@@ -74,7 +76,8 @@ FullCalendarModule.registerPlugins([
     CompletedComponent,
     CreateTaskComponent,
     AuthwrapperComponent,
-    LoadingSpinnerComponent
+    LoadingSpinnerComponent,
+    MainComponent
   ],
   imports: [
     BrowserModule,
@@ -105,7 +108,7 @@ FullCalendarModule.registerPlugins([
     ReactiveFormsModule,
     ToastModule,
     StoreModule.forRoot(appReducer),
-    EffectsModule.forRoot([]),
+    EffectsModule.forRoot([AuthEffects]),
     StoreDevtoolsModule.instrument({
       logOnly: environment.production, // Restrict extension to log-only mode
     }),
