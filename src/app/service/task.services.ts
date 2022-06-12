@@ -7,7 +7,11 @@ import { AppState } from 'src/app/app-store/app.state';
 
 @Injectable({ providedIn: 'root' })
 export class TasksService {
+<<<<<<< HEAD
+  apiUrl = 'http://localhost:3000/v1/tasks/';
+=======
   apiUrl = 'https://api-taskeasy.herokuapp.com/v1/tasks/';
+>>>>>>> dec39a0cdbed4cd11ecb6ce5d2436affa3388df5
   authToken = localStorage.getItem('authToken');
   constructor(private http: HttpClient, private store: Store<AppState>) {}
   
