@@ -9,9 +9,15 @@ import { MessageService } from 'primeng/api';
 
 @Injectable({ providedIn: 'root' })
 export class AuthServices {
+<<<<<<< HEAD
   apiUrlSignUp = 'http://localhost:3000/v1/users/signup';
   apiUrlSignIn = 'http://localhost:3000/v1/users/signin';
   apiUrlUserLoad = 'http://localhost:3000/v1/users/load';
+=======
+  apiUrlSignUp = 'https://api-taskeasy.herokuapp.com/v1/users/signup';
+  apiUrlSignIn = 'https://api-taskeasy.herokuapp.com/v1/users/signin';
+  apiUrlUserLoad = 'https://api-taskeasy.herokuapp.com/v1/users/load';
+>>>>>>> dec39a0cdbed4cd11ecb6ce5d2436affa3388df5
   constructor(
     private messageService: MessageService,
     private http: HttpClient,
