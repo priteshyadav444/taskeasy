@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
-import { catchError, exhaustMap, map, tap } from 'rxjs';
+import { catchError, exhaustMap, map, mergeMap, tap } from 'rxjs';
 import { AppState } from 'src/app/app-store/app.state';
 import { AuthServices } from 'src/app/service/auth.service';
-import { loginStart, loginSuccess, signupStart, signupSuccess } from './auth.actions';
+import { autoLogin, loginStart, loginSuccess, signupStart, signupSuccess } from './auth.actions';
 import { of } from 'rxjs';
 import { setErrorMessage, setLoadingSpinner } from 'src/app/app-store/Shared/shared.actions';
 import { Router } from '@angular/router';
@@ -77,6 +77,37 @@ export class AuthEffects {
   );
 
 
+  // autoLogin$ = createEffect(() => {
+  //   return this.actions$.pipe(
+  //     ofType(autoLogin),
+  //     mergeMap((action) => {
+  //       const user = this.authService.getUserFromLocalStorage();
+  //       return of(loginSuccess({ user, redirect: false }));
+  //     })
+  //   );
+  // });
   
-  
+
+  autoLogin$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(autoLogin),
+      exhaustMap((action) => {
+        return this.authService.getUserFromLocalStorage().pipe(
+          map((data) => {
+            this.store.dispatch(setLoadingSpinner({ status: false }));
+            this.store.dispatch(setErrorMessage({ message: '' }));
+            const user = this.authService.formatUser(data);
+            this.authService.setUserInLocalStorage(user);
+            return loginSuccess({ user, redirect: true });
+          }),
+          catchError((errResp) => {
+            const errmsg = this.authService.getErrorMessage(errResp.error.msg)
+            this.store.dispatch(setLoadingSpinner({ status: false }));
+            this.authService.showError(errmsg);
+            return of(setErrorMessage({ message: errmsg }));
+          })
+        );
+      })
+    );
+  });
 }
