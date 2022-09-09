@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { AppRoutingModule } from './app-routing.module';
+import { AppRoutingModule } from './routing/app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
@@ -13,12 +13,10 @@ import { MainwrapperComponent } from './main/mainwrapper/mainwrapper.component';
 import { SidemenuComponent } from './main/sidemenu/sidemenu.component';
 
 import { AppMenuitemComponent } from './main/sidemenu/app.menuitem.component';
-import { MenuService } from './service/app.menu.service';
+
 import { TaskoverviewComponent } from './component/taskoverview/taskoverview.component';
 import { DividerModule } from 'primeng/divider';
 import { ChartModule } from 'primeng/chart';
-import { AppConfigComponent } from './app.config.component';
-import { ConfigService } from './service/app.config.service';
 import { ProgressBarModule } from 'primeng/progressbar';
 import { CalendarModule } from 'primeng/calendar';
 
@@ -47,15 +45,20 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from 'src/environments/environment';
 import { CreateTaskComponent } from './component/task/create-task/create-task.component';
 import { EffectsModule } from '@ngrx/effects';
-import { UiService } from './service/ui.service';
-import { TasksService } from './service/task.services';
+
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { AuthwrapperComponent } from './main/authwrapper/authwrapper/authwrapper.component';
 import {ToastModule} from 'primeng/toast';
-import { MessageService } from 'primeng/api';
-import { LoadingSpinnerComponent } from './app-store/loading-spinner/loading-spinner.component';
+
+import { LoadingSpinnerComponent } from './shared/loading-spinner/loading-spinner.component';
 import { AuthEffects } from './component/auth/state/auth.effects';
 import { MainComponent } from './lending/main/main.component';
+
+//services
+import { MessageService } from 'primeng/api';
+import { UiService } from './service/ui.service';
+import { MenuService } from './service/app.menu.service';
+import { TasksService } from './service/task/task.services';
 
 FullCalendarModule.registerPlugins([
   // register FullCalendar plugins
@@ -71,7 +74,6 @@ FullCalendarModule.registerPlugins([
     SidemenuComponent,
     AppMenuitemComponent,
     TaskoverviewComponent,
-    AppConfigComponent,
     CalenderComponent,
     CompletedComponent,
     CreateTaskComponent,
@@ -113,7 +115,7 @@ FullCalendarModule.registerPlugins([
       logOnly: environment.production, // Restrict extension to log-only mode
     }),
   ],
-  providers: [MenuService, ConfigService,UiService,TasksService,MessageService],
+  providers: [UiService,TasksService,MessageService, MenuService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

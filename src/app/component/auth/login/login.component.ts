@@ -3,7 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/app-store/app.state';
-import { setLoadingSpinner } from 'src/app/app-store/Shared/shared.actions';
+import { setLoadingSpinner } from 'src/app/shared/state/Shared/shared.actions';
 import { loginStart } from '../state/auth.actions';
 
 @Component({

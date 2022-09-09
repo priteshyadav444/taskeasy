@@ -3,10 +3,10 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
 import { catchError, exhaustMap, map, mergeMap, tap } from 'rxjs';
 import { AppState } from 'src/app/app-store/app.state';
-import { AuthServices } from 'src/app/service/auth.service';
+import { AuthServices } from 'src/app/service/auth/auth.service';
 import { autoLogin, loginStart, loginSuccess, signupStart, signupSuccess } from './auth.actions';
 import { of } from 'rxjs';
-import { setErrorMessage, setLoadingSpinner } from 'src/app/app-store/Shared/shared.actions';
+import { setErrorMessage, setLoadingSpinner } from 'src/app/shared/state/Shared/shared.actions';
 import { Router } from '@angular/router';
 
 @Injectable()

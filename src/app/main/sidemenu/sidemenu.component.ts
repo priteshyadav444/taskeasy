@@ -7,7 +7,7 @@ import { MainwrapperComponent } from '../mainwrapper/mainwrapper.component';
 })
 export class SidemenuComponent implements OnInit {
   model!: any[];
-
+  categories !:any[];
   constructor(public appMain: MainwrapperComponent) {}
 
   ngOnInit() {
@@ -24,7 +24,7 @@ export class SidemenuComponent implements OnInit {
           {
             label: 'Study',
             icon: 'pi pi-list',
-            routerLink: ['taskoverview1'],
+            routerLink: ['id1'],
           },
         ],
       },

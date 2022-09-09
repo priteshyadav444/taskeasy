@@ -5,8 +5,8 @@ import { Store } from '@ngrx/store';
 import { MessageService } from 'primeng/api';
 import { Observable } from 'rxjs';
 import { AppState } from 'src/app/app-store/app.state';
-import { setLoadingSpinner } from 'src/app/app-store/Shared/shared.actions';
-import { getErrorMessage } from 'src/app/app-store/Shared/shared.selector';
+import { setLoadingSpinner } from 'src/app/shared/state/Shared/shared.actions';
+import { getErrorMessage } from 'src/app/shared/state/Shared/shared.selector';
 import { signupStart } from '../state/auth.actions';
 
 @Component({

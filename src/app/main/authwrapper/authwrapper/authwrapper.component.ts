@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { AppState } from 'src/app/app-store/app.state';
-import { getErrorMessage, getLoading } from 'src/app/app-store/Shared/shared.selector';
+import { getErrorMessage, getLoading } from 'src/app/shared/state/Shared/shared.selector';
 
 @Component({
   selector: 'app-authwrapper',

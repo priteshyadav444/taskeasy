@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { AppConfig } from '../../../app/api/appconfig';
-import { ConfigService } from 'src/app/service/app.config.service';
+// import { AppConfig } from '../../../app/api/appconfig';
+// import { ConfigService } from 'src/app/service/app.config.service';
 
 @Component({
   selector: 'app-taskoverview',
@@ -13,11 +13,11 @@ export class TaskoverviewComponent implements OnInit {
   doughnutdata:any
   barOptions: any;
   doughnutOptions:any
-  config!: AppConfig;
+
   subscription!: Subscription;
   rangeDates!: Date[];
 
-  constructor(public configService: ConfigService) {}
+  constructor() {}
   ngOnInit() {
     this.doughnutdata = {
       labels: ['Study','New Skill','Communiactiom'],
@@ -96,15 +96,15 @@ export class TaskoverviewComponent implements OnInit {
     }
 };
 
-this.doughnutOptions = this.config && this.config.dark ? this.getDarkTheme() : this.getLightTheme()
+// this.doughnutOptions = this.config && this.config.dark ? this.getDarkTheme() : this.getLightTheme()
     
 
-this.config = this.configService.config;
-    this.updateChartOptions();
-    this.subscription = this.configService.configUpdate$.subscribe((config) => {
-      this.config = config;
-      this.updateChartOptions();
-    });
+// this.config = this.configService.config;
+//     this.updateChartOptions();
+//     this.subscription = this.configService.configUpdate$.subscribe((config) => {
+//       this.config = config;
+//       this.updateChartOptions();
+//     });
 
     
   }

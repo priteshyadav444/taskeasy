@@ -15,13 +15,15 @@
           Category
         </h6>
         <hr class="p-0 m-2" />
+       
         <li
           app-menuitem
-          *ngFor="let child of item.items"
+          *ngFor="let child of item.items;"
           [item]="child"
           [index]="i"
           role="none"
         ></li>
+
       </ul>
       <hr *ngIf="item.label == 'Task'" class="m-2" />
       <a

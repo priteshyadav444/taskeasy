@@ -6,9 +6,22 @@ import { Subscription } from 'rxjs';
 @Component({
   selector: 'app-mainwrapper',
   templateUrl: './mainwrapper.component.html',
-  styleUrls: ['./mainwrapper.component.css']
+  styleUrls: ['./mainwrapper.component.css'],
+  animations: [
+    trigger('submenu', [
+        state('hidden', style({
+            height: '0px'
+        })),
+        state('visible', style({
+            height: '*'
+        })),
+        transition('visible => hidden', animate('400ms cubic-bezier(0.86, 0, 0.07, 1)')),
+        transition('hidden => visible', animate('400ms cubic-bezier(0.86, 0, 0.07, 1)'))
+    ])
+]
 })
-export class MainwrapperComponent implements OnInit {
+export class MainwrapperComponent implements AfterViewInit, OnDestroy, OnInit  {
+ 
   public menuInactiveDesktop!: boolean;
 
   public menuActiveMobile!: boolean;
