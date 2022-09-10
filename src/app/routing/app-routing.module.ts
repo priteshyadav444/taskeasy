@@ -6,7 +6,7 @@ import { TaskoverviewComponent } from '../component/taskoverview/taskoverview.co
 import { MainwrapperComponent } from '../main/mainwrapper/mainwrapper.component';
 import { AuthwrapperComponent } from '../main/authwrapper/authwrapper/authwrapper.component';
 import { AuthGuard } from '../service/auth.guard';
-import { MainComponent } from '../lending/main/main.component';
+import { MainComponent } from '../main/lending/main/main.component';
 
 const routes: Routes = [
   {

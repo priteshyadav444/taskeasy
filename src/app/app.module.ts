@@ -52,7 +52,7 @@ import {ToastModule} from 'primeng/toast';
 
 import { LoadingSpinnerComponent } from './shared/loading-spinner/loading-spinner.component';
 import { AuthEffects } from './component/auth/state/auth.effects';
-import { MainComponent } from './lending/main/main.component';
+import { MainComponent } from './main/lending/main/main.component';
 
 //services
 import { MessageService } from 'primeng/api';
