@@ -101,7 +101,7 @@ export class AuthEffects {
             return loginSuccess({ user, redirect: true });
           }),
           catchError((errResp) => {
-            const errmsg = this.authService.getErrorMessage(errResp.error.msg)
+            const errmsg = this.authService.getErrorMessage(errResp.error)
             this.store.dispatch(setLoadingSpinner({ status: false }));
             this.authService.showError(errmsg);
             return of(setErrorMessage({ message: errmsg }));

@@ -1,0 +1,99 @@
+<div
+  class="layout-wrapper"
+  [ngClass]="{
+    'layout-overlay': isOverlay(),
+    'layout-static': isStatic(),
+    'layout-overlay-sidebar-active': overlayMenuActive,
+    'layout-static-sidebar-inactive': staticMenuInactive,
+    'layout-mobile-sidebar-active': menuActiveMobile
+  }"
+>
+  <div class="layout-topbar">
+    <a
+      class="p-link layout-menu-button layout-topbar-button"
+      (click)="toggleMenu($event)"
+    >
+      <i class="pi pi-bars"></i>
+    </a>
+    <a class="layout-topbar-logo" routerLink="/home">
+      <img src="assets/layout/images/logo.png" alt="logo" />
+    </a>
+
+    <a class="p-link layout-topbar-menu-button layout-topbar-button" href="#">
+      <i class="pi pi-ellipsis-v"></i>
+    </a>
+
+    <div class="layout-topbar-menu">
+      <p-button
+        label="Create New Task"
+        icon="pi pi-plus"
+        class="mr-2"
+      ></p-button>
+
+      <a href="#" class="p-link layout-topbar-button">
+        <i class="pi pi-calendar"></i>
+        <span>Calendar</span>
+      </a>
+      <a href="#" class="p-link layout-topbar-button">
+        <i class="pi pi-cog"></i>
+        <span>Settings</span>
+      </a>
+      <a href="#" class="p-link layout-topbar-button">
+        <i class="pi pi-user"></i>
+        <span>Profile</span>
+      </a>
+    </div>
+  </div>
+
+  <div class="layout-sidebar">
+    <app-dashboard-sidemenu> </app-dashboard-sidemenu>
+  </div>
+
+  <div class="layout-main-container">
+    <div class="grid">
+      <div class="col-12">
+        <div class="card">
+         
+          <div class="flex card-container blue-container overflow-hidden">
+            <div
+              class="flex-none flex align-items-center justify-content-center font-bold m-1 px-5"
+            >
+              All Goal
+            </div>
+            <div
+              class="flex-grow-1 flex align-items-center justify-content-center text-white m-1 px-5"
+            ></div>
+            <div
+              class="flex-none flex align-items-center justify-content-center m-1 px-5"
+            >
+              <p-paginator></p-paginator>
+            </div>
+          </div>
+
+          <div class="flex align-items-center flex-column sm:flex-row mt-1">
+            <p-card
+              header="Project 1"
+              [style]="{ width: '16rem', 'margin-left': '2em' }"
+            >
+              <ng-template pTemplate="header"> </ng-template>
+              <p>
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                Inventore sed consequuntur error repudiandae numquam deserunt
+                quisquam repellat libero asperiores earum nam nobis, culpa
+                ratione quam perferendis esse, cupiditate neque quas!
+              </p>
+            </p-card>
+          </div>
+
+          <div class="flex align-items-center mt-4">
+            <full-calendar [options]="calendarOptions"></full-calendar>
+
+
+          </div>
+        </div>
+      </div>
+
+      <!-- <p-tree [value]="files1" selectionMode="checkbox" [(selection)]="selectedFiles1"></p-tree> -->
+    </div>
+  </div>
+</div>

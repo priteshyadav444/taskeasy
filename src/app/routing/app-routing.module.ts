@@ -7,11 +7,17 @@ import { MainwrapperComponent } from '../main/mainwrapper/mainwrapper.component'
 import { AuthwrapperComponent } from '../main/authwrapper/authwrapper/authwrapper.component';
 import { AuthGuard } from '../service/auth.guard';
 import { MainComponent } from '../main/lending/main/main.component';
+import { DashboardComponent } from '../main/dashboard/wrapper/dashboard.component';
 
 const routes: Routes = [
   {
     path: '',
     component: MainComponent,
+    canActivate:[]
+  },
+  {
+    path: 'dashboard',
+    component: DashboardComponent,
     canActivate:[]
   },
   {
