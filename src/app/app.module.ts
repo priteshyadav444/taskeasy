@@ -19,6 +19,7 @@ import { DividerModule } from 'primeng/divider';
 import { ChartModule } from 'primeng/chart';
 import { ProgressBarModule } from 'primeng/progressbar';
 import { CalendarModule } from 'primeng/calendar';
+import {MenubarModule} from 'primeng/menubar';
 
 import { FullCalendarModule } from '@fullcalendar/angular'; // must go before plugins
 import dayGridPlugin from '@fullcalendar/daygrid'; // a plugin!
@@ -37,6 +38,9 @@ import {DialogModule} from 'primeng/dialog';
 import {InputTextModule} from 'primeng/inputtext';
 import {InputSwitchModule} from 'primeng/inputswitch';
 import {TimelineModule} from 'primeng/timeline';
+import {PaginatorModule} from 'primeng/paginator';
+
+
 import { CompletedComponent } from './component/completed/completed.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { appReducer } from './app-store/app.state';
@@ -55,16 +59,22 @@ import { AuthEffects } from './component/auth/state/auth.effects';
 import { MainComponent } from './main/lending/main/main.component';
 
 //services
-import { MessageService } from 'primeng/api';
+import { MessageService,MenuItem } from 'primeng/api';
 import { UiService } from './service/ui.service';
 import { MenuService } from './service/app.menu.service';
 import { TasksService } from './service/task/task.services';
+import { DashboardComponent } from './main/dashboard/wrapper/dashboard.component';
+import { DashboardSidemenuComponent } from './main/dashboard/dashboard-sidemenu/dashboard-sidemenu.component';
 
 FullCalendarModule.registerPlugins([
-  // register FullCalendar plugins
   dayGridPlugin,
-  interactionPlugin,
+  interactionPlugin
 ]);
+
+
+import {CommonModule} from '@angular/common';
+import {TabViewModule} from 'primeng/tabview';
+
 
 @NgModule({
   declarations: [
@@ -79,7 +89,9 @@ FullCalendarModule.registerPlugins([
     CreateTaskComponent,
     AuthwrapperComponent,
     LoadingSpinnerComponent,
-    MainComponent
+    MainComponent,
+    DashboardComponent,
+    DashboardSidemenuComponent
   ],
   imports: [
     BrowserModule,
@@ -109,6 +121,10 @@ FullCalendarModule.registerPlugins([
     HttpClientModule,
     ReactiveFormsModule,
     ToastModule,
+    MenubarModule,
+    PaginatorModule,
+    CommonModule,
+    TabViewModule,    
     StoreModule.forRoot(appReducer),
     EffectsModule.forRoot([AuthEffects]),
     StoreDevtoolsModule.instrument({
