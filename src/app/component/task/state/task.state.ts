@@ -1,4 +1,4 @@
-import { Task } from "src/app/Models/task.models";
+import { Task } from "src/app/models/task.models";
 export const COUNTER_STATE_NAME = 'tasks';
 
 export interface TaskState{

@@ -10,7 +10,7 @@ import { AppState } from 'src/app/app-store/app.state';
 import { loadAllTasks } from '../state/task.action';
 import { getActiveTask, getPendingTasks, getScheduledTasks, getTasks, getTodayCompletedTasks, getTodayTasks, getUnScheduledTasks } from '../state/task.selector';
 import { Observable } from 'rxjs';
-import { Task } from 'src/app/Models/task.models';
+import { Task } from 'src/app/models/task.models';
 
 interface City {
   name: string;

@@ -1,5 +1,5 @@
 import { createAction, props } from "@ngrx/store";
-import { Task } from "src/app/Models/task.models";
+import { Task } from "src/app/models/task.models";
 
 export const ADD_TASK_INITIATE = "on add task start";
 export const ADD_TASK_SUCCESS = "on add task success"

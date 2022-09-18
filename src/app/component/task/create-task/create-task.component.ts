@@ -4,7 +4,7 @@ import { Store } from '@ngrx/store';
 import { MenuItem } from 'primeng/api';
 import { AppState } from 'src/app/app-store/app.state';
 import { UiService } from 'src/app/service/ui.service';
-import { Task } from 'src/app/Models/task.models';
+import { Task } from 'src/app/models/task.models';
 import { addTask } from '../state/task.action';
 import {
   CdkDragDrop,

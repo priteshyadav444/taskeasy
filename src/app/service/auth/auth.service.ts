@@ -3,8 +3,8 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/app-store/app.state';
-import { AuthResponseData } from '../../Models/authResponses';
-import { User } from '../../Models/user.models';
+import { AuthResponseData } from '../../models/authResponses';
+import { User } from '../../models/user.models';
 import { MessageService } from 'primeng/api';
 
 @Injectable({ providedIn: 'root' })
