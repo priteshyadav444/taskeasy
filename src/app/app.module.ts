@@ -65,6 +65,7 @@ import { MenuService } from './service/app.menu.service';
 import { TasksService } from './service/task/task.services';
 import { DashboardComponent } from './main/dashboard/wrapper/dashboard.component';
 import { DashboardSidemenuComponent } from './main/dashboard/dashboard-sidemenu/dashboard-sidemenu.component';
+import { ScheduleModule } from '@syncfusion/ej2-angular-schedule';
 
 FullCalendarModule.registerPlugins([
   dayGridPlugin,
@@ -74,6 +75,7 @@ FullCalendarModule.registerPlugins([
 
 import {CommonModule} from '@angular/common';
 import {TabViewModule} from 'primeng/tabview';
+import { TimelineComponent } from './main/dashboard/timeline/timeline.component';
 
 
 @NgModule({
@@ -91,7 +93,8 @@ import {TabViewModule} from 'primeng/tabview';
     LoadingSpinnerComponent,
     MainComponent,
     DashboardComponent,
-    DashboardSidemenuComponent
+    DashboardSidemenuComponent,
+    TimelineComponent
   ],
   imports: [
     BrowserModule,
@@ -125,6 +128,7 @@ import {TabViewModule} from 'primeng/tabview';
     PaginatorModule,
     CommonModule,
     TabViewModule,    
+    ScheduleModule,
     StoreModule.forRoot(appReducer),
     EffectsModule.forRoot([AuthEffects]),
     StoreDevtoolsModule.instrument({
