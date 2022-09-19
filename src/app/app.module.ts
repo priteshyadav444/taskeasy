@@ -66,6 +66,7 @@ import { TasksService } from './service/task/task.services';
 import { DashboardComponent } from './main/dashboard/wrapper/dashboard.component';
 import { DashboardSidemenuComponent } from './main/dashboard/dashboard-sidemenu/dashboard-sidemenu.component';
 import { ScheduleModule } from '@syncfusion/ej2-angular-schedule';
+import { TimelineComponent } from './main/dashboard/timeline/timeline.component';
 
 FullCalendarModule.registerPlugins([
   dayGridPlugin,
@@ -75,7 +76,6 @@ FullCalendarModule.registerPlugins([
 
 import {CommonModule} from '@angular/common';
 import {TabViewModule} from 'primeng/tabview';
-import { TimelineComponent } from './main/dashboard/timeline/timeline.component';
 
 
 @NgModule({
@@ -135,6 +135,7 @@ import { TimelineComponent } from './main/dashboard/timeline/timeline.component'
       logOnly: environment.production, // Restrict extension to log-only mode
     }),
   ],
+  
   providers: [UiService,TasksService,MessageService, MenuService],
   bootstrap: [AppComponent],
 })

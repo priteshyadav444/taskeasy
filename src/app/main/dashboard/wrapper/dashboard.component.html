@@ -1,21 +1,6 @@
-<div
-  class="layout-wrapper"
-  [ngClass]="{
-    'layout-overlay': isOverlay(),
-    'layout-static': isStatic(),
-    'layout-overlay-sidebar-active': overlayMenuActive,
-    'layout-static-sidebar-inactive': staticMenuInactive,
-    'layout-mobile-sidebar-active': menuActiveMobile
-  }"
->
+<div class="layout-wrapper layout-static layout-static-sidebar-inactive">
   <div class="layout-topbar">
-    <a
-      class="p-link layout-menu-button layout-topbar-button"
-      (click)="toggleMenu($event)"
-    >
-      <i class="pi pi-bars"></i>
-    </a>
-    <a class="layout-topbar-logo" routerLink="/home">
+    <a class="layout-topbar-logo" routerLink="/dashboard">
       <img src="assets/layout/images/logo.svg" alt="logo" />
     </a>
 
@@ -25,7 +10,7 @@
 
     <div class="layout-topbar-menu">
       <p-button
-        label="Create New Task"
+        label="New Project"
         icon="pi pi-plus"
         class="mr-2"
       ></p-button>
@@ -53,12 +38,11 @@
     <div class="grid">
       <div class="col-12">
         <div class="card">
-         
           <div class="flex card-container blue-container overflow-hidden">
             <div
               class="flex-none flex align-items-center justify-content-center font-bold m-1 px-5"
             >
-              All Goal
+              <h4>All Project</h4>
             </div>
             <div
               class="flex-grow-1 flex align-items-center justify-content-center text-white m-1 px-5"
@@ -71,24 +55,125 @@
           </div>
 
           <div class="flex align-items-center flex-column sm:flex-row mt-1">
-            <p-card
-              header="Project 1"
-              [style]="{ width: '16rem', 'margin-left': '2em' }"
+            <a href="/home">
+              <p-card
+              header="Project Inventore sed consequuntur"
+              [style]="{ width: '16rem', 'margin-left': '2em', padding: '4px', background:'#D2DAFF' }"
             >
               <ng-template pTemplate="header"> </ng-template>
-              <p>
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                Inventore sed consequuntur error repudiandae numquam deserunt
-                quisquam repellat libero asperiores earum nam nobis, culpa
-                ratione quam perferendis esse, cupiditate neque quas!
-              </p>
+
+              <p-tag value="New"></p-tag>
+              <p-tag class="p-1" severity="danger" value="Danger"></p-tag>
+
+              <ng-template pTemplate="footer">
+                <hr />
+                <div class="flex container blue-container overflow-hidden">
+                  <div
+                    class="flex-none flex align-items-center justify-content-center mr-2"
+                  >
+                    <i class="pi pi-list mr-1" style="font-size: 1rem"> 2/5 </i>
+                  </div>
+                  <div
+                    class="flex-grow-1 align-items-center justify-content-center mt-2"
+                  >
+                    <p-progressBar
+                      mode="determinate"
+                      [showValue]="false"
+                      [value]="value"
+                      [style]="{ height: '6px' }"
+                    ></p-progressBar>
+                  </div>
+                  <div
+                    class="flex-none flex align-items-center justify-content-center ml-2"
+                  >
+                    10%
+                  </div>
+                </div>
+              </ng-template>
             </p-card>
+            
+            </a>
+            <a href="/home">
+              <p-card
+              header="Project Inventore sed consequuntur"
+              [style]="{ width: '16rem', 'margin-left': '2em', padding: '4px', background:'#D2DAFF' }"
+            >
+              <ng-template pTemplate="header"> </ng-template>
+
+              <p-tag value="New"></p-tag>
+              <p-tag class="p-1" severity="danger" value="Danger"></p-tag>
+
+              <ng-template pTemplate="footer">
+                <hr />
+                <div class="flex container blue-container overflow-hidden">
+                  <div
+                    class="flex-none flex align-items-center justify-content-center mr-2"
+                  >
+                    <i class="pi pi-list mr-1" style="font-size: 1rem"> 2/5 </i>
+                  </div>
+                  <div
+                    class="flex-grow-1 align-items-center justify-content-center mt-2"
+                  >
+                    <p-progressBar
+                      mode="determinate"
+                      [showValue]="false"
+                      [value]="value"
+                      [style]="{ height: '6px' }"
+                    ></p-progressBar>
+                  </div>
+                  <div
+                    class="flex-none flex align-items-center justify-content-center ml-2"
+                  >
+                    10%
+                  </div>
+                </div>
+              </ng-template>
+            </p-card>
+            
+            </a>
+            <a href="/home">
+              <p-card
+              header="Project Inventore sed consequuntur"
+              [style]="{ width: '16rem', 'margin-left': '2em', padding: '4px', background:'#D2DAFF' }"
+            >
+              <ng-template pTemplate="header"> </ng-template>
+
+              <p-tag value="New"></p-tag>
+              <p-tag class="p-1" severity="danger" value="Danger"></p-tag>
+
+              <ng-template pTemplate="footer">
+                <hr />
+                <div class="flex container blue-container overflow-hidden">
+                  <div
+                    class="flex-none flex align-items-center justify-content-center mr-2"
+                  >
+                    <i class="pi pi-list mr-1" style="font-size: 1rem"> 2/5 </i>
+                  </div>
+                  <div
+                    class="flex-grow-1 align-items-center justify-content-center mt-2"
+                  >
+                    <p-progressBar
+                      mode="determinate"
+                      [showValue]="false"
+                      [value]="value"
+                      [style]="{ height: '6px' }"
+                    ></p-progressBar>
+                  </div>
+                  <div
+                    class="flex-none flex align-items-center justify-content-center ml-2"
+                  >
+                    10%
+                  </div>
+                </div>
+              </ng-template>
+            </p-card>
+            
+            </a>
           </div>
+          
 
-          <div class="flex align-items-center mt-4">
-            <full-calendar [options]="calendarOptions"></full-calendar>
-
-
+          <div class="flex align-items-center mt-5" style="height: 100%;">
+            <app-timeline></app-timeline>
           </div>
         </div>
       </div>

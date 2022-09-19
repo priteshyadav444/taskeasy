@@ -4,13 +4,17 @@ import { AppComponent } from 'src/app/app.component';
 import { Subscription } from 'rxjs';
 import { CalendarOptions } from '@fullcalendar/angular';
 
+
+
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.css']
+  styleUrls: ['./dashboard.component.css'],
 })
 export class DashboardComponent   {
+    
   items: MenuItem[]  = [];
+  value: number = 10;
   public menuInactiveDesktop!: boolean;
 
   public menuActiveMobile!: boolean;

@@ -25,6 +25,7 @@
     "@ngrx/effects": "^13.1.0",
     "@ngrx/store": "^13.1.0",
     "@ngrx/store-devtools": "^13.1.0",
+    "@syncfusion/ej2-angular-schedule": "^20.2.45",
     "chart.js": "^3.7.1",
     "moment": "^2.29.3",
     "ngrx": "^0.0.1-security",
