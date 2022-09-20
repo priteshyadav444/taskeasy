@@ -19,7 +19,6 @@ export class AuthEffects {
       exhaustMap((action) => {
         return this.authService.signUp(action.firstname, action.lastname, action.email, action.password).pipe(
           map((data) => {
-            this.store.dispatch(setLoadingSpinner({ status: false }));
             const user = this.authService.formatUser(data);
             this.authService.setUserInLocalStorage(user);
             return signupSuccess({ user, redirect: true });
@@ -27,7 +26,7 @@ export class AuthEffects {
           catchError((errResp) => {
             console.log(errResp.error.msg)
             const errmsg = this.authService.getErrorMessage(errResp.error.msg)
-            this.store.dispatch(setLoadingSpinner({ status: false }));
+            this.store.dispatch(setLogoLoading({ status: false }));
             this.authService.showError(errmsg);
             return of(setErrorMessage({ message: errmsg }));
           })
@@ -71,7 +70,7 @@ export class AuthEffects {
           this.store.dispatch(setErrorMessage({ message: '' }));
           if (action.redirect) {
              console.log(this.router)
-            this.router.navigate(['/home']);
+            this.router.navigate(['/dashboard']);
           }
         })
       );
@@ -95,6 +94,7 @@ export class AuthEffects {
     return this.actions$.pipe(
       ofType(autoLogin),
       exhaustMap((action) => {
+        this.store.dispatch(setLogoLoading({ status: true }));
         return this.authService.getUserFromLocalStorage().pipe(
           map((data) => {
             this.store.dispatch(setLoadingSpinner({ status: false }));
