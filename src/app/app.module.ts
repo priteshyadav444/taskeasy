@@ -76,6 +76,7 @@ FullCalendarModule.registerPlugins([
 
 import {CommonModule} from '@angular/common';
 import {TabViewModule} from 'primeng/tabview';
+import { LogoLoadingComponent } from './shared/logo-loading/logo-loading.component';
 
 
 @NgModule({
@@ -94,7 +95,8 @@ import {TabViewModule} from 'primeng/tabview';
     MainComponent,
     DashboardComponent,
     DashboardSidemenuComponent,
-    TimelineComponent
+    TimelineComponent,
+    LogoLoadingComponent
   ],
   imports: [
     BrowserModule,

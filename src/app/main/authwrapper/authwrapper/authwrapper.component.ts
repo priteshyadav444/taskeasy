@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { AppState } from 'src/app/app-store/app.state';
-import { getErrorMessage, getLoading } from 'src/app/shared/state/Shared/shared.selector';
+import { getErrorMessage, getLoading, getLogoLoading } from 'src/app/shared/state/Shared/shared.selector';
 
 @Component({
   selector: 'app-authwrapper',
@@ -11,12 +11,13 @@ import { getErrorMessage, getLoading } from 'src/app/shared/state/Shared/shared.
 })
 export class AuthwrapperComponent implements OnInit {
   showLoading$:Observable<boolean> | undefined
+  showLogoLoading$: Observable <boolean> | undefined
 
   constructor(private store:Store<AppState>) { }
 
   ngOnInit(): void {
+    this.showLogoLoading$ = this.store.select(getLogoLoading);
     this.showLoading$ = this.store.select(getLoading);
-   
   }
 
 }

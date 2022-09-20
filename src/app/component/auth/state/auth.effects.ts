@@ -6,7 +6,7 @@ import { AppState } from 'src/app/app-store/app.state';
 import { AuthServices } from 'src/app/service/auth/auth.service';
 import { autoLogin, loginStart, loginSuccess, signupStart, signupSuccess } from './auth.actions';
 import { of } from 'rxjs';
-import { setErrorMessage, setLoadingSpinner } from 'src/app/shared/state/Shared/shared.actions';
+import { setErrorMessage, setLoadingSpinner, setLogoLoading } from 'src/app/shared/state/Shared/shared.actions';
 import { Router } from '@angular/router';
 
 @Injectable()
@@ -45,6 +45,7 @@ export class AuthEffects {
           map((data) => {
             this.store.dispatch(setLoadingSpinner({ status: false }));
             this.store.dispatch(setErrorMessage({ message: '' }));
+           
             const user = this.authService.formatUser(data);
             this.authService.setUserInLocalStorage(user);
             return loginSuccess({ user, redirect: true });
@@ -52,6 +53,7 @@ export class AuthEffects {
           catchError((errResp) => {
             const errmsg = this.authService.getErrorMessage(errResp.error.msg)
             this.store.dispatch(setLoadingSpinner({ status: false }));
+           
             this.authService.showError(errmsg);
             return of(setErrorMessage({ message: errmsg }));
           })
@@ -68,6 +70,7 @@ export class AuthEffects {
         tap((action) => {
           this.store.dispatch(setErrorMessage({ message: '' }));
           if (action.redirect) {
+             console.log(this.router)
             this.router.navigate(['/home']);
           }
         })
@@ -103,6 +106,7 @@ export class AuthEffects {
           catchError((errResp) => {
             const errmsg = this.authService.getErrorMessage(errResp.error)
             this.store.dispatch(setLoadingSpinner({ status: false }));
+            this.store.dispatch(setLogoLoading({ status: false }));
             this.authService.showError(errmsg);
             return of(setErrorMessage({ message: errmsg }));
           })

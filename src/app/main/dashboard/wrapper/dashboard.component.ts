@@ -3,6 +3,8 @@ import { MenuItem } from 'primeng/api';
 import { AppComponent } from 'src/app/app.component';
 import { Subscription } from 'rxjs';
 import { CalendarOptions } from '@fullcalendar/angular';
+import { AppState } from 'src/app/app-store/app.state';
+import { Store } from '@ngrx/store';
 
 
 
@@ -12,7 +14,6 @@ import { CalendarOptions } from '@fullcalendar/angular';
   styleUrls: ['./dashboard.component.css'],
 })
 export class DashboardComponent   {
-    
   items: MenuItem[]  = [];
   value: number = 10;
   public menuInactiveDesktop!: boolean;
@@ -46,10 +47,12 @@ export class DashboardComponent   {
 
 
   subscription!: Subscription;
-  constructor(public renderer: Renderer2, public app: AppComponent) { }
+  constructor(public renderer: Renderer2, public app: AppComponent, private store:Store<AppState>) { }
  
 
     ngOnInit() {
+        // console.log('check')
+        // this.store.dispatch(setLogoLoading({status:true}));
         this.items = [
             {
                 label: 'File',

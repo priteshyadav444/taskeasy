@@ -11,6 +11,7 @@ import { loadAllTasks } from '../state/task.action';
 import { getActiveTask, getPendingTasks, getScheduledTasks, getTasks, getTodayCompletedTasks, getTodayTasks, getUnScheduledTasks } from '../state/task.selector';
 import { Observable } from 'rxjs';
 import { Task } from 'src/app/models/task.models';
+import { setLogoLoading } from 'src/app/shared/state/Shared/shared.actions';
 
 interface City {
   name: string;
@@ -23,6 +24,7 @@ interface City {
   styleUrls: ['./home.component.css'],
 })
 export class HomeComponent implements OnInit {
+
   items!: MenuItem[];
   category!: MenuItem[];
   todo = [
@@ -59,14 +61,16 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
     // this.pending = this.store.dispatch(getPendingTasks);
+  
     this.store.dispatch(loadAllTasks());
-    
+
     this.pending = this.store.select(getPendingTasks);
     this.active = this.store.select(getActiveTask);
     this.today = this.store.select(getTodayTasks)
     this.todaycompleted = this.store.select(getTodayCompletedTasks)
     this.scheduled = this.store.select(getScheduledTasks)
     this.unsheduled = this.store.select(getUnScheduledTasks)
+    this.store.dispatch(setLogoLoading({ status: false }));
 
     this.items = [
       { label: 'Mark As Done', icon: 'pi pi-refresh' },

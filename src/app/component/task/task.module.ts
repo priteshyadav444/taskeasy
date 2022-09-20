@@ -21,6 +21,7 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
 import { InputSwitchModule } from 'primeng/inputswitch';
 import { CalendarModule } from 'primeng/calendar';
 import { CommonModule } from '@angular/common';
+import { LogoLoadingComponent } from 'src/app/shared/logo-loading/logo-loading.component';
 
 const routes: Routes = [
   {
