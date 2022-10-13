@@ -68,6 +68,7 @@ import { DashboardSidemenuComponent } from './main/dashboard/dashboard-sidemenu/
 import { ScheduleModule } from '@syncfusion/ej2-angular-schedule';
 import { TimelineComponent } from './main/dashboard/timeline/timeline.component';
 
+
 FullCalendarModule.registerPlugins([
   dayGridPlugin,
   interactionPlugin
@@ -77,6 +78,7 @@ FullCalendarModule.registerPlugins([
 import {CommonModule} from '@angular/common';
 import {TabViewModule} from 'primeng/tabview';
 import { LogoLoadingComponent } from './shared/logo-loading/logo-loading.component';
+import { TasksCardService } from './service/task/taskcard.service';
 
 
 @NgModule({
@@ -138,7 +140,7 @@ import { LogoLoadingComponent } from './shared/logo-loading/logo-loading.compone
     }),
   ],
   
-  providers: [UiService,TasksService,MessageService, MenuService],
+  providers: [UiService,TasksService,MessageService, MenuService,TasksCardService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

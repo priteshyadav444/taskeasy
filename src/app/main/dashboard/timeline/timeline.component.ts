@@ -12,8 +12,8 @@ export class TimelineComponent implements OnInit {
   data: object[] = [{
     Id: 1,
     Subject: 'Meeting',
-    StartTime: new Date(2018, 1, 15, 10, 0),
-    EndTime: new Date(2018, 1, 15, 12, 30)
+    StartTime: new Date(2022, 1, 15, 10, 0),
+    EndTime: new Date(2022, 1, 15, 12, 30)
       }];
       public eventSettings: EventSettingsModel = {
     dataSource: this.data

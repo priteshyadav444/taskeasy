@@ -5,6 +5,11 @@
   display: inline-block;
   vertical-align: top;
 }
+e-kanban {  
+  position: -webkit-sticky;
+  position: sticky;
+  z-index: 9999;
+}
 
 /* .example-list {
   border: solid 1px #ccc;
