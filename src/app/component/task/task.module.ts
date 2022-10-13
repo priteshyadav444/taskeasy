@@ -22,6 +22,8 @@ import { InputSwitchModule } from 'primeng/inputswitch';
 import { CalendarModule } from 'primeng/calendar';
 import { CommonModule } from '@angular/common';
 import { LogoLoadingComponent } from 'src/app/shared/logo-loading/logo-loading.component';
+import { KanbanModule } from '@syncfusion/ej2-angular-kanban';
+import { TasksService } from 'src/app/service/task/task.services';
 
 const routes: Routes = [
   {
@@ -47,9 +49,11 @@ const routes: Routes = [
     InputSwitchModule,
     CalendarModule,
     CommonModule,
+    KanbanModule,
     RouterModule.forChild(routes),
     StoreModule.forFeature('tasks', tasksReducer),
-    EffectsModule.forFeature([TaskEffects])
+    EffectsModule.forFeature([TaskEffects]),
+    
   ],
 })
 export class TaskModule {}
