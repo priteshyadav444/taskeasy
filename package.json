@@ -25,6 +25,7 @@
     "@ngrx/effects": "^13.1.0",
     "@ngrx/store": "^13.1.0",
     "@ngrx/store-devtools": "^13.1.0",
+    "@syncfusion/ej2-angular-dropdowns": "^20.3.49",
     "@syncfusion/ej2-angular-kanban": "^20.3.49",
     "@syncfusion/ej2-angular-schedule": "^20.2.45",
     "chart.js": "^3.7.1",
