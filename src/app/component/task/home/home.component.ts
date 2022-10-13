@@ -25,6 +25,7 @@ import {
   DataSourceChangedEventArgs,
   DataStateChangeEventArgs,
   DialogEventArgs,
+  DialogSettingsModel,
   KanbanComponent,
 } from '@syncfusion/ej2-angular-kanban';
 import { DataManager, ODataAdaptor } from '@syncfusion/ej2-data';
@@ -79,7 +80,6 @@ export class HomeComponent implements OnInit {
   }
 
   public dataSourceChanged(state: DataSourceChangedEventArgs): void {
-    console.log(state);
     if (state.requestType === 'cardCreated') {
          this.service.addCard(state).subscribe(() => {
              state.endEdit();
@@ -100,16 +100,24 @@ export class HomeComponent implements OnInit {
   this.service.execute(state);
 }
  
- 
+public dialogSettings: DialogSettingsModel = {
+  fields: [
+      { text: 'Status', key: 'task_status', type: 'DropDown' },
+      { text: 'Title', key: 'title', type: 'TextArea' },
+      { text: 'Description', key: 'description', type: 'TextArea' },
+      { text: 'Priority', key: 'badge', type: 'DropDown' },
+  ]
+};
   ngOnInit(): void {
     let state = { skip: 0, take: 10 };
     this.service.execute(state);
     this.cardSettings = {
-      headerField: '_id',
-      contentField: 'title',
-      selectionType: 'Single',
+      headerField: 'title',
+      showHeader:true,
+      contentField: 'description',
+      tagsField:'badge',
     };
-
+    
     this.store.dispatch(loadAllTasks());
     this.pending = this.store.select(getPendingTasks);
     console.log(this.data);
