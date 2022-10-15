@@ -1,16 +1,14 @@
-<div class="control-section">
-  <div class="content-wrapper">
-<ejs-kanban  cssClass="kanban-card-template" keyField='task_status' [dialogSettings]='dialogSettings' [dataSource]='data | async'  [cardSettings]='cardSettings' (dataStateChange)= 'dataStateChange($event)'  (dataSourceChanged)='dataSourceChanged($event)'>
+
+<ejs-kanban class="pt-2" cssClass="kanban-card-template" keyField='task_status' [dialogSettings]='dialogSettings' [dataSource]='data | async'  [cardSettings]='cardSettings' (dataStateChange)= 'dataStateChange($event)'  (dataSourceChanged)='dataSourceChanged($event)'>
     <e-columns>
         <e-column headerText='To Do' keyField='pending'> </e-column>
         <e-column headerText='In Progress' keyField='active'></e-column>
         <e-column headerText='Done' keyField='done'></e-column>
         <e-column headerText='Unsheduled' keyField='unsheduled'></e-column>
     </e-columns>
-
+    
 </ejs-kanban>
-</div>
-</div>
+
 <!-- <div class="grid">
   <div class="col-12 lg:col-4">
     <div class="card p-3">

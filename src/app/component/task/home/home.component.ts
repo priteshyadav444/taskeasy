@@ -105,7 +105,7 @@ public dialogSettings: DialogSettingsModel = {
       { text: 'Status', key: 'task_status', type: 'DropDown' },
       { text: 'Title', key: 'title', type: 'TextArea' },
       { text: 'Description', key: 'description', type: 'TextArea' },
-      { text: 'Priority', key: 'badge', type: 'DropDown' },
+      { text: 'Priority', key: 'badge', type: 'TextArea' },
   ]
 };
   ngOnInit(): void {
@@ -113,11 +113,40 @@ public dialogSettings: DialogSettingsModel = {
     this.service.execute(state);
     this.cardSettings = {
       headerField: 'title',
-      showHeader:true,
+      showHeader: true,
       contentField: 'description',
       tagsField:'badge',
+      selectionType:'Single'
     };
     
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     this.store.dispatch(loadAllTasks());
     this.pending = this.store.select(getPendingTasks);
     console.log(this.data);
