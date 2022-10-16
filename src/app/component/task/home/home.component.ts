@@ -95,58 +95,25 @@ export class HomeComponent implements OnInit {
      }
  }
 
- public dataStateChange(state: DataStateChangeEventArgs): void {
-  console.log(state);
-  this.service.execute(state);
-}
+  public dataStateChange(state: DataStateChangeEventArgs): void {
+    this.service.execute();
+  }
  
-public dialogSettings: DialogSettingsModel = {
-  fields: [
-      { text: 'Status', key: 'task_status', type: 'DropDown' },
-      { text: 'Title', key: 'title', type: 'TextArea' },
-      { text: 'Description', key: 'description', type: 'TextArea' },
-      { text: 'Priority', key: 'badge', type: 'TextArea' },
-  ]
-};
+  public dialogSettings: DialogSettingsModel = {
+    fields: [
+        { text: 'Status', key: 'task_status', type: 'DropDown' },
+        { text: 'Title', key: 'title', type: 'TextArea' },
+        { text: 'Description', key: 'description', type: 'TextArea' },
+        { text: 'Priority', key: 'badge', type: 'TextArea' },
+    ]
+  };
+  
   ngOnInit(): void {
     let state = { skip: 0, take: 10 };
-    this.service.execute(state);
+    this.service.execute();
     this.cardSettings = {
-      headerField: 'title',
-      showHeader: true,
-      contentField: 'description',
-      tagsField:'badge',
-      selectionType:'Single'
-    };
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+      headerField: '_id'
+    };    
     this.store.dispatch(loadAllTasks());
     this.pending = this.store.select(getPendingTasks);
     console.log(this.data);

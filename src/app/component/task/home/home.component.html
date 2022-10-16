@@ -7,6 +7,26 @@
         <e-column headerText='Unsheduled' keyField='unsheduled'></e-column>
     </e-columns>
     
+    <ng-template #cardSettingsTemplate let-data>
+      <div class='e-card-content'>
+          <table class="card-template-wrap">
+              <tbody>
+                <tr>
+                    <td class="CardHeader">Priority:</td>
+                    <td>{{data.title}}</td>
+                </tr>
+                <tr>
+                    <td class="CardHeader">Priority:</td>
+                    <td>{{data.description}}</td>
+                </tr>
+                <tr>
+                      <td class="CardHeader">Summary:</td>
+                      <td>{{data._id}}</td>
+                  </tr>
+              </tbody>
+          </table>
+      </div>
+  </ng-template>
 </ejs-kanban>
 
 <!-- <div class="grid">
