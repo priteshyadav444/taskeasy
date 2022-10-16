@@ -22,7 +22,7 @@ export class TasksCardService extends Subject<DataStateChangeEventArgs> {
 
     
 
-    protected getData(state: DataStateChangeEventArgs): Observable<DataStateChangeEventArgs> {
+    protected getData(): Observable<DataStateChangeEventArgs> {
         return this.http
            .get(`${this.BASE_URL}`, {
             headers:this.reqHeader
@@ -30,11 +30,13 @@ export class TasksCardService extends Subject<DataStateChangeEventArgs> {
            .pipe(map((response: any) => (<any>{
             result: response
         })))
-        .pipe((data: any) => data);
+        .pipe((data: any) => {
+            return data;
+        });
     }
 
-    public execute(state: any): void {
-        this.getData(state).subscribe(x => super.next(x));
+    public execute(): void {
+        this.getData().subscribe(x => super.next(x));
     }
 
     /** POST: add a new record  to the server */
