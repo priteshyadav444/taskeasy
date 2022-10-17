@@ -26,3 +26,20 @@ a {
 .layout-theme-light {
     background-color: #edf1f5;
 }
+
+.e-kanban .e-kanban-content .e-content-row .e-content-cells .e-kanban-border {
+    display: none !important;
+    border: 1px dashed red !important;
+  }
+  .e-kanban .e-kanban-content .e-content-row .e-content-cells .e-kanban-border.e-dropping {
+    display: none !important;
+    position: relative !important;
+    border: 1px dashed yellowgreen !important;
+    left: 2px !important;
+  }
+
+  .e-kanban .e-kanban-content .e-content-row .e-content-cells .e-card-wrapper .e-card.e-kanban-dragged-card,
+.e-kanban .e-kanban-content .e-content-row .e-content-cells .e-card-container .e-card.e-kanban-dragged-card {
+  display: none;
+  left: 0 !important;
+}

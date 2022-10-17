@@ -70,7 +70,7 @@ export class AuthEffects {
           this.store.dispatch(setErrorMessage({ message: '' }));
           if (action.redirect) {
              console.log(this.router)
-            this.router.navigate(['/dashboard']);
+            this.router.navigate(['/home']);
           }
         })
       );
