@@ -79,6 +79,7 @@ import {CommonModule} from '@angular/common';
 import {TabViewModule} from 'primeng/tabview';
 import { LogoLoadingComponent } from './shared/logo-loading/logo-loading.component';
 import { TasksCardService } from './service/task/taskcard.service';
+import { ProjectEffects } from './main/dashboard/state/project.effects';
 
 
 @NgModule({
@@ -134,7 +135,7 @@ import { TasksCardService } from './service/task/taskcard.service';
     TabViewModule,    
     ScheduleModule,
     StoreModule.forRoot(appReducer),
-    EffectsModule.forRoot([AuthEffects]),
+    EffectsModule.forRoot([AuthEffects, ProjectEffects]),
     StoreDevtoolsModule.instrument({
       logOnly: environment.production, // Restrict extension to log-only mode
     }),
