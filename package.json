@@ -32,6 +32,7 @@
     "@syncfusion/ej2-angular-schedule": "^20.2.45",
     "chart.js": "^3.7.1",
     "concurrently": "^7.4.0",
+    "dateformat": "^5.0.3",
     "moment": "^2.29.3",
     "ngrx": "^0.0.1-security",
     "primeflex": "^3.1.3",

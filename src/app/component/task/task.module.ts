@@ -24,6 +24,7 @@ import { CommonModule } from '@angular/common';
 import { LogoLoadingComponent } from 'src/app/shared/logo-loading/logo-loading.component';
 import { KanbanAllModule } from '@syncfusion/ej2-angular-kanban';
 import { TasksService } from 'src/app/service/task/task.services';
+import {BadgeModule} from 'primeng/badge';
 
 const routes: Routes = [
   {
@@ -50,6 +51,7 @@ const routes: Routes = [
     CalendarModule,
     CommonModule,
     KanbanAllModule,
+    BadgeModule,
     RouterModule.forChild(routes),
     StoreModule.forFeature('tasks', tasksReducer),
     EffectsModule.forFeature([TaskEffects]),

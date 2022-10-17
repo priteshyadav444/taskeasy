@@ -28,8 +28,8 @@ import {
   DialogSettingsModel,
   KanbanComponent,
 } from '@syncfusion/ej2-angular-kanban';
-import { DataManager, ODataAdaptor } from '@syncfusion/ej2-data';
 import { TasksCardService } from 'src/app/service/task/taskcard.service';
+import dateFormat, { masks } from "dateformat";
 
 interface City {
   name: string;

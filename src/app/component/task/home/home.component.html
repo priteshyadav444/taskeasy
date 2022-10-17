@@ -1,5 +1,5 @@
 
-<ejs-kanban class="pt-2" cssClass="kanban-card-template" keyField='task_status' [dialogSettings]='dialogSettings' [dataSource]='data | async'  [cardSettings]='cardSettings' (dataStateChange)= 'dataStateChange($event)'  (dataSourceChanged)='dataSourceChanged($event)'>
+<ejs-kanban class="pt-2" height="100%" weight="100%" keyField='task_status' [dialogSettings]='dialogSettings' [dataSource]='data | async'  [cardSettings]='cardSettings' (dataStateChange)= 'dataStateChange($event)'  (dataSourceChanged)='dataSourceChanged($event)'>
     <e-columns>
         <e-column headerText='To Do' keyField='pending'> </e-column>
         <e-column headerText='In Progress' keyField='active'></e-column>
@@ -9,22 +9,48 @@
     
     <ng-template #cardSettingsTemplate let-data>
       <div class='e-card-content'>
-          <table class="card-template-wrap">
-              <tbody>
-                <tr>
-                    <td class="CardHeader">Priority:</td>
-                    <td>{{data.title}}</td>
-                </tr>
-                <tr>
-                    <td class="CardHeader">Priority:</td>
-                    <td>{{data.description}}</td>
-                </tr>
-                <tr>
-                      <td class="CardHeader">Summary:</td>
-                      <td>{{data._id}}</td>
-                  </tr>
-              </tbody>
-          </table>
+        <div class="card-15">
+          <div class="card-15__colone">
+              <div class="card-15__title">
+                 {{data.title}}
+              </div>
+              <div class="card-15__date">
+                {{data.scheduled_date | date: mediumDate}}
+              </div>
+          </div>
+          <div class="card-15__pos">
+            {{data.description}}
+          </div>
+          <div class="card-15__colthree">
+              <div class="card-15__percent">
+                  <span class="card-15__complete">50%</span>
+                
+              </div>
+              <div class="card-15__days">
+                12/20
+              </div>
+          </div>
+          <div class="card-15__progressbar">
+              <div class="card-15__progresscomplete">
+                  
+              </div>
+          </div>
+          <div class="card-15__colfive">
+              <div class="card-15__avatar">
+                <span class="card-15__leftuser">
+                  <p-badge [value]="data.badge" severity="info" styleClass="mr-2"></p-badge>
+
+                </span>
+              </div>
+  
+              <div class="card-15__stat">
+                  <div class="card-15__statinfo">
+                    <i class="pi pi-clock mr-1"></i>
+                    00:00:00
+                  </div>
+              </div>
+          </div>
+      </div>
       </div>
   </ng-template>
 </ejs-kanban>

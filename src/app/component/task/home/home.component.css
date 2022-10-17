@@ -1,121 +1,210 @@
-.kanban-card-template .e-card table {
-  table-layout: fixed;
-}
 
-.kanban-card-template .e-card .e-time {
-  display: inline-flex;
+.e-kanban .e-kanban-content .e-content-row .e-content-cells .e-kanban-border {
+  display: none !important;
+  border: 1px dashed red !important;
 }
-
-.kanban-card-template .e-card .e-size {
-  color: #b8860b
+.e-kanban .e-kanban-content .e-content-row .e-content-cells .e-kanban-border.e-dropping {
+  display: block !important;
+  position: relative !important;
+  border: 1px dashed red !important;
+  margin-left: 100px !important;
 }
-
-.kanban-card-template .e-card .e-mins {
-  padding-left: 3px;
-}
-
-.kanban-card-template .e-card .e-clock {
-  padding-top: 2px;
-}
-
-.kanban-card-template .e-card .e-clock::before {
-  content: '\e20c';
-  color: #ffa500;
-  font-size: 10px;
-}
-
-.kanban-card-template .e-card .e-done::before {
-  content: '\ea84';
-  color: #008000;
-  font-size: 16px;
-}
-
-.fabric .kanban-card-template .e-card .e-clock::before {
-  content: '\e97f';
-}
-
-.bootstrap .kanban-card-template .e-card .e-clock::before {
-  content: '\e93e';
-}
-
-.bootstrap4 .kanban-card-template .e-card .e-clock::before {
-  content: '\e7c7';
-}
-
-.bootstrap4 .kanban-card-template .e-card .e-done::before {
-  content: '\e7d9';
-}
-
-.highcontrast .kanban-card-template .e-card .e-clock::before {
-  content: '\e97f';
-}
-
-.kanban-card-template .e-card .card-template-wrap {
-  line-height: normal;
-  font-size: 12px;
+.card-15 {
+  background: #fff;
   width: 100%;
+  max-width: 470px;
+  font-family: Arial, Helvetica, sans-serif;
+  padding: 4px;
 }
 
-.kanban-card-template .e-card .card-template-wrap td {
-  background: none !important;
-  border: none !important;
-  height: auto !important;
-  line-height: 1.6;
-}
-
-.kanban-card-template .e-card .e-image img {
-  background: #ececec;
-  border-radius: 50%;
-  width: 45px;
-  height: 45px;
-}
-
-.kanban-card-template .e-card .e-image {
-  padding-right: 5px;
-  padding-left: 10px;
-}
-
-.kanban-card-template .e-card .card-header {
-  font-size: 15px;
-  font-weight: 500;
-  display: inline-block;
-}
-
-.kanban-card-template .e-card .card-content {
+.card-15__colone {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  justify-content: space-between;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
 }
 
-.kanban-card-template .e-card .e-description {
-  padding-top: 5px;
-  padding-bottom: 10px;
-}
-
-.kanban-card-template .e-card .e-done {
-  padding-top: 5px;
-  padding-bottom: 10px;
-  position: absolute;
-  right: 15px;
-}
-
-.kanban-card-template .e-card .e-readyText {
-  color: #008000;
-}
-
-.kanban-card-template .e-card .e-preparingText {
-  color: #9ACD32;
-  animation: blinker 1.5s linear infinite;
-}
-
-.kanban-card-template .e-card .e-deliveredText {
-  color: #ff0000;
-}
-
-@keyframes blinker {
-  50% {
-    opacity: 0.5;
+@media only screen and (max-width: 480px) {
+  .card-15__colone {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
   }
 }
+
+.card-15__title {
+  font-size: 18px;
+  font-weight: normal;
+  color: #000;
+}
+
+@media only screen and (max-width: 480px) {
+  .card-15__title {
+    font-size: 18px;
+    margin-bottom: 4px;
+  }
+}
+
+.card-15__date {
+  font-size: 14px;
+  color: #747D96;
+}
+
+.card-15__pos {
+  font-size: 16px;
+  color: #747D96;
+  margin-top: 4px;
+  margin-bottom: 8px;
+}
+
+@media only screen and (max-width: 480px) {
+  .card-15__pos {
+    font-size: 14px;
+    text-align: center;
+  }
+}
+
+.card-15__colthree {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  margin-bottom: 4px;
+}
+
+.card-15__percent, .card-15__days {
+  font-size: 12px;
+  color: #747D96;
+  font-weight: bold;
+}
+
+.card-15__progressbar {
+  position: relative;
+  width: 100%;
+  border-radius: 8px;
+  height: 8px;
+  background: #EBEFFE;
+  z-index: 1;
+}
+
+.card-15__progresscomplete {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 50%;
+  z-index: 3;
+  background: #3E82F1;
+  border-radius: 8px;
+  height: 8px;
+}
+
+.card-15__colfive {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  margin-top: 12px;
+}
+
+@media only screen and (max-width: 480px) {
+  .card-15__colfive {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+  }
+}
+
+.card-15__avatar {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+@media only screen and (max-width: 480px) {
+  .card-15__avatar {
+    margin-bottom: 10px;
+    margin-top: 10px;
+  }
+}
+
+.card-15__avtimg {
+  margin-right: -10px;
+  width: 34px;
+  height: 34px;
+}
+
+.card-15__leftuser {
+  width: 32px;
+  height: 24px;
+  background:  #4da6ff;
+  border-radius: 50%;
+  text-align: center;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  color: #fff;
+  margin-right: -10px;
+  position: relative;
+  top: 2px;
+}
+
+.card-15__stat {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.card-15__statinfo {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.card-15__statinfo:not(:last-child) {
+  margin-right: 24px;
+}
+
+.card-15__statimg {
+  width: 20px;
+  height: auto;
+}
+
+.card-15__stattext {
+  font-size: 16px;
+  font-weight: bold;
+  color: #747D96;
+  margin-left: 5px;
+}
+/*# sourceMappingURL=15.css.map */
 
 .example-container {
   width: auto;
