@@ -1,0 +1,14 @@
+.inputtext {
+    border: none;
+    width: 100%;
+    display: block;
+    outline: none;
+      font-size: 1rem;
+      padding: 0.75rem 0.75rem;
+  }
+  
+  
+  .inputtext:focus {
+    outline: none;
+    border: none;
+  }

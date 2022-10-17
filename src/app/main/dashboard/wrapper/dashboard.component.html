@@ -10,21 +10,17 @@
     </a>
 
     <div class="layout-topbar-menu">
-      <p-button
-        label="New Project"
-        icon="pi pi-plus"
-        class="mr-2"
-      ></p-button>
+      <p-button label="New Project" (click)="addProject()" icon="pi pi-plus" class="mr-2"></p-button>
 
-      <a href="#" class="p-link layout-topbar-button">
+      <!-- <a href="#" class="p-link layout-topbar-button">
         <i class="pi pi-calendar"></i>
         <span>Calendar</span>
       </a>
       <a href="#" class="p-link layout-topbar-button">
         <i class="pi pi-cog"></i>
-        <span>Settings</span>
-      </a>
-      <a href="#" class="p-link layout-topbar-button">
+        <span>Settings</span> -->
+       
+      <a href="/" class="p-link layout-topbar-button">
         <i class="pi pi-user"></i>
         <span>Profile</span>
       </a>
@@ -182,4 +178,28 @@
       <!-- <p-tree [value]="files1" selectionMode="checkbox" [(selection)]="selectedFiles1"></p-tree> -->
     </div>
   </div>
+  <p-dialog
+header="Create Project"
+[(visible)]="showDailog"
+[style]="{ width: '22rem' }"
+class="subtask"
+(onHide)="close()"
+>
+<form (ngSubmit)="onAddProject()"> 
+  <div class="p-fluid p-0">
+    <div class="col-12 p-0">
+      <input type="text" class="inputtext" placeholder="Enter Title"  [(ngModel)]="title"  name="title" id="text" />
+    </div>
+    <!-- <div *ngIf="addtaskForm.get('title')!.errors?.['required']">
+      Title is required
+    </div> -->
+  
+        <div class="w-100 mt-2">
+          <button pButton type="submit" label="Create Project" ></button>
+        </div>
+  </div>
+</form>
+</p-dialog>
 </div>
+
+
