@@ -1,7 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import {
   CdkDragDrop,
-  moveItemInArray,
   transferArrayItem,
 } from '@angular/cdk/drag-drop';
 import { MenuItem } from 'primeng/api';
@@ -98,7 +97,9 @@ export class HomeComponent implements OnInit {
   public dataStateChange(state: DataStateChangeEventArgs): void {
     this.service.execute();
   }
- 
+  public check(): void {
+    this.service.execute();
+  }
   public dialogSettings: DialogSettingsModel = {
     fields: [
         { text: 'Status', key: 'task_status', type: 'DropDown' },
@@ -150,6 +151,7 @@ export class HomeComponent implements OnInit {
   showBasicDialog() {
     this.displayBasic = true;
   }
+  
   showCreateDialog() {
     this.displayCategory = true;
   }

@@ -11,6 +11,8 @@ import {
   moveItemInArray,
   transferArrayItem,
 } from '@angular/cdk/drag-drop';
+import { TasksCardService } from 'src/app/service/task/taskcard.service';
+import { HomeComponent } from '../home/home.component';
 @Component({
   selector: 'app-create-task',
   templateUrl: './create-task.component.html',
@@ -32,10 +34,9 @@ export class CreateTaskComponent implements OnInit {
   title!:string
   description:string=""
   categorytitle!:string
-  @Output() btnClick:EventEmitter <Task> = new EventEmitter();
-  
 
-  constructor(private uiService:UiService, private store: Store<AppState>) {
+  @Output() btnClick:EventEmitter <Task> = new EventEmitter();
+  constructor(private uiService:UiService, private store: Store<AppState>, private service:TasksCardService) {
     this.uiService.onToggle().subscribe((value)=> (this.showDailog = value))
     this.selectedCategory = this.selectedCategory==null?"None":this.selectedCategory
     this.category = [
@@ -102,12 +103,9 @@ export class CreateTaskComponent implements OnInit {
 
 
   onAddTask(){
-    console.log(this.title)
-    console.log(this.description)
-    console.log(this.selectedCategory)
-    console.log(this.subTask)
-    console.log(this.selectedDate)
-   
+    
+    
+
     if(this.title==undefined || this.title==''){
       alert("Enter Title");
       return
@@ -122,7 +120,8 @@ export class CreateTaskComponent implements OnInit {
     }
     
     this.store.dispatch(addTask({task}))
-    
-
+    let homecomponent = new HomeComponent(this.store, this.service);
+    homecomponent.check();
+    this.showDailog = !this.showDailog
   }
 }
