@@ -41,7 +41,7 @@ const routes: Routes = [
         canActivate: [AuthGuard],
       },
       {
-        path: 'id',
+        path: ':id',
         loadChildren: () =>
           import('../component/task/task.module').then((m) => m.TaskModule),
         canActivate: [AuthGuard],

@@ -14,6 +14,7 @@ export interface AppState{
     projects: ProjectState,
     [SHARED_STATE_NAME]: SharedState;
 }
+
 export const appReducer = {
     tasks: tasksReducer,
     auth: AuthReducer,

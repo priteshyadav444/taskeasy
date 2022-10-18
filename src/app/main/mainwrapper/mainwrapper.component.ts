@@ -19,6 +19,7 @@ import { AppState } from 'src/app/app-store/app.state';
 import { getLogoLoading } from 'src/app/shared/state/Shared/shared.selector';
 import { autoLogin } from 'src/app/component/auth/state/auth.actions';
 import { setLogoLoading } from 'src/app/shared/state/Shared/shared.actions';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-mainwrapper',
@@ -50,6 +51,8 @@ import { setLogoLoading } from 'src/app/shared/state/Shared/shared.actions';
   ],
 })
 export class MainwrapperComponent implements AfterViewInit, OnDestroy, OnInit {
+  
+  
   showLogoLoading$: Observable<boolean> | undefined;
 
   public menuInactiveDesktop!: boolean;
@@ -83,8 +86,11 @@ export class MainwrapperComponent implements AfterViewInit, OnDestroy, OnInit {
   constructor(
     public renderer: Renderer2,
     public app: AppComponent,
-    private store: Store<AppState>
-  ) {}
+    private store: Store<AppState>,
+    private route: ActivatedRoute
+  ) {
+    console.log(this.route.snapshot.paramMap.get('id'))
+  }
 
   ngOnInit() {
   }
