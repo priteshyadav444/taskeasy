@@ -17,7 +17,7 @@ export class TaskEffects {
     return this.actions$.pipe(
       ofType(addTask),
       mergeMap((action) => {
-        return this.taskServices.addTask(action.task).pipe(
+        return this.taskServices.addTask(action.task,action.pid).pipe(
           map((data) => {
             const task = { ...action.task, id: data.id };
             return addTaskSuccess({ task });
@@ -27,16 +27,16 @@ export class TaskEffects {
     );
   });
 
-    loadAllTasks$ = createEffect(() =>{
-      return this.actions$.pipe(
-        ofType(loadAllTasks),
-        mergeMap((action) => {
-          return this.taskServices.getAllTasks().pipe(
-            map((tasks)=>{
-              return loadTasksSuccess({ tasks });
-            })
-          )
-        })
-      )
-    })
+  loadAllTasks$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(loadAllTasks),
+      mergeMap((action) => {
+        return this.taskServices.getAllTasks().pipe(
+          map((tasks) => {
+            return loadTasksSuccess({ tasks });
+          })
+        );
+      })
+    );
+  });
 }

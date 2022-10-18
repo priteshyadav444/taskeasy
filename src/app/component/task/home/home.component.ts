@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, Output, ViewChild } from '@angular/core';
 import {
   CdkDragDrop,
   transferArrayItem,
@@ -29,6 +29,8 @@ import {
 } from '@syncfusion/ej2-angular-kanban';
 import { TasksCardService } from 'src/app/service/task/taskcard.service';
 import dateFormat, { masks } from "dateformat";
+import { ActivatedRoute } from '@angular/router';
+import { EventEmitter } from 'stream';
 
 interface City {
   name: string;
@@ -44,7 +46,7 @@ export class HomeComponent implements OnInit {
   public cardSettings?: CardSettingsModel;
   public data: Observable<DataStateChangeEventArgs>;
   public state?: DataStateChangeEventArgs;
-
+ 
   items!: MenuItem[];
   category!: MenuItem[];
   todo = [
@@ -66,9 +68,12 @@ export class HomeComponent implements OnInit {
   cities!: City[];
   selectedCity!: City;
   temp!: Observable<Task[]>;
+  pid!:any
 
-  constructor(private store: Store<AppState>, private service:TasksCardService) {
+  constructor(private store: Store<AppState>, private service:TasksCardService, private route: ActivatedRoute) {
     this.data = service
+    this.pid = this.route.snapshot.paramMap.get('id');
+    console.log(this.pid)
     this.cities = [
       { name: 'New York', code: 'NY' },
       { name: 'Rome', code: 'RM' },
@@ -80,25 +85,25 @@ export class HomeComponent implements OnInit {
 
   public dataSourceChanged(state: DataSourceChangedEventArgs): void {
     if (state.requestType === 'cardCreated') {
-         this.service.addCard(state).subscribe(() => {
+         this.service.addCard(state, this.pid).subscribe(() => {
              state.endEdit();
          });
      } else if (state.requestType === 'cardChanged') {
-         this.service.updateCard(state).subscribe(() => {
+         this.service.updateCard(state,this.pid).subscribe(() => {
           state.endEdit();
          });
      } else if (state.requestType === 'cardRemoved') {
-         this.service.deleteCard(state).subscribe(() => {
+         this.service.deleteCard(state, this.pid).subscribe(() => {
              state.endEdit();
          });
      }
  }
 
   public dataStateChange(state: DataStateChangeEventArgs): void {
-    this.service.execute();
+    this.service.execute(this.pid);
   }
   public check(): void {
-    this.service.execute();
+    this.service.execute(this.pid);
   }
   public dialogSettings: DialogSettingsModel = {
     fields: [
@@ -111,14 +116,13 @@ export class HomeComponent implements OnInit {
   
   ngOnInit(): void {
     let state = { skip: 0, take: 10 };
-    this.service.execute();
+    this.service.execute(this.pid);
     this.cardSettings = {
       headerField: '_id'
     };    
+    
     this.store.dispatch(loadAllTasks());
     this.pending = this.store.select(getPendingTasks);
-    console.log(this.data);
-    console.log(this.pending);
     this.active = this.store.select(getActiveTask);
     this.today = this.store.select(getTodayTasks);
     this.todaycompleted = this.store.select(getTodayCompletedTasks);

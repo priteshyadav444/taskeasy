@@ -21,7 +21,8 @@ export class TasksService {
     'x-auth-token': JSON.parse(this.authToken!),
   });
 
-  addTask(task: Task): Observable<Task> {
+  addTask(task: Task,pid:string): Observable<Task> {
+    this.apiUrl = `${this.apiUrl}/${pid}`
     return this.http.post<Task>(this.apiUrl, task,{
       headers:this.reqHeader
     });

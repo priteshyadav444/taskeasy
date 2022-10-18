@@ -6,7 +6,9 @@ import { CalendarOptions } from '@fullcalendar/angular';
 import { AppState } from 'src/app/app-store/app.state';
 import { Store } from '@ngrx/store';
 import { UiService } from 'src/app/service/ui.service';
-import { addProjectStart } from '../state/project.action';
+import { addProjectStart, loadAllProjects } from '../state/project.action';
+import { Project } from 'src/app/models/projects.models';
+import { getAllProjects } from '../state/project.selector';
 
 @Component({
   selector: 'app-dashboard',
@@ -18,6 +20,9 @@ export class DashboardComponent {
   items: MenuItem[] = [];
   value: number = 10;
   title!: string;
+  selectedDate:any = null
+  minimumDate:any = new Date();
+  projects:any=[];
   public menuInactiveDesktop!: boolean;
 
   public menuActiveMobile!: boolean;
@@ -60,7 +65,9 @@ export class DashboardComponent {
 
   ngOnInit() {
     // console.log('check')
-    // this.store.dispatch(setLogoLoading({status:true}));
+    this.store.dispatch(loadAllProjects());
+    this.projects = this.store.select(getAllProjects);
+    console.log(this.projects)
     this.items = [
       {
         label: 'File',
@@ -211,9 +218,14 @@ export class DashboardComponent {
      this.uiService.toggleAddProject()
   }
 
-  onAddProject() {
+  onAddProject() { 
     console.log({"title":this.title});
-    this.store.dispatch(addProjectStart({"title":this.title}))
-    this.uiService.toggleAddProject()
+    const project :Project  = {
+      project_title:this.title,
+      project_deadline:this.selectedDate,
+    }
+    this.store.dispatch(addProjectStart({project}))
+    this.store.dispatch(loadAllProjects());
+    //this.uiService.toggleAddProject()
   }
 }

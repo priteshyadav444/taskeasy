@@ -22,9 +22,9 @@ export class TasksCardService extends Subject<DataStateChangeEventArgs> {
 
     
 
-    protected getData(): Observable<DataStateChangeEventArgs> {
+    protected getData(pid:string): Observable<DataStateChangeEventArgs> {
         return this.http
-           .get(`${this.BASE_URL}`, {
+           .get(`${this.BASE_URL}/${pid}`, {
             headers:this.reqHeader
           })
            .pipe(map((response: any) => (<any>{
@@ -35,31 +35,31 @@ export class TasksCardService extends Subject<DataStateChangeEventArgs> {
         });
     }
 
-    public execute(): void {
-        this.getData().subscribe(x => super.next(x));
+    public execute(pid:string): void {
+        this.getData(pid).subscribe(x => super.next(x));
     }
 
     /** POST: add a new record  to the server */
-    addCard(state: DataSourceChangedEventArgs): Observable<Task> {
+    addCard(state: DataSourceChangedEventArgs, pid:string): Observable<Task> {
         return this.http.post<any>(this.BASE_URL, state.addedRecords[0], {
             headers:this.reqHeader
         });
     }
 
     /** DELETE: delete the record from the server */
-    deleteCard(state: any): Observable<any> {
+    deleteCard(state: any, pid:string): Observable<any> {
         const id = state.deletedRecords[0]._id;
-        const url = `${this.BASE_URL}/${id}`;
+        const url = `${this.BASE_URL}/${pid}/${id}`;
         return this.http.delete<any>(url, {
             headers:this.reqHeader
         });
     }
 
     /** PUT: update the record on the server */
-    updateCard(state: DataSourceChangedEventArgs): Observable<any> {
+    updateCard(state: DataSourceChangedEventArgs, pid:string): Observable<any> {
         //console.log(state.changedRecords[0]);
         console.log(state.changedRecords[0]);
-        return this.http.put(`${this.BASE_URL}/update`, state.changedRecords[0], {
+        return this.http.put(`${this.BASE_URL}/update/${pid}`, state.changedRecords[0], {
             headers:this.reqHeader
         });
     }
