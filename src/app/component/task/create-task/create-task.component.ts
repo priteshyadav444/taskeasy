@@ -14,6 +14,7 @@ import {
 import { TasksCardService } from 'src/app/service/task/taskcard.service';
 import { HomeComponent } from '../home/home.component';
 import { ActivatedRoute } from '@angular/router';
+import { coerceNumberProperty } from '@angular/cdk/coercion';
 @Component({
   selector: 'app-create-task',
   templateUrl: './create-task.component.html',
@@ -35,7 +36,7 @@ export class CreateTaskComponent implements OnInit {
   title!: string;
   description: string = '';
   categorytitle!: string;
-  pid:string
+  pid: string;
 
   @Output() btnClick: EventEmitter<Task> = new EventEmitter();
   constructor(
@@ -114,7 +115,7 @@ export class CreateTaskComponent implements OnInit {
     console.log(this.subTask);
     this.subtaskele = '';
   }
-  
+
   removeSubTask(idx: any) {
     var index = this.subTask.indexOf(idx);
     if (index > -1) {
@@ -130,20 +131,22 @@ export class CreateTaskComponent implements OnInit {
       alert('Enter Title');
       return;
     }
-    
+
     const task: Task = {
       title: this.title,
       scheduled_date: this.selectedDate,
       category: this.selectedCategory,
       description: this.description,
       subtasklist: this.subTask,
-      badge:this.selectedCategory
+      badge: this.selectedCategory,
     };
 
-    console.log("Id",this.service.activeRouterId);
-    this.store.dispatch(addTask({ task, pid: this.service.activeRouterId }));
-    let homecomponent = new HomeComponent(this.store, this.service, this.route);
-    homecomponent.check();
+    const id = this.service.activeRouterId;
+    console.log({ task, pid: id })
+    this.store.dispatch(addTask({ task, pid: id }));
+    // let homecomponent = new HomeComponent(this.store, this.service, this.route);
+    // homecomponent.check();
+    this.service.execute(id);
     this.showDailog = !this.showDailog;
   }
 }

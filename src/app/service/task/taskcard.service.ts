@@ -24,7 +24,9 @@ export class TasksCardService extends Subject<DataStateChangeEventArgs> {
         super();
         this.activateRouter$.subscribe(val => {
             if (val) {
+                console.log(val)
                 this.activeRouterId = val;
+                console.log(this.activeRouterId)
             }
         });
     }

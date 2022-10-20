@@ -9,7 +9,7 @@ import { DataStateChangeEventArgs } from '@syncfusion/ej2-angular-kanban';
 @Injectable({ providedIn: 'root' })
 export class TasksService {
 
-  apiUrl = 'http://localhost:3000/v1/tasks/';
+  apiUrl = 'http://localhost:3000/v1/tasks';
   // apiUrl = 'https://api-taskeasy.herokuapp.com/v1/tasks/';
 
   authToken = localStorage.getItem('authToken');
@@ -22,7 +22,9 @@ export class TasksService {
   });
 
   addTask(task: Task,pid:string): Observable<Task> {
+    this.apiUrl = "http://localhost:3000/v1/tasks"
     this.apiUrl = `${this.apiUrl}/${pid}`
+    console.log(this.apiUrl)
     return this.http.post<Task>(this.apiUrl, task,{
       headers:this.reqHeader
     });

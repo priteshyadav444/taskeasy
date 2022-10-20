@@ -19,7 +19,7 @@ export class TaskEffects {
       mergeMap((action) => {
         return this.taskServices.addTask(action.task,action.pid).pipe(
           map((data) => {
-            const task = { ...action.task, id: data.id };
+            const task = { ...action.task };
             return addTaskSuccess({ task });
           })
         );
