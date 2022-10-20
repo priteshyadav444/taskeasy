@@ -8,6 +8,10 @@ import { Task } from 'src/app/models/task.models';
 
 @Injectable()
 export class TasksCardService extends Subject<DataStateChangeEventArgs> {
+
+    
+    activateRouter$ = new Subject();
+    activeRouterId: any;
     private BASE_URL = 'http://localhost:3000/v1/tasks'
     authToken = localStorage.getItem('authToken');
 
@@ -18,6 +22,11 @@ export class TasksCardService extends Subject<DataStateChangeEventArgs> {
 
     constructor(private http: HttpClient) {
         super();
+        this.activateRouter$.subscribe(val => {
+            if (val) {
+                this.activeRouterId = val;
+            }
+        });
     }
 
     

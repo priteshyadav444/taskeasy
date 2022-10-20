@@ -140,7 +140,8 @@ export class CreateTaskComponent implements OnInit {
       badge:this.selectedCategory
     };
 
-    this.store.dispatch(addTask({ task, pid:"634c77fe9b0bdb5860e4e801" }));
+    console.log("Id",this.service.activeRouterId);
+    this.store.dispatch(addTask({ task, pid: this.service.activeRouterId }));
     let homecomponent = new HomeComponent(this.store, this.service, this.route);
     homecomponent.check();
     this.showDailog = !this.showDailog;

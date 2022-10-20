@@ -28,7 +28,6 @@ import {
   KanbanComponent,
 } from '@syncfusion/ej2-angular-kanban';
 import { TasksCardService } from 'src/app/service/task/taskcard.service';
-import dateFormat, { masks } from "dateformat";
 import { ActivatedRoute } from '@angular/router';
 import { EventEmitter } from 'stream';
 
@@ -73,6 +72,7 @@ export class HomeComponent implements OnInit {
   constructor(private store: Store<AppState>, private service:TasksCardService, private route: ActivatedRoute) {
     this.data = service
     this.pid = this.route.snapshot.paramMap.get('id');
+    this.service.activateRouter$.next(this.pid);
     console.log(this.pid)
     this.cities = [
       { name: 'New York', code: 'NY' },
