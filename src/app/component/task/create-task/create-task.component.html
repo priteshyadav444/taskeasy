@@ -98,9 +98,11 @@
               class="selectdate"
               inputId="basic"
               [showIcon]="true"
+              class="selectdate"
               [showButtonBar]="true"
               [(ngModel)]="selectedDate"
               name="selectedDate"
+              [minDate]="minimumDate"
               placeholder="Scheduled Date"
             ></p-calendar>
           </div>

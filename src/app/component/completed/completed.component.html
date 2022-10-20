@@ -1,8 +1,8 @@
 <div class="card">
-    <h5>Customized</h5>
+    <h5>Timeline</h5>
     <p-timeline
       [value]="events1"
-      align="alternate"
+      align="left"
       styleClass="customized-timeline"
     >
       <ng-template pTemplate="marker" let-event>
@@ -10,14 +10,14 @@
           class="custom-marker shadow-2 p-4"
           [style.backgroundColor]="event.color"
         >
-          25/50
+          4/4
         </span>
       </ng-template>
       <ng-template pTemplate="content" let-event>
         <p-card [header]="event.status" [subheader]="event.date">
           
             <h5>Completion Rate</h5>
-            <p-knob [size]="50" valueColor="#5bf906" value="{value}%"></p-knob>
+            <p-knob [size]="50" valueColor="#5bf906" [(ngModel)]="value"></p-knob>
      
 
           <div class="example-list-create">

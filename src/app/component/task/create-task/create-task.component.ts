@@ -31,12 +31,13 @@ export class CreateTaskComponent implements OnInit {
   value2!: string;
   selectedCategory: any = null;
   subtaskele!: string;
-  selectedDate: any = null;
+  selectedDate: any = new Date();
   addtaskForm!: FormGroup;
   title!: string;
   description: string = '';
   categorytitle!: string;
   pid: string;
+  minimumDate: any = new Date();
 
   @Output() btnClick: EventEmitter<Task> = new EventEmitter();
   constructor(
@@ -107,13 +108,14 @@ export class CreateTaskComponent implements OnInit {
   addSubTask(stask: any) {
     console.log(this.subTask);
 
-    if (stask == '') {
+    if (stask == '' || stask == null) {
       return;
+    } else {
+      const newstask = { stitle: stask, checked: false };
+      this.subTask = [...this.subTask, newstask];
+      console.log(this.subTask);
+      this.subtaskele = '';
     }
-    const newstask = { stitle: stask, checked: false };
-    this.subTask = [...this.subTask, newstask];
-    console.log(this.subTask);
-    this.subtaskele = '';
   }
 
   removeSubTask(idx: any) {
@@ -142,7 +144,7 @@ export class CreateTaskComponent implements OnInit {
     };
 
     const id = this.service.activeRouterId;
-    console.log({ task, pid: id })
+    console.log({ task, pid: id });
     this.store.dispatch(addTask({ task, pid: id }));
     // let homecomponent = new HomeComponent(this.store, this.service, this.route);
     // homecomponent.check();

@@ -24,12 +24,7 @@ const routes: Routes = [
     path: 'home',
     component: MainwrapperComponent,
     children: [
-      {
-        path: '',
-        loadChildren: () =>
-          import('../component/task/task.module').then((m) => m.TaskModule),
-        canActivate: [AuthGuard],
-      },
+      
       {
         path: 'taskoverview',
         component: TaskoverviewComponent,
@@ -41,16 +36,22 @@ const routes: Routes = [
         canActivate: [AuthGuard],
       },
       {
-        path: ':id',
+        path: 'completed',
+        component: CompletedComponent,
+        canActivate: [AuthGuard],
+      },
+      {
+        path: '',
         loadChildren: () =>
           import('../component/task/task.module').then((m) => m.TaskModule),
         canActivate: [AuthGuard],
       },
       {
-        path: 'completed',
-        component: CompletedComponent,
+        path: ':id',
+        loadChildren: () =>
+          import('../component/task/task.module').then((m) => m.TaskModule),
         canActivate: [AuthGuard],
-      },
+      }
     ],
   },
   {

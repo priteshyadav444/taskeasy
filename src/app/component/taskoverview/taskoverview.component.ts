@@ -20,10 +20,10 @@ export class TaskoverviewComponent implements OnInit {
   constructor() {}
   ngOnInit() {
     this.doughnutdata = {
-      labels: ['Study','New Skill','Communiactiom'],
+      labels: ['low','medium','High'],
       datasets: [
           {
-              data: [300, 50, 100],
+              data: [80, 5, 15],
               backgroundColor: [
                   "#FF6384",
                   "#36A2EB",
@@ -38,45 +38,27 @@ export class TaskoverviewComponent implements OnInit {
       ]
   };
     this.barData = {
-      labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+      labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July',"August", "September","October","November","December"],
       datasets: [{
           type: 'bar',
           label: 'Dataset 1',
           backgroundColor: '#42A5F5',
           data: [
-              50,
-              25,
-              12,
-              48,
-              90,
-              76,
-              42
+            0,0,0,0,0,0,0,0,0,6,0,0
           ]
       }, {
           type: 'bar',
           label: 'Dataset 2',
           backgroundColor: '#66BB6A',
           data: [
-              21,
-              84,
-              24,
-              75,
-              37,
-              65,
-              34
+            0,0,0,0,0,0,0,0,0,4,0,0
           ]
       }, {
           type: 'bar',
           label: 'Dataset 3',
           backgroundColor: '#FFA726',
           data: [
-              41,
-              52,
-              24,
-              74,
-              23,
-              21,
-              32
+            0,0,0,0,0,0,0,0,0,3,0,0
           ]
       }]
   };
