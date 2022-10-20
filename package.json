@@ -8,7 +8,8 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "server": "npm start --prefix backend",
-    "dev": "concurrently \"npm run start \" \" npm run server\""
+    "dev": "concurrently \"npm run start \" \" npm run server\"",
+    "postinstall": "ngcc"
   },
   "private": true,
   "dependencies": {
@@ -21,8 +22,8 @@
     "@angular/platform-browser": "~13.2.0",
     "@angular/platform-browser-dynamic": "~13.2.0",
     "@angular/router": "~13.2.0",
-    "@fullcalendar/angular": "^5.11.0",
-    "@fullcalendar/daygrid": "^5.11.0",
+    "@fullcalendar/angular": "^5.11.2",
+    "@fullcalendar/daygrid": "^5.11.3",
     "@fullcalendar/interaction": "^5.11.0",
     "@ngrx/effects": "^13.1.0",
     "@ngrx/store": "^13.1.0",

@@ -21,9 +21,9 @@ import { ProgressBarModule } from 'primeng/progressbar';
 import { CalendarModule } from 'primeng/calendar';
 import {MenubarModule} from 'primeng/menubar';
 
-import { FullCalendarModule } from '@fullcalendar/angular'; // must go before plugins
-import dayGridPlugin from '@fullcalendar/daygrid'; // a plugin!
-import interactionPlugin from '@fullcalendar/interaction';
+// import { FullCalendarModule } from '@fullcalendar/angular'; // must go before plugins
+// import dayGridPlugin from '@fullcalendar/daygrid'; // a plugin!
+// import interactionPlugin from '@fullcalendar/interaction';
 import { CalenderComponent } from './component/calender/calender.component';
 import { CheckboxModule } from 'primeng/checkbox';
 
@@ -69,10 +69,10 @@ import { ScheduleModule } from '@syncfusion/ej2-angular-schedule';
 import { TimelineComponent } from './main/dashboard/timeline/timeline.component';
 
 
-FullCalendarModule.registerPlugins([
-  dayGridPlugin,
-  interactionPlugin
-]);
+// FullCalendarModule.registerPlugins([
+//   dayGridPlugin,
+//   interactionPlugin
+// ]);
 
 
 import {CommonModule} from '@angular/common';
@@ -112,7 +112,6 @@ import { ProjectEffects } from './main/dashboard/state/project.effects';
     CalendarModule,
     ChartModule,
     ProgressBarModule,
-    FullCalendarModule,
     CheckboxModule,
     SplitButtonModule,
     ButtonModule,

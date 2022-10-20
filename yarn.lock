@@ -1242,7 +1242,7 @@
   resolved "https://registry.yarnpkg.com/@discoveryjs/json-ext/-/json-ext-0.5.6.tgz#d5e0706cf8c6acd8c6032f8d54070af261bbbb2f"
   integrity sha512-ws57AidsDvREKrZKYffXddNkyaF14iHNHm8VQnZH6t99E8gczjNN0GpvcGny0imC80yQ0tHz1xVUKk/KFQSUyA==
 
-"@fullcalendar/angular@^5.11.0":
+"@fullcalendar/angular@^5.11.2":
   version "5.11.2"
   resolved "https://registry.yarnpkg.com/@fullcalendar/angular/-/angular-5.11.2.tgz#2fa2e6fd7532f017cec4380438d76f58646a0e44"
   integrity sha512-o4IsB3DCS7mcwwXtbaAAWY5WVIT1hSelj/hvFwkr49/ZxmmQYjpjP00Gant0vxvSvu29ZYys/2Gg/ZFVtkkLhQ==
@@ -1267,7 +1267,7 @@
     preact "^10.0.5"
     tslib "^2.1.0"
 
-"@fullcalendar/daygrid@^5.11.0":
+"@fullcalendar/daygrid@^5.11.3":
   version "5.11.3"
   resolved "https://registry.yarnpkg.com/@fullcalendar/daygrid/-/daygrid-5.11.3.tgz#6bc1f956c95f84438428aa6e7a106c863a791a70"
   integrity sha512-PCK0y80DRNCzWuC5lGpIWqCgKDvql1ah7rXql5lu+Gn2EeFj15ZQ8diMFjtNIQucEmFaNOXnR05Pgcry1n6Shg==

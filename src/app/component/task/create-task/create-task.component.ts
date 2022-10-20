@@ -47,23 +47,29 @@ export class CreateTaskComponent implements OnInit {
     this.uiService.onToggle().subscribe((value) => (this.showDailog = value));
     this.pid = this.route.snapshot.paramMap.get('id');
     this.selectedCategory =
-      this.selectedCategory == null ? 'None' : this.selectedCategory;
+      this.selectedCategory == null ? 'low' : this.selectedCategory;
     this.category = [
       {
-        label: 'None',
+        label: 'low',
         command: () => {
-          this.selectCategory('None');
+          this.selectCategory('low');
         },
       },
       {
-        label: 'Study',
+        label: 'medium',
         command: () => {
-          this.selectCategory('Study');
+          this.selectCategory('medium');
+        },
+      },
+      {
+        label: 'high',
+        command: () => {
+          this.selectCategory('high');
         },
       },
       { separator: true },
       {
-        label: 'Create Category',
+        label: 'Create Badge',
         icon: 'pi pi-plus',
         command: () => {
           this.showCreateDialog();
@@ -108,6 +114,7 @@ export class CreateTaskComponent implements OnInit {
     console.log(this.subTask);
     this.subtaskele = '';
   }
+  
   removeSubTask(idx: any) {
     var index = this.subTask.indexOf(idx);
     if (index > -1) {
@@ -123,15 +130,17 @@ export class CreateTaskComponent implements OnInit {
       alert('Enter Title');
       return;
     }
+    
     const task: Task = {
       title: this.title,
       scheduled_date: this.selectedDate,
       category: this.selectedCategory,
       description: this.description,
       subtasklist: this.subTask,
+      badge:this.selectedCategory
     };
 
-    this.store.dispatch(addTask({ task, pid:this.pid }));
+    this.store.dispatch(addTask({ task, pid:"634c77fe9b0bdb5860e4e801" }));
     let homecomponent = new HomeComponent(this.store, this.service, this.route);
     homecomponent.check();
     this.showDailog = !this.showDailog;

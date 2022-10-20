@@ -51,8 +51,6 @@ import { ActivatedRoute } from '@angular/router';
   ],
 })
 export class MainwrapperComponent implements AfterViewInit, OnDestroy, OnInit {
-  
-  
   showLogoLoading$: Observable<boolean> | undefined;
 
   public menuInactiveDesktop!: boolean;
@@ -89,11 +87,10 @@ export class MainwrapperComponent implements AfterViewInit, OnDestroy, OnInit {
     private store: Store<AppState>,
     private route: ActivatedRoute
   ) {
-    console.log(this.route.snapshot.paramMap.get('id'))
+    console.log(this.route.snapshot.paramMap.get('id'));
   }
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   ngAfterViewInit() {
     this.showLogoLoading$ = this.store.select(getLogoLoading);
