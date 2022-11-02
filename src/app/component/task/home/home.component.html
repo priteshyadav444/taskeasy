@@ -37,7 +37,30 @@
           </div>
           <div class="card-15__colfive">
               <div class="card-15__avatar">
-                  <p-badge [value]="data.badge" severity="info" styleClass="mr-2"></p-badge>
+                <div *ngIf="data.badge==='medium' || data.badge==='low' || data.badge==='high' ; else elseBlock">
+                  <div *ngIf="data.badge==='low'">
+                    <p-badge [value]="data.badge" severity="info" styleClass="mr-2"></p-badge>
+                  </div>
+
+                  <div *ngIf="data.badge==='medium'">
+                    <p-badge [value]="data.badge" severity="warning" styleClass="mr-2"></p-badge>
+                  </div>
+
+                  <div *ngIf="data.badge==='high'">
+                    <p-badge [value]="data.badge" severity="danger" styleClass="mr-2"></p-badge>
+                  </div>
+                </div>
+                  <ng-template #elseBlock><p-badge [value]="data.badge" severity="info" styleClass="mr-2"></p-badge></ng-template>
+
+                <!-- <div ng-switch on="data.badge">
+                  <div ng-switch-when="high">
+                    <p-badge [value]="data.badge" severity="warning" styleClass="mr-2"></p-badge>
+                  </div>
+                  <div ng-switch-default>
+                    <p-badge [value]="data.badge" severity="info" styleClass="mr-2"></p-badge>
+                  </div>
+                </div> -->
+                 
               </div>
   
               <div class="card-15__stat">
