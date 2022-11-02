@@ -61,7 +61,7 @@ export class AuthEffects {
     );
   });
 
-
+  defaultRedirect = "/home/634c77fe9b0bdb5860e4e801"
   loginRedirect$ = createEffect(
     () => {
       return this.actions$.pipe(
@@ -70,7 +70,7 @@ export class AuthEffects {
           this.store.dispatch(setErrorMessage({ message: '' }));
           if (action.redirect) {
              console.log(this.router)
-            this.router.navigate(['/dashboard']);
+            this.router.navigate([this.defaultRedirect]);
           }
         })
       );
