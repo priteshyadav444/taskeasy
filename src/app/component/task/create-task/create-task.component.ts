@@ -134,6 +134,10 @@ export class CreateTaskComponent implements OnInit {
       return;
     }
 
+    if(this.selectedDate< new Date()){
+      alert('Enter Valid Date');
+      return;
+    }
     const task: Task = {
       title: this.title,
       scheduled_date: this.selectedDate,
