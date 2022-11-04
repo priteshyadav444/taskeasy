@@ -17,6 +17,8 @@ import { DataManager, ODataV4Adaptor, Query } from '@syncfusion/ej2-data';
 export class TimelineComponent implements OnInit {
   public selectedDate: Date = new Date();
   public readonly: boolean = true;
+  public url:any = "https://api-taskeasy.herokuapp.com/v1/tasks/all/tasks"
+  // public url:any = "http://127.0.0.1:3000/v1/tasks/all/tasks"
   authToken = localStorage.getItem('authToken');
   reqHeader =[{
         'Content-Type': 'application/json',
@@ -24,7 +26,7 @@ export class TimelineComponent implements OnInit {
       }];
 
   private dataManager: DataManager = new DataManager({
-    url: 'http://127.0.0.1:3000/v1/tasks/all/tasks',
+    url: this.url,
     adaptor: new ODataV4Adaptor(),
     headers: this.reqHeader
   });
