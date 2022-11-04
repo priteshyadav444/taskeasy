@@ -1,9 +1,9 @@
 
-<ejs-kanban class="pt-2" height="100%" weight="100%" keyField='task_status' [dialogSettings]='dialogSettings' [dataSource]='data | async'  [cardSettings]='cardSettings' (dataStateChange)= 'dataStateChange($event)'  (dataSourceChanged)='dataSourceChanged($event)'>
+<ejs-kanban class="pt-2" height="100%" weight="100%" keyField='task_status' [dialogSettings]='dialogSettings'  [sortSettings]='sortSettings' [dataSource]='data | async'  [cardSettings]='cardSettings' (dataStateChange)= 'dataStateChange($event)'  (dataSourceChanged)='dataSourceChanged($event)'>
     <e-columns>
         <e-column headerText='To Do' keyField='pending'> </e-column>
         <e-column headerText='In Progress' keyField='active'></e-column>
-        <e-column headerText='Done' keyField='done'></e-column>
+        <e-column headerText='Done' keyField='done' allowDrag="false"></e-column>
         <e-column headerText='Unsheduled' keyField='unsheduled'></e-column>
     </e-columns>
     
@@ -15,7 +15,7 @@
                  {{data.title}}
               </div>
               <div class="card-15__date">
-                {{data.scheduled_date | date: mediumDate}}
+                {{data.scheduled_date==null ? (data.updatedAt | date: mediumDate) : (data.scheduled_date | date: mediumDate)}}
               </div>
           </div>
           <div class="card-15__pos">
@@ -66,9 +66,10 @@
               <div class="card-15__stat">
                   <div class="card-15__statinfo">
                     <i class="pi pi-clock mr-1"></i>
-                    00:00:00
+                   {{ calculateDiff(data.createdAt) }}
                   </div>
               </div>
+              
           </div>
       </div>
       </div>
