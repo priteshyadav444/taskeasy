@@ -14,9 +14,9 @@ export class AuthServices {
   // apiUrlSignIn = 'http://localhost:3000/v1/users/signin';
   // apiUrlUserLoad = 'http://localhost:3000/v1/users/load';
 
-  apiUrlSignUp = 'https://api-taskeasy.herokuapp.com/v1/users/signup';
-  apiUrlSignIn = 'https://api-taskeasy.herokuapp.com/v1/users/signin';
-  apiUrlUserLoad = 'https://api-taskeasy.herokuapp.com/v1/users/load';
+  apiUrlSignUp = 'https://api-taskeasy.onrender.com/v1/users/signup';
+  apiUrlSignIn = 'https://api-taskeasy.onrender.com/v1/users/signin';
+  apiUrlUserLoad = 'https://api-taskeasy.onrender.com/v1/users/load';
 
   constructor(
     private messageService: MessageService,

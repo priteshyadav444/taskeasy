@@ -13,7 +13,7 @@ export class TasksCardService extends Subject<DataStateChangeEventArgs> {
     activateRouter$ = new Subject();
     activeRouterId: any;
     private BASE_URL = 'http://localhost:3000/v1/tasks'
-    // private BASE_URL =' https://api-taskeasy.herokuapp.com/v1/tasks'
+    // private BASE_URL ='https://api-taskeasy.onrender.com/v1/tasks'
     authToken = localStorage.getItem('authToken');
 
     reqHeader = new HttpHeaders({
@@ -25,9 +25,7 @@ export class TasksCardService extends Subject<DataStateChangeEventArgs> {
         super();
         this.activateRouter$.subscribe(val => {
             if (val) {
-                console.log(val)
                 this.activeRouterId = val;
-                console.log(this.activeRouterId)
             }
         });
     }
