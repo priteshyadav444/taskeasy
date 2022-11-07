@@ -28,6 +28,7 @@ import {
 import { TasksCardService } from 'src/app/service/task/taskcard.service';
 import { ActivatedRoute } from '@angular/router';
 import { EventEmitter } from 'stream';
+import {DropDownListComponent} from '@syncfusion/ej2-angular-dropdowns';
 
 interface City {
   name: string;
@@ -109,10 +110,11 @@ export class HomeComponent implements OnInit {
   }
   public dialogSettings: DialogSettingsModel = {
     fields: [
-      { text: 'Status', key: 'task_status', type: 'DropDown' },
-      { text: 'Title', key: 'title', type: 'TextArea' },
-      { text: 'Description', key: 'description', type: 'TextArea' },
-      { text: 'Priority', key: 'badge', type: 'TextArea' },
+      { text: 'Status', key: 'task_status', type: 'DropDown', validationRules: { required: true } },
+      { key: 'badge', type: 'DropDown', validationRules: { required: true } },
+      { text: 'Title', key: 'title', type: 'TextBox', validationRules: { required: true } },
+      { text: 'Description', key: 'description', type: 'TextArea', validationRules: { required: true } },
+      { text: 'Priority', key: 'badge', type: 'TextBox', validationRules: { required: true } },
     ],
   };
   public sortSettings: SortSettingsModel = {
@@ -120,6 +122,18 @@ export class HomeComponent implements OnInit {
     field: 'updatedAt',
     direction: 'Descending',
   };
+
+  public priorityData: Object[] = [
+    { Id: 'active', Name: 'Active' },
+    { Id: 'done', Name: 'Done' },
+    { Id: 'pending', Name: 'Pending' },
+    { Id: 'unsheduled', Name: 'Unsheduled' },
+];
+dialogOpen(args: DialogEventArgs): void {
+  args.cancel = true;
+}
+public fields: Object = { text: 'Name', value: 'Id' };
+
   ngOnInit(): void {
     let state = { skip: 0, take: 10 };
     this.service.execute(this.pid);
