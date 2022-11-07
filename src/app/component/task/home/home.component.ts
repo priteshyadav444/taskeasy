@@ -26,6 +26,7 @@ import {
   DialogEventArgs,
   DialogSettingsModel,
   KanbanComponent,
+  SortSettingsModel,
 } from '@syncfusion/ej2-angular-kanban';
 import { TasksCardService } from 'src/app/service/task/taskcard.service';
 import { ActivatedRoute } from '@angular/router';
@@ -113,7 +114,11 @@ export class HomeComponent implements OnInit {
         { text: 'Priority', key: 'badge', type: 'TextArea' },
     ]
   };
-  
+  public sortSettings: SortSettingsModel = {
+    sortBy: 'Custom',
+    field: 'updatedAt',
+    direction:'Descending'
+};
   ngOnInit(): void {
     let state = { skip: 0, take: 10 };
     this.service.execute(this.pid);
@@ -151,7 +156,20 @@ export class HomeComponent implements OnInit {
         },
       },
     ];
+    
   }
+  calculateDiff(sentDate) {
+   
+    var date1:any = new Date(sentDate);
+    var date2:any = new Date();
+    var diffMs =  Math.floor((date2 - date1));
+
+    var diffDays:any = Math.floor(diffMs / (1000 * 60 * 60 * 24)); // days
+    var diffHrs = Math.floor((diffMs % 86400000) / 3600000); // hours
+    var diffMins = Math.round(((diffMs % 86400000) % 3600000) / 60000); //minuts
+
+    return diffDays + " Days: " + diffHrs +"H";
+}
   showBasicDialog() {
     this.displayBasic = true;
   }
@@ -181,4 +199,6 @@ export class HomeComponent implements OnInit {
   save(severity: string) {
     this.displayCategory = true;
   }
+
+ 
 }
