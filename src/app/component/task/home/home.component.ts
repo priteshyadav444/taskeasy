@@ -1,8 +1,5 @@
 import { Component, OnInit, Output, ViewChild } from '@angular/core';
-import {
-  CdkDragDrop,
-  transferArrayItem,
-} from '@angular/cdk/drag-drop';
+import { CdkDragDrop, transferArrayItem } from '@angular/cdk/drag-drop';
 import { MenuItem } from 'primeng/api';
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/app-store/app.state';
@@ -46,7 +43,7 @@ export class HomeComponent implements OnInit {
   public cardSettings?: CardSettingsModel;
   public data: Observable<DataStateChangeEventArgs>;
   public state?: DataStateChangeEventArgs;
- 
+
   items!: MenuItem[];
   category!: MenuItem[];
   todo = [
@@ -68,13 +65,17 @@ export class HomeComponent implements OnInit {
   cities!: City[];
   selectedCity!: City;
   temp!: Observable<Task[]>;
-  pid!:any
+  pid!: any;
 
-  constructor(private store: Store<AppState>, private service:TasksCardService, private route: ActivatedRoute) {
-    this.data = service
+  constructor(
+    private store: Store<AppState>,
+    private service: TasksCardService,
+    private route: ActivatedRoute
+  ) {
+    this.data = service;
     this.pid = this.route.snapshot.paramMap.get('id');
     this.service.activateRouter$.next(this.pid);
-    console.log(this.pid)
+    console.log(this.pid);
     this.cities = [
       { name: 'New York', code: 'NY' },
       { name: 'Rome', code: 'RM' },
@@ -86,19 +87,19 @@ export class HomeComponent implements OnInit {
 
   public dataSourceChanged(state: DataSourceChangedEventArgs): void {
     if (state.requestType === 'cardCreated') {
-         this.service.addCard(state, this.pid).subscribe(() => {
-             state.endEdit();
-         });
-     } else if (state.requestType === 'cardChanged') {
-         this.service.updateCard(state,this.pid).subscribe(() => {
-          state.endEdit();
-         });
-     } else if (state.requestType === 'cardRemoved') {
-         this.service.deleteCard(state, this.pid).subscribe(() => {
-             state.endEdit();
-         });
-     }
- }
+      this.service.addCard(state, this.pid).subscribe(() => {
+        state.endEdit();
+      });
+    } else if (state.requestType === 'cardChanged') {
+      this.service.updateCard(state, this.pid).subscribe(() => {
+        state.endEdit();
+      });
+    } else if (state.requestType === 'cardRemoved') {
+      this.service.deleteCard(state, this.pid).subscribe(() => {
+        state.endEdit();
+      });
+    }
+  }
 
   public dataStateChange(state: DataStateChangeEventArgs): void {
     this.service.execute(this.pid);
@@ -108,24 +109,24 @@ export class HomeComponent implements OnInit {
   }
   public dialogSettings: DialogSettingsModel = {
     fields: [
-        { text: 'Status', key: 'task_status', type: 'DropDown' },
-        { text: 'Title', key: 'title', type: 'TextArea' },
-        { text: 'Description', key: 'description', type: 'TextArea' },
-        { text: 'Priority', key: 'badge', type: 'TextArea' },
-    ]
+      { text: 'Status', key: 'task_status', type: 'DropDown' },
+      { text: 'Title', key: 'title', type: 'TextArea' },
+      { text: 'Description', key: 'description', type: 'TextArea' },
+      { text: 'Priority', key: 'badge', type: 'TextArea' },
+    ],
   };
   public sortSettings: SortSettingsModel = {
     sortBy: 'Custom',
     field: 'updatedAt',
-    direction:'Descending'
-};
+    direction: 'Descending',
+  };
   ngOnInit(): void {
     let state = { skip: 0, take: 10 };
     this.service.execute(this.pid);
     this.cardSettings = {
-      headerField: '_id'
-    };    
-    
+      headerField: '_id',
+    };
+
     this.store.dispatch(loadAllTasks());
     this.pending = this.store.select(getPendingTasks);
     this.active = this.store.select(getActiveTask);
@@ -156,24 +157,34 @@ export class HomeComponent implements OnInit {
         },
       },
     ];
-    
   }
   calculateDiff(sentDate) {
-   
-    var date1:any = new Date(sentDate);
-    var date2:any = new Date();
-    var diffMs =  Math.floor((date2 - date1));
+    var date1: any = new Date(sentDate);
+    var date2: any = new Date();
+    var diffMs = Math.floor(date2 - date1);
 
-    var diffDays:any = Math.floor(diffMs / (1000 * 60 * 60 * 24)); // days
+    var diffDays: any = Math.floor(diffMs / (1000 * 60 * 60 * 24)); // days
     var diffHrs = Math.floor((diffMs % 86400000) / 3600000); // hours
     var diffMins = Math.round(((diffMs % 86400000) % 3600000) / 60000); //minuts
 
-    return diffDays + " Days: " + diffHrs +"H";
-}
+    return diffDays + ' Days: ' + diffHrs + 'H';
+  }
+  
+  calculateCompletionDiff(sentDate, fromDate) {
+    var date1: any = new Date(sentDate);
+    var date2: any = new Date(fromDate);
+    var diffMs = Math.floor(date2 - date1);
+
+    var diffDays: any = Math.floor(diffMs / (1000 * 60 * 60 * 24)); // days
+    var diffHrs = Math.floor((diffMs % 86400000) / 3600000); // hours
+    var diffMins = Math.round(((diffMs % 86400000) % 3600000) / 60000); //minuts
+
+    return diffDays + ' Days: ' + diffHrs + 'H';
+  }
   showBasicDialog() {
     this.displayBasic = true;
   }
-  
+
   showCreateDialog() {
     this.displayCategory = true;
   }
@@ -199,6 +210,4 @@ export class HomeComponent implements OnInit {
   save(severity: string) {
     this.displayCategory = true;
   }
-
- 
 }

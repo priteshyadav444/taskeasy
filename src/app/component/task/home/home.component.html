@@ -1,58 +1,92 @@
+<ejs-kanban
+  class="pt-2"
+  height="100%"
+  weight="100%"
+  keyField="task_status"
+  [dialogSettings]="dialogSettings"
+  [sortSettings]="sortSettings"
+  [dataSource]="data | async"
+  [cardSettings]="cardSettings"
+  (dataStateChange)="dataStateChange($event)"
+  (dataSourceChanged)="dataSourceChanged($event)"
+>
+  <e-columns>
+    <e-column headerText="To Do" keyField="pending"> </e-column>
+    <e-column headerText="In Progress" keyField="active"></e-column>
+    <e-column headerText="Done" keyField="done" allowDrag="false"></e-column>
+    <e-column headerText="Unsheduled" keyField="unsheduled"></e-column>
+  </e-columns>
 
-<ejs-kanban class="pt-2" height="100%" weight="100%" keyField='task_status' [dialogSettings]='dialogSettings'  [sortSettings]='sortSettings' [dataSource]='data | async'  [cardSettings]='cardSettings' (dataStateChange)= 'dataStateChange($event)'  (dataSourceChanged)='dataSourceChanged($event)'>
-    <e-columns>
-        <e-column headerText='To Do' keyField='pending'> </e-column>
-        <e-column headerText='In Progress' keyField='active'></e-column>
-        <e-column headerText='Done' keyField='done' allowDrag="false"></e-column>
-        <e-column headerText='Unsheduled' keyField='unsheduled'></e-column>
-    </e-columns>
-    
-    <ng-template #cardSettingsTemplate let-data>
-      <div class='e-card-content'>
-        <div class="card-15">
-          <div class="card-15__colone">
-              <div class="card-15__title">
-                 {{data.title}}
-              </div>
-              <div class="card-15__date">
-                {{data.scheduled_date==null ? (data.updatedAt | date: mediumDate) : (data.scheduled_date | date: mediumDate)}}
-              </div>
+  <ng-template #cardSettingsTemplate let-data>
+    <div class="e-card-content">
+      <div class="card-15">
+        <div class="card-15__colone">
+          <div class="card-15__title">
+            {{ data.title }}
           </div>
-          <div class="card-15__pos">
-            {{data.description}}
+          <div class="card-15__date">
+            {{
+              data.scheduled_date == null
+                ? (data.updatedAt | date: mediumDate)
+                : (data.scheduled_date | date: mediumDate)
+            }}
           </div>
-          <div class="card-15__colthree">
-              <div class="card-15__percent">
-                  <span class="card-15__complete">50%</span>
-                
-              </div>
-              <div class="card-15__days">
-                12/20
-              </div>
+        </div>
+        <div class="card-15__pos">
+          {{ data.description }}
+        </div>
+        <div class="card-15__colthree">
+          <div class="card-15__percent">
+            <span class="card-15__complete">50%</span>
           </div>
-          <div class="card-15__progressbar">
-              <div class="card-15__progresscomplete">
-                  
+          <div class="card-15__days">12/20</div>
+        </div>
+        <div class="card-15__progressbar">
+          <div class="card-15__progresscomplete"></div>
+        </div>
+        <div class="card-15__colfive">
+          <div class="card-15__avatar">
+            <div
+              *ngIf="
+                data.badge === 'medium' ||
+                  data.badge === 'low' ||
+                  data.badge === 'high';
+                else elseBlock
+              "
+            >
+              <div *ngIf="data.badge === 'low'">
+                <p-badge
+                  [value]="data.badge"
+                  severity="info"
+                  styleClass="mr-2"
+                ></p-badge>
               </div>
-          </div>
-          <div class="card-15__colfive">
-              <div class="card-15__avatar">
-                <div *ngIf="data.badge==='medium' || data.badge==='low' || data.badge==='high' ; else elseBlock">
-                  <div *ngIf="data.badge==='low'">
-                    <p-badge [value]="data.badge" severity="info" styleClass="mr-2"></p-badge>
-                  </div>
 
-                  <div *ngIf="data.badge==='medium'">
-                    <p-badge [value]="data.badge" severity="warning" styleClass="mr-2"></p-badge>
-                  </div>
+              <div *ngIf="data.badge === 'medium'">
+                <p-badge
+                  [value]="data.badge"
+                  severity="warning"
+                  styleClass="mr-2"
+                ></p-badge>
+              </div>
 
-                  <div *ngIf="data.badge==='high'">
-                    <p-badge [value]="data.badge" severity="danger" styleClass="mr-2"></p-badge>
-                  </div>
-                </div>
-                  <ng-template #elseBlock><p-badge [value]="data.badge" severity="info" styleClass="mr-2"></p-badge></ng-template>
+              <div *ngIf="data.badge === 'high'">
+                <p-badge
+                  [value]="data.badge"
+                  severity="danger"
+                  styleClass="mr-2"
+                ></p-badge>
+              </div>
+            </div>
+            <ng-template #elseBlock
+              ><p-badge
+                [value]="data.badge"
+                severity="info"
+                styleClass="mr-2"
+              ></p-badge
+            ></ng-template>
 
-                <!-- <div ng-switch on="data.badge">
+            <!-- <div ng-switch on="data.badge">
                   <div ng-switch-when="high">
                     <p-badge [value]="data.badge" severity="warning" styleClass="mr-2"></p-badge>
                   </div>
@@ -60,22 +94,42 @@
                     <p-badge [value]="data.badge" severity="info" styleClass="mr-2"></p-badge>
                   </div>
                 </div> -->
-                 
-              </div>
-  
-              <div class="card-15__stat">
-                  <div class="card-15__statinfo">
-                    <i class="pi pi-clock mr-1"></i>
-                   {{ calculateDiff(data.createdAt) }}
-                  </div>
-              </div>
-              
           </div>
+
+          <div class="card-15__stat">
+            <div class="card-15__statinfo">
+             
+
+              <span
+                *ngIf="
+                  data.task_status == 'active' || data.task_status == 'done';
+                  else elseBlock1
+                "
+              >
+                <span *ngIf="data.task_status == 'done'">
+                  <i class="pi pi-check-circle mr-1" style="color: greenyellow; font-weight:bolder;"></i> 
+                   {{ calculateCompletionDiff(data.startedAt, data.completedAt) }}
+                </span>
+
+                <span *ngIf="data.task_status == 'active'">
+                  <i class="pi pi-clock mr-1" style="color: #ffc107; font-weight:bolder;"></i>  
+                   {{ calculateDiff(data.startedAt) }}
+                </span>
+              </span>
+              <ng-template #elseBlock1>   
+                <span *ngIf="data.task_status == 'unsheduled'">
+                  <i class="pi pi-circle-fill mr-1" style="color: red; font-weight:bolder;">   <b>  Not Started </b> </i>  
+                 
+                </span>
+
+              </ng-template>
+            </div>
+          </div>
+        </div>
       </div>
-      </div>
+    </div>
   </ng-template>
 </ejs-kanban>
-
 
 <p-dialog
   header="Create Task"
@@ -146,7 +200,7 @@
       </div>
     </div>
     <hr class="m-0" />
-    <button (click)="showCreateDialog()" > Create</button>
+    <button (click)="showCreateDialog()">Create</button>
     <div class="field col-12 p-0 subtask">
       <div class="col-6">
         <div class="p-inputgroup">
@@ -163,12 +217,10 @@
             ></p-calendar>
           </span>
         </div>
-        <div style="width: 100%;">
+        <div style="width: 100%">
           <span>Repeat</span><p-inputSwitch styleClass="block"></p-inputSwitch>
         </div>
       </div>
-
-     
     </div>
   </div>
 
@@ -182,17 +234,12 @@
   </ng-template> -->
 </p-dialog>
 
-
-
-
 <p-dialog
   header="Create Category"
   [(visible)]="displayCategory"
   [style]="{ width: '20rem' }"
   class="subtask"
 >
-
-
   <div class="p-fluid p-0">
     <div class="col-12 p-0">
       <input type="text" class="inputtext" placeholder="Enter Title" />
@@ -200,5 +247,5 @@
     <div class="col-12 m-2">
       <p-button label="Create"></p-button>
     </div>
-    </div>
+  </div>
 </p-dialog>
