@@ -68,7 +68,6 @@ export class TasksCardService extends Subject<DataStateChangeEventArgs> {
     /** PUT: update the record on the server */
     updateCard(state: DataSourceChangedEventArgs, pid:string): Observable<any> {
         //console.log(state.changedRecords[0]);
-        console.log(state.changedRecords[0]);
         return this.http.put(`${this.BASE_URL}/update/${pid}`, state.changedRecords[0], {
             headers:this.reqHeader
         });

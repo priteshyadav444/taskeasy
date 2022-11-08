@@ -3,7 +3,7 @@
   height="100%"
   weight="100%"
   keyField="task_status"
-  [dialogSettings]="dialogSettings"
+ 
   [sortSettings]="sortSettings"
   [dataSource]="data | async"
   [cardSettings]="cardSettings"
@@ -17,6 +17,47 @@
     <e-column headerText="Unsheduled" keyField="unsheduled"></e-column>
   </e-columns>
   
+  <ng-template #dialogSettingsTemplate let-data>
+    <table>
+        <tbody>
+            <tr>
+              <td>
+                  <!-- <p-splitButton
+                    label="{{ this.selectedCategory==null ? data.task_status : this.selectedCategory }}"
+                    [model]="this.badge"
+                    name="task_status"
+                    styleClass="p-button-raised p-button-plain p-button-text e-field"
+                  ></p-splitButton> -->
+                  <p-dropdown  [options]="status" [(ngModel)]="selectedStatus" optionLabel="task_status" placeholder="Changed Status" optionValue="code" value="data.task_status" [showClear]="true"></p-dropdown>
+                </td>
+            </tr>
+            <tr>
+              <td >
+                <input
+                type="text"
+                name="title"
+                id="title"
+                class="e-field inputtext"
+                placeholder="Enter Title"
+                value="{{data.title}}"
+              />
+              </td>
+            </tr>
+            <tr>
+              <textarea
+              rows="5"
+              cols="30"
+              placeholder="Add Description"
+              class="inputtext"
+              pInputTextarea
+              value="{{data.description}}"
+              name="description"
+            ></textarea>
+            </tr>
+            
+        </tbody>
+    </table>
+</ng-template>
   <ng-template #cardSettingsTemplate let-data>
     <div class="e-card-content">
       <div class="card-15">

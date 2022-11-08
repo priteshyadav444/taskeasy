@@ -25,6 +25,7 @@ import { LogoLoadingComponent } from 'src/app/shared/logo-loading/logo-loading.c
 import { KanbanAllModule } from '@syncfusion/ej2-angular-kanban';
 import { TasksService } from 'src/app/service/task/task.services';
 import {BadgeModule} from 'primeng/badge';
+import {DropdownModule} from 'primeng/dropdown';
 
 const routes: Routes = [
   {
@@ -46,6 +47,7 @@ const routes: Routes = [
     DividerModule,
     CardModule,
     FormsModule,
+    DropdownModule,
     DragDropModule,
     InputSwitchModule,
     CalendarModule,

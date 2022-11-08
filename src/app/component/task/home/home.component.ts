@@ -30,8 +30,8 @@ import { ActivatedRoute } from '@angular/router';
 import { EventEmitter } from 'stream';
 import {DropDownListComponent} from '@syncfusion/ej2-angular-dropdowns';
 
-interface City {
-  name: string;
+interface Status {
+  task_status: string;
   code: string;
 }
 
@@ -46,7 +46,6 @@ export class HomeComponent implements OnInit {
   public state?: DataStateChangeEventArgs;
 
   items!: MenuItem[];
-  category!: MenuItem[];
   todo = [
     'Get to work Get to workGet to work Get to workGet to work Get to work',
     'Pick up groceries',
@@ -63,11 +62,16 @@ export class HomeComponent implements OnInit {
   done = ['Get up', 'Brush teeth'];
   knobvalue: number = 50;
   value2!: string;
-  cities!: City[];
-  selectedCity!: City;
+
   temp!: Observable<Task[]>;
   pid!: any;
+  category!: MenuItem[];
+  badge!: MenuItem[];
+  selectedCategory: any = null;
 
+  status: Status[];
+  selectedStatus: Status;
+  
   constructor(
     private store: Store<AppState>,
     private service: TasksCardService,
@@ -76,14 +80,23 @@ export class HomeComponent implements OnInit {
     this.data = service;
     this.pid = this.route.snapshot.paramMap.get('id');
     this.service.activateRouter$.next(this.pid);
-    console.log(this.pid);
-    this.cities = [
-      { name: 'New York', code: 'NY' },
-      { name: 'Rome', code: 'RM' },
-      { name: 'London', code: 'LDN' },
-      { name: 'Istanbul', code: 'IST' },
-      { name: 'Paris', code: 'PRS' },
+  
+
+    this.status = [
+      { task_status: 'Active', code: 'active' },
+      { task_status: 'Pending', code: 'pending' },
+      { task_status: 'Done', code: 'done' },
+      { task_status: 'Unsheduled', code: 'unsheduled' },
+      { task_status: 'Unsheduled', code: 'unsheduled' },
     ];
+
+
+
+  }
+
+ 
+  selectCategory(category: string) {
+    this.selectedCategory = category;
   }
 
   public dataSourceChanged(state: DataSourceChangedEventArgs): void {
@@ -92,9 +105,19 @@ export class HomeComponent implements OnInit {
         state.endEdit();
       });
     } else if (state.requestType === 'cardChanged') {
+      
+      console.log(this.selectedStatus);
+
+      if(this.selectedStatus!=undefined){
+        state.changedRecords[0] = {...state.changedRecords[0], task_status: this.selectedStatus}; 
+        this.selectedStatus=undefined;
+      }
+        this.selectedStatus=undefined;
       this.service.updateCard(state, this.pid).subscribe(() => {
         state.endEdit();
       });
+      console.log(this.selectedStatus);
+      
     } else if (state.requestType === 'cardRemoved') {
       this.service.deleteCard(state, this.pid).subscribe(() => {
         state.endEdit();
@@ -117,6 +140,7 @@ export class HomeComponent implements OnInit {
       { text: 'Priority', key: 'badge', type: 'TextBox', validationRules: { required: true } },
     ],
   };
+
   public sortSettings: SortSettingsModel = {
     sortBy: 'Custom',
     field: 'updatedAt',
@@ -129,6 +153,7 @@ export class HomeComponent implements OnInit {
     { Id: 'pending', Name: 'Pending' },
     { Id: 'unsheduled', Name: 'Unsheduled' },
 ];
+
 dialogOpen(args: DialogEventArgs): void {
   args.cancel = true;
 }
@@ -159,12 +184,27 @@ public fields: Object = { text: 'Name', value: 'Id' };
     ];
 
     this.category = [
-      { label: 'Study' },
-      { label: 'Work' },
-      { label: 'Others' },
+      {
+        label: 'low',
+        command: () => {
+          this.selectCategory('low');
+        },
+      },
+      {
+        label: 'medium',
+        command: () => {
+          this.selectCategory('medium');
+        },
+      },
+      {
+        label: 'high',
+        command: () => {
+          this.selectCategory('high');
+        },
+      },
       { separator: true },
       {
-        label: 'Create Category',
+        label: 'Create Badge',
         icon: 'pi pi-plus',
         command: () => {
           this.showCreateDialog();
