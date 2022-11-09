@@ -127,7 +127,13 @@ export class CreateTaskComponent implements OnInit {
   selectCategory(category: string) {
     this.selectedCategory = category;
   }
-
+  clearDailog(){
+    this.title = ""
+    this.description = ""
+    this.category = null
+    this.selectedCategory = null
+    this.subTask = []
+  }
   onAddTask() {
     if (this.title == undefined || this.title == '') {
       alert('Enter Title');
@@ -150,9 +156,8 @@ export class CreateTaskComponent implements OnInit {
     const id = this.service.activeRouterId;
     console.log({ task, pid: id });
     this.store.dispatch(addTask({ task, pid: id }));
-    // let homecomponent = new HomeComponent(this.store, this.service, this.route);
-    // homecomponent.check();
     this.service.execute(id);
     this.showDailog = !this.showDailog;
+    this.clearDailog()
   }
 }
