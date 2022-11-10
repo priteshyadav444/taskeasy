@@ -26,6 +26,7 @@ import { KanbanAllModule } from '@syncfusion/ej2-angular-kanban';
 import { TasksService } from 'src/app/service/task/task.services';
 import {BadgeModule} from 'primeng/badge';
 import {DropdownModule} from 'primeng/dropdown';
+import {AccordionModule} from 'primeng/accordion';
 
 const routes: Routes = [
   {
@@ -54,6 +55,7 @@ const routes: Routes = [
     CommonModule,
     KanbanAllModule,
     BadgeModule,
+    AccordionModule,
     RouterModule.forChild(routes),
     StoreModule.forFeature('tasks', tasksReducer),
     EffectsModule.forFeature([TaskEffects]),

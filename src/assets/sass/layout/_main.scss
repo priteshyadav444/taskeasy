@@ -43,3 +43,46 @@ a {
   display: none;
   left: 0 !important;
 }
+
+.p-accordion .p-accordion-header:not(.p-disabled).p-highlight .p-accordion-header-link {
+  background: white;
+  border-color: #dee2e6;
+  color: #343a40;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+.p-accordion .p-accordion-header:not(.p-disabled).p-highlight:hover .p-accordion-header-link {
+  border-color: #dee2e6;
+  background: white;
+  color: #343a40;
+}
+.p-accordion .p-accordion-content{
+  padding: 0rem;
+  border: 0px solid #dee2e6;
+}
+
+.p-accordion .p-accordion-header .p-accordion-header-link {
+  padding: 1.25rem;
+  border: 0px;
+  color: #6c757d;
+  background: white;
+  font-weight: 700;
+  transition: box-shadow 0.2s;
+}
+.p-accordion .p-accordion-header .p-accordion-header-link:active{
+  background: white;
+  border: 0px;
+}
+
+
+.p-accordion .p-accordion-header .p-accordion-header-link:hover{
+  background: white;
+  border: 0px;
+}
+
+.p-accordion-tab :hover{
+  background: white;
+}
+
+

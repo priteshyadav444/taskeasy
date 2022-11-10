@@ -87,7 +87,7 @@ export class HomeComponent implements OnInit {
       { task_status: 'Pending', code: 'pending' },
       { task_status: 'Done', code: 'done' },
       { task_status: 'Unsheduled', code: 'unsheduled' },
-      { task_status: 'Unsheduled', code: 'unsheduled' },
+
     ];
 
 
