@@ -247,7 +247,7 @@ e-kanban {
   cursor: cursor;
   background: white;
   font-size: 14px;
-  background-color: #f1f4f457;
+  background-color: #F5F5F5		;
 }
 /* .example-box {
   padding: 3px 3px;
@@ -337,11 +337,14 @@ e-kanban {
 
 .inputtext {
   border: none;
+  border-bottom: #000 1px solid;
   width: 100%;
   display: block;
+  z-index: -112;
   outline: none;
     font-size: 1rem;
-    padding: 0.75rem 0.75rem;
+    padding: 0.5rem 0.75rem;
+    border-bottom: red 1px solid;
 }
 
 
@@ -370,4 +373,12 @@ e-kanban {
 
 .subtask{
   z-index: 10;
+}
+
+.p-accordion .p-accordion-header:not(.p-disabled).p-highlight .p-accordion-header-link {
+  background: #154e87;
+  border-color: #dee2e6;
+  color: #343a40;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
 }
