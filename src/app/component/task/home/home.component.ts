@@ -87,9 +87,29 @@ export class HomeComponent implements OnInit {
       { task_status: 'Pending', code: 'pending' },
       { task_status: 'Done', code: 'done' },
       { task_status: 'Unsheduled', code: 'unsheduled' },
+    ];
+    
+    this.badge = [
+      {
+        label: 'low',
+        command: () => {
+          this.selectCategory('low');
+        },
+      },
+      {
+        label: 'medium',
+        command: () => {
+          this.selectCategory('medium');
+        },
+      },
+      {
+        label: 'high',
+        command: () => {
+          this.selectCategory('high');
+        },
+      },
 
     ];
-
 
 
   }
@@ -106,17 +126,15 @@ export class HomeComponent implements OnInit {
       });
     } else if (state.requestType === 'cardChanged') {
       
-      console.log(this.selectedStatus);
-
+ 
       if(this.selectedStatus!=undefined){
         state.changedRecords[0] = {...state.changedRecords[0], task_status: this.selectedStatus}; 
-        this.selectedStatus=undefined;
+        this.selectedStatus==undefined;
       }
-        this.selectedStatus=undefined;
+        this.selectedStatus==undefined;
       this.service.updateCard(state, this.pid).subscribe(() => {
         state.endEdit();
       });
-      console.log(this.selectedStatus);
       
     } else if (state.requestType === 'cardRemoved') {
       this.service.deleteCard(state, this.pid).subscribe(() => {
@@ -244,7 +262,6 @@ public fields: Object = { text: 'Name', value: 'Id' };
   }
 
   drop(event: CdkDragDrop<any[]>) {
-    console.log(event);
     if (event.previousContainer === event.container) {
       // moveItemInArray(
       //   event.container.data,
