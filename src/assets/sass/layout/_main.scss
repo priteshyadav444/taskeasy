@@ -70,13 +70,13 @@ a {
   font-weight: 700;
   transition: box-shadow 0.2s;
 }
-.p-accordion .p-accordion-header .p-accordion-header-link:active{
+.p-accordion .p-accordion-header :active{
   background: white;
   border: 0px;
 }
 
 
-.p-accordion .p-accordion-header .p-accordion-header-link:hover{
+.p-accordion .p-accordion-header :hover{
   background: white;
   border: 0px;
 }
