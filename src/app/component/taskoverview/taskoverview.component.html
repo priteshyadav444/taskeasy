@@ -69,13 +69,13 @@
         type="doughnut"
         [data]="doughnutdata"
         [options]="doughnutOptions"
-        [style]="{ width: '40%', height: '100%', color: 'red' }"
+        [style]="{ width: '40%', height: '100%', color: 'red', margin:'1.6rem' }"
       ></p-chart>
     </div>
   </div>
 
-  <div class="card col-6">
+  <div class="col-12 lg:col-6 p-2">
     <h5 class="text-left w-full">Priority</h5>
-    <p-chart type="bar" [data]="barData" [options]="barOptions"></p-chart>
+    <p-chart type="bar" [data]="barData" [options]="barOptions" ></p-chart>
   </div>
 </div>
