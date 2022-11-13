@@ -46,7 +46,7 @@
 
       <hr />
       <div class="field col-12 mt-1 mb-0 p-0">
-        <div class="col-6 p-0">
+        <div class="col-8 p-0">
           <div class="p-inputgroup">
             <input
               type="text"
@@ -54,6 +54,7 @@
               placeholder="Add Sub Task"
               [(ngModel)]="subtaskele"
               name="subtaskele"
+              style="border-bottom: 1px #dfe7ef solid; border-radius: 0px;"
             />
             <button
               type="button"
@@ -69,6 +70,8 @@
 
       <div class="field col-12 p-0">
         <div cdkDropList class="example-list-create">
+          <div *ngIf="subTask?.length != 0">
+
           <div class="example-box" *ngFor="let item of subTask" cdkDrag>
             <div class="example-box flex justify-content-between">
               <p-checkbox name="groupname" value="false"></p-checkbox>
@@ -87,6 +90,7 @@
               (click)="removeSubTask(item)"
               icon="pi pi-times"
             ></button>
+          </div>
           </div>
         </div>
       </div>
