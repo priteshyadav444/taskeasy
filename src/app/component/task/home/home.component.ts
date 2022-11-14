@@ -68,10 +68,10 @@ export class HomeComponent implements OnInit {
   category!: MenuItem[];
   badge!: MenuItem[];
   selectedCategory: any = null;
-
   status: Status[];
   selectedStatus: Status;
-  
+  subTask: any = [];
+  subtaskele!: string;
   constructor(
     private store: Store<AppState>,
     private service: TasksCardService,
@@ -125,16 +125,23 @@ export class HomeComponent implements OnInit {
         state.endEdit();
       });
     } else if (state.requestType === 'cardChanged') {
-      
- 
+      if(this.subTask.length>0){
+        state.changedRecords[0] = {...state.changedRecords[0], subtasklist:[ ...state.changedRecords[0]['subtasklist'] , ...this.subTask]};
+        console.log(state.changedRecords[0]);
+        this.subTask = []
+      }
       if(this.selectedStatus!=undefined){
         state.changedRecords[0] = {...state.changedRecords[0], task_status: this.selectedStatus}; 
         this.selectedStatus==undefined;
       }
-        this.selectedStatus==undefined;
+        
       this.service.updateCard(state, this.pid).subscribe(() => {
         state.endEdit();
       });
+
+      this.selectedStatus==undefined;
+      this.subTask = []
+
       
     } else if (state.requestType === 'cardRemoved') {
       this.service.deleteCard(state, this.pid).subscribe(() => {
@@ -173,7 +180,8 @@ export class HomeComponent implements OnInit {
 ];
 
 dialogOpen(args: DialogEventArgs): void {
-  args.cancel = true;
+  console.log(args)
+  // args.cancel = true;
 }
 public fields: Object = { text: 'Name', value: 'Id' };
 
@@ -280,5 +288,18 @@ public fields: Object = { text: 'Name', value: 'Id' };
 
   save(severity: string) {
     this.displayCategory = true;
+  }
+
+  addSubTask(stask: any) {
+    
+    if (stask == '' || stask == null) {
+      return;
+    } else {
+      const newstask = { stitle: stask, checked: false };
+      this.subTask = [...this.subTask, newstask];
+      console.log(this.subTask);
+      this.subtaskele = '';
+    }
+    console.log(this.subTask);
   }
 }

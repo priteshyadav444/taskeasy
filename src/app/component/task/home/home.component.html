@@ -8,6 +8,7 @@
   [cardSettings]="cardSettings"
   (dataStateChange)="dataStateChange($event)"
   (dataSourceChanged)="dataSourceChanged($event)"
+  (dialogOpen)="dialogOpen($event)"
 >
   <e-columns>
     <e-column headerText="To Do" keyField="pending"> </e-column>
@@ -19,43 +20,160 @@
   <ng-template #dialogSettingsTemplate let-data>
     <div class="field col-12 p-0 mb-0 mt-1">
       <div class="col-8 p-0">
-    <p-dropdown
-      [options]="status"
-      [(ngModel)]="selectedStatus"
-      optionLabel="task_status"
-      placeholder="Changed Status"
-      optionValue="code"
-      [showClear]="true"
-    ></p-dropdown>
-  </div>
-</div>
+        <p-dropdown
+          [options]="status"
+          [(ngModel)]="selectedStatus"
+          optionLabel="task_status"
+          placeholder="Update Status"
+          optionValue="code"
+          [showClear]="true"
+        ></p-dropdown>
+      </div>
+    </div>
 
-<div class="p-fluid p-0">
-  <div class="col-12 p-0">
-    <input
-      type="text"
-      name="title"
-      id="title"
-      class="e-field inputtext"
-      placeholder="Enter Title"
-      value="{{ data.title }}"
-    />
-  </div>
-  <hr class="m-0" />
-  <div class="col-12 p-0 mt-2">
-    <textarea
-      rows="5"
-      cols="32"
-      placeholder="Add Description"
-      class="e-field"
-      pInputTextarea
-      value="{{ data.description }}"
-      name="description"
-    ></textarea>
-  </div>
+    <div class="p-fluid p-0">
+      <div class="col-12 p-0">
+        <input
+          type="text"
+          name="title"
+          id="title"
+          class="e-field inputtext"
+          placeholder="Enter Title"
+          value="{{ data.title }}"
+        />
+      </div>
+      <hr class="m-0" />
+      <div class="col-12 p-0 mt-2">
+        <textarea
+          rows="5"
+          cols="32"
+          placeholder="Add Description"
+          class="e-field"
+          pInputTextarea
+          value="{{ data.description }}"
+          name="description"
+        ></textarea>
+      </div>
 
+      <div class="field col-12 mt-1 mb-0 p-0">
+        <div class="col-8 p-0">
+          <div style="display: flex; align-items: stretch; width: 100%">
+            <input
+              type="text"
+              class="e-field inputtextsubtask"
+              placeholder="Add Sub Task"
+              name="subtaskele"
+              [(ngModel)]="subtaskele"
+              style="border-bottom: 1px #dfe7ef solid; border-radius: 0px"
+            />
+            <button
+              type="button"
+              class="p-button-text p-button-plain"
+              pButton
+              pRipple
+              (click)="addSubTask(subtaskele)"
+              icon="pi pi-plus"
+            ></button>
+          </div>
+        </div>
+      </div>
+      <!-- Dailog SubTask -->
+      <div class="field col-12 p-0 mt-1">
+        <div class="example-list-create">
+          <p-accordion [multiple]="true">
+            <p-accordionTab header="SubTasks" [selected]="true">
+              <div *ngIf="data.subtasklist?.length != 0">
+                <!-- Remote UnChecked SubTask -->
+                <div *ngFor="let item of data.subtasklist">
+                  <div *ngIf="item.checked == false" class="example-box">
+                    <div class="example-box flex justify-content-between">
+                      <p-checkbox
+                        name="groupname"
+                        [(ngModel)]="item.checked"
+                        [binary]="true"
+                      ></p-checkbox>
+                    </div>
+
+                    <div class="example-td mr-auto">
+                      <span class="text-900 font-medium text-md example-title">
+                        {{ item.stitle }}</span
+                      >
+                    </div>
+                  </div>
+                </div>
+              </div>
+                <!-- Local UnChecked SubTask -->
+              <div *ngIf="subTask?.length != 0">
+                  <div *ngFor="let item of subTask">
+                    <div *ngIf="item.checked == false" class="example-box">
+                      <div class="example-box flex justify-content-between">
+                        <p-checkbox
+                          name="groupname"
+                          [(ngModel)]="item.checked"
+                          [binary]="true"
+                        ></p-checkbox>
+                      </div>
+
+                      <div class="example-td mr-auto">
+                        <span
+                          class="text-900 font-medium text-md example-title"
+                        >
+                          {{ item.stitle }}</span
+                        >
+                      </div>
+                    </div>
+                  </div>
+              </div>
+              
+            </p-accordionTab>
+
+            <p-accordionTab header="Completed Tasks" style="margin-top: 4px">
+              
+                <!-- Remote Checked SubTask -->
+              <div *ngIf="data.subtasklist?.length != 0">
+                <div *ngFor="let item of data.subtasklist">
+                  <div *ngIf="item.checked == true" class="example-box">
+                    <div class="example-box flex justify-content-between">
+                      <p-checkbox
+                        name="groupname"
+                        [(ngModel)]="item.checked"
+                        [binary]="true"
+                      ></p-checkbox>
+                    </div>
+
+                    <div class="example-td mr-auto">
+                      <span class="text-900 font-medium text-md example-title">
+                        {{ item.stitle }}</span
+                      >
+                    </div>
+                  </div>
+                </div>
+              </div>
+                <!-- Remote Checked SubTask -->
+                <div *ngIf="subTask?.length != 0">
+                  <div *ngFor="let item of subTask">
+                    <div *ngIf="item.checked == true" class="example-box">
+                      <div class="example-box flex justify-content-between">
+                        <p-checkbox
+                          name="groupname"
+                          [(ngModel)]="item.checked"
+                          [binary]="true"
+                        ></p-checkbox>
+                      </div>
   
-  </div>
+                      <div class="example-td mr-auto">
+                        <span class="text-900 font-medium text-md example-title">
+                          {{ item.stitle }}</span
+                        >
+                      </div>
+                    </div>
+                  </div>
+                </div>
+            </p-accordionTab>
+          </p-accordion>
+        </div>
+      </div>
+    </div>
   </ng-template>
 
   <ng-template #cardSettingsTemplate let-data>
@@ -83,57 +201,62 @@
           <div class="card-15__days">12/20</div>
         </div>
 
-        
-        
         <div class="card-15__progressbar">
           <div class="card-15__progresscomplete"></div>
         </div>
 
         <div *ngIf="data.subtasklist?.length > 0" class="field col-12 p-0 mt-1">
-          <div  class="example-list-create">
-            <p-accordion  [multiple]="true">
+          <div class="example-list-create">
+            <p-accordion [multiple]="true">
               <p-accordionTab header="SubTasks" [selected]="true">
+                <div *ngIf="data.subtasklist?.length != 0">
+                  <div *ngFor="let item of data.subtasklist">
+                    <div *ngIf="item.checked == false" class="example-box">
+                      <div class="example-box flex justify-content-between">
+                        <p-checkbox
+                          name="groupname"
+                          value="{{ item.checked }}"
+                          disabled="false"
+                        ></p-checkbox>
+                      </div>
 
-                <div *ngIf="data.subtasklist?.length != 0"> 
-                <div *ngFor="let item of data.subtasklist" > 
-                <div *ngIf="item.checked == false" class="example-box" >
-                  <div class="example-box flex justify-content-between">
-                    <p-checkbox name="groupname" value="{{ item.checked }}" disabled="false"	></p-checkbox>
-                  </div>
-          
-                  <div class="example-td mr-auto">
-                    <span class="text-900 font-medium text-md example-title">
-                      {{ item.stitle }}</span
-                    >
-                  </div>
-                </div>
-                </div>
-              </div>
-              </p-accordionTab>
-
-              <p-accordionTab header="Completed Tasks" style="margin-top: 4px;"> 
-               
-                <div *ngIf="data.subtasklist?.length != 0"> 
-                  <div *ngFor="let item of data.subtasklist" > 
-                  <div *ngIf="item.checked == true" class="example-box" >
-                    <div class="example-box flex justify-content-between">
-                      <p-checkbox name="groupname" value="{{ item.checked }}" disabled="false"	></p-checkbox>
-                    </div>
-            
-                    <div class="example-td mr-auto">
-                      <span class="text-900 font-medium text-md example-title">
-                        {{ item.stitle }}</span
-                      >
+                      <div class="example-td mr-auto">
+                        <span
+                          class="text-900 font-medium text-md example-title"
+                        >
+                          {{ item.stitle }}</span
+                        >
+                      </div>
                     </div>
                   </div>
+                </div>
+              </p-accordionTab>
+
+              <p-accordionTab header="Completed Tasks" style="margin-top: 4px">
+                <div *ngIf="data.subtasklist?.length != 0">
+                  <div *ngFor="let item of data.subtasklist">
+                    <div *ngIf="item.checked == true" class="example-box">
+                      <div class="example-box flex justify-content-between">
+                        <p-checkbox
+                          name="groupname"
+                          [(ngModel)]="item.checked"
+                          [binary]="true"
+                          disabled="true"
+                        ></p-checkbox>
+                      </div>
+
+                      <div class="example-td mr-auto">
+                        <span
+                          class="text-900 font-medium text-md example-title"
+                        >
+                          {{ item.stitle }}</span
+                        >
+                      </div>
+                    </div>
                   </div>
                 </div>
-
               </p-accordionTab>
-         
-            
-
-          </p-accordion>
+            </p-accordion>
           </div>
         </div>
 

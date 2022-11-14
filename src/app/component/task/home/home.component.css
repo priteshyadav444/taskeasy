@@ -347,6 +347,15 @@ e-kanban {
     border-bottom: red 1px solid;
 }
 
+.inputtextsubtask {
+  border: none;
+  width: 100%;
+  display: block;
+  outline: none;
+  font-size: 1rem;
+  padding: 0.5rem 0.5rem;
+}
+
 
 .inputtext:focus {
   outline: none;
@@ -382,3 +391,4 @@ e-kanban {
   border-bottom-right-radius: 0;
   border-bottom-left-radius: 0;
 }
+
