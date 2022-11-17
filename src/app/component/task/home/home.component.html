@@ -9,6 +9,7 @@
   (dataStateChange)="dataStateChange($event)"
   (dataSourceChanged)="dataSourceChanged($event)"
   (dialogOpen)="dialogOpen($event)"
+
 >
   <e-columns>
     <e-column headerText="To Do" keyField="pending"> </e-column>
@@ -17,7 +18,7 @@
     <e-column headerText="Unsheduled" keyField="unsheduled"></e-column>
   </e-columns>
 
-  <ng-template #dialogSettingsTemplate let-data>
+  <ng-template #dialogSettingsTemplate let-data >
     <div class="field col-12 p-0 mb-0 mt-1">
       <div class="col-8 p-0">
         <p-dropdown
@@ -91,12 +92,13 @@
                         name="groupname"
                         [(ngModel)]="item.checked"
                         [binary]="true"
+                        (onChange)="onChange(item.checked)"
                       ></p-checkbox>
                     </div>
 
                     <div class="example-td mr-auto">
                       <span class="text-900 font-medium text-md example-title">
-                        {{ item.stitle }}</span
+                        {{ item.stitle }} </span
                       >
                     </div>
                   </div>
@@ -138,6 +140,7 @@
                         name="groupname"
                         [(ngModel)]="item.checked"
                         [binary]="true"
+                        (onChange)="onChange(item.checked)"
                       ></p-checkbox>
                     </div>
 
@@ -196,13 +199,17 @@
         </div>
         <div class="card-15__colthree">
           <div class="card-15__percent">
-            <span class="card-15__complete">50%</span>
+             
+            <span class="card-15__complete">{{data.subtasklist?.length==0? "": calculatePercentage(data.subtasklist)+"%"}}</span>
           </div>
-          <div class="card-15__days">12/20</div>
+          
+          <div class="card-15__days"> {{ data.subtasklist?.length==0? "No SubTask": (calulateCompleteSubTask(data.subtasklist))+"/"+data.subtasklist?.length}} </div>
         </div>
 
         <div class="card-15__progressbar">
-          <div class="card-15__progresscomplete"></div>
+          <span *ngIf="data.subtasklist?.length > 0">
+          <p-progressBar [value]="calculatePercentage(data.subtasklist)" [style]="{ height: '12px'}"></p-progressBar>
+          </span>
         </div>
 
         <div *ngIf="data.subtasklist?.length > 0" class="field col-12 p-0 mt-1">
@@ -301,15 +308,6 @@
                 styleClass="mr-2"
               ></p-badge
             ></ng-template>
-
-            <!-- <div ng-switch on="data.badge">
-                  <div ng-switch-when="high">
-                    <p-badge [value]="data.badge" severity="warning" styleClass="mr-2"></p-badge>
-                  </div>
-                  <div ng-switch-default>
-                    <p-badge [value]="data.badge" severity="info" styleClass="mr-2"></p-badge>
-                  </div>
-                </div> -->
           </div>
 
           <div class="card-15__stat">

@@ -72,6 +72,9 @@ export class HomeComponent implements OnInit {
   selectedStatus: Status;
   subTask: any = [];
   subtaskele!: string;
+
+  
+
   constructor(
     private store: Store<AppState>,
     private service: TasksCardService,
@@ -80,7 +83,7 @@ export class HomeComponent implements OnInit {
     this.data = service;
     this.pid = this.route.snapshot.paramMap.get('id');
     this.service.activateRouter$.next(this.pid);
-  
+    
 
     this.status = [
       { task_status: 'Active', code: 'active' },
@@ -111,15 +114,27 @@ export class HomeComponent implements OnInit {
 
     ];
 
+    
 
   }
+  
 
+  
  
   selectCategory(category: string) {
     this.selectedCategory = category;
   }
 
+  OnDataBound(): void {
+    let headerEle: HTMLElement = document.querySelector('[title="CANCEL"]');
+    addEventListener("click", function (e: Event) {
+      console.log("Check")
+    })
+  }
+
   public dataSourceChanged(state: DataSourceChangedEventArgs): void {
+    console.log("CHanked")
+
     if (state.requestType === 'cardCreated') {
       this.service.addCard(state, this.pid).subscribe(() => {
         state.endEdit();
@@ -180,7 +195,6 @@ export class HomeComponent implements OnInit {
 ];
 
 dialogOpen(args: DialogEventArgs): void {
-  console.log(args)
   // args.cancel = true;
 }
 public fields: Object = { text: 'Name', value: 'Id' };
@@ -238,6 +252,7 @@ public fields: Object = { text: 'Name', value: 'Id' };
       },
     ];
   }
+
   calculateDiff(sentDate) {
     var date1: any = new Date(sentDate);
     var date2: any = new Date();
@@ -260,6 +275,19 @@ public fields: Object = { text: 'Name', value: 'Id' };
     var diffMins = Math.round(((diffMs % 86400000) % 3600000) / 60000); //minuts
 
     return diffDays + ' Days: ' + diffHrs + 'H';
+  }
+  calulateCompleteSubTask(data){
+    var result = 0;
+    data.forEach(element => {
+      if(element.checked==true){
+        result++;
+      }
+    });
+    return result;
+  }
+  
+  calculatePercentage(data){
+    return  Math.round(((this.calulateCompleteSubTask(data)*100)/data.length));
   }
   showBasicDialog() {
     this.displayBasic = true;
@@ -301,5 +329,10 @@ public fields: Object = { text: 'Name', value: 'Id' };
       this.subtaskele = '';
     }
     console.log(this.subTask);
+  }
+  onChange(val:boolean){
+    console.log("Check Box")
+    console.log(this.service)
+  //  this.service.updateCard(this.data, this.pid);
   }
 }

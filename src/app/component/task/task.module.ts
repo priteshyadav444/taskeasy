@@ -27,6 +27,7 @@ import { TasksService } from 'src/app/service/task/task.services';
 import {BadgeModule} from 'primeng/badge';
 import {DropdownModule} from 'primeng/dropdown';
 import {AccordionModule} from 'primeng/accordion';
+import {ProgressBarModule} from 'primeng/progressbar';
 
 const routes: Routes = [
   {
@@ -56,6 +57,7 @@ const routes: Routes = [
     KanbanAllModule,
     BadgeModule,
     AccordionModule,
+    ProgressBarModule,
     RouterModule.forChild(routes),
     StoreModule.forFeature('tasks', tasksReducer),
     EffectsModule.forFeature([TaskEffects]),
