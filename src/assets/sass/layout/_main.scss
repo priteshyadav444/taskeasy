@@ -63,32 +63,22 @@ a {
 }
 
 .p-accordion .p-accordion-header .p-accordion-header-link {
-  padding: 1.25rem;
   border: 0px;
   color: #6c757d;
   background: white;
   font-weight: 700;
   transition: box-shadow 0.2s;
 }
-.p-accordion .p-accordion-header :active{
+
+.p-accordion .p-accordion-header{
   background: white;
-  border: 0px;
+  outline: none;
+}
+.p-accordion-tab .p-accordion-tab-active {
+  background-color: #edf1f5;
 }
 
 
-.p-accordion .p-accordion-header :hover{
-  background: white;
-  border: 0px;
+.p-accordion .p-accordion-header:not(.p-highlight):not(.p-disabled):hover .p-accordion-header-link {
+  background-color:white;
 }
-
-.p-accordion-tab :hover{
-  background: white;
-}
-
-
-.p-progressbar .p-progressbar-value {
-  border: 0 none;
-  margin: 0;
-  background: greenyellow;
-}
-
