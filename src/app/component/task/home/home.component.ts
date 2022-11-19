@@ -125,15 +125,7 @@ export class HomeComponent implements OnInit {
     this.selectedCategory = category;
   }
 
-  OnDataBound(): void {
-    let headerEle: HTMLElement = document.querySelector('[title="CANCEL"]');
-    addEventListener("click", function (e: Event) {
-      console.log("Check")
-    })
-  }
-
   public dataSourceChanged(state: DataSourceChangedEventArgs): void {
-    console.log("CHanked")
 
     if (state.requestType === 'cardCreated') {
       this.service.addCard(state, this.pid).subscribe(() => {
@@ -142,14 +134,30 @@ export class HomeComponent implements OnInit {
     } else if (state.requestType === 'cardChanged') {
       if(this.subTask.length>0){
         state.changedRecords[0] = {...state.changedRecords[0], subtasklist:[ ...state.changedRecords[0]['subtasklist'] , ...this.subTask]};
-        console.log(state.changedRecords[0]);
         this.subTask = []
       }
+      
       if(this.selectedStatus!=undefined){
         state.changedRecords[0] = {...state.changedRecords[0], task_status: this.selectedStatus}; 
         this.selectedStatus==undefined;
       }
+      
+      //if all suntask completed
+      const subtasklistcopy = state.changedRecords[0]['subtasklist'];
+      console.log(subtasklistcopy);
+      if(subtasklistcopy.length>0){
+        var cnt = 0;
+
+        subtasklistcopy.forEach(element => {
+          if(element.checked==true) { cnt++; }
+        });
+        console.log(cnt);
         
+        if(cnt==subtasklistcopy.length){
+          state.changedRecords[0] = {...state.changedRecords[0], task_status: "done"}; 
+        }
+      }
+      console.log(state.changedRecords[0]);
       this.service.updateCard(state, this.pid).subscribe(() => {
         state.endEdit();
       });
@@ -331,8 +339,8 @@ public fields: Object = { text: 'Name', value: 'Id' };
     console.log(this.subTask);
   }
   onChange(val:boolean){
-    console.log("Check Box")
-    console.log(this.service)
+    // console.log("Check Box")
+    // console.log(this.service)
   //  this.service.updateCard(this.data, this.pid);
   }
 }

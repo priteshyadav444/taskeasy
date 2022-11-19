@@ -40,7 +40,7 @@
 
 .card-15__title {
   font-size: 18px;
-  font-weight: normal;
+  font-weight: bold;
   color: #000;
 }
 
@@ -267,7 +267,7 @@ e-kanban {
 
 .example-title {
   display: inline-block;
-  max-width: 150px;
+  max-width: 180px;
   color: #585858;
   white-space: nowrap;
   overflow: hidden !important;
