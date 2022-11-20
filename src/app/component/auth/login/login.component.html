@@ -49,6 +49,7 @@
               style="padding: 1rem"
               formControlName="password"
               name="password"
+              autocomplete="on"
             />
             <small
               *ngIf="loginForm.get('password')!.hasError('required')"
