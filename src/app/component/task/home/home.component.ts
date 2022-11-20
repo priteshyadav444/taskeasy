@@ -212,9 +212,10 @@ public fields: Object = { text: 'Name', value: 'Id' };
     this.service.execute(this.pid);
     this.cardSettings = {
       headerField: '_id',
+      selectionType: 'Single'
     };
 
-    this.store.dispatch(loadAllTasks());
+   // this.store.dispatch(loadAllTasks());
     this.pending = this.store.select(getPendingTasks);
     this.active = this.store.select(getActiveTask);
     this.today = this.store.select(getTodayTasks);
