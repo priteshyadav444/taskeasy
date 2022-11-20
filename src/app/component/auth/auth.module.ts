@@ -9,6 +9,7 @@ import {ButtonModule} from 'primeng/button';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AuthEffects } from './state/auth.effects';
 import { EffectsModule } from '@ngrx/effects';
+import {DividerModule} from 'primeng/divider';
 
 const routes: Routes = [
   {
@@ -30,6 +31,7 @@ const routes: Routes = [
     ButtonModule,
     FormsModule,
     ReactiveFormsModule,
+    DividerModule,
     RouterModule.forChild(routes),
     EffectsModule.forFeature([])
   ],
