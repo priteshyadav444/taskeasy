@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { TasksCardService } from 'src/app/service/task/taskcard.service';
 import { MainwrapperComponent } from '../mainwrapper/mainwrapper.component';
 
 @Component({
@@ -8,8 +10,15 @@ import { MainwrapperComponent } from '../mainwrapper/mainwrapper.component';
 export class SidemenuComponent implements OnInit {
   model!: any[];
   categories !:any[];
-  constructor(public appMain: MainwrapperComponent) {}
+  pid!: any;
 
+  constructor(public appMain: MainwrapperComponent, private service: TasksCardService,private route: ActivatedRoute) {
+    this.pid = this.route.snapshot.paramMap.get('id');
+    this.service.activateRouter$.next(this.pid);
+    //console.log(this.pid)
+  }
+  
+  
   ngOnInit() {
     this.model = [
       {
@@ -20,11 +29,6 @@ export class SidemenuComponent implements OnInit {
             label: 'All Task',
             icon: 'pi pi-list',
             routerLink: ['id'],
-          },
-          {
-            label: 'Study',
-            icon: 'pi pi-list',
-            routerLink: ['id1'],
           },
         ],
       },

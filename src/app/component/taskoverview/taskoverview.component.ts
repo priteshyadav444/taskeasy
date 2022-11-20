@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { MainwrapperComponent } from 'src/app/main/mainwrapper/mainwrapper.component';
+import { TasksCardService } from 'src/app/service/task/taskcard.service';
 // import { AppConfig } from '../../../app/api/appconfig';
 // import { ConfigService } from 'src/app/service/app.config.service';
 
@@ -13,11 +16,16 @@ export class TaskoverviewComponent implements OnInit {
   doughnutdata:any
   barOptions: any;
   doughnutOptions:any
-
+  pid!:any
   subscription!: Subscription;
   rangeDates!: Date[];
 
-  constructor() {}
+  constructor(public appMain: MainwrapperComponent, private service: TasksCardService, private route: ActivatedRoute) {
+    this.pid = this.route.snapshot.paramMap.get('id');
+    this.service.activateRouter$.next(this.pid);
+    console.log(this.pid)
+  }
+
   ngOnInit() {
     this.doughnutdata = {
       labels: ['low','medium','High'],
