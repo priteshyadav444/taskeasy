@@ -10,7 +10,9 @@ import { setLogoLoading } from './shared/state/Shared/shared.actions';
 export class AppComponent {
     menuMode = 'static';
 
-    constructor(private primengConfig: PrimeNGConfig, private store:Store) { }
+    constructor(private primengConfig: PrimeNGConfig, private store:Store) {
+        this.store.select
+     }
 
     ngOnInit() {
         this.primengConfig.ripple = true;

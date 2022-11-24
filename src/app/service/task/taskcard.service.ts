@@ -54,10 +54,15 @@ export class TasksCardService extends Subject<DataStateChangeEventArgs> {
             for (let key in data) {
               tasks.push({ ...data[key], id: key });
             }
-            console.log(tasks);
             return tasks;
           })
         );
+      }
+    
+      addTask(task: Task,pid:string): Observable<Task> {
+        return this.http.post<Task>(`${this.BASE_URL}/${pid}`, task,{
+          headers:this.reqHeader
+        });
       }
 
     public execute(pid:string): void {
