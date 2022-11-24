@@ -28,12 +28,17 @@ import {BadgeModule} from 'primeng/badge';
 import {DropdownModule} from 'primeng/dropdown';
 import {AccordionModule} from 'primeng/accordion';
 import {ProgressBarModule} from 'primeng/progressbar';
+import { TaskoverviewComponent } from '../taskoverview/taskoverview.component';
 
 const routes: Routes = [
   {
     path: '',
     component: HomeComponent,
   },
+  {
+    path: 'taskoverview',
+    component: TaskoverviewComponent
+  }
 ];
 @NgModule({
   declarations: [ HomeComponent],

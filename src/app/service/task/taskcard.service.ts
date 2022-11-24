@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { DataSourceChangedEventArgs, DataStateChangeEventArgs } from '@syncfusion/ej2-angular-kanban'
-import { Observable } from 'rxjs';
+import { Observable, BehaviorSubject } from 'rxjs';
 import { Subject } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Task } from 'src/app/models/task.models';
@@ -12,6 +12,7 @@ export class TasksCardService extends Subject<DataStateChangeEventArgs> {
     
     activateRouter$ = new Subject();
     activeRouterId: any;
+    pid = new BehaviorSubject("")
     private BASE_URL = 'http://localhost:3000/v1/tasks'
     // private BASE_URL ='https://api-taskeasy.onrender.com/v1/tasks'
     authToken = localStorage.getItem('authToken');
@@ -31,7 +32,9 @@ export class TasksCardService extends Subject<DataStateChangeEventArgs> {
     }
 
     
-
+    public setId(id:any):void{
+      this.pid.next(id)
+    }
     protected getData(pid:string): Observable<DataStateChangeEventArgs> {
         return this.http
            .get(`${this.BASE_URL}/${pid}`, {

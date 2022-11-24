@@ -28,11 +28,11 @@
       <hr *ngIf="item.label == 'Task'" class="m-2" />
       <a
         *ngIf="item.label == 'Task'"
-        [routerLink]="['taskoverview']"
+        [routerLink]="[pid,'taskoverview']"
         routerLinkActive="router-link-active"
         ><h6>
           <i class="pi pi-chart-bar"> </i>
-          Task Overview
+          Task Overview 
         </h6>
       </a>
       <a *ngIf="item.label == 'Task'"

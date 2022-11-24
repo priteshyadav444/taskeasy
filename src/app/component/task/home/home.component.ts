@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, OnInit, Output, ViewChild, EventEmitter } from '@angular/core';
 import { CdkDragDrop, transferArrayItem } from '@angular/cdk/drag-drop';
 import { MenuItem } from 'primeng/api';
 import { Store } from '@ngrx/store';
@@ -27,7 +27,6 @@ import {
 } from '@syncfusion/ej2-angular-kanban';
 import { TasksCardService } from 'src/app/service/task/taskcard.service';
 import { ActivatedRoute } from '@angular/router';
-import { EventEmitter } from 'stream';
 import {DropDownListComponent} from '@syncfusion/ej2-angular-dropdowns';
 
 interface Status {
@@ -73,7 +72,7 @@ export class HomeComponent implements OnInit {
   selectedStatus: Status;
   subTask: any = [];
   subtaskele!: string;
-
+  @Output() messageEvent = new EventEmitter<string>();
   
 
   constructor(
@@ -84,7 +83,8 @@ export class HomeComponent implements OnInit {
     this.data = service;
     this.pid = this.route.snapshot.paramMap.get('id');
     this.service.activateRouter$.next(this.pid);
-
+    this.service.setId(this.pid)
+    
     this.status = [
       { task_status: 'Active', code: 'active' },
       { task_status: 'Pending', code: 'pending' },

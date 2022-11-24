@@ -11,15 +11,19 @@ export class SidemenuComponent implements OnInit {
   model!: any[];
   categories !:any[];
   pid!: any;
+  message:string;
+
+  
 
   constructor(public appMain: MainwrapperComponent, private service: TasksCardService,private route: ActivatedRoute) {
-    this.pid = this.route.snapshot.paramMap.get('id');
-    this.service.activateRouter$.next(this.pid);
-    //console.log(this.pid)
+    this.service.pid.subscribe(log=> {
+      this.pid = log
+    })
   }
-  
-  
+
+
   ngOnInit() {
+    
     this.model = [
       {
         label: 'Task',
@@ -28,7 +32,7 @@ export class SidemenuComponent implements OnInit {
           {
             label: 'All Task',
             icon: 'pi pi-list',
-            routerLink: ['id'],
+            routerLink: [this.pid],
           },
         ],
       },

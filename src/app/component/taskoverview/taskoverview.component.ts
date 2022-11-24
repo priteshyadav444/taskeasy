@@ -4,6 +4,7 @@ import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
 import { AppState } from 'src/app/app-store/app.state';
 import { MainwrapperComponent } from 'src/app/main/mainwrapper/mainwrapper.component';
+import { Task } from 'src/app/models/task.models';
 import { TasksCardService } from 'src/app/service/task/taskcard.service';
 import { getTasks } from '../task/state/task.selector';
 // import { AppConfig } from '../../../app/api/appconfig';
@@ -22,10 +23,33 @@ export class TaskoverviewComponent implements OnInit {
   pid!:any
   subscription!: Subscription;
   rangeDates!: Date[];
+  totalCompletedTask: any = 0
+  totalOngoingTasks:any = 0
+  totalTasks : any = 0
+
+  lowPriorityTask : any = 0
+  midPriorityTask : any = 0
+  highPriorityTask : any = 0
+
 
   constructor(public appMain: MainwrapperComponent,  private store: Store<AppState>, private route: ActivatedRoute) {
-   this.store.select(getTasks).forEach((ele)=>{
-    console.log(ele);
+
+    this.pid = this.route.snapshot.paramMap.get('id');
+    console.log(this.pid);
+    
+   this.store.select(getTasks).subscribe(list => {
+    list.forEach(value => {
+        if(value.task_status == "actice") this.totalOngoingTasks++;
+        if(value.task_status == "done") this.totalCompletedTask++;
+
+        if(value.badge=="low") this.lowPriorityTask++;
+        if(value.badge=="medium") this.midPriorityTask++;
+        if(value.badge=="high") this.highPriorityTask++;
+
+
+        this.totalTasks++;
+
+    })
    })
   }
 
@@ -34,7 +58,7 @@ export class TaskoverviewComponent implements OnInit {
       labels: ['low','medium','High'],
       datasets: [
           {
-              data: [80, 5, 15],
+              data: [this.lowPriorityTask, this.midPriorityTask, this.highPriorityTask],
               backgroundColor: [
                   "#FF6384",
                   "#36A2EB",
