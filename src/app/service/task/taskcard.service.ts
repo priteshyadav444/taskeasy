@@ -37,13 +37,28 @@ export class TasksCardService extends Subject<DataStateChangeEventArgs> {
            .get(`${this.BASE_URL}/${pid}`, {
             headers:this.reqHeader
           })
-           .pipe(map((response: any) => (<any>{
+           .pipe(map((response: Task[]) => (<any>{
             result: response
         })))
         .pipe((data: any) => {
             return data;
         });
     }
+
+    getAllTasks(pid:string): Observable<Task[]> {
+        return this.http.get<Task[]>(`${this.BASE_URL}/${pid}`,{
+          headers:this.reqHeader
+        }).pipe(
+          map((data) => {
+            const tasks: Task[] = [];
+            for (let key in data) {
+              tasks.push({ ...data[key], id: key });
+            }
+            console.log(tasks);
+            return tasks;
+          })
+        );
+      }
 
     public execute(pid:string): void {
         this.getData(pid).subscribe(x => super.next(x));

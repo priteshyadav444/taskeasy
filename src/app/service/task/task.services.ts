@@ -46,23 +46,5 @@ export class TasksService {
     );
   }
 
-  getAllTasksNew(state: DataStateChangeEventArgs): Observable<Task[]> {
-    return this.http.get<any[]>(this.apiUrl,{
-      headers:this.reqHeader
-    }).pipe(
-      map((data) => {
-        const tasks: any[] = [];
-        for (let key in data) {
-          tasks.push({ ...data[key], id: key });
-        }
-        console.log(tasks);
-        return tasks;
-      })
-    );
-  }
-
-  public execute(state: any): void {
-    this.getAllTasksNew(state).subscribe();
-}
 
 }
