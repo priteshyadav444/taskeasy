@@ -84,7 +84,7 @@ export class HomeComponent implements OnInit {
     this.pid = this.route.snapshot.paramMap.get('id');
     this.service.activateRouter$.next(this.pid);
     this.service.setId(this.pid)
-    
+
     this.status = [
       { task_status: 'Active', code: 'active' },
       { task_status: 'Pending', code: 'pending' },
@@ -218,7 +218,7 @@ public fields: Object = { text: 'Name', value: 'Id' };
       selectionType: 'Single'
     };
 
-    this.store.dispatch(loadAllTasks({ pid:this.pid }));
+    // this.store.dispatch(loadAllTasks({ pid:this.pid }));
     // this.pending = this.store.select(getPendingTasks);
     // this.active = this.store.select(getActiveTask);
     // this.today = this.store.select(getTodayTasks);
