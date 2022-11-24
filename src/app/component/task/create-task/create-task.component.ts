@@ -156,7 +156,6 @@ export class CreateTaskComponent implements OnInit {
     const id = this.service.activeRouterId;
     console.log({ task, pid: id });
     this.store.dispatch(addTask({ task, pid: id }));
-    this.service.execute(id);
     this.showDailog = !this.showDailog;
     this.clearDailog()
   }

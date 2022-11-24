@@ -87,7 +87,7 @@ export class MainwrapperComponent implements AfterViewInit, OnDestroy, OnInit {
     private store: Store<AppState>,
     private route: ActivatedRoute
   ) {
-    console.log(this.route.snapshot.paramMap.get('id'));
+   
   }
 
   ngOnInit() {}
