@@ -33,7 +33,7 @@ export class TaskEffects {
     return this.actions$.pipe(
       ofType(loadAllTasks),
       mergeMap((action) => {
-        return this.taskServices.getAllTasks().pipe(
+        return this.service.getAllTasks(action.pid).pipe(
           map((tasks) => {
             return loadTasksSuccess({ tasks });
           })

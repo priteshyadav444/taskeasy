@@ -10,7 +10,7 @@ export const LOAD_TASKS_SUCCESS= 'load tasks success';
 export const addTask = createAction(ADD_TASK_INITIATE, props<{task: Task, pid:string}>());
 export const addTaskSuccess = createAction(ADD_TASK_SUCCESS, props<{task: Task}>()); 
 
-export const loadAllTasks = createAction(LOAD_TASKS)
+export const loadAllTasks = createAction(LOAD_TASKS,props<{ pid:string }>())
 
 export const loadTasksSuccess = createAction(
     LOAD_TASKS_SUCCESS,
