@@ -127,7 +127,6 @@ export class HomeComponent implements OnInit {
   }
 
   public dataSourceChanged(state: DataSourceChangedEventArgs): void {
-
     if (state.requestType === 'cardCreated') {
       this.service.addCard(state, this.pid).subscribe(() => {
         state.endEdit();
@@ -205,6 +204,14 @@ export class HomeComponent implements OnInit {
 
 dialogOpen(args: DialogEventArgs): void {
   // args.cancel = true;
+  console.log("args open",args);
+}
+
+dialogClose(args: DialogEventArgs): void {
+    // this.subTask = [];
+    // this.selectedCategory = null;
+    // this.subtaskele = '';
+    console.log("args close",args);
 }
 public fields: Object = { text: 'Name', value: 'Id' };
 
@@ -340,9 +347,10 @@ public fields: Object = { text: 'Name', value: 'Id' };
     }
     console.log(this.subTask);
   }
-  onChange(val:boolean){
+  onChange(item:any){
     // console.log("Check Box")
     // console.log(this.service)
   //  this.service.updateCard(this.data, this.pid);
+   console.log("item",item)
   }
 }

@@ -9,7 +9,8 @@
   (dataStateChange)="dataStateChange($event)"
   (dataSourceChanged)="dataSourceChanged($event)"
   (dialogOpen)="dialogOpen($event)"
-
+  (dialogClose)="dialogClose($event)"
+  
 >
   <e-columns>
     <e-column headerText="To Do" keyField="pending"> </e-column>
@@ -92,7 +93,7 @@
                         name="groupname"
                         [(ngModel)]="item.checked"
                         [binary]="true"
-                        (onChange)="onChange(item.checked)"
+                        (onChange)="onChange(item)"
                       ></p-checkbox>
                     </div>
 
