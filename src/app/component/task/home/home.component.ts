@@ -50,16 +50,17 @@ export class HomeComponent implements OnInit {
     'Get to work Get to workGet to work Get to workGet to work Get to work',
     'Pick up groceries',
   ];
+  done = ['Get up', 'Brush teeth'];
+
   pending!: any;
   active!: any;
   today!: any;
   todaycompleted!: any;
   scheduled!: any;
   unsheduled!: any;
-
   displayBasic!: boolean;
   displayCategory!: boolean;
-  done = ['Get up', 'Brush teeth'];
+ 
   knobvalue: number = 50;
   value2!: string;
 
@@ -83,8 +84,6 @@ export class HomeComponent implements OnInit {
     this.data = service;
     this.pid = this.route.snapshot.paramMap.get('id');
     this.service.activateRouter$.next(this.pid);
-    console.log(this.pid)
-    
 
     this.status = [
       { task_status: 'Active', code: 'active' },
@@ -114,19 +113,14 @@ export class HomeComponent implements OnInit {
       },
 
     ];
-
-    
-
   }
   
-
-  
- 
   selectCategory(category: string) {
     this.selectedCategory = category;
   }
 
   public dataSourceChanged(state: DataSourceChangedEventArgs): void {
+    console.log("source dataSourceChanged", state)
     if (state.requestType === 'cardCreated') {
       this.service.addCard(state, this.pid).subscribe(() => {
         state.endEdit();
@@ -176,9 +170,11 @@ export class HomeComponent implements OnInit {
   public dataStateChange(state: DataStateChangeEventArgs): void {
     this.service.execute(this.pid);
   }
+
   public check(): void {
     this.service.execute(this.pid);
   }
+
   public dialogSettings: DialogSettingsModel = {
     fields: [
       { text: 'Status', key: 'task_status', type: 'DropDown', validationRules: { required: true } },
@@ -203,14 +199,13 @@ export class HomeComponent implements OnInit {
 ];
 
 dialogOpen(args: DialogEventArgs): void {
-  // args.cancel = true;
-  console.log("args open",args);
+  this.subTask = [];
 }
 
 dialogClose(args: DialogEventArgs): void {
-    // this.subTask = [];
-    // this.selectedCategory = null;
-    // this.subtaskele = '';
+    this.service.execute(this.pid);
+    this.selectedStatus = null;
+    this.subtaskele = '';
     console.log("args close",args);
 }
 public fields: Object = { text: 'Name', value: 'Id' };
@@ -223,13 +218,13 @@ public fields: Object = { text: 'Name', value: 'Id' };
       selectionType: 'Single'
     };
 
-    this.store.dispatch(loadAllTasks());
-    this.pending = this.store.select(getPendingTasks);
-    this.active = this.store.select(getActiveTask);
-    this.today = this.store.select(getTodayTasks);
-    this.todaycompleted = this.store.select(getTodayCompletedTasks);
-    this.scheduled = this.store.select(getScheduledTasks);
-    this.unsheduled = this.store.select(getUnScheduledTasks);
+    this.store.dispatch(loadAllTasks({ pid:this.pid }));
+    // this.pending = this.store.select(getPendingTasks);
+    // this.active = this.store.select(getActiveTask);
+    // this.today = this.store.select(getTodayTasks);
+    // this.todaycompleted = this.store.select(getTodayCompletedTasks);
+    // this.scheduled = this.store.select(getScheduledTasks);
+    // this.unsheduled = this.store.select(getUnScheduledTasks);
     this.store.dispatch(setLogoLoading({ status: false }));
 
     this.items = [
@@ -293,6 +288,7 @@ public fields: Object = { text: 'Name', value: 'Id' };
 
     return diffDays + ' Days: ' + diffHrs + 'H';
   }
+
   calulateCompleteSubTask(data){
     var result = 0;
     data.forEach(element => {
@@ -306,6 +302,7 @@ public fields: Object = { text: 'Name', value: 'Id' };
   calculatePercentage(data){
     return  Math.round(((this.calulateCompleteSubTask(data)*100)/data.length));
   }
+
   showBasicDialog() {
     this.displayBasic = true;
   }
@@ -335,8 +332,7 @@ public fields: Object = { text: 'Name', value: 'Id' };
     this.displayCategory = true;
   }
 
-  addSubTask(stask: any) {
-    
+  addSubTask(data:any, stask: any) {
     if (stask == '' || stask == null) {
       return;
     } else {
@@ -345,12 +341,8 @@ public fields: Object = { text: 'Name', value: 'Id' };
       console.log(this.subTask);
       this.subtaskele = '';
     }
-    console.log(this.subTask);
   }
   onChange(item:any){
-    // console.log("Check Box")
-    // console.log(this.service)
-  //  this.service.updateCard(this.data, this.pid);
-   console.log("item",item)
+   //console.log("item",item)
   }
 }
