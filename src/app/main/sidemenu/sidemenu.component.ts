@@ -32,7 +32,7 @@ export class SidemenuComponent implements OnInit {
           {
             label: 'All Task',
             icon: 'pi pi-list',
-            routerLink: [this.pid],
+            routerLink: [this.pid,"?category=all"],
           },
         ],
       },

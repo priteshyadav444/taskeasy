@@ -25,21 +25,6 @@ const routes: Routes = [
     component: MainwrapperComponent,
     children: [
       {
-        path: 'taskoverview',
-        component: TaskoverviewComponent,
-        canActivate: [AuthGuard],
-      },
-      {
-        path: 'calender',
-        component: CalenderComponent,
-        canActivate: [AuthGuard],
-      },
-      {
-        path: 'completed',
-        component: CompletedComponent,
-        canActivate: [AuthGuard],
-      },
-      {
         path: ':id',
         loadChildren: () =>
           import('../component/task/task.module').then((m) => m.TaskModule),

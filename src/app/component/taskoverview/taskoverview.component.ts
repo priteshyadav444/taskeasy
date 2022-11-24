@@ -6,6 +6,7 @@ import { AppState } from 'src/app/app-store/app.state';
 import { MainwrapperComponent } from 'src/app/main/mainwrapper/mainwrapper.component';
 import { Task } from 'src/app/models/task.models';
 import { TasksCardService } from 'src/app/service/task/taskcard.service';
+import { loadAllTasks } from '../task/state/task.action';
 import { getTasks } from '../task/state/task.selector';
 // import { AppConfig } from '../../../app/api/appconfig';
 // import { ConfigService } from 'src/app/service/app.config.service';
@@ -32,25 +33,27 @@ export class TaskoverviewComponent implements OnInit {
   highPriorityTask : any = 0
 
 
-  constructor(public appMain: MainwrapperComponent,  private store: Store<AppState>, private route: ActivatedRoute) {
+  constructor(public appMain: MainwrapperComponent,  private store: Store<AppState>, private service: TasksCardService) {
 
-    this.pid = this.route.snapshot.paramMap.get('id');
-    console.log(this.pid);
-    
-   this.store.select(getTasks).subscribe(list => {
-    list.forEach(value => {
-        if(value.task_status == "actice") this.totalOngoingTasks++;
-        if(value.task_status == "done") this.totalCompletedTask++;
-
-        if(value.badge=="low") this.lowPriorityTask++;
-        if(value.badge=="medium") this.midPriorityTask++;
-        if(value.badge=="high") this.highPriorityTask++;
-
-
-        this.totalTasks++;
-
+    this.service.pid.subscribe(log=> {
+        this.pid = log
+        console.log(this.pid)
+        if(this.pid!=undefined){
+        this.store.dispatch(loadAllTasks({pid:this.pid}));
+        this.store.select(getTasks).subscribe(list => {
+            list.forEach(value => {
+                if(value.task_status == "active") this.totalOngoingTasks++;
+                if(value.task_status == "done") this.totalCompletedTask++;
+        
+                if(value.badge=="low") this.lowPriorityTask++;
+                if(value.badge=="medium") this.midPriorityTask++;
+                if(value.badge=="high") this.highPriorityTask++;
+                this.totalTasks++;
+        
+            })
+           })
+        }
     })
-   })
   }
 
   ngOnInit() {

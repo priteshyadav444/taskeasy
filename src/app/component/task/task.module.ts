@@ -29,6 +29,8 @@ import {DropdownModule} from 'primeng/dropdown';
 import {AccordionModule} from 'primeng/accordion';
 import {ProgressBarModule} from 'primeng/progressbar';
 import { TaskoverviewComponent } from '../taskoverview/taskoverview.component';
+import { CalenderComponent } from '../calender/calender.component';
+import { CompletedComponent } from '../completed/completed.component';
 
 const routes: Routes = [
   {
@@ -36,8 +38,20 @@ const routes: Routes = [
     component: HomeComponent,
   },
   {
+    path: '?category=all',
+    component: HomeComponent,
+  },
+  {
     path: 'taskoverview',
     component: TaskoverviewComponent
+  },
+  {
+    path: 'calender',
+    component: CalenderComponent
+  },
+  {
+    path: 'completed',
+    component: CompletedComponent
   }
 ];
 @NgModule({

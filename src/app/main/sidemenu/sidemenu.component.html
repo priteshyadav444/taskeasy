@@ -36,7 +36,7 @@
         </h6>
       </a>
       <a *ngIf="item.label == 'Task'"
-      [routerLink]="['calender']"
+      [routerLink]="[pid,'calender']"
       routerLinkActive="router-link-active"
         ><h6>
           <i class="pi pi-calendar"> </i>
@@ -44,7 +44,7 @@
         </h6>
       </a>
       <a *ngIf="item.label == 'Task'"
-      [routerLink]="['completed']"
+      [routerLink]="[pid,'completed']"
       routerLinkActive="router-link-active"
         ><h6>
           <i class="pi pi-check-circle"> </i>
