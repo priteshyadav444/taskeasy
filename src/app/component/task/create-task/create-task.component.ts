@@ -29,7 +29,7 @@ export class CreateTaskComponent implements OnInit {
   done = ['Get up', 'Brush teeth'];
   knobvalue: number = 50;
   value2!: string;
-  selectedCategory: any = null;
+  selectedCategory: any = "low";
   subtaskele!: string;
   selectedDate: any = new Date();
   addtaskForm!: FormGroup;
@@ -48,8 +48,8 @@ export class CreateTaskComponent implements OnInit {
   ) {
     this.uiService.onToggle().subscribe((value) => (this.showDailog = value));
     this.pid = this.route.snapshot.paramMap.get('id');
-    this.selectedCategory =
-      this.selectedCategory == null ? 'low' : this.selectedCategory;
+    this.selectedCategory == null ? 'low' : this.selectedCategory;
+
     this.category = [
       {
         label: 'low',
@@ -68,15 +68,7 @@ export class CreateTaskComponent implements OnInit {
         command: () => {
           this.selectCategory('high');
         },
-      },
-      { separator: true },
-      {
-        label: 'Create Badge',
-        icon: 'pi pi-plus',
-        command: () => {
-          this.showCreateDialog();
-        },
-      },
+      }
     ];
   }
 
@@ -130,8 +122,7 @@ export class CreateTaskComponent implements OnInit {
   clearDailog(){
     this.title = ""
     this.description = ""
-    this.category = null
-    this.selectedCategory = null
+    this.selectedCategory = "low"
     this.subTask = []
   }
   onAddTask() {
@@ -140,10 +131,10 @@ export class CreateTaskComponent implements OnInit {
       return;
     }
 
-    if(this.selectedDate< new Date()){
-      alert('Enter Valid Date');
-      return;
-    }
+    // if(this.selectedDate< new Date()){
+    //   alert('Enter Valid Date');
+    //   return;
+    // }
     const task: Task = {
       title: this.title,
       scheduled_date: this.selectedDate,
