@@ -17,8 +17,8 @@ import { DataManager, ODataV4Adaptor, Query } from '@syncfusion/ej2-data';
 export class TimelineComponent implements OnInit {
   public selectedDate: Date = new Date();
   public readonly: boolean = true;
-  // public url:any = "https://api-taskeasy.onrender.com/v1/tasks/all/tasks"
-  public url:any = "http://127.0.0.1:3000/v1/tasks/all/tasks"
+  // public url:any = "https://api-taskeasy.onrender.com/v1/tasks/calender/all"
+  public url:any = "http://127.0.0.1:3000/v1/tasks/calender/all"
   authToken = localStorage.getItem('authToken');
   reqHeader =[{
         'Content-Type': 'application/json',
