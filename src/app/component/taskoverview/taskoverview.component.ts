@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
+import { AppState } from 'src/app/app-store/app.state';
 import { MainwrapperComponent } from 'src/app/main/mainwrapper/mainwrapper.component';
 import { TasksCardService } from 'src/app/service/task/taskcard.service';
+import { getTasks } from '../task/state/task.selector';
 // import { AppConfig } from '../../../app/api/appconfig';
 // import { ConfigService } from 'src/app/service/app.config.service';
 
@@ -20,10 +23,10 @@ export class TaskoverviewComponent implements OnInit {
   subscription!: Subscription;
   rangeDates!: Date[];
 
-  constructor(public appMain: MainwrapperComponent, private service: TasksCardService, private route: ActivatedRoute) {
-    this.pid = this.route.snapshot.paramMap.get('id');
-    this.service.activateRouter$.next(this.pid);
-    console.log(this.pid)
+  constructor(public appMain: MainwrapperComponent,  private store: Store<AppState>, private route: ActivatedRoute) {
+   this.store.select(getTasks).forEach((ele)=>{
+    console.log(ele);
+   })
   }
 
   ngOnInit() {

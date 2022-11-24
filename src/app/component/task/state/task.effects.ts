@@ -18,7 +18,7 @@ export class TaskEffects {
     return this.actions$.pipe(
       ofType(addTask),
       mergeMap((action) => {
-        return this.taskServices.addTask(action.task,action.pid).pipe(
+        return this.service.addTask(action.task,action.pid).pipe(
           map((data) => {
             const task = { ...action.task };
             this.service.execute(action.pid);
