@@ -49,7 +49,7 @@ export class CalenderComponent implements OnInit {
       dataSource:  this.dataManager,
       fields: {
         subject: { title: 'Event Name', name: 'title', default: 'Add Name' },
-        description: { title: 'Summary', name: 'title' },
+        description: { title: 'Summary', name: 'description' },
         startTime: { title: 'From', name: 'scheduled_date' },
         endTime: { title: 'To', name: 'scheduled_date' },
       },

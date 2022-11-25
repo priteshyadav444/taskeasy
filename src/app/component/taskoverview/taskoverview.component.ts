@@ -78,24 +78,24 @@ export class TaskoverviewComponent implements OnInit {
       labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July',"August", "September","October","November","December"],
       datasets: [{
           type: 'bar',
-          label: 'Dataset 1',
+          label: 'Active Tasks',
           backgroundColor: '#42A5F5',
           data: [
-            0,0,0,0,0,0,0,0,0,6,0,0
+            0,0,0,0,0,0,0,0,0,0,this.totalOngoingTasks,0
           ]
       }, {
           type: 'bar',
-          label: 'Dataset 2',
+          label: 'Total Completed Tasks',
           backgroundColor: '#66BB6A',
           data: [
-            0,0,0,0,0,0,0,0,0,4,0,0
+            0,0,0,0,0,0,0,0,0,0,this.totalCompletedTask,0
           ]
       }, {
           type: 'bar',
-          label: 'Dataset 3',
+          label: 'Total Tasks',
           backgroundColor: '#FFA726',
           data: [
-            0,0,0,0,0,0,0,0,0,3,0,0
+            0,0,0,0,0,0,0,0,0,0,this.totalTasks,0
           ]
       }]
   };
