@@ -32,7 +32,7 @@ export class TaskoverviewComponent implements OnInit {
   midPriorityTask : any = 0
   highPriorityTask : any = 0
 
-
+  
   constructor(public appMain: MainwrapperComponent,  private store: Store<AppState>, private service: TasksCardService) {
 
     this.service.pid.subscribe(log=> {
@@ -49,7 +49,6 @@ export class TaskoverviewComponent implements OnInit {
                 if(value.badge=="medium") this.midPriorityTask++;
                 if(value.badge=="high") this.highPriorityTask++;
                 this.totalTasks++;
-        
             })
            })
         }

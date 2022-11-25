@@ -1,5 +1,4 @@
 <div class="layout-menu-container">
-  
   <ul class="layout-menu" role="menu" (keydown)="onKeydown($event)">
     <li
       class="layout-menuitem-category"
@@ -43,14 +42,14 @@
           Calender
         </h6>
       </a>
-      <a *ngIf="item.label == 'Task'"
+      <!-- <a *ngIf="item.label == 'Task'"
       [routerLink]="[pid,'completed']"
       routerLinkActive="router-link-active"
         ><h6>
           <i class="pi pi-check-circle"> </i>
           Completed Task
         </h6>
-      </a>
+      </a> -->
     </li>
   </ul>
 </div>
