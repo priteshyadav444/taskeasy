@@ -1254,7 +1254,7 @@ label {
   .hero-copy {
     padding-top: 40px;
     padding-right: 48px;
-    min-width: 448px;
+    min-width: 512px;
     max-width: 512px;
     z-index: 1;
   }
