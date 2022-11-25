@@ -60,11 +60,10 @@ export class DashboardComponent {
   ) {
     this.uiService
       .onProjectToggle()
-      .subscribe((value) => {this.showDailog = value; console.log(value)});
+      .subscribe((value) => {this.showDailog = value;});
   }
 
   ngOnInit() {
-    // console.log('check')
     this.store.dispatch(loadAllProjects());
     this.projects = this.store.select(getAllProjects);
     this.items = [
@@ -129,7 +128,6 @@ export class DashboardComponent {
   }
   toggleMenu(event: Event) {
     this.menuClick = true;
-    console.log(event);
     if (this.isDesktop()) {
       if (this.app.menuMode === 'overlay') {
         if (this.menuActiveMobile === true) {
@@ -218,7 +216,6 @@ export class DashboardComponent {
   }
 
   onAddProject() { 
-    console.log({"title":this.title});
     const project :Project  = {
       project_title:this.title,
       project_deadline:this.selectedDate,

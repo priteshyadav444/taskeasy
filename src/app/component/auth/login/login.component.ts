@@ -17,7 +17,6 @@ export class LoginComponent implements OnInit {
   loginForm!:FormGroup
   ngOnInit(): void {
     this.loginForm = new FormGroup({
-    
       email: new FormControl('', [Validators.required, Validators.email]),
       password: new FormControl('',[ Validators.required, Validators.minLength(8)]),
      
@@ -38,6 +37,5 @@ export class LoginComponent implements OnInit {
     const password = this.loginForm.value.password;
     this.store.dispatch(setLoadingSpinner({ status: true }));
     this.store.dispatch(loginStart({ email, password }));
-    console.log("Login")
   }
 }

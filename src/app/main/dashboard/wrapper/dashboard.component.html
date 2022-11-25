@@ -24,9 +24,13 @@
         <i class="pi pi-cog"></i>
         <span>Settings</span> -->
 
-      <a href="/" class="p-link layout-topbar-button">
+      <a [routerLink]="['/dashboard']" class="p-link layout-topbar-button">
         <i class="pi pi-user"></i>
         <span>Profile</span>
+      </a>
+      <a [routerLink]="['/logout']" class="p-link layout-topbar-button">
+        <i class="pi pi-sign-out"></i>
+        <span>Logout</span>
       </a>
     </div>
   </div>
