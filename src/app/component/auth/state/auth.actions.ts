@@ -4,12 +4,12 @@ import { User } from "src/app/models/user.models";
 export const LOGIN_START = '[auth page] login start';
 export const LOGIN_SUCCESS = '[auth page] login Success';
 export const LOGIN_FAIL = '[auth page] login Fail';
-
+export const LOGOUT_SUCCESS = "Logout Success";
 export const SIGNUP_START = '[auth page] signup start';
 export const SIGNUP_SUCCESS = '[auth page] signup success';
 
 export const AUTO_LOGIN = "auto login";
-
+export const LOGOUT = "Logout "
 
 export const signupStart = createAction (
     SIGNUP_START,
@@ -27,10 +27,14 @@ export const signupStart = createAction (
     props<{ email: string; password: string }>()
   );
   export const loginSuccess = createAction(
-   
     LOGIN_SUCCESS,
     props<{ user: User; redirect: boolean }>()
   );
 
+  export const logoutSucess = createAction(
+    LOGOUT_SUCCESS,
+    props<{ user: User; redirect: boolean }>()
+  );
 
   export const autoLogin = createAction(AUTO_LOGIN);
+  export const logOut = createAction(LOGOUT);

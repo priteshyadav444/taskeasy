@@ -80,6 +80,7 @@ import {TabViewModule} from 'primeng/tabview';
 import { LogoLoadingComponent } from './shared/logo-loading/logo-loading.component';
 import { TasksCardService } from './service/task/taskcard.service';
 import { ProjectEffects } from './main/dashboard/state/project.effects';
+import { LogoutComponent } from './main/logout/logout.component';
 
 
 @NgModule({
@@ -99,7 +100,8 @@ import { ProjectEffects } from './main/dashboard/state/project.effects';
     DashboardComponent,
     DashboardSidemenuComponent,
     TimelineComponent,
-    LogoLoadingComponent
+    LogoLoadingComponent,
+    LogoutComponent
   ],
   imports: [
     BrowserModule,

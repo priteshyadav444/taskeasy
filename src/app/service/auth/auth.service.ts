@@ -82,6 +82,8 @@ export class AuthServices {
         return 'Email Not Registered';
       case 'WRONG_PASSWORD':
         return 'Wrong Password';
+      case 'LOGOUT':
+          return 'Wrong Password';
       default:
         return 'Unknown error occurred. Please try again';
     }
