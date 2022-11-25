@@ -2,7 +2,7 @@
     <h5>Timeline</h5>
     <p-timeline
       [value]="events1"
-      align="left"
+      align="right"
       styleClass="customized-timeline"
     >
       <ng-template pTemplate="marker" let-event>
@@ -16,14 +16,11 @@
       <ng-template pTemplate="content" let-event>
         <p-card [header]="event.status" [subheader]="event.date">
           
-            <h5>Completion Rate</h5>
-            <p-knob [size]="50" valueColor="#5bf906" [(ngModel)]="value"></p-knob>
-     
-
+          <h6>Completed Task</h6>
           <div class="example-list-create">
             <div class="example-box" *ngFor="let item of todo">
               <div class="flex justify-content-between">
-                <p-checkbox name="groupname" value="true"></p-checkbox>
+                <p-checkbox name="groupname" value="true" aria-checked="true"></p-checkbox>
               </div>
 
               <div class="example-td ml-2">
@@ -31,7 +28,7 @@
                   {{ item }}</del
                 >
                 <div class="block text-500 font-medium mb-1">
-                  26-4
+                 {{item.date}}
                   <i class="pi pi-sync ml-2" style="font-size: 1rem"></i>
                   <i class="pi pi-star-fill ml-2" style="font-size: 1rem"></i>
                 </div>

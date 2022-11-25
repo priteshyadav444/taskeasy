@@ -33,7 +33,6 @@ export class TimelineComponent implements OnInit {
  
   
   constructor() {
-    console.log(this.dataManager)
   }
   
   ngOnInit(): void {

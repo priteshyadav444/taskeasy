@@ -32,7 +32,6 @@ export class ProjectService {
         for (let key in data) {
           projects.push({ ...data[key], id: key });
         }
-        console.log(projects)
         return projects;
       })
     );

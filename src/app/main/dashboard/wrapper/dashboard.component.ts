@@ -67,7 +67,6 @@ export class DashboardComponent {
     // console.log('check')
     this.store.dispatch(loadAllProjects());
     this.projects = this.store.select(getAllProjects);
-    console.log(this.projects)
     this.items = [
       {
         label: 'File',
