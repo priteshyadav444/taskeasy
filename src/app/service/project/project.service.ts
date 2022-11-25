@@ -9,8 +9,8 @@ import { Project } from 'src/app/models/projects.models';
 })
 export class ProjectService {
   authToken = localStorage.getItem('authToken');
-  apiUrl = 'http://localhost:3000/v1/users/project';
-  // apiUrl = 'https://api-taskeasy.onrender.com/v1/users/project'
+  // apiUrl = 'http://localhost:3000/v1/users/project';
+  apiUrl = 'https://api-taskeasy.onrender.com/v1/users/project'
   constructor(private http: HttpClient) {}
   reqHeader = new HttpHeaders({
     'Content-Type': 'application/json',

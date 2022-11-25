@@ -13,8 +13,8 @@ export class TasksCardService extends Subject<DataStateChangeEventArgs> {
     activateRouter$ = new Subject();
     activeRouterId: any;
     pid = new BehaviorSubject("")
-    private BASE_URL = 'http://localhost:3000/v1/tasks'
-    // private BASE_URL ='https://api-taskeasy.onrender.com/v1/tasks'
+    // private BASE_URL = 'http://localhost:3000/v1/tasks'
+    private BASE_URL ='https://api-taskeasy.onrender.com/v1/tasks'
     authToken = localStorage.getItem('authToken');
 
     reqHeader = new HttpHeaders({

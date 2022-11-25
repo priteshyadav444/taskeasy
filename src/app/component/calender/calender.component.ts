@@ -19,8 +19,8 @@ export class CalenderComponent implements OnInit {
   public readonly: boolean = true;
   public eventSettings: EventSettingsModel;
   pid!:any
-  // public url:any = "https://api-taskeasy.onrender.com/v1/tasks/calender/${this.pid}"
-  public url:any = `http://127.0.0.1:3000/v1/tasks/calender/${this.pid}`
+  public url:any = `https://api-taskeasy.onrender.com/v1/tasks/calender/${this.pid}`
+  // public url:any = `http://127.0.0.1:3000/v1/tasks/calender/${this.pid}`
   authToken = localStorage.getItem('authToken');
   reqHeader =[{
         'Content-Type': 'application/json',
