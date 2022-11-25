@@ -227,4 +227,9 @@ export class DashboardComponent {
     this.store.dispatch(loadAllProjects());
     //this.uiService.toggleAddProject()
   }
+
+  calculatePercentage(totalCompletedTask, totalTasks){
+    if(totalTasks==0) return 0;
+    return  Math.round(((totalCompletedTask*100)/totalTasks));
+  }
 }

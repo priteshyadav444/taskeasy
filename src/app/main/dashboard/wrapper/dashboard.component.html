@@ -91,7 +91,7 @@
                         <p-progressBar
                           mode="determinate"
                           [showValue]="true"
-                          [value]="(item.total_completed_tasks/item.total_tasks)*100"
+                          [value]="calculatePercentage(item.total_completed_tasks,item.total_tasks)"
                           [style]="{ height: '12px' }"
               
                         ></p-progressBar>
