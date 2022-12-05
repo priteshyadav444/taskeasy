@@ -4,11 +4,11 @@
       <img src="assets/layout/images/logo.svg" alt="logo" />
     </a>
 
-    <a class="p-link layout-topbar-menu-button layout-topbar-button" href="#">
+    <a class="p-link layout-topbar-menu-button layout-topbar-button" (click)="toggleTopMenu($event)">
       <i class="pi pi-ellipsis-v"></i>
     </a>
 
-    <div class="layout-topbar-menu">
+    <div class="layout-topbar-menu" [ngClass]="{'layout-topbar-menu-mobile-active':topMenuActive}">
       <p-button
         label="New Project"
         (click)="addProject()"
