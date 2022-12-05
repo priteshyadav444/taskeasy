@@ -23,21 +23,28 @@ export class ProjectService {
     });
   }
 
+
+  getToken() {
+    return this.reqHeader = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'x-auth-token': JSON.parse(localStorage.getItem('authToken')),
+    });
+  }
+
   createProject(project:Project): Observable<Project> {
     return this.http.post<Project>(this.apiUrl,project,{
-      headers: this.reqHeader
+      headers: this.getToken()
     })
   }
-  async getToken(): Promise < string > {
-    return await localStorage.getItem('authToken');
-  }
+
+
+  // async getToken(): Promise < string > {
+  //   return await localStorage.getItem('authToken');
+  // }
   
   getAllProjects(): Observable<Project[]> {
     return this.http.get<Project[]>(this.apiUrl,{
-      headers:new HttpHeaders({
-        'Content-Type': 'application/json',
-        'x-auth-token': JSON.parse(localStorage.getItem('authToken')),
-      })
+      headers: this.getToken()
     }).pipe(
       map((data) => {
         const projects: Project[] = [];
