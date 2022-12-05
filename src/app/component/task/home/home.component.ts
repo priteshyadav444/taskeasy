@@ -200,11 +200,11 @@ export class HomeComponent implements OnInit {
 
 dialogOpen(args: DialogEventArgs): void {
   this.subTask = [];
+  this.selectedStatus = null;
 }
 
 dialogClose(args: DialogEventArgs): void {
     this.service.execute(this.pid);
-    this.selectedStatus = null;
     this.subtaskele = '';
     console.log("args close",args);
 }
