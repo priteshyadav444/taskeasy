@@ -219,9 +219,11 @@ export class DashboardComponent {
     const project :Project  = {
       project_title:this.title,
       project_deadline:this.selectedDate,
+      total_completed_tasks: 0,
+      total_tasks:0.
     }
     this.store.dispatch(addProjectStart({project}))
-    this.store.dispatch(loadAllProjects());
+    //this.store.dispatch(loadAllProjects());
     //this.uiService.toggleAddProject()
   }
 
