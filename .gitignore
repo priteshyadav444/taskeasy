@@ -42,3 +42,8 @@ testem.log
 Thumbs.db
 
 /backend
+
+# deployment files
+
+.firebaserc
+firebase.json
