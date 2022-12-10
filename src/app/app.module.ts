@@ -14,7 +14,6 @@ import { SidemenuComponent } from './main/sidemenu/sidemenu.component';
 
 import { AppMenuitemComponent } from './main/sidemenu/app.menuitem.component';
 
-import { TaskoverviewComponent } from './component/taskoverview/taskoverview.component';
 import { DividerModule } from 'primeng/divider';
 import { ChartModule } from 'primeng/chart';
 import { ProgressBarModule } from 'primeng/progressbar';
@@ -24,7 +23,6 @@ import {MenubarModule} from 'primeng/menubar';
 // import { FullCalendarModule } from '@fullcalendar/angular'; // must go before plugins
 // import dayGridPlugin from '@fullcalendar/daygrid'; // a plugin!
 // import interactionPlugin from '@fullcalendar/interaction';
-import { CalenderComponent } from './component/calender/calender.component';
 import { CheckboxModule } from 'primeng/checkbox';
 
 import { SplitButtonModule } from 'primeng/splitbutton';
@@ -41,7 +39,6 @@ import {TimelineModule} from 'primeng/timeline';
 import {PaginatorModule} from 'primeng/paginator';
 
 
-import { CompletedComponent } from './component/completed/completed.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { appReducer } from './app-store/app.state';
 import { StoreModule } from '@ngrx/store';
@@ -90,9 +87,6 @@ import { LogoutComponent } from './main/logout/logout.component';
     MainwrapperComponent,
     SidemenuComponent,
     AppMenuitemComponent,
-    TaskoverviewComponent,
-    CalenderComponent,
-    CompletedComponent,
     CreateTaskComponent,
     AuthwrapperComponent,
     LoadingSpinnerComponent,
