@@ -6,8 +6,8 @@ import { AppState } from 'src/app/app-store/app.state';
 import { MainwrapperComponent } from 'src/app/main/mainwrapper/mainwrapper.component';
 import { Task } from 'src/app/models/task.models';
 import { TasksCardService } from 'src/app/service/task/taskcard.service';
-import { loadAllTasks } from '../task/state/task.action';
-import { getTasks } from '../task/state/task.selector';
+import { loadAllTasks } from '../state/task.action';
+import { getTasks } from '../state/task.selector';
 // import { AppConfig } from '../../../app/api/appconfig';
 // import { ConfigService } from 'src/app/service/app.config.service';
 

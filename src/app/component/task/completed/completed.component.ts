@@ -4,8 +4,8 @@ import { MenuItem, PrimeIcons } from 'primeng/api';
 import { Observable } from 'rxjs';
 import { AppState } from 'src/app/app-store/app.state';
 import { TasksCardService } from 'src/app/service/task/taskcard.service';
-import { loadAllTasks } from '../task/state/task.action';
-import { getTasks } from '../task/state/task.selector';
+import { loadAllTasks } from '../state/task.action';
+import { getTasks } from '../state/task.selector';
 
 @Component({
   selector: 'app-completed',

@@ -28,9 +28,12 @@ import {BadgeModule} from 'primeng/badge';
 import {DropdownModule} from 'primeng/dropdown';
 import {AccordionModule} from 'primeng/accordion';
 import {ProgressBarModule} from 'primeng/progressbar';
-import { TaskoverviewComponent } from '../taskoverview/taskoverview.component';
-import { CalenderComponent } from '../calender/calender.component';
-import { CompletedComponent } from '../completed/completed.component';
+import { TaskoverviewComponent } from './taskoverview/taskoverview.component';
+import { CompletedComponent } from './completed/completed.component';
+import { CalenderComponent } from './calender/calender.component';
+import { ScheduleModule } from '@syncfusion/ej2-angular-schedule';
+import {TimelineModule} from 'primeng/timeline';
+import { ChartModule } from 'primeng/chart';
 
 const routes: Routes = [
   {
@@ -55,7 +58,7 @@ const routes: Routes = [
   }
 ];
 @NgModule({
-  declarations: [ HomeComponent],
+  declarations: [ HomeComponent, TaskoverviewComponent, CompletedComponent, CalenderComponent],
   imports: [
     DialogModule,
     SplitButtonModule,
@@ -77,6 +80,9 @@ const routes: Routes = [
     BadgeModule,
     AccordionModule,
     ProgressBarModule,
+    TimelineModule,
+    ChartModule,
+    ScheduleModule,
     RouterModule.forChild(routes),
     StoreModule.forFeature('tasks', tasksReducer),
     EffectsModule.forFeature([TaskEffects]),
