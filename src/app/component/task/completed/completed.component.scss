@@ -1,0 +1,110 @@
+.custom-marker {
+    display: flex;
+    width: 2rem;
+    height: 2rem;
+    align-items: center;
+    justify-content: center;
+    color: #ffffff;
+    border-radius: 50%;
+    z-index: 1;
+}
+
+::ng-deep {
+    .p-timeline-event-content,
+    .p-timeline-event-opposite {
+        line-height: 1;
+    }
+}
+
+@media screen and (max-width: 960px) {
+    ::ng-deep {
+        .customized-timeline {
+            .p-timeline-event:nth-child(even) {
+                flex-direction: row !important;
+                
+                .p-timeline-event-content {
+                    text-align: left !important;
+                }
+            }
+
+            .p-timeline-event-opposite {
+                flex: 0;
+            }
+
+            .p-card {
+                margin-top: 1rem;
+            }
+        }
+    }
+}
+
+.example-container {
+    width: auto;
+    max-width: 100%;
+    margin: 0 25px 25px 0;
+    display: inline-block;
+    vertical-align: top;
+  }
+  
+  .example-list {
+    border: solid 1px #ccc;
+    min-height: 60px;
+    background: white;
+    border-radius: 4px;
+    overflow: hidden;
+    display: block;
+   
+  }
+  
+  .example-box {
+    padding: 6px 6px;
+    margin: 3px;
+    color: #d5dddd;
+    display: flex;
+    border-radius: 2px;
+    flex-direction: row;
+    align-items: center;
+    box-sizing: border-box;
+    cursor: cursor;
+    background: white;
+    font-size: 14px;
+    opacity: 0.5;
+    background-color: #f1f4f4;
+  }
+  
+  .example-td {
+    align-items: left;
+  }
+  
+
+
+
+  @media (max-width: 992px) {
+    .example-title {
+        display: inline-block;
+        max-width: 500px;
+        white-space: nowrap;
+        overflow: hidden !important;
+        text-overflow: ellipsis;
+      }
+    }
+  
+    @media (max-width: 750px) {
+        .example-title {
+            display: inline-block;
+            max-width: 160px;
+            white-space: nowrap;
+            overflow: hidden !important;
+            text-overflow: ellipsis;
+          }
+  }
+
+  @media (max-width: 450px) {
+    .example-title {
+        display: inline-block;
+        max-width: 160px;
+        white-space: nowrap;
+        overflow: hidden !important;
+        text-overflow: ellipsis;
+      }
+}
