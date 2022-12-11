@@ -48,7 +48,7 @@ export class ProjectService {
       map((data) => {
         const projects: Project[] = [];
         for (let key in data) {
-          projects.push({ ...data[key], id: key });
+          projects.push({ ...data[key] });
         }
         return projects;
       })

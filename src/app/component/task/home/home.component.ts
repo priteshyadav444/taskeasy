@@ -168,6 +168,7 @@ export class HomeComponent implements OnInit {
   }
 
   public dataStateChange(state: DataStateChangeEventArgs): void {
+    console.log(this.pid)
     this.service.execute(this.pid);
   }
 

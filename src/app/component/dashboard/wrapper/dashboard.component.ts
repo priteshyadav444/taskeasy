@@ -9,7 +9,6 @@ import { UiService } from 'src/app/service/ui.service';
 import { addProjectStart, loadAllProjects } from '../state/project.action';
 import { Project } from 'src/app/models/projects.models';
 import { getAllProjects } from '../state/project.selector';
-
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',

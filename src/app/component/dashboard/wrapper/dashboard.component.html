@@ -56,6 +56,9 @@
                 <p-card
                   header="{{ item.project_title }}"
                   [style]="{
+                    'min-width': '16rem',
+                    'max-width': '16rem',
+                    height: '20rem',
                     'margin-left': '2em',
                     padding: '4px',
                     background: '#D2DAFF'
@@ -127,6 +130,7 @@
             id="text"
           />
         </div>
+        <hr class="m-0" />
         <p-calendar
           class="selectdate"
           [minDate]="minimumDate"

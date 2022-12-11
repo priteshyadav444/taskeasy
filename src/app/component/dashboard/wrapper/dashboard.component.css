@@ -12,3 +12,7 @@
     outline: none;
     border: none;
   }
+
+  .p-card .p-card-title{
+    font-size: small;
+  }

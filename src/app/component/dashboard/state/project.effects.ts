@@ -33,7 +33,7 @@ export class ProjectEffects {
       mergeMap((action) => {
         return this.projectService.createProject(action.project).pipe(
           map((data) => {
-            const project = { ...action.project, id: data.id };
+            const project = { ...action.project, _id: data._id };
             return addProjectSucess({ project });
           }),
           catchError((errResp) => {
