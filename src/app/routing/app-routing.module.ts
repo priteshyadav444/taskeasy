@@ -5,7 +5,7 @@ import { AuthwrapperComponent } from '../main/authwrapper/authwrapper/authwrappe
 import { AuthGuard } from '../service/auth.guard';
 import { MainComponent } from '../main/lending/main/main.component';
 import { DashboardComponent } from '../main/dashboard/wrapper/dashboard.component';
-import { LogoutComponent } from '../main/logout/logout.component';
+import { LogoutComponent } from '../main/dashboard/logout/logout.component';
 
 const routes: Routes = [
   {
