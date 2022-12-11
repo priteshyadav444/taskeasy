@@ -52,7 +52,7 @@ import {ToastModule} from 'primeng/toast';
 
 import { LoadingSpinnerComponent } from './shared/loading-spinner/loading-spinner.component';
 import { AuthEffects } from './component/auth/state/auth.effects';
-import { MainComponent } from './main/lending/main/main.component';
+
 
 //services
 import { MessageService,MenuItem } from 'primeng/api';
@@ -74,6 +74,7 @@ import { TimelineComponent } from './component/dashboard/timeline/timeline.compo
 import { LogoutComponent } from './component/dashboard/logout/logout.component';
 import { ProjectEffects } from './component/dashboard/state/project.effects';
 import { MainwrapperComponent } from './main/taskwrapper/wrapper/mainwrapper.component';
+import { MainComponent } from './component/lendingpage/main.component';
 
 @NgModule({
   declarations: [
