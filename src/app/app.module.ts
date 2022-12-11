@@ -71,7 +71,6 @@ import { TasksCardService } from './service/task/taskcard.service';
 
 //dashboard component
 import { DashboardComponent } from './component/dashboard/wrapper/dashboard.component';
-import { DashboardSidemenuComponent } from './component/dashboard/dashboard-sidemenu/dashboard-sidemenu.component';
 import { TimelineComponent } from './component/dashboard/timeline/timeline.component';
 import { LogoutComponent } from './component/dashboard/logout/logout.component';
 import { ProjectEffects } from './component/dashboard/state/project.effects';
@@ -89,7 +88,6 @@ import { ProjectEffects } from './component/dashboard/state/project.effects';
     MainComponent,
     LogoLoadingComponent,
     DashboardComponent,
-    DashboardSidemenuComponent,
     TimelineComponent,
     LogoutComponent
   ],
