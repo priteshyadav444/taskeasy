@@ -85,7 +85,6 @@ export class MainwrapperComponent implements AfterViewInit, OnDestroy, OnInit {
     public renderer: Renderer2,
     public app: AppComponent,
     private store: Store<AppState>,
-    private route: ActivatedRoute
   ) {
    
   }

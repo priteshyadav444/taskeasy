@@ -31,7 +31,7 @@ const routes: Routes = [
     ],
   },
   {
-    path: 'auth',
+    path: '',
     component: AuthwrapperComponent,
     children: [
       {

@@ -50,7 +50,7 @@ export class SignupComponent implements OnInit {
     console.log('SignUp');
   }
   onSignInClick(this: any) {
-    this.router.navigateByUrl('/auth/login');
+    this.router.navigateByUrl('/login');
   }
  
 

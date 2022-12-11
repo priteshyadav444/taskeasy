@@ -25,7 +25,7 @@ export class LoginComponent implements OnInit {
   
   onSignUpClick (this:any) {
     console.log("Login")
-    this.router.navigateByUrl('/auth/signup');
+    this.router.navigateByUrl('/signup');
   };
 
   onSignInSubmit(){
