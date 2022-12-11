@@ -8,11 +8,10 @@ import { AvatarModule } from 'primeng/avatar';
 import { AvatarGroupModule } from 'primeng/avatargroup';
 import { CardModule } from 'primeng/card';
 
-import { NavbarComponent } from './main/navbar/navbar.component';
-import { MainwrapperComponent } from './main/mainwrapper/mainwrapper.component';
-import { SidemenuComponent } from './main/sidemenu/sidemenu.component';
+import { NavbarComponent } from './main/taskwrapper/navbar/navbar.component';
+import { SidemenuComponent } from './main/taskwrapper/sidemenu/sidemenu.component';
 
-import { AppMenuitemComponent } from './main/sidemenu/app.menuitem.component';
+import { AppMenuitemComponent } from './main/taskwrapper/sidemenu/app.menuitem.component';
 
 import { DividerModule } from 'primeng/divider';
 import { ChartModule } from 'primeng/chart';
@@ -74,6 +73,7 @@ import { DashboardComponent } from './component/dashboard/wrapper/dashboard.comp
 import { TimelineComponent } from './component/dashboard/timeline/timeline.component';
 import { LogoutComponent } from './component/dashboard/logout/logout.component';
 import { ProjectEffects } from './component/dashboard/state/project.effects';
+import { MainwrapperComponent } from './main/taskwrapper/wrapper/mainwrapper.component';
 
 @NgModule({
   declarations: [

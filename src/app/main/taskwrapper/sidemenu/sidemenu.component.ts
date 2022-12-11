@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { TasksCardService } from 'src/app/service/task/taskcard.service';
-import { MainwrapperComponent } from '../mainwrapper/mainwrapper.component';
+import { MainwrapperComponent } from '../wrapper/mainwrapper.component';
 
 @Component({
   selector: 'app-sidemenu',

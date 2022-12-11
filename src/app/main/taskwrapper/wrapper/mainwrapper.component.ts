@@ -12,7 +12,6 @@ import {
   transition,
   animate,
 } from '@angular/animations';
-import { AppComponent } from '../../app.component';
 import { Subscription, Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/app-store/app.state';
@@ -20,6 +19,7 @@ import { getLogoLoading } from 'src/app/shared/state/Shared/shared.selector';
 import { autoLogin } from 'src/app/component/auth/state/auth.actions';
 import { setLogoLoading } from 'src/app/shared/state/Shared/shared.actions';
 import { ActivatedRoute } from '@angular/router';
+import { AppComponent } from 'src/app/app.component';
 
 @Component({
   selector: 'app-mainwrapper',

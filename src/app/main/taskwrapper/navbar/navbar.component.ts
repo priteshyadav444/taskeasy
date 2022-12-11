@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { MainwrapperComponent } from '../mainwrapper/mainwrapper.component';
-import { UiService } from '../../service/ui.service';
+import { UiService } from '../../../service/ui.service';
 import { ActivatedRoute } from '@angular/router';
+import { MainwrapperComponent } from '../wrapper/mainwrapper.component';
 
 @Component({
   selector: 'app-navbar',

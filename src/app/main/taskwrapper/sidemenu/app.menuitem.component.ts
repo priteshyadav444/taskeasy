@@ -3,8 +3,8 @@ import { NavigationEnd, Router } from '@angular/router';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { Subscription } from 'rxjs';
 import { filter } from 'rxjs/operators';
-import { MainwrapperComponent } from '../mainwrapper/mainwrapper.component';
 import { MenuService } from 'src/app/service/app.menu.service';
+import { MainwrapperComponent } from '../wrapper/mainwrapper.component';
 
 @Component({
     /* tslint:disable:componeAnt-selector */
