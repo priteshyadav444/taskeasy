@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { ProjectState } from 'src/app/main/dashboard/state/project.state';
 import { Observable,map } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Project } from 'src/app/models/projects.models';
@@ -49,7 +48,7 @@ export class ProjectService {
       map((data) => {
         const projects: Project[] = [];
         for (let key in data) {
-          projects.push({ ...data[key], id: key });
+          projects.push({ ...data[key] });
         }
         return projects;
       })

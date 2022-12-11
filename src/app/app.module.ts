@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
+import { BrowserModule, Title } from '@angular/platform-browser';
 import { AppRoutingModule } from './routing/app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -60,25 +60,20 @@ import { MessageService,MenuItem } from 'primeng/api';
 import { UiService } from './service/ui.service';
 import { MenuService } from './service/app.menu.service';
 import { TasksService } from './service/task/task.services';
-import { DashboardComponent } from './main/dashboard/wrapper/dashboard.component';
-import { DashboardSidemenuComponent } from './main/dashboard/dashboard-sidemenu/dashboard-sidemenu.component';
 import { ScheduleModule } from '@syncfusion/ej2-angular-schedule';
-import { TimelineComponent } from './main/dashboard/timeline/timeline.component';
-
-
-// FullCalendarModule.registerPlugins([
-//   dayGridPlugin,
-//   interactionPlugin
-// ]);
 
 
 import {CommonModule} from '@angular/common';
 import {TabViewModule} from 'primeng/tabview';
 import { LogoLoadingComponent } from './shared/logo-loading/logo-loading.component';
 import { TasksCardService } from './service/task/taskcard.service';
-import { ProjectEffects } from './main/dashboard/state/project.effects';
-import { LogoutComponent } from './main/logout/logout.component';
 
+
+//dashboard component
+import { DashboardComponent } from './component/dashboard/wrapper/dashboard.component';
+import { TimelineComponent } from './component/dashboard/timeline/timeline.component';
+import { LogoutComponent } from './component/dashboard/logout/logout.component';
+import { ProjectEffects } from './component/dashboard/state/project.effects';
 
 @NgModule({
   declarations: [
@@ -91,10 +86,9 @@ import { LogoutComponent } from './main/logout/logout.component';
     AuthwrapperComponent,
     LoadingSpinnerComponent,
     MainComponent,
-    DashboardComponent,
-    DashboardSidemenuComponent,
-    TimelineComponent,
     LogoLoadingComponent,
+    DashboardComponent,
+    TimelineComponent,
     LogoutComponent
   ],
   imports: [
@@ -136,7 +130,7 @@ import { LogoutComponent } from './main/logout/logout.component';
     }),
   ],
   
-  providers: [UiService,TasksService,MessageService, MenuService,TasksCardService],
+  providers: [UiService,TasksService,MessageService, MenuService,TasksCardService, Title],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

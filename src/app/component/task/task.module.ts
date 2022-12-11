@@ -34,6 +34,7 @@ import { CalenderComponent } from './calender/calender.component';
 import { ScheduleModule } from '@syncfusion/ej2-angular-schedule';
 import {TimelineModule} from 'primeng/timeline';
 import { ChartModule } from 'primeng/chart';
+import { ProjectReducer } from '../dashboard/state/project.reducer';
 
 const routes: Routes = [
   {

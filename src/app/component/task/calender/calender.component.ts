@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 import {
   DayService,
   MonthService,
@@ -30,7 +31,7 @@ export class CalenderComponent implements OnInit {
   private dataManager: DataManager = new DataManager();
  
   
-  constructor(private service:TasksCardService) {
+  constructor(private service:TasksCardService, private titleService: Title) {
     this.service.pid.subscribe(log=> {
       this.pid = log
       this.url = `http://127.0.0.1:3000/v1/tasks/calender/${this.pid}`
@@ -45,6 +46,7 @@ export class CalenderComponent implements OnInit {
   }
   
   ngOnInit(): void {
+    this.titleService.setTitle(`Calender - TaskEasy.in`);
      this.eventSettings = {
       dataSource:  this.dataManager,
       fields: {

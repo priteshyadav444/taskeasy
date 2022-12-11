@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Title } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { MessageService } from 'primeng/api';
 import { Observable } from 'rxjs';
 import { AppState } from 'src/app/app-store/app.state';
 import { setLoadingSpinner, setLogoLoading } from 'src/app/shared/state/Shared/shared.actions';
-import { getErrorMessage } from 'src/app/shared/state/Shared/shared.selector';
+import { getErrorMessage, getLoading, getLogoLoading } from 'src/app/shared/state/Shared/shared.selector';
 import { signupStart } from '../state/auth.actions';
 
 @Component({
@@ -18,20 +19,29 @@ import { signupStart } from '../state/auth.actions';
 export class SignupComponent implements OnInit {
   signUpForm!: FormGroup;
   errorMessage!:Observable<string>;
-  constructor(private router: Router,private store :Store<AppState>) {}
+  constructor(private router: Router,private store :Store<AppState>, private titleService: Title) {}
 
 
   confirmPassword(signUpForm: FormGroup) {
     return signUpForm.controls['newPassword'].value === signUpForm.controls['repeatNewPassword'].value ? null : {'mismatch': true};
   }
   ngOnInit(): void {
-   
+    this.titleService.setTitle("Signup - TaskEasy.in");
     this.signUpForm = new FormGroup({
       firstname: new FormControl('', Validators.required),
       lastname: new FormControl('', Validators.required),
       email: new FormControl('', [Validators.required, Validators.email]),
       password: new FormControl('', [ Validators.required, Validators.minLength(8)]),
     
+    });
+
+    this.store.select(getLogoLoading).pipe().forEach((value)=>{
+      if(value==true){
+        this.titleService.setTitle("checking......");
+      }
+      else{
+        this.titleService.setTitle("Signup - TaskEasy.in");
+      }
     });
     
   }
@@ -50,7 +60,7 @@ export class SignupComponent implements OnInit {
     console.log('SignUp');
   }
   onSignInClick(this: any) {
-    this.router.navigateByUrl('/auth/login');
+    this.router.navigateByUrl('/login');
   }
  
 

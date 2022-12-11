@@ -94,7 +94,7 @@ export class AuthEffects {
           if (action.redirect) {
             this.router.navigate([this.defaultRedirect]);
           } else {
-            this.router.navigate(['/auth']);
+            this.router.navigate(['login']);
           }
         })
       );

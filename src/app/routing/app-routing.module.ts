@@ -4,8 +4,8 @@ import { MainwrapperComponent } from '../main/mainwrapper/mainwrapper.component'
 import { AuthwrapperComponent } from '../main/authwrapper/authwrapper/authwrapper.component';
 import { AuthGuard } from '../service/auth.guard';
 import { MainComponent } from '../main/lending/main/main.component';
-import { DashboardComponent } from '../main/dashboard/wrapper/dashboard.component';
-import { LogoutComponent } from '../main/logout/logout.component';
+import { DashboardComponent } from '../component/dashboard/wrapper/dashboard.component';
+import { LogoutComponent } from '../component/dashboard/logout/logout.component';
 
 const routes: Routes = [
   {
@@ -31,7 +31,7 @@ const routes: Routes = [
     ],
   },
   {
-    path: 'auth',
+    path: '',
     component: AuthwrapperComponent,
     children: [
       {

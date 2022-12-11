@@ -16,8 +16,7 @@ export class UiService {
   }
   toggleAddProject():void{
     
-    this.showAddProject = !this.showAddProject
-    console.log(this.showAddProject)
+    this.showAddProject = !this.showAddProject    
     this.projectsubject.next(this.showAddProject)
   }
   onToggle():Observable<any>{
