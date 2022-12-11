@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
@@ -35,7 +36,8 @@ export class TaskoverviewComponent implements OnInit {
   constructor(
     public appMain: MainwrapperComponent,
     private store: Store<AppState>,
-    private service: TasksCardService
+    private service: TasksCardService,
+    private titleService: Title
   ) {
     this.service.pid.subscribe((log) => {
       this.pid = log;
@@ -66,6 +68,7 @@ export class TaskoverviewComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.titleService.setTitle(`TaskOverview - TaskEasy.in`);
     this.doughnutdata = {
       labels: ['low', 'medium', 'High'],
       datasets: [

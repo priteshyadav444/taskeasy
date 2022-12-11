@@ -12,6 +12,7 @@ import { getAllProjects } from '../state/project.selector';
 import { setLoadingSpinner } from 'src/app/shared/state/Shared/shared.actions';
 import { Observable } from 'rxjs';
 import { getLoading } from 'src/app/shared/state/Shared/shared.selector';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-dashboard',
@@ -61,13 +62,25 @@ export class DashboardComponent {
     private uiService: UiService,
     public renderer: Renderer2,
     public app: AppComponent,
-    private store: Store<AppState>
+    private store: Store<AppState>,
+    private titleService: Title
   ) {
-    ngOnInit() {
-      this.uiService
-        .onProjectToggle()
-        .subscribe((value) => {this.showDailog = value;});
+    this.uiService
+    .onProjectToggle()
+    .subscribe((value) => {this.showDailog = value;});
   }
+
+  ngOnInit() {
+    this.titleService.setTitle("Dashboard - TaskEasy.in");
+    this.store.select(getLoading).pipe().forEach((value)=>{
+      if(value==true){
+        this.titleService.setTitle("creating project..."); 
+      }
+      else{
+        this.titleService.setTitle("Dashboard - TaskEasy.in");
+      }
+    })
+
     this.store.dispatch(loadAllProjects());
     this.projects = this.store.select(getAllProjects);
     this.showLoading$ = this.store.select(getLoading);
@@ -244,6 +257,7 @@ export class DashboardComponent {
     this.store.dispatch(addProjectStart({project}))
     this.showDailog = false
     this.clearProject();
+    
   }
 
   calculatePercentage(totalCompletedTask, totalTasks){
