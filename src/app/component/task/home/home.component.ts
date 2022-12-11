@@ -1,4 +1,10 @@
-import { Component, OnInit, Output, ViewChild, EventEmitter } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  Output,
+  ViewChild,
+  EventEmitter,
+} from '@angular/core';
 import { CdkDragDrop, transferArrayItem } from '@angular/cdk/drag-drop';
 import { MenuItem } from 'primeng/api';
 import { Store } from '@ngrx/store';
@@ -27,7 +33,9 @@ import {
 } from '@syncfusion/ej2-angular-kanban';
 import { TasksCardService } from 'src/app/service/task/taskcard.service';
 import { ActivatedRoute } from '@angular/router';
-import {DropDownListComponent} from '@syncfusion/ej2-angular-dropdowns';
+import { DropDownListComponent } from '@syncfusion/ej2-angular-dropdowns';
+import { Title } from '@angular/platform-browser';
+import { getAllProjects, getProjectTitle } from '../../dashboard/state/project.selector';
 
 interface Status {
   task_status: string;
@@ -59,7 +67,7 @@ export class HomeComponent implements OnInit {
   unsheduled!: any;
   displayBasic!: boolean;
   displayCategory!: boolean;
- 
+
   knobvalue: number = 50;
   value2!: string;
 
@@ -73,17 +81,18 @@ export class HomeComponent implements OnInit {
   subTask: any = [];
   subtaskele!: string;
   @Output() messageEvent = new EventEmitter<string>();
-  
+  projecttitle: any;
 
   constructor(
     private store: Store<AppState>,
     private service: TasksCardService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private titleService: Title
   ) {
     this.data = service;
     this.pid = this.route.snapshot.paramMap.get('id');
     this.service.activateRouter$.next(this.pid);
-    this.service.setId(this.pid)
+    this.service.setId(this.pid);
 
     this.status = [
       { task_status: 'Active', code: 'active' },
@@ -91,7 +100,7 @@ export class HomeComponent implements OnInit {
       { task_status: 'Done', code: 'done' },
       { task_status: 'Unsheduled', code: 'unsheduled' },
     ];
-    
+
     this.badge = [
       {
         label: 'low',
@@ -111,44 +120,57 @@ export class HomeComponent implements OnInit {
           this.selectCategory('high');
         },
       },
-
     ];
   }
-  
+
   selectCategory(category: string) {
     this.selectedCategory = category;
   }
 
   public dataSourceChanged(state: DataSourceChangedEventArgs): void {
-    console.log("source dataSourceChanged", state)
+    console.log('source dataSourceChanged', state);
     if (state.requestType === 'cardCreated') {
       this.service.addCard(state, this.pid).subscribe(() => {
         state.endEdit();
       });
     } else if (state.requestType === 'cardChanged') {
-      if(this.subTask.length>0){
-        state.changedRecords[0] = {...state.changedRecords[0], subtasklist:[ ...state.changedRecords[0]['subtasklist'] , ...this.subTask]};
-        this.subTask = []
+      if (this.subTask.length > 0) {
+        state.changedRecords[0] = {
+          ...state.changedRecords[0],
+          subtasklist: [
+            ...state.changedRecords[0]['subtasklist'],
+            ...this.subTask,
+          ],
+        };
+        this.subTask = [];
       }
-      
-      if(this.selectedStatus!=undefined){
-        state.changedRecords[0] = {...state.changedRecords[0], task_status: this.selectedStatus}; 
-        this.selectedStatus==undefined;
+
+      if (this.selectedStatus != undefined) {
+        state.changedRecords[0] = {
+          ...state.changedRecords[0],
+          task_status: this.selectedStatus,
+        };
+        this.selectedStatus == undefined;
       }
-      
+
       //if all suntask completed
       const subtasklistcopy = state.changedRecords[0]['subtasklist'];
       console.log(subtasklistcopy);
-      if(subtasklistcopy.length>0){
+      if (subtasklistcopy.length > 0) {
         var cnt = 0;
 
-        subtasklistcopy.forEach(element => {
-          if(element.checked==true) { cnt++; }
+        subtasklistcopy.forEach((element) => {
+          if (element.checked == true) {
+            cnt++;
+          }
         });
         console.log(cnt);
-        
-        if(cnt==subtasklistcopy.length){
-          state.changedRecords[0] = {...state.changedRecords[0], task_status: "done"}; 
+
+        if (cnt == subtasklistcopy.length) {
+          state.changedRecords[0] = {
+            ...state.changedRecords[0],
+            task_status: 'done',
+          };
         }
       }
       console.log(state.changedRecords[0]);
@@ -156,10 +178,8 @@ export class HomeComponent implements OnInit {
         state.endEdit();
       });
 
-      this.selectedStatus==undefined;
-      this.subTask = []
-
-      
+      this.selectedStatus == undefined;
+      this.subTask = [];
     } else if (state.requestType === 'cardRemoved') {
       this.service.deleteCard(state, this.pid).subscribe(() => {
         state.endEdit();
@@ -168,7 +188,7 @@ export class HomeComponent implements OnInit {
   }
 
   public dataStateChange(state: DataStateChangeEventArgs): void {
-    console.log(this.pid)
+    console.log(this.pid);
     this.service.execute(this.pid);
   }
 
@@ -178,11 +198,31 @@ export class HomeComponent implements OnInit {
 
   public dialogSettings: DialogSettingsModel = {
     fields: [
-      { text: 'Status', key: 'task_status', type: 'DropDown', validationRules: { required: true } },
+      {
+        text: 'Status',
+        key: 'task_status',
+        type: 'DropDown',
+        validationRules: { required: true },
+      },
       { key: 'badge', type: 'DropDown', validationRules: { required: true } },
-      { text: 'Title', key: 'title', type: 'TextBox', validationRules: { required: true } },
-      { text: 'Description', key: 'description', type: 'TextArea', validationRules: { required: true } },
-      { text: 'Priority', key: 'badge', type: 'TextBox', validationRules: { required: true } },
+      {
+        text: 'Title',
+        key: 'title',
+        type: 'TextBox',
+        validationRules: { required: true },
+      },
+      {
+        text: 'Description',
+        key: 'description',
+        type: 'TextArea',
+        validationRules: { required: true },
+      },
+      {
+        text: 'Priority',
+        key: 'badge',
+        type: 'TextBox',
+        validationRules: { required: true },
+      },
     ],
   };
 
@@ -197,26 +237,28 @@ export class HomeComponent implements OnInit {
     { Id: 'done', Name: 'Done' },
     { Id: 'pending', Name: 'Pending' },
     { Id: 'unsheduled', Name: 'Unsheduled' },
-];
+  ];
 
-dialogOpen(args: DialogEventArgs): void {
-  this.subTask = [];
-  this.selectedStatus = null;
-}
+  dialogOpen(args: DialogEventArgs): void {
+    this.subTask = [];
+    this.selectedStatus = null;
+  }
 
-dialogClose(args: DialogEventArgs): void {
+  dialogClose(args: DialogEventArgs): void {
     this.service.execute(this.pid);
     this.subtaskele = '';
-    console.log("args close",args);
-}
-public fields: Object = { text: 'Name', value: 'Id' };
+    console.log('args close', args);
+  }
+  public fields: Object = { text: 'Name', value: 'Id' };
 
   ngOnInit(): void {
+    // this.titleService.setTitle(`${this.projecttitle} - TaskEasy.in`);
+    this.titleService.setTitle(`TaskEasy.in`);
     let state = { skip: 0, take: 10 };
     this.service.execute(this.pid);
     this.cardSettings = {
       headerField: '_id',
-      selectionType: 'Single'
+      selectionType: 'Single',
     };
 
     // this.store.dispatch(loadAllTasks({ pid:this.pid }));
@@ -277,7 +319,7 @@ public fields: Object = { text: 'Name', value: 'Id' };
 
     return diffDays + ' Days: ' + diffHrs + 'H';
   }
-  
+
   calculateCompletionDiff(sentDate, fromDate) {
     var date1: any = new Date(sentDate);
     var date2: any = new Date(fromDate);
@@ -290,18 +332,18 @@ public fields: Object = { text: 'Name', value: 'Id' };
     return diffDays + ' Days: ' + diffHrs + 'H';
   }
 
-  calulateCompleteSubTask(data){
+  calulateCompleteSubTask(data) {
     var result = 0;
-    data.forEach(element => {
-      if(element.checked==true){
+    data.forEach((element) => {
+      if (element.checked == true) {
         result++;
       }
     });
     return result;
   }
-  
-  calculatePercentage(data){
-    return  Math.round(((this.calulateCompleteSubTask(data)*100)/data.length));
+
+  calculatePercentage(data) {
+    return Math.round((this.calulateCompleteSubTask(data) * 100) / data.length);
   }
 
   showBasicDialog() {
@@ -333,7 +375,7 @@ public fields: Object = { text: 'Name', value: 'Id' };
     this.displayCategory = true;
   }
 
-  addSubTask(data:any, stask: any) {
+  addSubTask(data: any, stask: any) {
     if (stask == '' || stask == null) {
       return;
     } else {
@@ -343,7 +385,7 @@ public fields: Object = { text: 'Name', value: 'Id' };
       this.subtaskele = '';
     }
   }
-  onChange(item:any){
-   //console.log("item",item)
+  onChange(item: any) {
+    //console.log("item",item)
   }
 }
