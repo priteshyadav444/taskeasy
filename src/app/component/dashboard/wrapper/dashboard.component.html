@@ -1,3 +1,4 @@
+<app-loading-spinner *ngIf="showLoading$ | async"></app-loading-spinner>
 <div class="layout-wrapper layout-static layout-static-sidebar-inactive">
   <div class="layout-topbar">
     <a class="layout-topbar-logo" routerLink="/dashboard">
@@ -142,10 +143,7 @@
           placeholder="Selected Deadline Date"
           appendTo="body"
         ></p-calendar>
-        <!-- <div *ngIf="addtaskForm.get('title')!.errors?.['required']">
-      Title is required
-    </div> -->
-
+        <!-- <input type="color" name="cardcolor" id=""> -->
         <div class="w-100 mt-2">
           <button pButton type="submit" label="Create Project"></button>
         </div>

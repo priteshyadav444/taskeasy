@@ -9,6 +9,10 @@ import { UiService } from 'src/app/service/ui.service';
 import { addProjectStart, loadAllProjects } from '../state/project.action';
 import { Project } from 'src/app/models/projects.models';
 import { getAllProjects } from '../state/project.selector';
+import { setLoadingSpinner } from 'src/app/shared/state/Shared/shared.actions';
+import { Observable } from 'rxjs';
+import { getLoading } from 'src/app/shared/state/Shared/shared.selector';
+
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
@@ -22,6 +26,8 @@ export class DashboardComponent {
   selectedDate:any = null
   minimumDate:any = new Date();
   projects:any=[];
+  showLoading$:Observable<boolean> | undefined
+  
   public menuInactiveDesktop!: boolean;
 
   public menuActiveMobile!: boolean;
@@ -57,14 +63,14 @@ export class DashboardComponent {
     public app: AppComponent,
     private store: Store<AppState>
   ) {
-    this.uiService
-      .onProjectToggle()
-      .subscribe((value) => {this.showDailog = value;});
+    ngOnInit() {
+      this.uiService
+        .onProjectToggle()
+        .subscribe((value) => {this.showDailog = value;});
   }
-
-  ngOnInit() {
     this.store.dispatch(loadAllProjects());
     this.projects = this.store.select(getAllProjects);
+    this.showLoading$ = this.store.select(getLoading);
     this.items = [
       {
         label: 'File',
@@ -213,17 +219,31 @@ export class DashboardComponent {
   close() {
      this.uiService.toggleAddProject()
   }
+  clearProject(){
+     this.title = ""
+     this.selectedDate = ""
+  }
 
   onAddProject() { 
+    if(this.title=="" || this.title==null){
+      return alert('Enter Title');
+    }
+
+    if(this.selectedDate=="" || this.selectedDate==null){
+      return alert('Select Deadline');
+    }
+
     const project :Project  = {
       project_title:this.title,
       project_deadline:this.selectedDate,
       total_completed_tasks: 0,
       total_tasks:0.
     }
+    
+    this.store.dispatch(setLoadingSpinner({ status: true }));
     this.store.dispatch(addProjectStart({project}))
-    //this.store.dispatch(loadAllProjects());
-    //this.uiService.toggleAddProject()
+    this.showDailog = false
+    this.clearProject();
   }
 
   calculatePercentage(totalCompletedTask, totalTasks){

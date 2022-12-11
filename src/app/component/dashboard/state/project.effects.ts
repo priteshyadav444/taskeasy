@@ -13,6 +13,7 @@ import { catchError, exhaustMap, map, mergeMap, tap } from 'rxjs';
 import { of } from 'rxjs';
 import { ProjectService } from 'src/app/service/project/project.service';
 import { Project } from 'src/app/models/projects.models';
+import { setLoadingSpinner } from 'src/app/shared/state/Shared/shared.actions';
 
 @Injectable()
 export class ProjectEffects {
@@ -34,9 +35,11 @@ export class ProjectEffects {
         return this.projectService.createProject(action.project).pipe(
           map((data) => {
             const project = { ...action.project, _id: data._id };
+            this.store.dispatch(setLoadingSpinner({ status: false }));
             return addProjectSucess({ project });
           }),
           catchError((errResp) => {
+            this.store.dispatch(setLoadingSpinner({ status: false }));
             return of();
           })
         );
