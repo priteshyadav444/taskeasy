@@ -1,9 +1,9 @@
 import { AuthReducer } from "../component/auth/state/auth.reducer";
 import { AuthState } from "../component/auth/state/auth.state";
+import { ProjectReducer } from "../component/dashboard/state/project.reducer";
+import { ProjectState } from "../component/dashboard/state/project.state";
 import { tasksReducer } from "../component/task/state/task.reducers";
 import { TaskState } from "../component/task/state/task.state";
-import { ProjectReducer } from "../main/dashboard/state/project.reducer";
-import { ProjectState } from "../main/dashboard/state/project.state";
 import { SharedReducer } from "../shared/state/Shared/shared.reducer";
 import { SHARED_STATE_NAME } from "../shared/state/Shared/shared.selector";
 import { SharedState } from "../shared/state/Shared/shared.state";
