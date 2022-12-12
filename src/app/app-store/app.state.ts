@@ -4,9 +4,9 @@ import { ProjectReducer } from "../component/dashboard/state/project.reducer";
 import { ProjectState } from "../component/dashboard/state/project.state";
 import { tasksReducer } from "../component/task/state/task.reducers";
 import { TaskState } from "../component/task/state/task.state";
-import { SharedReducer } from "../shared/state/Shared/shared.reducer";
-import { SHARED_STATE_NAME } from "../shared/state/Shared/shared.selector";
-import { SharedState } from "../shared/state/Shared/shared.state";
+import { SharedReducer } from "../component/shared/state/Shared/shared.reducer";
+import { SHARED_STATE_NAME } from "../component/shared/state/Shared/shared.selector";
+import { SharedState } from "../component/shared/state/Shared/shared.state";
 
 export interface AppState{
     tasks: TaskState;
