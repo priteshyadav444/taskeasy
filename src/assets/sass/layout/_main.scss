@@ -77,8 +77,16 @@ a {
 .p-accordion-tab .p-accordion-tab-active {
   background-color: #edf1f5;
 }
-
-
 .p-accordion .p-accordion-header:not(.p-highlight):not(.p-disabled):hover .p-accordion-header-link {
   background-color:white;
+}
+
+.e-kanban .e-kanban-content .e-content-row .e-content-cells .e-card-wrapper .e-card .e-card-content, .e-kanban .e-kanban-content .e-content-row .e-content-cells .e-card-container .e-card .e-card-content{
+  padding: 0;
+}
+.e-kanban .e-kanban-content .e-content-row .e-content-cells .e-card-wrapper .e-card.e-selection:hover, .e-kanban .e-kanban-content .e-content-row .e-content-cells .e-card-container .e-card.e-selection:hover{
+  box-shadow: none;
+}
+.e-kanban .e-kanban-content .e-content-row .e-content-cells .e-card-wrapper .e-card {
+  box-shadow: 0 1px 5px rgb(0 0 0 / 0.2);
 }
