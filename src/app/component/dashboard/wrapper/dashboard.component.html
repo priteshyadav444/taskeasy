@@ -1,9 +1,9 @@
 <app-loading-spinner *ngIf="showLoading$ | async"></app-loading-spinner>
 <div class="layout-wrapper layout-static layout-static-sidebar-inactive">
   <div class="layout-topbar">
-    <a class="layout-topbar-logo" routerLink="/dashboard">
-      <img src="assets/layout/images/logo.svg" alt="logo" />
-    </a>
+    <span class="layout-topbar-logo" >
+      <img src="assets/layout/images/logo.svg" alt="logo" routerLink="/dashboard" />
+    </span>
 
     <a class="p-link layout-topbar-menu-button layout-topbar-button" (click)="toggleTopMenu($event)">
       <i class="pi pi-ellipsis-v"></i>
