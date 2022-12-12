@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { PrimeNGConfig } from 'primeng/api';
 import { autoLogin } from './component/auth/state/auth.actions';
-import { setLogoLoading } from './shared/state/Shared/shared.actions';
+import { setLogoLoading } from './component/shared/state/Shared/shared.actions';
 @Component({
     selector: 'app-root',
     templateUrl: './app.component.html'

@@ -18,7 +18,7 @@ import {
   setErrorMessage,
   setLoadingSpinner,
   setLogoLoading,
-} from 'src/app/shared/state/Shared/shared.actions';
+} from 'src/app/component/shared/state/Shared/shared.actions';
 import { Router } from '@angular/router';
 
 @Injectable()

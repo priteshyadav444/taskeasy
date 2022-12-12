@@ -9,9 +9,9 @@ import { UiService } from 'src/app/service/ui.service';
 import { addProjectStart, loadAllProjects } from '../state/project.action';
 import { Project } from 'src/app/models/projects.models';
 import { getAllProjects } from '../state/project.selector';
-import { setLoadingSpinner } from 'src/app/shared/state/Shared/shared.actions';
+import { setLoadingSpinner } from 'src/app/component/shared/state/Shared/shared.actions';
 import { Observable } from 'rxjs';
-import { getLoading } from 'src/app/shared/state/Shared/shared.selector';
+import { getLoading } from 'src/app/component/shared/state/Shared/shared.selector';
 import { Title } from '@angular/platform-browser';
 
 @Component({

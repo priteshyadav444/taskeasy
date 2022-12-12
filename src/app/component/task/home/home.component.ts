@@ -21,7 +21,7 @@ import {
 } from '../state/task.selector';
 import { Observable } from 'rxjs';
 import { Task } from 'src/app/models/task.models';
-import { setLogoLoading } from 'src/app/shared/state/Shared/shared.actions';
+import { setLogoLoading } from 'src/app/component/shared/state/Shared/shared.actions';
 import {
   CardSettingsModel,
   DataSourceChangedEventArgs,

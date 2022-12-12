@@ -50,7 +50,7 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { AuthwrapperComponent } from './main/authwrapper/authwrapper/authwrapper.component';
 import {ToastModule} from 'primeng/toast';
 
-import { LoadingSpinnerComponent } from './shared/loading-spinner/loading-spinner.component';
+import { LoadingSpinnerComponent } from './component/shared/loading-spinner/loading-spinner.component';
 import { AuthEffects } from './component/auth/state/auth.effects';
 
 
@@ -64,7 +64,7 @@ import { ScheduleModule } from '@syncfusion/ej2-angular-schedule';
 
 import {CommonModule} from '@angular/common';
 import {TabViewModule} from 'primeng/tabview';
-import { LogoLoadingComponent } from './shared/logo-loading/logo-loading.component';
+import { LogoLoadingComponent } from './component/shared/logo-loading/logo-loading.component';
 import { TasksCardService } from './service/task/taskcard.service';
 
 
