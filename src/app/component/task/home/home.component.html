@@ -12,8 +12,10 @@
   (dialogClose)="dialogClose($event)"
 >
   <e-columns>
-    <e-column headerText="To Do" keyField="pending"> </e-column>
-    <e-column headerText="In Progress" keyField="active"></e-column>
+    <e-column headerText="To Do" keyField="pending"> 
+    </e-column>
+    <e-column headerText="In Progress" keyField="active">
+    </e-column>
     <e-column headerText="Done" keyField="done"></e-column>
     <e-column headerText="Unsheduled" keyField="unsheduled"></e-column>
   </e-columns>
@@ -187,39 +189,80 @@
             {{ data.title }}
           </div>
           <div class="card-15__date">
-            {{
+            <!-- {{
               data.scheduled_date == null
                 ? (data.updatedAt | date: mediumDate)
                 : (data.scheduled_date | date: mediumDate)
-            }}
+            }} -->
+            <div class="card-15__avatar">
+            
+              <div
+                *ngIf="
+                  data.badge === 'medium' ||
+                    data.badge === 'low' ||
+                    data.badge === 'high';
+                  else elseBlock
+                "
+              >
+                <div *ngIf="data.badge === 'low'">
+                  <p-badge
+                    [value]="data.badge"
+                    severity="info"
+                    styleClass="mr-2"
+                  ></p-badge>
+                </div>
+  
+                <div *ngIf="data.badge === 'medium'">
+                  <p-badge
+                    [value]="data.badge"
+                    severity="warning"
+                    styleClass="mr-2"
+                  ></p-badge>
+                </div>
+  
+                <div *ngIf="data.badge === 'high'">
+                  <p-badge
+                    [value]="data.badge"
+                    severity="danger"
+                    styleClass="mr-2"
+                  ></p-badge>
+                </div>
+              </div>
+              <ng-template #elseBlock
+                ><p-badge
+                  [value]="data.badge"
+                  severity="info"
+                  styleClass="mr-2"
+                ></p-badge
+              ></ng-template>
+              <i class="pi pi-ellipsis-v" style="font-size: 1rem"></i>
+            </div>
           </div>
         </div>
-        <div class="card-15__pos">
-          {{ data.description }}
-        </div>
-        <div class="card-15__colthree">
+        
+        <!-- <div class="card-15__colthree">
           <div class="card-15__percent">
              
             <span class="card-15__complete">{{data.subtasklist?.length==0? "": calculatePercentage(data.subtasklist)+"%"}}</span>
           </div>
           
           <div class="card-15__days"> {{ data.subtasklist?.length==0? "No SubTask": (calulateCompleteSubTask(data.subtasklist))+"/"+data.subtasklist?.length}} </div>
-        </div>
+        </div> -->
 
-        <div class="card-15__progressbar">
+        <div class="card-15__progressbar mt-2">
           <span *ngIf="data.subtasklist?.length > 0">
-          <p-progressBar [value]="calculatePercentage(data.subtasklist)" [style]="{ height: '12px'}"></p-progressBar>
+          <p-progressBar [value]="calculatePercentage(data.subtasklist)" [style]="{ height: '10px'}"></p-progressBar>
           </span>
         </div>
 
         <div *ngIf="data.subtasklist?.length > 0" class="field col-12 p-0 mt-1">
           <div class="example-list-create">
             <p-accordion [multiple]="true">
-              <p-accordionTab header="SubTasks" [selected]="true">
+              <p-accordionTab header="subtasks - {{data.subtasklist?.length-calulateCompleteSubTask(data.subtasklist)}}" [selected]="true">
                 <div *ngIf="data.subtasklist?.length != 0">
                   <div *ngFor="let item of data.subtasklist">
                     <div *ngIf="item.checked == false" class="example-box">
-                      <div class="example-box flex justify-content-between">
+                      <div class="flex justify-content-between mr-1">
                         <p-checkbox
                           name="groupname"
                           value="{{ item.checked }}"
@@ -229,7 +272,7 @@
 
                       <div class="example-td mr-auto">
                         <span
-                          class="text-900 font-medium text-md example-title"
+                          class="font-medium text-md example-title"
                         >
                           {{ item.stitle }}</span
                         >
@@ -239,7 +282,7 @@
                 </div>
               </p-accordionTab>
 
-              <p-accordionTab header="Completed Tasks" style="margin-top: 4px">
+              <p-accordionTab header="completed - {{calulateCompleteSubTask(data.subtasklist)}}" style="margin-top: 4px">
                 <div *ngIf="data.subtasklist?.length != 0">
                   <div *ngFor="let item of data.subtasklist">
                     <div *ngIf="item.checked == true" class="example-box">
@@ -254,7 +297,7 @@
 
                       <div class="example-td mr-auto">
                         <span
-                          class="text-900 font-medium text-md example-title"
+                          class="font-medium text-md example-title"
                         >
                           {{ item.stitle }}</span
                         >
@@ -268,48 +311,6 @@
         </div>
 
         <div class="card-15__colfive">
-          <div class="card-15__avatar">
-            <div
-              *ngIf="
-                data.badge === 'medium' ||
-                  data.badge === 'low' ||
-                  data.badge === 'high';
-                else elseBlock
-              "
-            >
-              <div *ngIf="data.badge === 'low'">
-                <p-badge
-                  [value]="data.badge"
-                  severity="info"
-                  styleClass="mr-2"
-                ></p-badge>
-              </div>
-
-              <div *ngIf="data.badge === 'medium'">
-                <p-badge
-                  [value]="data.badge"
-                  severity="warning"
-                  styleClass="mr-2"
-                ></p-badge>
-              </div>
-
-              <div *ngIf="data.badge === 'high'">
-                <p-badge
-                  [value]="data.badge"
-                  severity="danger"
-                  styleClass="mr-2"
-                ></p-badge>
-              </div>
-            </div>
-            <ng-template #elseBlock
-              ><p-badge
-                [value]="data.badge"
-                severity="info"
-                styleClass="mr-2"
-              ></p-badge
-            ></ng-template>
-          </div>
-
           <div class="card-15__stat">
             <div class="card-15__statinfo">
               <span
@@ -337,22 +338,12 @@
                 </span>
               </span>
               <ng-template #elseBlock1>
-                <span *ngIf="data.task_status == 'unsheduled'">
-                  <i
-                    class="pi pi-circle-fill"
-                    style="color: greenyellow; font-weight: bolder"
-                  >
-                    <b> Unsheduled </b>
-                  </i>
+                <span *ngIf="data.task_status == 'unsheduled'" style="font-size: 1rem;">
+                  <i class="pi pi-tag pi-tag" style="font-size: 1rem; color: greenyellow; font-weight: bolder"></i>  <b> Unsheduled </b>
                 </span>
 
-                <span *ngIf="data.task_status == 'pending'">
-                  <i
-                    class="pi pi-circle-fill"
-                    style="color: red; font-weight: bolder"
-                  >
-                    <b> Not Started </b>
-                  </i>
+                <span *ngIf="data.task_status == 'pending'" style="font-size: 1rem;">
+                  <i class="pi pi-tag pi-tag" style="font-size: 1rem; color: red; font-weight: bolder"></i>  <b> Not Started </b>
                 </span>
               </ng-template>
             </div>
