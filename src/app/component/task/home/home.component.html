@@ -258,7 +258,7 @@
         <div *ngIf="data.subtasklist?.length > 0" class="field col-12 p-0 mt-1">
           <div class="example-list-create">
             <p-accordion [multiple]="true">
-              <p-accordionTab header="subtasks - {{data.subtasklist?.length-calulateCompleteSubTask(data.subtasklist)}}" [selected]="true">
+              <p-accordionTab header="subtasks - {{data.subtasklist?.length-calulateCompleteSubTask(data.subtasklist)}}" [selected]="false">
                 <div *ngIf="data.subtasklist?.length != 0">
                   <div *ngFor="let item of data.subtasklist">
                     <div *ngIf="item.checked == false" class="example-box">
@@ -282,11 +282,11 @@
                 </div>
               </p-accordionTab>
 
-              <p-accordionTab header="completed - {{calulateCompleteSubTask(data.subtasklist)}}" style="margin-top: 4px">
+              <p-accordionTab *ngIf="calulateCompleteSubTask(data.subtasklist) != 0" header="completed - {{calulateCompleteSubTask(data.subtasklist)}}" style="margin-top: 4px">
                 <div *ngIf="data.subtasklist?.length != 0">
                   <div *ngFor="let item of data.subtasklist">
                     <div *ngIf="item.checked == true" class="example-box">
-                      <div class="example-box flex justify-content-between">
+                      <div class="flex justify-content-between mr-1">
                         <p-checkbox
                           name="groupname"
                           [(ngModel)]="item.checked"
