@@ -268,7 +268,7 @@ export class HomeComponent implements OnInit {
     // this.todaycompleted = this.store.select(getTodayCompletedTasks);
     // this.scheduled = this.store.select(getScheduledTasks);
     // this.unsheduled = this.store.select(getUnScheduledTasks);
-    this.store.dispatch(setLogoLoading({ status: false }));
+    // this.store.dispatch(setLogoLoading({ status: false }));
 
     this.items = [
       { label: 'Mark As Done', icon: 'pi pi-refresh' },
