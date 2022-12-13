@@ -2,7 +2,6 @@ import { Component, Renderer2 } from '@angular/core';
 import { MenuItem } from 'primeng/api';
 import { AppComponent } from 'src/app/app.component';
 import { Subscription } from 'rxjs';
-import { CalendarOptions } from '@fullcalendar/angular';
 import { AppState } from 'src/app/app-store/app.state';
 import { Store } from '@ngrx/store';
 import { UiService } from 'src/app/service/ui.service';
@@ -44,9 +43,7 @@ export class DashboardComponent {
   public topMenuLeaving!: boolean;
 
   public theme!: string;
-  calendarOptions: CalendarOptions = {
-    initialView: 'dayGridMonth',
-  };
+ 
   documentClickListener!: () => void;
 
   menuClick!: boolean;
