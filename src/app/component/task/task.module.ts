@@ -35,6 +35,12 @@ import { ScheduleModule } from '@syncfusion/ej2-angular-schedule';
 import {TimelineModule} from 'primeng/timeline';
 import { ChartModule } from 'primeng/chart';
 import { ProjectReducer } from '../dashboard/state/project.reducer';
+import {TooltipModule} from 'primeng/tooltip';
+import {EditorModule} from 'primeng/editor';
+import { HttpClientModule } from '@angular/common/http';
+import { ButtonModule } from 'primeng/button';
+import {MessagesModule} from 'primeng/messages';
+import {MessageModule} from 'primeng/message';
 
 const routes: Routes = [
   {
@@ -84,6 +90,12 @@ const routes: Routes = [
     TimelineModule,
     ChartModule,
     ScheduleModule,
+    TooltipModule,
+    EditorModule,
+    HttpClientModule,
+    ButtonModule,
+    MessagesModule,
+    MessageModule,
     RouterModule.forChild(routes),
     StoreModule.forFeature('tasks', tasksReducer),
     EffectsModule.forFeature([TaskEffects]),

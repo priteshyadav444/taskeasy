@@ -96,3 +96,15 @@ a {
   z-index: 1300;
   margin-left: -100px;
 }
+.p-inline-message.p-inline-message-error .p-inline-message-icon{
+  display: none;
+}
+.p-inline-message.p-inline-message-success .p-inline-message-icon{
+  display: none;
+}
+.p-inline-message.p-inline-message-warn .p-inline-message-icon{
+  display: none;
+}
+.e-kanban-dialog.e-dialog {
+  min-width: 560px;
+}

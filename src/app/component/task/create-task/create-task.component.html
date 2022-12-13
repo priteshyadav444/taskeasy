@@ -5,6 +5,7 @@
   class="subtask"
   (onHide)="close()"
 >
+
   <form (ngSubmit)="onAddTask()">
     <div class="field col-12 p-0 mb-0 mt-1">
       <div class="col-8 p-0">
@@ -33,15 +34,7 @@
       <hr class="m-0" />
 
       <div class="col-12 p-0 mt-2">
-        <textarea
-          rows="5"
-          cols="30"
-          placeholder="Add Description"
-          class="inputtext"
-          pInputTextarea
-          [(ngModel)]="description"
-          name="description"
-        ></textarea>
+        <p-editor [(ngModel)]="description" [style]="{'height':'200px'}" [ngModelOptions]="{standalone: true}" name="fieldName" ngDefaultControl></p-editor>
       </div>
 
       <hr />
@@ -51,7 +44,7 @@
             <input
               type="text"
               class="inputtext"
-              placeholder="Add Sub Task"
+              placeholder="Add Subtask"
               [(ngModel)]="subtaskele"
               name="subtaskele"
               style="border-bottom: 1px #dfe7ef solid; border-radius: 0px;"

@@ -36,6 +36,7 @@ import {InputTextModule} from 'primeng/inputtext';
 import {InputSwitchModule} from 'primeng/inputswitch';
 import {TimelineModule} from 'primeng/timeline';
 import {PaginatorModule} from 'primeng/paginator';
+import {EditorModule} from 'primeng/editor';
 
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -124,6 +125,7 @@ import { MainComponent } from './component/lendingpage/main.component';
     CommonModule,
     TabViewModule,    
     ScheduleModule,
+    EditorModule,
     StoreModule.forRoot(appReducer),
     EffectsModule.forRoot([AuthEffects, ProjectEffects]),
     StoreDevtoolsModule.instrument({
