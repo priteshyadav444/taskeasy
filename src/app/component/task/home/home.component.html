@@ -81,7 +81,7 @@
         </div>
       </div>
       <!-- Dailog SubTask -->
-      <div class="field col-12 p-0 mt-1">
+      <div class="field col-12 mt-1">
         <div class="example-list-create">
           <p-accordion [multiple]="true">
             <p-accordionTab header="SubTasks" [selected]="true">
@@ -189,13 +189,10 @@
             {{ data.title }}
           </div>
           <div class="card-15__date">
-            <!-- {{
-              data.scheduled_date == null
-                ? (data.updatedAt | date: mediumDate)
-                : (data.scheduled_date | date: mediumDate)
-            }} -->
             <div class="card-15__avatar">
-            
+              <span class="calender mt-2 mr-1" *ngIf="data.scheduled_date != null">
+                <i class="pi pi-calendar-minus" style="font-size: 1.4rem" ></i>
+              </span>
               <div
                 *ngIf="
                   data.badge === 'medium' ||
@@ -235,6 +232,7 @@
                   styleClass="mr-2"
                 ></p-badge
               ></ng-template>
+              
               <i class="pi pi-ellipsis-v" style="font-size: 1rem"></i>
             </div>
           </div>
@@ -249,11 +247,7 @@
           <div class="card-15__days"> {{ data.subtasklist?.length==0? "No SubTask": (calulateCompleteSubTask(data.subtasklist))+"/"+data.subtasklist?.length}} </div>
         </div> -->
 
-        <div class="card-15__progressbar mt-2">
-          <span *ngIf="data.subtasklist?.length > 0">
-          <p-progressBar [value]="calculatePercentage(data.subtasklist)" [style]="{ height: '10px'}"></p-progressBar>
-          </span>
-        </div>
+        
 
         <div *ngIf="data.subtasklist?.length > 0" class="field col-12 p-0 mt-1">
           <div class="example-list-create">
@@ -281,33 +275,41 @@
                   </div>
                 </div>
               </p-accordionTab>
-
-              <p-accordionTab *ngIf="calulateCompleteSubTask(data.subtasklist) != 0" header="completed - {{calulateCompleteSubTask(data.subtasklist)}}" style="margin-top: 4px">
-                <div *ngIf="data.subtasklist?.length != 0">
-                  <div *ngFor="let item of data.subtasklist">
-                    <div *ngIf="item.checked == true" class="example-box">
-                      <div class="flex justify-content-between mr-1">
-                        <p-checkbox
-                          name="groupname"
-                          [(ngModel)]="item.checked"
-                          [binary]="true"
-                          disabled="true"
-                        ></p-checkbox>
-                      </div>
-
-                      <div class="example-td mr-auto">
-                        <span
-                          class="font-medium text-md example-title"
-                        >
-                          {{ item.stitle }}</span
-                        >
+              <div *ngIf="calulateCompleteSubTask(data.subtasklist) != 0">
+                <p-accordionTab  header="completed - {{calulateCompleteSubTask(data.subtasklist)}}" style="margin-top: 4px">
+                  <div *ngIf="data.subtasklist?.length != 0">
+                    <div *ngFor="let item of data.subtasklist">
+                      <div *ngIf="item.checked == true" class="example-box">
+                        <div class="flex justify-content-between mr-1">
+                          <p-checkbox
+                            name="groupname"
+                            [(ngModel)]="item.checked"
+                            [binary]="true"
+                            disabled="true"
+                          ></p-checkbox>
+                        </div>
+  
+                        <div class="example-td mr-auto">
+                          <span
+                            class="font-medium text-md example-title"
+                          >
+                            {{ item.stitle }}</span
+                          >
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
-              </p-accordionTab>
+                </p-accordionTab>
+              </div>
+              
             </p-accordion>
           </div>
+        </div>
+        
+        <div *ngIf="data.subtasklist?.length != 0">
+          <span>
+          <p-progressBar [value]="calculatePercentage(data.subtasklist)" [style]="{ height: '4px'}"  [showValue]="false"></p-progressBar>
+          </span>
         </div>
 
         <div class="card-15__colfive">

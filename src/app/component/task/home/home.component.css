@@ -370,7 +370,7 @@ e-kanban {
 
 .example-list-create{
   border: none;
-  min-height: 60px;
+ 
   background: white;
   border-radius: 4px;
   overflow: hidden;
@@ -393,3 +393,9 @@ e-kanban {
   border-bottom-left-radius: 0;
 }
 
+.field{
+  margin-bottom: 0;
+}
+.calender:hover{
+  cursor: pointer;
+}
