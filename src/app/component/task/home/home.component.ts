@@ -9,7 +9,7 @@ import { CdkDragDrop, transferArrayItem } from '@angular/cdk/drag-drop';
 import { MenuItem } from 'primeng/api';
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/app-store/app.state';
-import { loadAllTasks } from '../state/task.action';
+import { loadAllTasks, resetTasks } from '../state/task.action';
 import {
   getActiveTask,
   getPendingTasks,
@@ -36,6 +36,7 @@ import { ActivatedRoute } from '@angular/router';
 import { DropDownListComponent } from '@syncfusion/ej2-angular-dropdowns';
 import { Title } from '@angular/platform-browser';
 import { getAllProjects, getProjectTitle } from '../../dashboard/state/project.selector';
+import { tasksReducer } from '../state/task.reducers';
 
 interface Status {
   task_status: string;
@@ -48,9 +49,9 @@ interface Status {
   styleUrls: ['./home.component.css'],
 })
 export class HomeComponent implements OnInit {
-  public cardSettings?: CardSettingsModel;
   public data: Observable<DataStateChangeEventArgs>;
-  public state?: DataStateChangeEventArgs;
+  public state: DataStateChangeEventArgs;
+  public cardSettings: CardSettingsModel;
 
   items!: MenuItem[];
   todo = [
@@ -90,9 +91,7 @@ export class HomeComponent implements OnInit {
     private titleService: Title
   ) {
     this.data = service;
-    this.pid = this.route.snapshot.paramMap.get('id');
-    this.service.activateRouter$.next(this.pid);
-    this.service.setId(this.pid);
+    
 
     this.status = [
       { task_status: 'Active', code: 'active' },
@@ -130,9 +129,9 @@ export class HomeComponent implements OnInit {
   public dataSourceChanged(state: DataSourceChangedEventArgs): void {
     console.log('source dataSourceChanged', state);
     if (state.requestType === 'cardCreated') {
-      this.service.addCard(state, this.pid).subscribe(() => {
-        state.endEdit();
-      });
+      // this.service.addCard(state, this.pid).subscribe(() => {
+      //   state.endEdit();
+      // });
     } else if (state.requestType === 'cardChanged') {
       if (this.subTask.length > 0) {
         state.changedRecords[0] = {
@@ -155,7 +154,6 @@ export class HomeComponent implements OnInit {
 
       //if all suntask completed
       const subtasklistcopy = state.changedRecords[0]['subtasklist'];
-      console.log(subtasklistcopy);
       if (subtasklistcopy.length > 0) {
         var cnt = 0;
 
@@ -164,7 +162,6 @@ export class HomeComponent implements OnInit {
             cnt++;
           }
         });
-        console.log(cnt);
 
         if (cnt == subtasklistcopy.length) {
           state.changedRecords[0] = {
@@ -173,11 +170,9 @@ export class HomeComponent implements OnInit {
           };
         }
       }
-      console.log(state.changedRecords[0]);
       this.service.updateCard(state, this.pid).subscribe(() => {
         state.endEdit();
       });
-
       this.selectedStatus == undefined;
       this.subTask = [];
     } else if (state.requestType === 'cardRemoved') {
@@ -185,15 +180,16 @@ export class HomeComponent implements OnInit {
         state.endEdit();
       });
     }
-  }
-
+  } 
   public dataStateChange(state: DataStateChangeEventArgs): void {
-    console.log(this.pid);
-    this.service.execute(this.pid);
+    console.log(state)
+    this.service.execute(state); 
   }
 
-  public check(): void {
-    this.service.execute(this.pid);
+  public update(): void {
+    
+    let state = { skip: 0, take: 10 };
+    this.service.execute(state);
   }
 
   public dialogSettings: DialogSettingsModel = {
@@ -229,7 +225,6 @@ export class HomeComponent implements OnInit {
   public sortSettings: SortSettingsModel = {
     sortBy: 'Custom',
     field: 'updatedAt',
-    direction: 'Descending',
   };
 
   public priorityData: Object[] = [
@@ -238,14 +233,16 @@ export class HomeComponent implements OnInit {
     { Id: 'pending', Name: 'Pending' },
     { Id: 'unsheduled', Name: 'Unsheduled' },
   ];
+  addCard(data:any){
 
+  }
   dialogOpen(args: DialogEventArgs): void {
     this.subTask = [];
     this.selectedStatus = null;
   }
 
   dialogClose(args: DialogEventArgs): void {
-    this.service.execute(this.pid);
+    //this.service.execute(s);
     this.subtaskele = '';
     console.log('args close', args);
   }
@@ -253,9 +250,14 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
     // this.titleService.setTitle(`${this.projecttitle} - TaskEasy.in`);
+    
     this.titleService.setTitle(`TaskEasy.in`);
     let state = { skip: 0, take: 10 };
-    this.service.execute(this.pid);
+
+    this.pid = this.route.snapshot.paramMap.get('id');
+    this.service.activateRouter$.next(this.pid);
+    this.store.dispatch(loadAllTasks({ pid:this.pid }));
+    this.service.execute(state);
     this.cardSettings = {
       headerField: '_id',
       selectionType: 'Single',
@@ -381,7 +383,6 @@ export class HomeComponent implements OnInit {
     } else {
       const newstask = { stitle: stask, checked: false };
       this.subTask = [...this.subTask, newstask];
-      console.log(this.subTask);
       this.subtaskele = '';
     }
   }

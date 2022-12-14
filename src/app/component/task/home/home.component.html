@@ -10,6 +10,7 @@
   (dataSourceChanged)="dataSourceChanged($event)"
   (dialogOpen)="dialogOpen($event)"
   (dialogClose)="dialogClose($event)"
+  (addCard) = "addCard(data)"
 >
   <e-columns>
     <e-column headerText="To Do" keyField="pending"> 
@@ -202,16 +203,16 @@
                   else elseBlock
                 "
               >
-                <div *ngIf="data.badge === 'low'">
-                  <p-message severity="success" text="{{data.badge}}" styleClass="mr-2 mt-1" [style]="{ height: '6px'}" ></p-message>
+                <div *ngIf="data.badge == 'low'">
+                  <p-message severity="success" text="{{data.badge}}" styleClass="mr-2 mt-1" [style]="{ height: '6px', 'font-weight':'bolder'}" ></p-message>
                 </div>
   
-                <div *ngIf="data.badge === 'medium'">
-                  <p-message severity="warn" text="{{data.badge}}" styleClass="mr-2 mt-1" [style]="{ height: '6px'}" ></p-message>
+                <div *ngIf="data.badge == 'medium'">
+                  <p-message severity="warn" text="{{data.badge}}" styleClass="mr-2 mt-1" [style]="{ height: '6px', 'font-weight':'bolder'}" ></p-message>
                 </div>
   
-                <div *ngIf="data.badge === 'high'">
-                  <p-message severity="error" text="{{data.badge}}" styleClass="mr-2 mt-1" [style]="{ height: '6px'}" ></p-message>  
+                <div *ngIf="data.badge == 'high'">
+                  <p-message severity="error" text="{{data.badge}}" styleClass="mr-2 mt-1" [style]="{ height: '6px', 'font-weight':'bolder'}" ></p-message>  
                 </div>
               </div>
               <ng-template #elseBlock

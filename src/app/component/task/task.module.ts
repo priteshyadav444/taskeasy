@@ -99,7 +99,7 @@ const routes: Routes = [
     RouterModule.forChild(routes),
     StoreModule.forFeature('tasks', tasksReducer),
     EffectsModule.forFeature([TaskEffects]),
-    
   ],
+  providers: [HomeComponent]
 })
 export class TaskModule {}

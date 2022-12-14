@@ -22,29 +22,34 @@ export class TasksService {
   });
 
   addTask(task: Task,pid:string): Observable<Task> {
-    // this.apiUrl = "http://localhost:3000/v1/tasks"
-    this.apiUrl = "https://api-taskeasy.onrender.com/v1/tasks"
-    this.apiUrl = `${this.apiUrl}/${pid}`
-    console.log(task)
-    return this.http.post<Task>(this.apiUrl, task,{
+    return this.http.post<Task>(`${this.apiUrl}/${pid}`, task,{
       headers:this.reqHeader
     });
   }
 
-  getAllTasks(): Observable<Task[]> {
-    return this.http.get<Task[]>(this.apiUrl,{
-      headers:this.reqHeader
-    }).pipe(
-      map((data) => {
-        const tasks: Task[] = [];
-        for (let key in data) {
-          tasks.push({ ...data[key], id: key });
-        }
-        console.log(tasks);
-        return tasks;
+  // addTask(task: Task, pid: string): Observable<Task> {
+  //   return this.http.post<Task>(`${this.BASE_URL}/${pid}`, task, {
+  //     headers: this.reqHeader,
+  //   });
+  // }
+
+  getAllTasks(pid: string): Observable<Task[]> {
+    return this.http
+      .get<Task[]>(`${this.apiUrl}/${pid}`, {
+        headers: this.reqHeader,
       })
-    );
+      .pipe(
+        map((data) => {
+          const tasks: Task[] = [];
+          for (let key in data) {
+            tasks.push({ ...data[key], id: key });
+          }
+          return tasks;
+        })
+      );
   }
+
+  
 
 
 }
