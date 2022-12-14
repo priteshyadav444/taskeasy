@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import {
   DayService,
   MonthService,
@@ -13,12 +13,13 @@ import { DataManager, ODataV4Adaptor, Query } from '@syncfusion/ej2-data';
   providers: [DayService, MonthService, AgendaService],
   // templateUrl: './timeline.component.html',
   styleUrls: ['./timeline.component.css'],
+  encapsulation: ViewEncapsulation.None
 })
 export class TimelineComponent implements OnInit {
   public selectedDate: Date = new Date();
   public readonly: boolean = true;
-  public url:any = "https://api-taskeasy.onrender.com/v1/tasks/calender/all"
-  // public url:any = "http://127.0.0.1:3000/v1/tasks/calender/all"
+  // public url:any = "https://api-taskeasy.onrender.com/v1/tasks/calender/all"
+  public url:any = "http://127.0.0.1:3000/v1/tasks/calender/all"
   authToken = localStorage.getItem('authToken');
   reqHeader =[{
         'Content-Type': 'application/json',
@@ -39,12 +40,16 @@ export class TimelineComponent implements OnInit {
     
   }
   public eventSettings: EventSettingsModel = {
-    dataSource:  this.dataManager,
+    dataSource: this.dataManager,
     fields: {
       subject: { title: 'Event Name', name: 'title', default: 'Add Name' },
-      description: { title: 'Summary', name: 'title' },
-      startTime: { title: 'From', name: 'scheduled_date' },
+      description: { title: 'Summary', name: 'description' },
+      startTime: { title: 'From', name: 'createdAt' },
       endTime: { title: 'To', name: 'scheduled_date' },
     },
-  };
+    enableTooltip:true,
+    enableIndicator:true,
+    enableMaxHeight:true
+  
+};
 }
