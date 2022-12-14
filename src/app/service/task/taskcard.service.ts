@@ -32,14 +32,14 @@ export class TasksCardService extends Subject<DataStateChangeEventArgs> {
     this.activateRouter$.subscribe((val) => {
       if (val) {
         this.activeRouterId = val;
-        // this.setId(val);
+        this.setId(val);
       }
     });
   }
 
-  // public setId(id: any): void {
-  //   this.pid.next(id);
-  // }
+  public setId(id: any): void {
+    this.pid.next(id);
+  }
   protected getData(state: DataStateChangeEventArgs): Observable<DataStateChangeEventArgs> {
     // return this.store
     //   .select(getTasks)
