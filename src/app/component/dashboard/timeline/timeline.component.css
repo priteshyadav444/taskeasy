@@ -1,0 +1,98 @@
+
+#container {
+    visibility: hidden;
+  }
+
+  #loader {
+    color: #008cff;
+    height: 40px;
+    width: 30%;
+    position: absolute;
+    top: 45%;
+    left: 45%;
+  }
+  
+  /* csslint ignore:start */
+  .schedule-event-template.e-schedule .e-vertical-view .e-content-wrap .e-appointment {
+    border-radius: 8px;
+}
+
+.schedule-event-template.e-schedule .e-vertical-view .e-content-wrap .e-appointment .e-appointment-details {
+    padding: 0;
+    height: 100%;
+}
+.e-schedule .e-month-view .e-appointment{
+    border-radius: 14px;
+    padding: 4px;
+}
+.schedule-event-template.e-schedule .template-wrap {
+    height: 100%;
+    white-space: normal;
+}
+
+.schedule-event-template.e-schedule .template-wrap .image {
+    padding: 8px 0 4px;
+}
+
+.schedule-event-template.e-schedule .template-wrap .image img {
+    height: 100%;
+    width: 100%;
+    padding: 10px 25%;
+}
+
+.schedule-event-template.e-schedule .template-wrap .subject {
+    margin-top: 1rem;
+    font-weight: 500;
+    font-size: 15px;
+    color: #fff;
+    padding: 4px 4px 4px;
+    height: 25px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.schedule-event-template.e-schedule .template-wrap .time {
+    height: 50px;
+}
+
+.schedule-event-template.e-schedule .template-wrap .time,
+.schedule-event-template.e-schedule .template-wrap .description {
+    font-size: 12px;
+    padding: 4px 6px 4px;
+    color: #fff;
+    overflow: hidden;
+}
+
+.schedule-event-template.e-schedule .template-wrap .footer {
+    position: absolute;
+    bottom: 0;
+    height: 50px;
+    width: 100%;
+}
+
+.schedule-event-template.e-schedule .e-timeline-view .e-appointment .e-appointment-details {
+    padding: 0;
+    height: 100%;
+    width: 100%;
+}
+
+.schedule-event-template.e-schedule .e-timeline-view .template-wrap {
+    width: 100%;
+}
+
+.schedule-event-template.e-schedule .e-timeline-view .template-wrap .subject {
+    font-size: 16px;
+    height: 36px;
+    text-align: center;
+    border-style: solid;
+    border-width: 0 15px;
+}
+
+.custom-class.e-schedule .e-vertical-view .e-day-wrapper .e-appointment.e-past-app {
+    background-color: #D2691E;
+}
+  /* csslint ignore:end */
+  .indicators{
+    height: 50px;
+}
