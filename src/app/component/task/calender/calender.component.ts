@@ -20,8 +20,8 @@ export class CalenderComponent implements OnInit {
   public readonly: boolean = true;
   public eventSettings: EventSettingsModel;
   pid!:any
-  public url:any = `https://api-taskeasy.onrender.com/v1/tasks/calender/${this.pid}`
-  // public url:any = `http://127.0.0.1:3000/v1/tasks/calender/${this.pid}`
+  // public url:any = `https://api-taskeasy.onrender.com/v1/tasks/calender/${this.pid}`
+  public url:any = `http://127.0.0.1:3000/v1/tasks/calender/${this.pid}`
   authToken = localStorage.getItem('authToken');
   reqHeader =[{
         'Content-Type': 'application/json',
@@ -34,8 +34,8 @@ export class CalenderComponent implements OnInit {
   constructor(private service:TasksCardService, private titleService: Title) {
     this.service.pid.subscribe(log=> {
       this.pid = log
-      this.url = `https://api-taskeasy.onrender.com/v1/tasks/calender/${this.pid}`
-      // this.url = `http://127.0.0.1:3000/v1/tasks/calender/${this.pid}`
+      // this.url = `https://api-taskeasy.onrender.com/v1/tasks/calender/${this.pid}`
+      this.url = `http://127.0.0.1:3000/v1/tasks/calender/${this.pid}`
       console.log(this.url)
     })
 
@@ -48,15 +48,18 @@ export class CalenderComponent implements OnInit {
   
   ngOnInit(): void {
     this.titleService.setTitle(`Calender - TaskEasy.in`);
-     this.eventSettings = {
-      dataSource:  this.dataManager,
+    this.eventSettings = {
+      dataSource: this.dataManager,
       fields: {
         subject: { title: 'Event Name', name: 'title', default: 'Add Name' },
         description: { title: 'Summary', name: 'description' },
-        startTime: { title: 'From', name: 'scheduled_date' },
+        startTime: { title: 'From', name: 'createdAt' },
         endTime: { title: 'To', name: 'scheduled_date' },
       },
-    };
+      enableTooltip:true,
+      enableIndicator:true,
+      enableMaxHeight:true 
+  };
   }
  
 
