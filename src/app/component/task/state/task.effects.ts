@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { map, mergeMap } from 'rxjs';
+import { map, mergeMap, tap } from 'rxjs';
 import { TasksService } from 'src/app/service/task/task.services';
 import { TasksCardService } from 'src/app/service/task/taskcard.service';
+import { HomeComponent } from '../home/home.component';
 import {
   addTask,
   addTaskSuccess,
@@ -12,16 +13,15 @@ import {
 
 @Injectable()
 export class TaskEffects {
-  constructor(private actions$: Actions, private taskServices: TasksService, private service: TasksCardService) {}
+  constructor(private actions$: Actions, private taskServices: TasksService, private service: TasksCardService, private home:HomeComponent) {}
 
   addTask$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(addTask),
       mergeMap((action) => {
-        return this.service.addTask(action.task,action.pid).pipe(
+        return this.taskServices.addTask(action.task,action.pid).pipe(
           map((data) => {
             const task = { ...action.task };
-            this.service.execute(action.pid);
             return addTaskSuccess({ task });
           })
         );
@@ -33,7 +33,7 @@ export class TaskEffects {
     return this.actions$.pipe(
       ofType(loadAllTasks),
       mergeMap((action) => {
-        return this.service.getAllTasks(action.pid).pipe(
+        return this.taskServices.getAllTasks(action.pid).pipe(
           map((tasks) => {
             return loadTasksSuccess({ tasks });
           })
@@ -41,4 +41,19 @@ export class TaskEffects {
       })
     );
   });
+
+  kanbanUpdate$ = createEffect(
+    () => {
+      return this.actions$.pipe(
+        ofType(...[addTaskSuccess]),
+        tap((action) => { 
+          console.log("kanban update")
+          this.home.update();
+          
+        })
+      );
+    },
+    { dispatch: false }
+  );
+
 }

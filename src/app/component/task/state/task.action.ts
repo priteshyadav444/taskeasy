@@ -6,6 +6,7 @@ export const ADD_TASK_SUCCESS = "on add task success"
 
 export const LOAD_TASKS = 'load all tasks';
 export const LOAD_TASKS_SUCCESS= 'load tasks success';
+export const RESET_TASKS= 'reset tasks success';
 
 export const addTask = createAction(ADD_TASK_INITIATE, props<{task: Task, pid:string}>());
 export const addTaskSuccess = createAction(ADD_TASK_SUCCESS, props<{task: Task}>()); 
@@ -16,3 +17,6 @@ export const loadTasksSuccess = createAction(
     LOAD_TASKS_SUCCESS,
     props<{ tasks: Task[]}>()
 )
+
+export const resetTasks = createAction(RESET_TASKS)
+

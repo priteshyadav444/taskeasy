@@ -1,5 +1,12 @@
+import { state } from '@angular/animations';
 import { createReducer, on } from '@ngrx/store';
-import { addTask, addTaskSuccess, loadAllTasks, loadTasksSuccess } from './task.action';
+import {
+  addTask,
+  addTaskSuccess,
+  loadAllTasks,
+  loadTasksSuccess,
+  resetTasks,
+} from './task.action';
 import { intialState } from './task.state';
 
 const _tasksReducer = createReducer(
@@ -16,6 +23,9 @@ const _tasksReducer = createReducer(
       ...state,
       tasks: action.tasks,
     };
+  }),
+  on(resetTasks, (state, action) => {
+    return { ...state, tasks: [] };
   })
 );
 
