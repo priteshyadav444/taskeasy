@@ -49,7 +49,5 @@ export class TimelineComponent implements OnInit {
     },
     enableTooltip:true,
     enableIndicator:true,
-    enableMaxHeight:true
-  
 };
 }

@@ -9,12 +9,13 @@
 >
   <ng-template #eventSettingsTemplate let-data>
     <div class="template-wrap" [style.background]="data.theme_colour">
-      <div class="subject mt-5" >
-        {{ data.title }}
+      <div class="subject" >
+       
         <p-badge *ngIf="data.badge == 'high'" severity="info"  [value]="data.badge" styleClass="mr-2"></p-badge>
         <p-badge *ngIf="data.badge == 'low'" severity="warning"  [value]="data.badge" styleClass="mr-2"></p-badge>
         <p-badge *ngIf="data.badge == 'medium'" severity="danger"  [value]="data.badge" styleClass="mr-2"></p-badge>
-        <i class="pi pi-tag pi-tag" style="font-size: 1rem; color: red;"></i>  Testing 
+        {{ data.title }}
+        <!-- <i class="pi pi-tag pi-tag" style="font-size: 1rem; color: red;"></i>  Testing  -->
       </div>
       <div class="time">
         Dates: {{ data.createdAt | date: mediumDate }} -
