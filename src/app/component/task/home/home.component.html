@@ -10,18 +10,20 @@
   (dataSourceChanged)="dataSourceChanged($event)"
   (dialogOpen)="dialogOpen($event)"
   (dialogClose)="dialogClose($event)"
-  (addCard) = "addCard(data)"
+  (addCard)="addCard(data)"
 >
   <e-columns>
-    <e-column headerText="To Do" keyField="pending"> 
-    </e-column>
-    <e-column headerText="In Progress" keyField="active">
-    </e-column>
+    <e-column headerText="To Do" keyField="pending"> </e-column>
+    <e-column headerText="In Progress" keyField="active"> </e-column>
     <e-column headerText="Done" keyField="done"></e-column>
     <e-column headerText="Unsheduled" keyField="unsheduled"></e-column>
   </e-columns>
 
-  <ng-template #dialogSettingsTemplate let-data style="min-width: 500px; background-color: red;">
+  <ng-template
+    #dialogSettingsTemplate
+    let-data
+    style="min-width: 500px; background-color: red"
+  >
     <div class="field col-12 p-0 mb-0 mt-1">
       <div class="col-8 p-0">
         <p-dropdown
@@ -57,7 +59,10 @@
           value="{{ data.description }}"
           name="description"
         ></textarea> -->
-        <p-editor [(ngModel)]="data.description" [style]="{'height':'300px'}"></p-editor>
+        <p-editor
+          [(ngModel)]="data.description"
+          [style]="{ height: '300px' }"
+        ></p-editor>
       </div>
 
       <div class="field col-12 mt-1 mb-0 p-0">
@@ -76,7 +81,7 @@
               class="p-button-text p-button-plain"
               pButton
               pRipple
-              (click)="addSubTask( data.subtasklist, subtaskele)"
+              (click)="addSubTask(data.subtasklist, subtaskele)"
               icon="pi pi-plus"
             ></button>
           </div>
@@ -102,40 +107,36 @@
 
                     <div class="example-td mr-auto">
                       <span class="text-900 font-medium text-md example-title">
-                        {{ item.stitle }} </span
+                        {{ item.stitle }}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- Local UnChecked SubTask -->
+              <div *ngIf="subTask?.length != 0">
+                <div *ngFor="let item of subTask">
+                  <div *ngIf="item.checked == false" class="example-box">
+                    <div class="example-box flex justify-content-between">
+                      <p-checkbox
+                        name="groupname"
+                        [(ngModel)]="item.checked"
+                        [binary]="true"
+                      ></p-checkbox>
+                    </div>
+
+                    <div class="example-td mr-auto">
+                      <span class="text-900 font-medium text-md example-title">
+                        {{ item.stitle }}</span
                       >
                     </div>
                   </div>
                 </div>
               </div>
-                <!-- Local UnChecked SubTask -->
-              <div *ngIf="subTask?.length != 0">
-                  <div *ngFor="let item of subTask">
-                    <div *ngIf="item.checked == false" class="example-box">
-                      <div class="example-box flex justify-content-between">
-                        <p-checkbox
-                          name="groupname"
-                          [(ngModel)]="item.checked"
-                          [binary]="true"
-                        ></p-checkbox>
-                      </div>
-
-                      <div class="example-td mr-auto">
-                        <span
-                          class="text-900 font-medium text-md example-title"
-                        >
-                          {{ item.stitle }}</span
-                        >
-                      </div>
-                    </div>
-                  </div>
-              </div>
-              
             </p-accordionTab>
 
             <p-accordionTab header="Completed Tasks" style="margin-top: 4px">
-              
-                <!-- Remote Checked SubTask -->
+              <!-- Remote Checked SubTask -->
               <div *ngIf="data.subtasklist?.length != 0">
                 <div *ngFor="let item of data.subtasklist">
                   <div *ngIf="item.checked == true" class="example-box">
@@ -156,26 +157,26 @@
                   </div>
                 </div>
               </div>
-                <!-- Remote Checked SubTask -->
-                <div *ngIf="subTask?.length != 0">
-                  <div *ngFor="let item of subTask">
-                    <div *ngIf="item.checked == true" class="example-box">
-                      <div class="example-box flex justify-content-between">
-                        <p-checkbox
-                          name="groupname"
-                          [(ngModel)]="item.checked"
-                          [binary]="true"
-                        ></p-checkbox>
-                      </div>
-  
-                      <div class="example-td mr-auto">
-                        <span class="text-900 font-medium text-md example-title">
-                          {{ item.stitle }}</span
-                        >
-                      </div>
+              <!-- Remote Checked SubTask -->
+              <div *ngIf="subTask?.length != 0">
+                <div *ngFor="let item of subTask">
+                  <div *ngIf="item.checked == true" class="example-box">
+                    <div class="example-box flex justify-content-between">
+                      <p-checkbox
+                        name="groupname"
+                        [(ngModel)]="item.checked"
+                        [binary]="true"
+                      ></p-checkbox>
+                    </div>
+
+                    <div class="example-td mr-auto">
+                      <span class="text-900 font-medium text-md example-title">
+                        {{ item.stitle }}</span
+                      >
                     </div>
                   </div>
                 </div>
+              </div>
             </p-accordionTab>
           </p-accordion>
         </div>
@@ -192,8 +193,15 @@
           </div>
           <div class="card-15__date">
             <div class="card-15__avatar">
-              <span class="calender mt-2 mr-2" *ngIf="data.scheduled_date != null">
-                <i class="pi pi-calendar-minus" style="font-size: 1.4rem" pTooltip="{{(data.scheduled_date | date: mediumDate)}}"></i>
+              <span
+                class="calender mt-2 mr-2"
+                *ngIf="data.scheduled_date != null"
+              >
+                <i
+                  class="pi pi-calendar-minus"
+                  style="font-size: 1.4rem"
+                  pTooltip="{{ data.scheduled_date | date: mediumDate }}"
+                ></i>
               </span>
               <div
                 *ngIf="
@@ -204,15 +212,30 @@
                 "
               >
                 <div *ngIf="data.badge == 'low'">
-                  <p-message severity="success" text="{{data.badge}}" styleClass="mr-2 mt-1" [style]="{ height: '6px', 'font-weight':'bolder'}" ></p-message>
+                  <p-message
+                    severity="success"
+                    text="{{ data.badge }}"
+                    styleClass="mr-2 mt-1"
+                    [style]="{ height: '6px', 'font-weight': 'bolder' }"
+                  ></p-message>
                 </div>
-  
+
                 <div *ngIf="data.badge == 'medium'">
-                  <p-message severity="warn" text="{{data.badge}}" styleClass="mr-2 mt-1" [style]="{ height: '6px', 'font-weight':'bolder'}" ></p-message>
+                  <p-message
+                    severity="warn"
+                    text="{{ data.badge }}"
+                    styleClass="mr-2 mt-1"
+                    [style]="{ height: '6px', 'font-weight': 'bolder' }"
+                  ></p-message>
                 </div>
-  
+
                 <div *ngIf="data.badge == 'high'">
-                  <p-message severity="error" text="{{data.badge}}" styleClass="mr-2 mt-1" [style]="{ height: '6px', 'font-weight':'bolder'}" ></p-message>  
+                  <p-message
+                    severity="error"
+                    text="{{ data.badge }}"
+                    styleClass="mr-2 mt-1"
+                    [style]="{ height: '6px', 'font-weight': 'bolder' }"
+                  ></p-message>
                 </div>
               </div>
               <ng-template #elseBlock
@@ -222,27 +245,40 @@
                   styleClass="mr-2"
                 ></p-badge
               ></ng-template>
-              
+
               <i class="pi pi-ellipsis-v" style="font-size: 1rem"></i>
             </div>
           </div>
         </div>
-        
-        <!-- <div class="card-15__colthree">
-          <div class="card-15__percent">
-             
-            <span class="card-15__complete">{{data.subtasklist?.length==0? "": calculatePercentage(data.subtasklist)+"%"}}</span>
-          </div>
-          
-          <div class="card-15__days"> {{ data.subtasklist?.length==0? "No SubTask": (calulateCompleteSubTask(data.subtasklist))+"/"+data.subtasklist?.length}} </div>
-        </div> -->
 
-        
+        <div *ngIf="data.description.length > 0" class="field">
+          <p-editor
+            [(ngModel)]="data.description"
+            [readonly]="true"
+            class="mt-1"
+            [style]="{ 'max-height': '200px', overflow: 'hidden' }"
+            [ngModelOptions]="{ standalone: true }"
+            name="fieldName"
+            ngDefaultControl
+          >
+            <ng-template pTemplate="header">
+              <span class="title font-small">
+                <span class="ql-format-button ql-bold">Description</span>
+              </span>
+            </ng-template>
+          </p-editor>
+        </div>
 
         <div *ngIf="data.subtasklist?.length > 0" class="field col-12 p-0 mt-1">
           <div class="example-list-create">
             <p-accordion [multiple]="true">
-              <p-accordionTab header="subtasks - {{data.subtasklist?.length-calulateCompleteSubTask(data.subtasklist)}}" [selected]="false">
+              <p-accordionTab
+                header="subtasks - {{
+                  data.subtasklist?.length -
+                    calulateCompleteSubTask(data.subtasklist)
+                }}"
+                [selected]="false"
+              >
                 <div *ngIf="data.subtasklist?.length != 0">
                   <div *ngFor="let item of data.subtasklist">
                     <div *ngIf="item.checked == false" class="example-box">
@@ -255,9 +291,7 @@
                       </div>
 
                       <div class="example-td mr-auto">
-                        <span
-                          class="font-medium text-md example-title"
-                        >
+                        <span class="font-medium text-md example-title">
                           {{ item.stitle }}</span
                         >
                       </div>
@@ -266,7 +300,12 @@
                 </div>
               </p-accordionTab>
               <div *ngIf="calulateCompleteSubTask(data.subtasklist) != 0">
-                <p-accordionTab  header="completed - {{calulateCompleteSubTask(data.subtasklist)}}" style="margin-top: 4px">
+                <p-accordionTab
+                  header="completed - {{
+                    calulateCompleteSubTask(data.subtasklist)
+                  }}"
+                  style="margin-top: 4px"
+                >
                   <div *ngIf="data.subtasklist?.length != 0">
                     <div *ngFor="let item of data.subtasklist">
                       <div *ngIf="item.checked == true" class="example-box">
@@ -278,11 +317,9 @@
                             disabled="true"
                           ></p-checkbox>
                         </div>
-  
+
                         <div class="example-td mr-auto">
-                          <span
-                            class="font-medium text-md example-title"
-                          >
+                          <span class="font-medium text-md example-title">
                             {{ item.stitle }}</span
                           >
                         </div>
@@ -291,14 +328,17 @@
                   </div>
                 </p-accordionTab>
               </div>
-              
             </p-accordion>
           </div>
         </div>
-        
+
         <div *ngIf="data.subtasklist?.length != 0">
           <span>
-          <p-progressBar [value]="calculatePercentage(data.subtasklist)" [style]="{ height: '4px'}"  [showValue]="false"></p-progressBar>
+            <p-progressBar
+              [value]="calculatePercentage(data.subtasklist)"
+              [style]="{ height: '4px' }"
+              [showValue]="false"
+            ></p-progressBar>
           </span>
         </div>
 
@@ -330,12 +370,30 @@
                 </span>
               </span>
               <ng-template #elseBlock1>
-                <span *ngIf="data.task_status == 'unsheduled'" style="font-size: 1rem;">
-                  <i class="pi pi-tag pi-tag" style="font-size: 1rem; color: greenyellow; font-weight: bolder"></i>  <b> Unsheduled </b>
+                <span
+                  *ngIf="data.task_status == 'unsheduled'"
+                  style="font-size: 1rem"
+                >
+                  <i
+                    class="pi pi-tag pi-tag"
+                    style="
+                      font-size: 1rem;
+                      color: greenyellow;
+                      font-weight: bolder;
+                    "
+                  ></i>
+                  <b> Unsheduled </b>
                 </span>
 
-                <span *ngIf="data.task_status == 'pending'" style="font-size: 1rem;">
-                  <i class="pi pi-tag pi-tag" style="font-size: 1rem; color: red; font-weight: bolder"></i>  <b> Not Started </b>
+                <span
+                  *ngIf="data.task_status == 'pending'"
+                  style="font-size: 1rem"
+                >
+                  <i
+                    class="pi pi-tag pi-tag"
+                    style="font-size: 1rem; color: red; font-weight: bolder"
+                  ></i>
+                  <b> Not Started </b>
                 </span>
               </ng-template>
             </div>

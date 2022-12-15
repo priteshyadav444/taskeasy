@@ -225,6 +225,7 @@ export class HomeComponent implements OnInit {
   public sortSettings: SortSettingsModel = {
     sortBy: 'Custom',
     field: 'updatedAt',
+    direction:'Descending'
   };
 
   public priorityData: Object[] = [
