@@ -12,6 +12,7 @@ import { setLoadingSpinner } from 'src/app/component/shared/state/Shared/shared.
 import { Observable } from 'rxjs';
 import { getLoading } from 'src/app/component/shared/state/Shared/shared.selector';
 import { Title } from '@angular/platform-browser';
+import { stdout } from 'process';
 
 @Component({
   selector: 'app-dashboard',
@@ -55,6 +56,9 @@ export class DashboardComponent {
   configClick!: boolean;
 
   subscription!: Subscription;
+  public trackThickness: number;
+  
+
   constructor(
     private uiService: UiService,
     public renderer: Renderer2,
@@ -66,8 +70,9 @@ export class DashboardComponent {
     .onProjectToggle()
     .subscribe((value) => {this.showDailog = value;});
   }
-
+  
   ngOnInit() {
+    this.trackThickness = 80;
     this.titleService.setTitle("Dashboard - TaskEasy.in");
     this.store.select(getLoading).pipe().forEach((value)=>{
       if(value==true){
@@ -256,8 +261,21 @@ export class DashboardComponent {
     this.clearProject();
     
   }
+   getColor(totalCompletedTask, totalTasks): string {
+    const value = this.calculatePercentage(totalCompletedTask, totalTasks)
+    console.log(value)
+    if (value < 25) {
+      return 'red';
+    } else if (value < 50) {
+      return 'orange';
+    } else if (value < 75) {
+      return 'blue';
+    } else {
+      return 'green';
+    }
+  }
 
-  calculatePercentage(totalCompletedTask, totalTasks){
+  calculatePercentage(totalCompletedTask, totalTasks):number{
     if(totalTasks==0) return 0;
     return  Math.round(((totalCompletedTask*100)/totalTasks));
   }

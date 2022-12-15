@@ -69,49 +69,149 @@
                   [style]="{
                     'min-width': '16rem',
                     'max-width': '16rem',
-                    'height': '16rem',
+                    height: '16rem',
                     'margin-left': '2em',
-                    'padding': '4px',
-                    'color':'#fff',
-                    'background': item.theme_colour
+                    padding: '4px',
+                    color: '#fff',
+                    background: item.theme_colour
                   }"
                 >
                   <ng-template pTemplate="header"> </ng-template>
-
-                  <p-tag value="New"></p-tag>
-                  <!-- <p-tag class="p-1" severity="danger" value="Danger"></p-tag> -->
+                  <ng-template pTemplate="body">
+                    <div class="flex align-items-center flex-wrap">
+                      <div
+                        class="flex align-items-center justify-content-center mr-2"
+                      >
+                        <i
+                          class="pi pi-tag pi-tag"
+                          style="font-size: 1rem; color: red"
+                        ></i>
+                        Label
+                      </div>
+                    </div>
+                  </ng-template>
 
                   <ng-template pTemplate="footer">
-                    <hr />
-                    <div class="flex container blue-container">
+                    <div class="flex align-items-center flex-wrap">
                       <div
-                        class="flex-none flex align-items-center justify-content-center mr-2"
+                        class="flex align-items-center justify-content-center mr-2"
                       >
-                        <i class="pi pi-list mr-1" style="font-size: 1rem">
+                        <i class="pi pi-list" style="font-size: 1rem">
                           {{ item.total_completed_tasks }}/{{
                             item.total_tasks
                           }}
                         </i>
                       </div>
-                      <div
-                        class="flex-grow-1 align-items-center justify-content-center mt-2"
-                      >
-                        <p-progressBar
-                          mode="determinate"
-                          [showValue]="true"
-                          [value]="
-                            calculatePercentage(
+
+                      <div class="single-chart">
+                        <svg
+                          viewBox="0 0 36 36"
+                          class="circular-chart {{
+                            getColor(
                               item.total_completed_tasks,
                               item.total_tasks
                             )
-                          "
-                          [style]="{ height: '12px' }"
-                        ></p-progressBar>
+                          }}"
+                        >
+                          <path
+                            class="circle-bg"
+                            d="M18 2.0845
+                                  a 15.9155 15.9155 0 0 1 0 31.831
+                                  a 15.9155 15.9155 0 0 1 0 -31.831"
+                          />
+                          <path
+                            class="circle"
+                            style.stroke-dasharray=" {{
+                              calculatePercentage(
+                                item.total_completed_tasks,
+                                item.total_tasks
+                              )
+                            }},100"
+                            d="M18 2.0845
+                                  a 15.9155 15.9155 0 0 1 0 31.831
+                                  a 15.9155 15.9155 0 0 1 0 -31.831"
+                          />
+                          <text x="18" y="20.35" class="percentage">
+                            {{
+                              calculatePercentage(
+                                item.total_completed_tasks,
+                                item.total_tasks
+                              )
+                            }}%
+                          </text>
+                        </svg>
                       </div>
-                      <div
-                        class="flex-none flex align-items-center justify-content-center ml-2"
-                      ></div>
+
+                      <!-- <div class="inside-circle" style="border: 2px solid {{getColor(item.total_completed_tasks, item.total_tasks)}};" > {{calculatePercentage(
+                            item.total_completed_tasks,
+                            item.total_tasks
+                          )}}%</div> -->
                     </div>
+
+                    <!-- <div class="flex-wrapper">
+                      <div class="single-chart">
+                        <svg viewBox="0 0 332 36" class="circular-chart orange">
+                          <path
+                            class="circle-bg"
+                            d="M18 2.0845
+                                  a 15.9155 15.9155 0 0 1 0 31.831
+                                  a 15.9155 15.9155 0 0 1 0 -31.831"
+                          />
+                          <path
+                            class="circle"
+                            style.stroke-dasharray=" {{ calculatePercentage(
+                              item.total_completed_tasks,
+                              item.total_tasks
+                            )}},100"
+                            d="M18 2.0845
+                                  a 15.9155 15.9155 0 0 1 0 31.831
+                                  a 15.9155 15.9155 0 0 1 0 -31.831"
+                          />
+                          <text x="18" y="20.35" class="percentage"> {{calculatePercentage(
+                            item.total_completed_tasks,
+                            item.total_tasks
+                          )}}%</text>
+                        </svg>
+                      </div>
+
+                      <div class="single-chart">
+                        <svg viewBox="0 0 36 36" class="circular-chart green">
+                          <path
+                            class="circle-bg"
+                            d="M18 2.0845
+                                  a 15.9155 15.9155 0 0 1 0 31.831
+                                  a 15.9155 15.9155 0 0 1 0 -31.831"
+                          />
+                          <path
+                            class="circle"
+                            stroke-dasharray="60, 100"
+                            d="M18 2.0845
+                                  a 15.9155 15.9155 0 0 1 0 31.831
+                                  a 15.9155 15.9155 0 0 1 0 -31.831"
+                          />
+                          <text x="18" y="20.35" class="percentage">60%</text>
+                        </svg>
+                      </div>
+
+                      <div class="single-chart">
+                        <svg viewBox="0 0 36 36" class="circular-chart blue">
+                          <path
+                            class="circle-bg"
+                            d="M18 2.0845
+                                  a 15.9155 15.9155 0 0 1 0 31.831
+                                  a 15.9155 15.9155 0 0 1 0 -31.831"
+                          />
+                          <path
+                            class="circle"
+                            stroke-dasharray="90, 100"
+                            d="M18 2.0845
+                                  a 15.9155 15.9155 0 0 1 0 31.831
+                                  a 15.9155 15.9155 0 0 1 0 -31.831"
+                          />
+                          <text x="18" y="20.35" class="percentage">90%</text>
+                        </svg>
+                      </div>
+                    </div> -->
                   </ng-template>
                 </p-card>
               </a>
@@ -123,7 +223,6 @@
           </div>
         </div>
       </div>
-
     </div>
   </div>
   <p-dialog
