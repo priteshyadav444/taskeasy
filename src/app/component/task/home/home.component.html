@@ -251,7 +251,7 @@
           </div>
         </div>
 
-        <div *ngIf="data.description.length > 0" class="field">
+        <div *ngIf="data.description!=null || data.description!=''" class="field">
           <p-editor
             [(ngModel)]="data.description"
             [readonly]="true"
