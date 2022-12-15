@@ -132,3 +132,7 @@
   .subtask{
     z-index: 10;
   }
+
+  ::ng-deep .ql-toolbar.ql-snow{
+    display :block;
+  }

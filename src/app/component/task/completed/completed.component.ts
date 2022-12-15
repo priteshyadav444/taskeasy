@@ -34,7 +34,6 @@ export class CompletedComponent implements OnInit {
           })
         })
 
-        console.log(this.allTask)
       // .pipe(map((data) => {
       //   data.sort((a, b) => {
       //       return a.value < b.value ? -1 : 1;

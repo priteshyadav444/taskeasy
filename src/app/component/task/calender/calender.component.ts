@@ -53,12 +53,11 @@ export class CalenderComponent implements OnInit {
       fields: {
         subject: { title: 'Event Name', name: 'title', default: 'Add Name' },
         description: { title: 'Summary', name: 'description' },
-        startTime: { title: 'From', name: 'createdAt' },
+        startTime: { title: 'From', name: 'scheduled_date' },
         endTime: { title: 'To', name: 'scheduled_date' },
       },
       enableTooltip:true,
       enableIndicator:true,
-      enableMaxHeight:true 
   };
   }
  

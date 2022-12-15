@@ -1,21 +1,45 @@
-<ejs-schedule width='100%' height='550px' [selectedDate]="selectedDate" currentView="Month" [readonly]="readonly"  [eventSettings]="eventSettings"> 
-    <ng-template #eventSettingsTemplate let-data>
-        <div class="template-wrap" [style.background]="data.theme_colour">
-          <div class="subject" >
-            {{ data.title }}
-            <p-badge *ngIf="data.badge == 'high'" severity="info"  [value]="data.badge" styleClass="mr-2"></p-badge>
-            <p-badge *ngIf="data.badge == 'low'" severity="warning"  [value]="data.badge" styleClass="mr-2"></p-badge>
-            <p-badge *ngIf="data.badge == 'medium'" severity="danger"  [value]="data.badge" styleClass="mr-2"></p-badge>
-            <i class="pi pi-tag pi-tag" style="font-size: 1rem; color: red;"></i>  Testing 
-          </div>
-          <div class="time">
-            Dates: {{ data.createdAt | date: mediumDate }} -
-            {{
-              data.scheduled_date != null
-                ? (data.scheduled_date | date: mediumDate)
-                : ""
-            }}
-          </div>
-        </div>
-      </ng-template>
+<ejs-schedule
+  width="100%"
+  height="800px"
+  cssClass="schedule-event-template"
+  [selectedDate]="selectedDate"
+  currentView="Month"
+  [readonly]="readonly"
+  [eventSettings]="eventSettings"
+>
+  <ng-template #eventSettingsTemplate let-data>
+    <div class="template-wrap" [style.background]="data.theme_colour">
+      <div class="subject">
+        <p-badge
+          *ngIf="data.badge == 'high'"
+          severity="info"
+          [value]="data.badge"
+          styleClass="mr-2"
+        ></p-badge>
+        <p-badge
+          *ngIf="data.badge == 'low'"
+          severity="warning"
+          [value]="data.badge"
+          styleClass="mr-2"
+        ></p-badge>
+        <p-badge
+          *ngIf="data.badge == 'medium'"
+          severity="danger"
+          [value]="data.badge"
+          styleClass="mr-2"
+        ></p-badge>
+        {{ data.title }}
+
+        <!-- <i class="pi pi-tag pi-tag" style="font-size: 1rem; color: red;"></i>  Testing  -->
+      </div>
+      <div class="time">
+        Dates: {{ data.createdAt | date: mediumDate }} -
+        {{
+          data.scheduled_date != null
+            ? (data.scheduled_date | date: mediumDate)
+            : ""
+        }}
+      </div>
+    </div>
+  </ng-template>
 </ejs-schedule>
