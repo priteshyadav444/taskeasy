@@ -9,16 +9,6 @@ import { CdkDragDrop, transferArrayItem } from '@angular/cdk/drag-drop';
 import { MenuItem } from 'primeng/api';
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/app-store/app.state';
-import { loadAllTasks, resetTasks } from '../state/task.action';
-import {
-  getActiveTask,
-  getPendingTasks,
-  getScheduledTasks,
-  getTasks,
-  getTodayCompletedTasks,
-  getTodayTasks,
-  getUnScheduledTasks,
-} from '../state/task.selector';
 import { Observable } from 'rxjs';
 import { Task } from 'src/app/models/task.models';
 import { setLogoLoading } from 'src/app/component/shared/state/Shared/shared.actions';
@@ -35,8 +25,9 @@ import { TasksCardService } from 'src/app/service/task/taskcard.service';
 import { ActivatedRoute } from '@angular/router';
 import { DropDownListComponent } from '@syncfusion/ej2-angular-dropdowns';
 import { Title } from '@angular/platform-browser';
-import { getAllProjects, getProjectTitle } from '../../dashboard/state/project.selector';
+import { getAllProjects } from '../../dashboard/state/project.selector';
 import { tasksReducer } from '../state/task.reducers';
+import { loadAllData, updateTask } from '../state/task.action';
 
 interface Status {
   task_status: string;
@@ -143,7 +134,6 @@ export class HomeComponent implements OnInit {
         };
         this.subTask = [];
       }
-
       if (this.selectedStatus != undefined) {
         state.changedRecords[0] = {
           ...state.changedRecords[0],
@@ -170,9 +160,8 @@ export class HomeComponent implements OnInit {
           };
         }
       }
-      this.service.updateCard(state, this.pid).subscribe(() => {
-        state.endEdit();
-      });
+      const task :any = {...state.changedRecords[0]}
+      this.store.dispatch(updateTask({task, pid:this.pid}));
       this.selectedStatus == undefined;
       this.subTask = [];
     } else if (state.requestType === 'cardRemoved') {
@@ -186,8 +175,7 @@ export class HomeComponent implements OnInit {
     this.service.execute(state); 
   }
 
-  public update(): void {
-    
+  public update(): void { 
     let state = { skip: 0, take: 10 };
     this.service.execute(state);
   }
@@ -257,21 +245,12 @@ export class HomeComponent implements OnInit {
 
     this.pid = this.route.snapshot.paramMap.get('id');
     this.service.activateRouter$.next(this.pid);
-    this.store.dispatch(loadAllTasks({ pid:this.pid }));
+    this.store.dispatch(loadAllData({ pid:this.pid }));
     this.service.execute(state);
     this.cardSettings = {
       headerField: '_id',
       selectionType: 'Single',
     };
-
-    // this.store.dispatch(loadAllTasks({ pid:this.pid }));
-    // this.pending = this.store.select(getPendingTasks);
-    // this.active = this.store.select(getActiveTask);
-    // this.today = this.store.select(getTodayTasks);
-    // this.todaycompleted = this.store.select(getTodayCompletedTasks);
-    // this.scheduled = this.store.select(getScheduledTasks);
-    // this.unsheduled = this.store.select(getUnScheduledTasks);
-    // this.store.dispatch(setLogoLoading({ status: false }));
 
     this.items = [
       { label: 'Mark As Done', icon: 'pi pi-refresh' },

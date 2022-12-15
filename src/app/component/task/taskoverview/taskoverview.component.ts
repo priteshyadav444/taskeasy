@@ -7,7 +7,7 @@ import { AppState } from 'src/app/app-store/app.state';
 import { MainwrapperComponent } from 'src/app/main/taskwrapper/wrapper/mainwrapper.component';
 import { Task } from 'src/app/models/task.models';
 import { TasksCardService } from 'src/app/service/task/taskcard.service';
-import { loadAllTasks } from '../state/task.action';
+import { loadAllData } from '../state/task.action';
 import { getTasks } from '../state/task.selector';
 // import { AppConfig } from '../../../app/api/appconfig';
 // import { ConfigService } from 'src/app/service/app.config.service';
@@ -43,7 +43,7 @@ export class TaskoverviewComponent implements OnInit {
       this.pid = log;
       console.log(this.pid);
       if (this.pid != undefined) {
-        this.store.dispatch(loadAllTasks({ pid: this.pid }));
+        this.store.dispatch(loadAllData({ pid: this.pid }));
         this.store.select(getTasks).subscribe((list) => {
           this.totalCompletedTask = 0;
           this.totalOngoingTasks = 0;

@@ -50,6 +50,17 @@ export class TasksService {
       );
   }
 
+  updateTask(state: Task, pid: string): Observable<any> {
+    //console.log(state.changedRecords[0]);
+    return this.http.put(
+      `${this.apiUrl}/update/${pid}`,
+      state,
+      {
+        headers: this.reqHeader,
+      }
+    );
+  }
+
   
 
 

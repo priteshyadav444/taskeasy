@@ -251,11 +251,11 @@
           </div>
         </div>
 
-        <div *ngIf="data.description.length > 0" class="field">
+        <div *ngIf="data.description?.length > 0" class="field">
           <p-editor
             [(ngModel)]="data.description"
             [readonly]="true"
-            class="mt-1"
+            class="mt-2"
             [style]="{ 'max-height': '200px', overflow: 'hidden' }"
             [ngModelOptions]="{ standalone: true }"
             name="fieldName"

@@ -4,7 +4,7 @@ import { MenuItem, PrimeIcons } from 'primeng/api';
 import { Observable } from 'rxjs';
 import { AppState } from 'src/app/app-store/app.state';
 import { TasksCardService } from 'src/app/service/task/taskcard.service';
-import { loadAllTasks } from '../state/task.action';
+import { loadAllData } from '../state/task.action';
 import { getTasks } from '../state/task.selector';
 
 @Component({
@@ -26,7 +26,7 @@ export class CompletedComponent implements OnInit {
     this.service.pid.subscribe(log=> {
       this.pid = log
       if(this.pid!=undefined){
-      this.store.dispatch(loadAllTasks({pid:this.pid}));
+      this.store.dispatch(loadAllData({pid:this.pid}));
       this.store.select(getTasks).subscribe(list => {
         this.allTask = list.forEach(value => {
              return value

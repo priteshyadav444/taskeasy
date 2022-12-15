@@ -11,6 +11,8 @@ import {
   addTaskSuccess,
   loadAllData,
   loadDataSuccess,
+  updateTask,
+  updateTaskSuccess,
 } from './task.action';
 
 @Injectable()
@@ -47,10 +49,24 @@ export class TaskEffects {
     );
   });
 
+  updateTask$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(updateTask),
+      mergeMap((action) => {
+        return this.taskServices.updateTask(action.task,action.pid).pipe(
+          map((data) => {
+            const task = { ...action.task};
+            return updateTaskSuccess({ task });
+          })
+        );
+      })
+    );
+  });
+
   kanbanUpdate$ = createEffect(
     () => {
       return this.actions$.pipe(
-        ofType(...[addTaskSuccess]),
+        ofType(...[addTaskSuccess, updateTaskSuccess]),
         tap((action) => { 
           console.log("kanban update")
           this.home.update();
