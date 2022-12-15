@@ -28,13 +28,13 @@ export class SidemenuComponent implements OnInit {
       {
         label: 'Task',
         icon: 'pi pi-check-square',
-        items: [
-          {
-            label: 'All Task',
-            icon: 'pi pi-list',
-            routerLink: [this.pid,"?category=all"],
-          },
-        ],
+        // items: [
+        //   {
+        //     label: 'All Task',
+        //     icon: 'pi pi-list',
+        //     routerLink: [this.pid,"?category=all"],
+        //   },
+        // ],
       },
       {
         label: 'Notes',
