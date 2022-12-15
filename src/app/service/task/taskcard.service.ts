@@ -41,31 +41,31 @@ export class TasksCardService extends Subject<DataStateChangeEventArgs> {
     this.pid.next(id);
   }
   protected getData(state: DataStateChangeEventArgs): Observable<DataStateChangeEventArgs> {
-    // return this.store
-    //   .select(getTasks)
-    //   .pipe(
-    //     map(
-    //       (response: Task[]) =>
-    //         <any>{
-    //           result: response,
-    //         }
-    //     )
-    //   )
-    //   .pipe((data: any) => {
-    //     return data;
-    //   });
+    return this.store
+      .select(getTasks)
+      .pipe(
+        map(
+          (response: Task[]) =>
+            <any>{
+              result: response,
+            }
+        )
+      )
+      .pipe((data: any) => {
+        return data;
+      });
     
-    return this.http
-           .get(`${this.BASE_URL}/${this.pid.value}`, {
-            headers:this.reqHeader
-          })
-           .pipe(map((response: Task[]) => (<any>{
-            result: response
-        })))
-        .pipe((data: any) => {
-          console.log(data)
-            return data;
-        });
+    // return this.http
+    //        .get(`${this.BASE_URL}/${this.pid.value}`, {
+    //         headers:this.reqHeader
+    //       })
+    //        .pipe(map((response: Task[]) => (<any>{
+    //         result: response
+    //     })))
+    //     .pipe((data: any) => {
+    //       console.log(data)
+    //         return data;
+    //     });
   }
 
   public execute(state:any): void {

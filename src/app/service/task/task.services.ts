@@ -5,12 +5,14 @@ import { map, Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/app-store/app.state';
 import { DataStateChangeEventArgs } from '@syncfusion/ej2-angular-kanban';
+import { Project } from 'src/app/models/projects.models';
+import { TaskState } from 'src/app/component/task/state/task.state';
 
 @Injectable({ providedIn: 'root' })
 export class TasksService {
 
-  // apiUrl = 'http://localhost:3000/v1/tasks';
-   apiUrl = 'https://api-taskeasy.onrender.com/v1/tasks';
+  apiUrl = 'http://localhost:3000/v1/tasks';
+  //  apiUrl = 'https://api-taskeasy.onrender.com/v1/tasks';
 
   authToken = localStorage.getItem('authToken');
   constructor(private http: HttpClient, private store: Store<AppState>) {}
@@ -33,18 +35,17 @@ export class TasksService {
   //   });
   // }
 
-  getAllTasks(pid: string): Observable<Task[]> {
+  getAll(pid: string): Observable<TaskState> {
     return this.http
-      .get<Task[]>(`${this.apiUrl}/${pid}`, {
+      .get<TaskState>(`${this.apiUrl}/${pid}`, {
         headers: this.reqHeader,
       })
       .pipe(
         map((data) => {
-          const tasks: Task[] = [];
-          for (let key in data) {
-            tasks.push({ ...data[key], id: key });
-          }
-          return tasks;
+          const tasks: Task[] = data.tasks;
+          const projectDetails:Project = { ...data.projectDetails};
+          const result = { tasks, projectDetails };
+          return result;
         })
       );
   }

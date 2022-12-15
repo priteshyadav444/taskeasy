@@ -1478,6 +1478,16 @@
     "@syncfusion/ej2-kanban" "20.3.60"
     tslib "^2.3.0"
 
+"@syncfusion/ej2-angular-progressbar@^20.3.60":
+  version "20.3.60"
+  resolved "https://registry.yarnpkg.com/@syncfusion/ej2-angular-progressbar/-/ej2-angular-progressbar-20.3.60.tgz#602c8743039c1dfa65affcacc8db32774a716fb5"
+  integrity sha512-X1Ot70u9M7G8R6PMJrF+GaW+CA9eA0F4N1GQ7uWEPRbb9T7h4YD/aKwlj8iXMbgRTY3cmtIv05MZUg+zUh1jLQ==
+  dependencies:
+    "@syncfusion/ej2-angular-base" "~20.3.56"
+    "@syncfusion/ej2-base" "~20.3.56"
+    "@syncfusion/ej2-progressbar" "20.3.60"
+    tslib "^2.3.0"
+
 "@syncfusion/ej2-angular-schedule@^20.2.45":
   version "20.3.58"
   resolved "https://registry.yarnpkg.com/@syncfusion/ej2-angular-schedule/-/ej2-angular-schedule-20.3.58.tgz#cdcbebe3c260a5affc3efc5533d121001aeb1c6d"
@@ -1617,6 +1627,15 @@
     "@syncfusion/ej2-base" "~20.3.56"
     "@syncfusion/ej2-buttons" "~20.3.58"
 
+"@syncfusion/ej2-progressbar@20.3.60":
+  version "20.3.60"
+  resolved "https://registry.yarnpkg.com/@syncfusion/ej2-progressbar/-/ej2-progressbar-20.3.60.tgz#66e1f51edb13433f785627d8e2fca68edc0bd7ae"
+  integrity sha512-HyWSXM3ZokZt9/weU9tFNDmuA8VUQcouWdHedHCVyEPrwb69APNYPwmSPNxJ3khv3JXiLKqBa/Ych1mxFJkzjQ==
+  dependencies:
+    "@syncfusion/ej2-base" "~20.3.56"
+    "@syncfusion/ej2-data" "~20.3.60"
+    "@syncfusion/ej2-svg-base" "~20.3.56"
+
 "@syncfusion/ej2-schedule@20.3.58":
   version "20.3.58"
   resolved "https://registry.yarnpkg.com/@syncfusion/ej2-schedule/-/ej2-schedule-20.3.58.tgz#69a62917daacd80a48d183d03b49fdf8de220e80"
@@ -1640,6 +1659,13 @@
   dependencies:
     "@syncfusion/ej2-base" "~20.3.56"
     "@syncfusion/ej2-popups" "~20.3.56"
+
+"@syncfusion/ej2-svg-base@~20.3.56":
+  version "20.3.56"
+  resolved "https://registry.yarnpkg.com/@syncfusion/ej2-svg-base/-/ej2-svg-base-20.3.56.tgz#7f6d2664e9cdae173d246f75e1bded2cdaae4597"
+  integrity sha512-r3qsk/zNP9Btv9qqn+sGenV8qSJLdxcYTqh0Djxk6dnPvFhsYXX45+FDMr9HB73tuqJP8dbBkXGH3dGSke6c/g==
+  dependencies:
+    "@syncfusion/ej2-base" "~20.3.56"
 
 "@tootallnate/once@1":
   version "1.1.2"

@@ -14,14 +14,6 @@ export const getTasks = createSelector(getTasksState, (state)=>{
     return state.tasks;
 })
 
-export const getPendingTasks = createSelector(
-    getTasks,
-    (tasks) => {
-        // tasks.forEach((data)=> console.log(date1 > formatDate(data.scheduled_date!,'yyyy-MM-dd','en_US')));
-        return tasks.filter((data) => (data.scheduled_type=="scheduled_task"  && formatDate(data.scheduled_date!,'yyyy-MM-dd','en_US') < date1))
-    }
-)
-
 export const getActiveTask = createSelector(
     getTasks,
     (tasks) => {
@@ -46,18 +38,5 @@ export const getTodayCompletedTasks = createSelector(
     }
 )
 
-export const getScheduledTasks = createSelector(
-    getTasks,
-    (tasks) => {
-        // tasks.forEach((data)=> console.log(date1 > formatDate(data.scheduled_date!,'yyyy-MM-dd','en_US')));
-        return tasks.filter((data) => (formatDate(data.scheduled_date!,'yyyy-MM-dd','en_US') > date1 && data.scheduled_type=="unscheduled_task"))
-    }
-)
 
-export const getUnScheduledTasks = createSelector(
-    getTasks,
-    (tasks) => {
-        // tasks.forEach((data)=> console.log(date1 > formatDate(data.scheduled_date!,'yyyy-MM-dd','en_US')));
-        return tasks.filter((data) => data.scheduled_type=="unscheduled_task")
-    }
-)
+

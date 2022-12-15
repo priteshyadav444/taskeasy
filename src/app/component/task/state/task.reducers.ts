@@ -3,8 +3,7 @@ import { createReducer, on } from '@ngrx/store';
 import {
   addTask,
   addTaskSuccess,
-  loadAllTasks,
-  loadTasksSuccess,
+  loadDataSuccess,
   resetTasks,
 } from './task.action';
 import { intialState } from './task.state';
@@ -18,10 +17,11 @@ const _tasksReducer = createReducer(
       tasks: [...state.tasks, task],
     };
   }),
-  on(loadTasksSuccess, (state, action) => {
+  on(loadDataSuccess, (state, action) => {
     return {
       ...state,
       tasks: action.tasks,
+      projectDetails : action.projectDetails,
     };
   }),
   on(resetTasks, (state, action) => {
