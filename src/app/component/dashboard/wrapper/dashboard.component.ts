@@ -263,7 +263,6 @@ export class DashboardComponent {
   }
    getColor(totalCompletedTask, totalTasks): string {
     const value = this.calculatePercentage(totalCompletedTask, totalTasks)
-    console.log(value)
     if (value < 25) {
       return 'red';
     } else if (value < 50) {

@@ -3,6 +3,7 @@ import { createReducer, on } from '@ngrx/store';
 import {
   addTask,
   addTaskSuccess,
+  deleteTaskSuccess,
   loadDataSuccess,
   resetTasks,
   updateTaskSuccess,
@@ -26,12 +27,18 @@ const _tasksReducer = createReducer(
     };
   }),
   on(updateTaskSuccess, (state, action) => {
-    console.log(action.task)
     const updatedTask = action.task;
     const tasks = state.tasks.map((data) =>
       data._id == action.task._id ? { ...updatedTask } : data
     );
-    console.log(state.tasks);
+    return {
+      ...state,
+      tasks,
+    };
+  }),
+  on(deleteTaskSuccess, (state, action) => {
+    const updatedTask = action.task;
+    const tasks = state.tasks.filter((data) => data._id != action.task._id);
     return {
       ...state,
       tasks,

@@ -27,7 +27,7 @@ import { DropDownListComponent } from '@syncfusion/ej2-angular-dropdowns';
 import { Title } from '@angular/platform-browser';
 import { getAllProjects } from '../../dashboard/state/project.selector';
 import { tasksReducer } from '../state/task.reducers';
-import { loadAllData, updateTask } from '../state/task.action';
+import { deleteTask, loadAllData, updateTask } from '../state/task.action';
 
 interface Status {
   task_status: string;
@@ -165,13 +165,11 @@ export class HomeComponent implements OnInit {
       this.selectedStatus == undefined;
       this.subTask = [];
     } else if (state.requestType === 'cardRemoved') {
-      this.service.deleteCard(state, this.pid).subscribe(() => {
-        state.endEdit();
-      });
+      const task :any = {...state.deletedRecords[0]}
+      this.store.dispatch(deleteTask({task, pid:this.pid}));
     }
   } 
   public dataStateChange(state: DataStateChangeEventArgs): void {
-    console.log(state)
     this.service.execute(state); 
   }
 
@@ -233,7 +231,6 @@ export class HomeComponent implements OnInit {
   dialogClose(args: DialogEventArgs): void {
     //this.service.execute(s);
     this.subtaskele = '';
-    console.log('args close', args);
   }
   public fields: Object = { text: 'Name', value: 'Id' };
 

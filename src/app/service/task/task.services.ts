@@ -7,6 +7,7 @@ import { AppState } from 'src/app/app-store/app.state';
 import { DataStateChangeEventArgs } from '@syncfusion/ej2-angular-kanban';
 import { Project } from 'src/app/models/projects.models';
 import { TaskState } from 'src/app/component/task/state/task.state';
+import { MessageService } from 'primeng/api';
 
 @Injectable({ providedIn: 'root' })
 export class TasksService {
@@ -15,7 +16,7 @@ export class TasksService {
   //  apiUrl = 'https://api-taskeasy.onrender.com/v1/tasks';
 
   authToken = localStorage.getItem('authToken');
-  constructor(private http: HttpClient, private store: Store<AppState>) {}
+  constructor(private http: HttpClient, private store: Store<AppState>, private messageService: MessageService) {}
   
   
   reqHeader = new HttpHeaders({
@@ -51,7 +52,6 @@ export class TasksService {
   }
 
   updateTask(state: Task, pid: string): Observable<any> {
-    //console.log(state.changedRecords[0]);
     return this.http.put(
       `${this.apiUrl}/update/${pid}`,
       state,
@@ -59,6 +59,18 @@ export class TasksService {
         headers: this.reqHeader,
       }
     );
+  }
+
+  deleteTask(state: Task, pid: string): Observable<any> {
+    const id = state._id;
+    const url = `${this.apiUrl}/${pid}/${id}`;
+    return this.http.delete<any>(url, {
+      headers: this.reqHeader,
+    });
+  }
+
+  showMessage(data: any) {
+    this.messageService.add(data);
   }
 
   
