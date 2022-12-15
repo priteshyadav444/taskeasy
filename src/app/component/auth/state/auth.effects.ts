@@ -90,6 +90,7 @@ export class AuthEffects {
         ofType(...[loginSuccess, signupSuccess,logoutSucess]),
         tap((action) => {
           this.store.dispatch(setErrorMessage({ message: '' }));
+          console.log("inside redirect ")
           if (action.redirect) {
             this.router.navigate([this.defaultRedirect]);
           } else {
