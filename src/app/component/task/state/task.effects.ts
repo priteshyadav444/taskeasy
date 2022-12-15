@@ -39,7 +39,7 @@ export class TaskEffects {
       })
     );
   });
-  
+
   addTask$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(addTask),
@@ -64,7 +64,8 @@ export class TaskEffects {
         return this.taskServices.updateTask(action.task,action.pid).pipe(
           map((data) => {
             const task = { ...action.task};
-            this.taskServices.showMessage("Task Updatde!")
+            const messageData = { severity:'success', summary: action.task.title, detail: 'Task Updated!'}
+            this.taskServices.showMessage(messageData);
             return updateTaskSuccess({ task });
           })
         );
@@ -79,7 +80,8 @@ export class TaskEffects {
         return this.taskServices.deleteTask(action.task,action.pid).pipe(
           map((data) => {
             const task = { ...action.task};
-            this.taskServices.showMessage("Task Deleted !")
+            const messageData = { severity:'error', summary: 'Success', detail: 'Task Deleted!'}
+            this.taskServices.showMessage(messageData);
             return deleteTaskSuccess({ task });
           })
         );

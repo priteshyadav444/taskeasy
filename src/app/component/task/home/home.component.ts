@@ -229,7 +229,7 @@ export class HomeComponent implements OnInit {
   }
 
   dialogClose(args: DialogEventArgs): void {
-    //this.service.execute(s);
+    this.service.execute({});
     this.subtaskele = '';
   }
   public fields: Object = { text: 'Name', value: 'Id' };
