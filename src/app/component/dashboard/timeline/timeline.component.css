@@ -14,19 +14,17 @@
   
   /* csslint ignore:start */
   .schedule-event-template.e-schedule .e-vertical-view .e-content-wrap .e-appointment {
-    border-radius: 8px;
+    border-radius: 12px;
 }
 
 .schedule-event-template.e-schedule .e-vertical-view .e-content-wrap .e-appointment .e-appointment-details {
     padding: 0;
     height: 100%;
 }
-.e-schedule .e-month-view .e-appointment{
-    border-radius: 14px;
-    padding: 4px;
-}
+
 .schedule-event-template.e-schedule .template-wrap {
     height: 100%;
+    border-radius: 10px;
     white-space: normal;
 }
 
@@ -41,12 +39,10 @@
 }
 
 .schedule-event-template.e-schedule .template-wrap .subject {
-    margin-top: 1rem;
     font-weight: 500;
-    font-size: 15px;
-    color: #fff;
-    padding: 4px 4px 4px;
-    height: 25px;
+    font-size: 12px;
+    padding: 1px;
+    height: 24px;
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
@@ -60,7 +56,6 @@
 .schedule-event-template.e-schedule .template-wrap .description {
     font-size: 12px;
     padding: 4px 6px 4px;
-    color: #fff;
     overflow: hidden;
 }
 
@@ -92,7 +87,11 @@
 .custom-class.e-schedule .e-vertical-view .e-day-wrapper .e-appointment.e-past-app {
     background-color: #D2691E;
 }
-  /* csslint ignore:end */
-  .indicators{
-    height: 50px;
-}
+  .e-schedule .e-month-view .e-appointment{
+    border-radius: 8px;
+    height: 25px;
+  }
+
+  .e-schedule .e-agenda-view .schedule-event-template.e-schedule .template-wrap .subject{
+    margin-top: 10px;
+  }
