@@ -41,7 +41,6 @@ export class TaskoverviewComponent implements OnInit {
   ) {
     this.service.pid.subscribe((log) => {
       this.pid = log;
-      console.log(this.pid);
       if (this.pid != undefined) {
         this.store.dispatch(loadAllData({ pid: this.pid }));
         this.store.select(getTasks).subscribe((list) => {

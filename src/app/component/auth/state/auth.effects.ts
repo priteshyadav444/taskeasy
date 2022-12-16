@@ -83,7 +83,7 @@ export class AuthEffects {
     );
   });
 
-  defaultRedirect = '/home/639b545a30055ddb10aba3c9';
+  defaultRedirect = '/dashboard';
   loginRedirect$ = createEffect(
     () => {
       return this.actions$.pipe(

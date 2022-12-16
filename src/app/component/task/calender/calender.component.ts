@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
+import { Store } from '@ngrx/store';
 import {
   DayService,
   MonthService,
@@ -7,7 +8,9 @@ import {
   EventSettingsModel,
 } from '@syncfusion/ej2-angular-schedule';
 import { DataManager, ODataV4Adaptor, Query } from '@syncfusion/ej2-data';
+import { AppState } from 'src/app/app-store/app.state';
 import { TasksCardService } from 'src/app/service/task/taskcard.service';
+import { getPendingTasks } from '../state/task.selector';
 
 @Component({
   selector: 'app-calender',
@@ -19,6 +22,7 @@ export class CalenderComponent implements OnInit {
   public selectedDate: Date = new Date();
   public readonly: boolean = true;
   public eventSettings: EventSettingsModel;
+  public pendingtasks:any[] = []
   pid!:any
   // public url:any = `https://api-taskeasy.onrender.com/v1/tasks/calender/${this.pid}`
   public url:any = `http://127.0.0.1:3000/v1/tasks/calender/${this.pid}`
@@ -31,12 +35,11 @@ export class CalenderComponent implements OnInit {
   private dataManager: DataManager = new DataManager();
  
   
-  constructor(private service:TasksCardService, private titleService: Title) {
+  constructor(private service:TasksCardService, private titleService: Title,  private store: Store<AppState>,) {
     this.service.pid.subscribe(log=> {
       this.pid = log
       this.url = `https://api-taskeasy.onrender.com/v1/tasks/calender/${this.pid}`
       // this.url = `http://127.0.0.1:3000/v1/tasks/calender/${this.pid}`
-      console.log(this.url)
     })
 
     this.dataManager = new DataManager({
@@ -47,9 +50,10 @@ export class CalenderComponent implements OnInit {
   }
   
   ngOnInit(): void {
+    this.store.select(getPendingTasks).subscribe((data)=>{ this.pendingtasks = data })
     this.titleService.setTitle(`Calender - TaskEasy.in`);
     this.eventSettings = {
-      dataSource: this.dataManager,
+      dataSource: this.pendingtasks,
       fields: {
         subject: { title: 'Event Name', name: 'title', default: 'Add Name' },
         description: { title: 'Summary', name: 'description' },

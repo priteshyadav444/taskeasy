@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Store } from '@ngrx/store';
 import {
   DayService,
   MonthService,
@@ -6,6 +7,8 @@ import {
   EventSettingsModel,
 } from '@syncfusion/ej2-angular-schedule';
 import { DataManager, ODataV4Adaptor, Query } from '@syncfusion/ej2-data';
+import { AppState } from 'src/app/app-store/app.state';
+import { getAllPendingTasks } from '../state/project.selector';
 
 @Component({
   selector: 'app-timeline',
@@ -18,6 +21,8 @@ import { DataManager, ODataV4Adaptor, Query } from '@syncfusion/ej2-data';
 export class TimelineComponent implements OnInit {
   public selectedDate: Date = new Date();
   public readonly: boolean = true;
+  public eventSettings: EventSettingsModel;
+  public pendingtasks:any[] = []
   public url:any = "https://api-taskeasy.onrender.com/v1/tasks/calender/all"
   // public url:any = "http://127.0.0.1:3000/v1/tasks/calender/all"
   authToken = localStorage.getItem('authToken');
@@ -33,21 +38,22 @@ export class TimelineComponent implements OnInit {
   });
  
   
-  constructor() {
+  constructor(private store: Store<AppState>) {
   }
   
   ngOnInit(): void {
-    
+    this.store.select(getAllPendingTasks).subscribe((data)=>{ this.pendingtasks = data })
+    this.eventSettings = {
+      dataSource: this.pendingtasks,
+      fields: {
+        subject: { title: 'Event Name', name: 'title', default: 'Add Name' },
+        description: { title: 'Summary', name: 'description' },
+        startTime: { title: 'From', name: 'scheduled_date' },
+        endTime: { title: 'To', name: 'scheduled_date' },
+      },
+      enableTooltip:true,
+      enableIndicator:true,
+  };
   }
-  public eventSettings: EventSettingsModel = {
-    dataSource: this.dataManager,
-    fields: {
-      subject: { title: 'Event Name', name: 'title', default: 'Add Name' },
-      description: { title: 'Summary', name: 'description' },
-      startTime: { title: 'From', name: 'createdAt' },
-      endTime: { title: 'To', name: 'scheduled_date' },
-    },
-    enableTooltip:true,
-    enableIndicator:true,
-};
+  
 }
