@@ -1,7 +1,7 @@
 <ejs-kanban
   class="pt-2 ejs-element"
   height="100%"
-  weight="100%"
+  weight="95%"
   keyField="task_status"
   [sortSettings]="sortSettings"
   [dataSource]="data | async"
@@ -10,22 +10,27 @@
   (dataSourceChanged)="dataSourceChanged($event)"
   (dialogOpen)="dialogOpen($event)"
   (dialogClose)="dialogClose($event)"
-  (addCard)="addCard(data)"
 >
   <e-columns>
-    <e-column headerText="To Do" keyField="pending"> </e-column>
-    <e-column headerText="In Progress" keyField="active"> </e-column>
-    <e-column headerText="Done" keyField="done"></e-column>
-    <e-column headerText="Unsheduled" keyField="unsheduled"></e-column>
+    <e-column headerText="Unsheduled" keyField="unsheduled" allowToggle='true' showAddButton="true" allowDrag="false"> </e-column>
+    <e-column headerText="To Do" keyField="pending" allowToggle='true' showAddButton="true"> </e-column>
+    <e-column headerText="In Progress" keyField="active" allowToggle='true' showAddButton="true"> </e-column>
+    <e-column headerText="Done" keyField="done" allowToggle='true' showAddButton="true"></e-column>
+    
   </e-columns>
+  <e-stackedHeaders>
+    <e-stackedHeader text='Pending Tasks' keyFields='pending, unsheduled'></e-stackedHeader>
+    <e-stackedHeader text='In Progress' keyFields='active'></e-stackedHeader>
+    <e-stackedHeader text='Completed Tasks' keyFields='done'></e-stackedHeader>
+</e-stackedHeaders>
 
   <ng-template
     #dialogSettingsTemplate
     let-data
     style="min-width: 500px; background-color: red"
   >
-    <div class="field col-12 p-0 mb-0 mt-1">
-      <div class="col-8 p-0">
+    <div class="field row p-0 mb-0 mt-1">
+      <div class="col-10 p-0">
         <p-dropdown
           [options]="status"
           [(ngModel)]="selectedStatus"
@@ -34,6 +39,15 @@
           optionValue="code"
           [showClear]="true"
         ></p-dropdown>
+
+        <p-dropdown
+          [options]="badgeData"
+          [(ngModel)]="selectedCategory"
+          optionLabel="badge"
+          placeholder="Update Priority"
+          optionValue="code"
+        ></p-dropdown>
+
       </div>
     </div>
 
@@ -43,6 +57,7 @@
           type="text"
           name="title"
           id="title"
+          required="true"
           class="e-field inputtext"
           placeholder="Enter Title"
           value="{{ data.title }}"
@@ -188,6 +203,7 @@
     <div class="e-card-content">
       <div class="card-15">
         <div class="card-15__colone">
+          
           <div class="card-15__title">
             {{ data.title }}
           </div>
@@ -251,7 +267,7 @@
           </div>
         </div>
 
-        <div *ngIf="data.description?.length > 0" class="field">
+        <div *ngIf="data.description?.length > 0" class="field mt-1">
           <p-editor
             [(ngModel)]="data.description"
             [readonly]="true"
@@ -403,122 +419,3 @@
     </div>
   </ng-template>
 </ejs-kanban>
-
-<p-dialog
-  header="Create Task"
-  [(visible)]="displayBasic"
-  [style]="{ width: '44rem' }"
-  class="subtask"
->
-  <div class="field col-12 p-0 mb-0">
-    <div class="col-8 p-0">
-      <p-splitButton
-        label="Low Priority"
-        [model]="this.category"
-        (onClick)="save('info')"
-        styleClass="p-button-raised p-button-plain p-button-text mr-2 mb-2"
-      ></p-splitButton>
-    </div>
-  </div>
-
-  <div class="p-fluid p-0">
-    <div class="col-12 p-0">
-      <input type="text" class="inputtext" placeholder="Enter Title" />
-    </div>
-    <hr class="m-0" />
-
-    <div class="col-12 p-0 mt-2">
-      <textarea
-        rows="5"
-        cols="30"
-        placeholder="Add Description"
-        class="inputtext"
-        pInputTextarea
-      ></textarea>
-    </div>
-    <hr />
-    <div class="field col-12 mt-1 mb-0 p-0">
-      <div class="col-6 p-0">
-        <div class="p-inputgroup">
-          <input type="text" class="inputtext" placeholder="Add Sub Task" />
-          <button
-            type="button"
-            class="p-button-text p-button-plain"
-            pButton
-            pRipple
-            icon="pi pi-plus"
-          ></button>
-        </div>
-      </div>
-    </div>
-
-    <div class="field col-12 p-0">
-      <div
-        cdkDropList
-        #todoList="cdkDropList"
-        class="example-list-create"
-        (cdkDropListDropped)="drop($event)"
-      >
-        <div class="example-box" *ngFor="let item of todo" cdkDrag>
-          <div class="example-box flex justify-content-between">
-            <p-checkbox name="groupname" value="false"></p-checkbox>
-          </div>
-
-          <div class="example-td mr-auto">
-            <span class="text-900 font-medium text-md example-title">
-              {{ item }}</span
-            >
-          </div>
-        </div>
-      </div>
-    </div>
-    <hr class="m-0" />
-    <button (click)="showCreateDialog()">Create</button>
-    <div class="field col-12 p-0 subtask">
-      <div class="col-6">
-        <div class="p-inputgroup">
-          <span class="p-inputgroup-addon">
-            <i class="pi pi-calendar"></i>
-          </span>
-          <span class="p-float-label">
-            <label for="basic">Basic</label>
-            <p-calendar
-              class="selectdate"
-              inputId="basic"
-              [showButtonBar]="true"
-              placeholder="Select Date"
-            ></p-calendar>
-          </span>
-        </div>
-        <div style="width: 100%">
-          <span>Repeat</span><p-inputSwitch styleClass="block"></p-inputSwitch>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- <ng-template pTemplate="footer">
-    <p-button
-      icon="pi pi-check"
-      (click)="displayBasic = false"
-      label="Ok"
-      styleClass="p-button-text"
-    ></p-button>
-  </ng-template> -->
-</p-dialog>
-
-<p-dialog
-  header="Create Category"
-  [(visible)]="displayCategory"
-  [style]="{ width: '20rem' }"
-  class="subtask"
->
-  <div class="p-fluid p-0">
-    <div class="col-12 p-0">
-      <input type="text" class="inputtext" placeholder="Enter Title" />
-    </div>
-    <div class="col-12 m-2">
-      <p-button label="Create"></p-button>
-    </div>
-  </div>
-</p-dialog>

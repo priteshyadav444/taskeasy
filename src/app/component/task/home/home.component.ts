@@ -27,7 +27,7 @@ import { DropDownListComponent } from '@syncfusion/ej2-angular-dropdowns';
 import { Title } from '@angular/platform-browser';
 import { getAllProjects } from '../../dashboard/state/project.selector';
 import { tasksReducer } from '../state/task.reducers';
-import { deleteTask, loadAllData, updateTask } from '../state/task.action';
+import { addTask, deleteTask, loadAllData, updateTask } from '../state/task.action';
 
 interface Status {
   task_status: string;
@@ -66,8 +66,8 @@ export class HomeComponent implements OnInit {
   temp!: Observable<Task[]>;
   pid!: any;
   category!: MenuItem[];
-  badge!: MenuItem[];
-  selectedCategory: any = null;
+  badge:Status;
+  selectedCategory: any;
   status: Status[];
   selectedStatus: Status;
   subTask: any = [];
@@ -91,26 +91,12 @@ export class HomeComponent implements OnInit {
       { task_status: 'Unsheduled', code: 'unsheduled' },
     ];
 
-    this.badge = [
-      {
-        label: 'low',
-        command: () => {
-          this.selectCategory('low');
-        },
-      },
-      {
-        label: 'medium',
-        command: () => {
-          this.selectCategory('medium');
-        },
-      },
-      {
-        label: 'high',
-        command: () => {
-          this.selectCategory('high');
-        },
-      },
+    this.badgeData= [
+      { code: 'low', badge: 'Low' },
+      { code: 'medium', badge: 'Medium' },
+      { code: 'high', badge: 'High' },
     ];
+
   }
 
   selectCategory(category: string) {
@@ -118,11 +104,30 @@ export class HomeComponent implements OnInit {
   }
 
   public dataSourceChanged(state: DataSourceChangedEventArgs): void {
-    console.log('source dataSourceChanged', state);
+    console.log('source dataSourceChanged', this.selectedCategory);
     if (state.requestType === 'cardCreated') {
-      // this.service.addCard(state, this.pid).subscribe(() => {
-      //   state.endEdit();
-      // });
+      if (this.selectedCategory == undefined) {
+        this.selectedCategory = "low"
+      }
+      const task: Task = {
+        title: "",
+        scheduled_date: "",
+        category: "",
+        description: "",
+        subtasklist: this.subTask,
+        badge:this.selectedCategory,
+        ...state.addedRecords[0]
+      };
+      
+      if (task.title == undefined || task.title == '') {
+        alert('Enter Title');
+        return;
+      }
+      else{
+        this.store.dispatch(addTask({task, pid:this.pid}));
+      }
+      
+
     } else if (state.requestType === 'cardChanged') {
       if (this.subTask.length > 0) {
         state.changedRecords[0] = {
@@ -139,7 +144,13 @@ export class HomeComponent implements OnInit {
           ...state.changedRecords[0],
           task_status: this.selectedStatus,
         };
-        this.selectedStatus == undefined;
+      }
+
+      if (this.selectedCategory != undefined) {
+        state.changedRecords[0] = {
+          ...state.changedRecords[0],
+          badge: this.selectedCategory,
+        };
       }
 
       //if all suntask completed
@@ -161,8 +172,13 @@ export class HomeComponent implements OnInit {
         }
       }
       const task :any = {...state.changedRecords[0]}
+      if (task.title == undefined || task.title == '') {
+        alert('Enter Title');
+        return;
+      }
       this.store.dispatch(updateTask({task, pid:this.pid}));
       this.selectedStatus == undefined;
+      this.selectedCategory = undefined
       this.subTask = [];
     } else if (state.requestType === 'cardRemoved') {
       const task :any = {...state.deletedRecords[0]}
@@ -220,12 +236,20 @@ export class HomeComponent implements OnInit {
     { Id: 'pending', Name: 'Pending' },
     { Id: 'unsheduled', Name: 'Unsheduled' },
   ];
+
+  public badgeData: Object[] = [
+    { Id: 'low', Name: 'Low' },
+    { Id: 'medium', Name: 'Medium' },
+    { Id: 'high', Name: 'High' },
+  ];
+  
   addCard(data:any){
 
   }
   dialogOpen(args: DialogEventArgs): void {
     this.subTask = [];
     this.selectedStatus = null;
+    this.selectedCategory = null;
   }
 
   dialogClose(args: DialogEventArgs): void {
@@ -275,15 +299,7 @@ export class HomeComponent implements OnInit {
         command: () => {
           this.selectCategory('high');
         },
-      },
-      { separator: true },
-      {
-        label: 'Create Badge',
-        icon: 'pi pi-plus',
-        command: () => {
-          this.showCreateDialog();
-        },
-      },
+      }
     ];
   }
 

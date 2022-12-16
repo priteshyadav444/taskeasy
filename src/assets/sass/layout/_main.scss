@@ -89,6 +89,7 @@ a {
 }
 .e-kanban .e-kanban-content .e-content-row .e-content-cells .e-card-wrapper .e-card {
   box-shadow: 0 1px 5px rgb(0 0 0 / 0.2);
+  border-radius: 6px;
 }
 .e-kanban .e-kanban-content .e-content-row .e-content-cells .e-card-wrapper .e-card.e-cloned-card,
 .e-kanban .e-kanban-content .e-content-row .e-content-cells .e-card-container .e-card.e-cloned-card {
@@ -116,4 +117,11 @@ a {
 .e-kanban .e-kanban-content .e-content-row .e-content-cells .e-card-wrapper .e-card.e-draggable,
 .e-kanban .e-kanban-content .e-content-row .e-content-cells .e-card-container .e-card.e-draggable {
   margin-bottom: 16px;
+}
+
+.e-kanban .e-kanban-table .e-header-cells .e-header-text{
+  font-weight: 500;
+}
+.e-kanban .e-kanban-table .e-header-cells .e-item-count{
+  font-weight: 500;
 }
