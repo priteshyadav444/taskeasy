@@ -42,9 +42,16 @@ export class TimelineComponent implements OnInit {
   }
   
   ngOnInit(): void {
-    this.store.select(getAllPendingTasks).subscribe((data)=>{ this.pendingtasks = data })
+    this.store.select(getAllPendingTasks).subscribe((data)=>{ 
+    if (data) {
+      this.bindSetting(data)
+    }
+  })
+  }
+
+  bindSetting(data) {
     this.eventSettings = {
-      dataSource: this.pendingtasks,
+      dataSource: data,
       fields: {
         subject: { title: 'Event Name', name: 'title', default: 'Add Name' },
         description: { title: 'Summary', name: 'description' },
