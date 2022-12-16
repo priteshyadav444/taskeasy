@@ -111,3 +111,9 @@ a {
 .e-schedule .e-agenda-view .e-appointment {
   color: #fff;
 }
+
+
+.e-kanban .e-kanban-content .e-content-row .e-content-cells .e-card-wrapper .e-card.e-draggable,
+.e-kanban .e-kanban-content .e-content-row .e-content-cells .e-card-container .e-card.e-draggable {
+  margin-bottom: 16px;
+}
