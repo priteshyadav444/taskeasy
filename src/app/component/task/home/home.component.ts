@@ -104,7 +104,6 @@ export class HomeComponent implements OnInit {
   }
 
   public dataSourceChanged(state: DataSourceChangedEventArgs): void {
-    console.log('source dataSourceChanged', this.selectedCategory);
     if (state.requestType === 'cardCreated') {
       if (this.selectedCategory == undefined) {
         this.selectedCategory = "low"

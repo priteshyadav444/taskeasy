@@ -98,14 +98,11 @@ export class CreateTaskComponent implements OnInit {
     this.btnClick.emit();
   }
   addSubTask(stask: any) {
-    console.log(this.subTask);
-
     if (stask == '' || stask == null) {
       return;
     } else {
       const newstask = { stitle: stask, checked: false };
       this.subTask = [...this.subTask, newstask];
-      console.log(this.subTask);
       this.subtaskele = '';
     }
   }
@@ -142,10 +139,10 @@ export class CreateTaskComponent implements OnInit {
       description: this.description,
       subtasklist: this.subTask,
       badge: this.selectedCategory,
+      task_status: "pending"
     };
 
     const id = this.service.activeRouterId;
-    console.log({ task, pid: id });
     this.store.dispatch(addTask({ task, pid: id }));
     this.showDailog = !this.showDailog;
     this.clearDailog()
