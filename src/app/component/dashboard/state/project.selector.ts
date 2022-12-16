@@ -26,6 +26,5 @@ export const getAllPendingTasks = createSelector(getProjectsState, (state)=>{
         Array.prototype.push.apply(allTasks, updatedtasks);
       }
     }
-    console.log(allTasks)
     return allTasks;
 })

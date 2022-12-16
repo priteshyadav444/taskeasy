@@ -5,6 +5,7 @@
             .layout-main-container {
                 margin-left: 0;
                 padding-left: 2rem;
+                background: #f5f5f5;
             }
            
             .layout-sidebar {
@@ -26,6 +27,7 @@
         &.layout-static {
             .layout-main-container {
                 margin-left: 240px;
+                background: #f5f5f5;
             }
 
             &.layout-static-sidebar-inactive {

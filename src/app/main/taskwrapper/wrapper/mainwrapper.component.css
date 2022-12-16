@@ -1,3 +1,7 @@
 .e-dropping {
     position: fixed;
 }
+
+.layout-wrapper{
+    background: #f5f5f5;
+}
