@@ -394,3 +394,8 @@ e-kanban {
 .p-editor-toolbar	{
   display: none;
 }
+
+.ejs-element{
+  background: #f5f5f5;
+}
+

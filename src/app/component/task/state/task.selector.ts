@@ -19,7 +19,6 @@ export const getPendingTasks = createSelector(
     (tasks) => {
         // tasks.forEach((data)=> console.log(date1 > formatDate(data.scheduled_date!,'yyyy-MM-dd','en_US')));
         const result = tasks.filter((data) => (data.task_status=="pending"));
-        console.log(result)
         return result;
     }
 )
