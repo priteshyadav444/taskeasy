@@ -34,8 +34,8 @@ export class CalenderComponent implements OnInit {
   constructor(private service:TasksCardService, private titleService: Title) {
     this.service.pid.subscribe(log=> {
       this.pid = log
-      // this.url = `https://api-taskeasy.onrender.com/v1/tasks/calender/${this.pid}`
-      this.url = `http://127.0.0.1:3000/v1/tasks/calender/${this.pid}`
+      this.url = `https://api-taskeasy.onrender.com/v1/tasks/calender/${this.pid}`
+      // this.url = `http://127.0.0.1:3000/v1/tasks/calender/${this.pid}`
       console.log(this.url)
     })
 
