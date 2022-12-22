@@ -8,10 +8,10 @@ import { AvatarModule } from 'primeng/avatar';
 import { AvatarGroupModule } from 'primeng/avatargroup';
 import { CardModule } from 'primeng/card';
 
-import { NavbarComponent } from './main/taskwrapper/navbar/navbar.component';
-import { SidemenuComponent } from './main/taskwrapper/sidemenu/sidemenu.component';
+import { NavbarComponent } from './wrapper/taskwrapper/navbar/navbar.component';
+import { SidemenuComponent } from './wrapper/taskwrapper/sidemenu/sidemenu.component';
 
-import { AppMenuitemComponent } from './main/taskwrapper/sidemenu/app.menuitem.component';
+import { AppMenuitemComponent } from './wrapper/taskwrapper/sidemenu/app.menuitem.component';
 
 import { DividerModule } from 'primeng/divider';
 import { ChartModule } from 'primeng/chart';
@@ -50,7 +50,7 @@ import { CreateTaskComponent } from './component/task/create-task/create-task.co
 import { EffectsModule } from '@ngrx/effects';
 
 import { HttpClient, HttpClientModule } from '@angular/common/http';
-import { AuthwrapperComponent } from './main/authwrapper/authwrapper/authwrapper.component';
+import { AuthwrapperComponent } from './wrapper/authwrapper/authwrapper/authwrapper.component';
 import {ToastModule} from 'primeng/toast';
 
 import { LoadingSpinnerComponent } from './component/shared/loading-spinner/loading-spinner.component';
@@ -76,7 +76,7 @@ import { DashboardComponent } from './component/dashboard/wrapper/dashboard.comp
 import { TimelineComponent } from './component/dashboard/timeline/timeline.component';
 import { LogoutComponent } from './component/dashboard/logout/logout.component';
 import { ProjectEffects } from './component/dashboard/state/project.effects';
-import { MainwrapperComponent } from './main/taskwrapper/wrapper/mainwrapper.component';
+import { MainwrapperComponent } from './wrapper/taskwrapper/wrapper/mainwrapper.component';
 import { MainComponent } from './component/lendingpage/main.component';
 
 @NgModule({
