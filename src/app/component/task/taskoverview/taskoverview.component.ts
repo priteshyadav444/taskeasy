@@ -4,7 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
 import { AppState } from 'src/app/app-store/app.state';
-import { MainwrapperComponent } from 'src/app/main/taskwrapper/wrapper/mainwrapper.component';
+import { MainwrapperComponent } from 'src/app/wrapper/taskwrapper/wrapper/mainwrapper.component';
 import { Task } from 'src/app/models/task.models';
 import { TasksCardService } from 'src/app/service/task/taskcard.service';
 import { loadAllData } from '../state/task.action';
