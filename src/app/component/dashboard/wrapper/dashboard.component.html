@@ -54,26 +54,26 @@
             <div
               class="flex-none flex align-items-center justify-content-center m-1 px-5"
             >
-              <p-paginator></p-paginator>
+            <p-paginator [rows]="rows" (onPageChange)="onPageChange($event)" [totalRecords]="totalprojects?.length" [pageLinkSize]="0"></p-paginator>
             </div>
           </div>
 
           <div class="flex align-items-center flex-column sm:flex-row mt-1">
             <div
               class="flex-row overflow-hidden"
-              *ngFor="let item of projects | async"
+              *ngFor="let item of projects"
             >
               <a [routerLink]="['/home', item._id]">
-                <p-card
+                <p-card class="ui-grid ui-grid-col-12 ui-grid-responsive"
                   header="{{ item.project_title }}"
                   [style]="{
                     'min-width': '16rem',
                     'max-width': '16rem',
-                    height: '16rem',
-                    'margin-left': '2em',
-                    padding: '4px',
-                    color: '#fff',
-                    background: item.theme_colour
+                    'height': '16rem',
+                    'margin-left': '1em',
+                    'padding': '2px',
+                    'color': '#fff',
+                    'background': item.theme_colour
                   }"
                 >
                   <ng-template pTemplate="header"> </ng-template>
