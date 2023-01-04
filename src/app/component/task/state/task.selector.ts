@@ -15,16 +15,10 @@ export const getTasks = createSelector(getTasksState, (state)=>{
 })
 
 export const getPendingTasks = createSelector(
-    getTasksState,
-    (data) => {
-        const tasks = data.tasks;
-        const theme_colour = data.projectDetails.theme_colour;
+    getTasks,
+    (tasks) => {
         // tasks.forEach((data)=> console.log(date1 > formatDate(data.scheduled_date!,'yyyy-MM-dd','en_US')));
-        let result = tasks.filter((data) => (data.task_status=="pending"));
-        result = result.map((data) => {
-            return { ...data, theme_colour: theme_colour};
-          });
-        
+        const result = tasks.filter((data) => (data.task_status=="pending"));
         return result;
     }
 )
