@@ -26,7 +26,10 @@ export class DashboardComponent {
   title!: string;
   selectedDate:any = null
   minimumDate:any = new Date();
-  projects:any=[];
+  totalprojects:any[]= [];
+  projects:any[]= [];
+  first:number = 0;
+  rows:number = 6;
   showLoading$:Observable<boolean> | undefined
   
   public menuInactiveDesktop!: boolean;
@@ -84,7 +87,14 @@ export class DashboardComponent {
     })
 
     this.store.dispatch(loadAllProjects());
-    this.projects = this.store.select(getAllProjects);
+    this.store.select(getAllProjects).subscribe({next: (data) => {
+        this.totalprojects = data; 
+        this.onPageChange({first: this.first, rows: this.rows})
+      },
+      error: (error) => {
+        console.log("error",error);
+      }
+    })
     this.showLoading$ = this.store.select(getLoading);
     this.items = [
       {
@@ -143,6 +153,13 @@ export class DashboardComponent {
       }
     );
   }
+
+  onPageChange(event) {
+    this.first = event?.first;
+    const projectUptoIndex = event?.first + event?.rows;
+    this.projects = this.totalprojects?.slice(this.first, projectUptoIndex);
+  }
+
   addProject() {
     this.uiService.toggleAddProject();
   }
