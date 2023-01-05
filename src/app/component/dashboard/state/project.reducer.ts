@@ -1,5 +1,5 @@
 import { createReducer, on } from '@ngrx/store';
-import { addProjectSucess, loadProjectsSuccess } from './project.action';
+import { addProjectSucess, deleteProjectSuccess, loadProjectsSuccess } from './project.action';
 import { initialState } from './project.state';
 
 const _projectReducer = createReducer(
@@ -16,6 +16,18 @@ const _projectReducer = createReducer(
       ...state,
       projects: action.projects,
     };
+  }),
+  on(deleteProjectSuccess,(state,action) => {
+    const filtertedData = state.projects.filter((project)=>{
+      return project._id!=action.pid;
+    });
+    console.log(filtertedData);
+    return {
+      ...state,
+      projects: state.projects.filter((project)=>{
+        return project._id!=action.pid;
+      })
+    }
   })
 );
 
