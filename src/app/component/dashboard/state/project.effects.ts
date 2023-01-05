@@ -6,6 +6,8 @@ import { Injectable } from '@angular/core';
 import {
   addProjectStart,
   addProjectSucess,
+  deleteProjectStart,
+  deleteProjectSuccess,
   loadAllProjects,
   loadProjectsSuccess,
 } from './project.action';
@@ -77,6 +79,23 @@ export class ProjectEffects {
             this.idx = 0;
             projects = this.data
             return loadProjectsSuccess({ projects });
+          })
+        );
+      })
+    );
+  });
+  deleteProject$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(deleteProjectStart),
+      mergeMap((action) => {
+        return this.projectService.deleteProject(action.pid).pipe(
+          map((data) => {
+            return deleteProjectSuccess({ pid:action.pid });
+          }),
+          catchError((errResp) => {
+            
+            this.store.dispatch(setLoadingSpinner({ status: false }));
+            return of();
           })
         );
       })

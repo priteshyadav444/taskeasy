@@ -3,6 +3,10 @@ import { Project } from "src/app/models/projects.models";
 
 export const CREATE_PROJECT = "project create";
 export const CREATE_PROJECT_SUCESS = "Project Created"
+
+export const DELETE_PROJECT = "project Deleted";
+export const DELETE_PROJECT_SUCCESS = "project Deleted Success";
+
 export const LOAD_PROJECTS = "Loading Projects";
 export const LOAD_PROJECTS_SUCCESS = "All Project Loaded"
 
@@ -22,4 +26,14 @@ export const loadAllProjects = createAction(LOAD_PROJECTS)
 export const loadProjectsSuccess = createAction(
     LOAD_PROJECTS_SUCCESS,
     props<{ projects: Project[]}>()
+)
+
+
+export const deleteProjectStart = createAction(
+    DELETE_PROJECT,
+    props<{ pid:string}>()
+)
+export const deleteProjectSuccess = createAction(
+    DELETE_PROJECT_SUCCESS,
+    props<{ pid:string}>()
 )

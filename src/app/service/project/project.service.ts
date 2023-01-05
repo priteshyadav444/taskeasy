@@ -14,6 +14,7 @@ export class ProjectService {
   reqHeader:any
 
   // apiUrl = 'http://localhost:3000/v1/users/project';
+  apiUrlProject = 'http://localhost:3000/v1/projects';
   apiUrl = 'https://api-taskeasy.onrender.com/v1/users/project'
   constructor(private http: HttpClient, private store:Store<AppState>) {
     this.reqHeader = new HttpHeaders({
@@ -34,6 +35,11 @@ export class ProjectService {
     return this.http.post<Project>(this.apiUrl,project,{
       headers: this.getToken()
     })
+  }
+  deleteProject(pid:String):Observable<any>{
+    return this.http.delete<any>(`${this.apiUrlProject}/${pid}`,{headers: this.getToken()}).pipe(map((data)=>{
+      return data;
+    }))
   }
 
 
