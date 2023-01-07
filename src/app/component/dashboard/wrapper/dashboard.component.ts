@@ -30,7 +30,7 @@ export class DashboardComponent {
   projects:any[]= [];
   first:number = 0;
   rows:number = 6;
-  theme_colour:string = "#1976D2";
+  theme_colour:any = "#1976D2";
   showLoading$:Observable<boolean> | undefined
   
   public menuInactiveDesktop!: boolean;
@@ -296,5 +296,8 @@ export class DashboardComponent {
   calculatePercentage(totalCompletedTask, totalTasks):number{
     if(totalTasks==0) return 0;
     return  Math.round(((totalCompletedTask*100)/totalTasks));
+  }
+  colorChange($event){
+    console.log($event);
   }
 }

@@ -256,8 +256,8 @@
             id="text"
           />
         </div>
-          <div class="col-12 p-0">
-           <p-colorPicker [(ngModel)]="theme_colour"></p-colorPicker> <label> : Select Theme Colour</label>
+          <div class="col-12 p-0 mb-1">
+           <p-colorPicker type="color" [(ngModel)]="theme_colour" name="theme_colour" onChange="colorChange($event)"></p-colorPicker> <label> : Select Theme Colour</label>
           </div>
         <hr class="m-0" />
         <p-calendar
