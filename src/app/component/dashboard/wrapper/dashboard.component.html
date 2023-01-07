@@ -63,9 +63,8 @@
               class="flex-row overflow-hidden"
               *ngFor="let item of projects"
             >
-              <a [routerLink]="['/home', item._id]">
-                <p-card class="ui-grid ui-grid-col-12 ui-grid-responsive"
-                  header="{{ item.project_title }}"
+              
+                <p-card  [routerLink]="['/home', item._id]" class="ui-grid ui-grid-col-12 ui-grid-responsive"
                   [style]="{
                     'min-width': '16rem',
                     'max-width': '16rem',
@@ -76,7 +75,15 @@
                     'background': item.theme_colour
                   }"
                 >
-                  <ng-template pTemplate="header"> </ng-template>
+                  <ng-template pTemplate="header">
+                    <div class="d-flex justify-content-space-between">
+                      <h3 class="">{{ item.project_title }}</h3>
+                      <div (click)="op.shows($event)">
+                        <i class="pi pi-ellipsis-v" style="font-size: 1rem"></i>
+                      </div>
+                    </div>
+
+                  </ng-template>
                   <ng-template pTemplate="body">
                     <div class="flex align-items-center flex-wrap">
                       <div
@@ -214,7 +221,12 @@
                     </div> -->
                   </ng-template>
                 </p-card>
-              </a>
+                  <p-overlayPanel #op [dismissable]="true" [showCloseIcon]="true">
+                    <ng-template pTemplate>
+                      <button pButton type="button" label="Delete" icon="pi pi-trash" class="p-button-text"></button>
+                    </ng-template>
+                  </p-overlayPanel>
+              
             </div>
           </div>
 
@@ -244,8 +256,8 @@
             id="text"
           />
         </div>
-          <div class="col-12 p-0">
-           <p-colorPicker [(ngModel)]="theme_colour"></p-colorPicker> <label> : Select Theme Colour</label>
+          <div class="col-12 p-0 mb-1">
+           <p-colorPicker type="color" [(ngModel)]="theme_colour" name="theme_colour" onChange="colorChange($event)"></p-colorPicker> <label> : Select Theme Colour</label>
           </div>
         <hr class="m-0" />
         <p-calendar

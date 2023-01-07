@@ -19,6 +19,7 @@ import { ProgressBarModule } from 'primeng/progressbar';
 import { CalendarModule } from 'primeng/calendar';
 import {MenubarModule} from 'primeng/menubar';
 
+import {OverlayPanelModule} from 'primeng/overlaypanel';
 // import { FullCalendarModule } from '@fullcalendar/angular'; // must go before plugins
 // import dayGridPlugin from '@fullcalendar/daygrid'; // a plugin!
 // import interactionPlugin from '@fullcalendar/interaction';
@@ -132,6 +133,7 @@ import { MainComponent } from './component/lendingpage/main.component';
     MessagesModule,
     MessageModule,
     ColorPickerModule,
+    OverlayPanelModule,
     StoreModule.forRoot(appReducer),
     EffectsModule.forRoot([AuthEffects, ProjectEffects]),
     StoreDevtoolsModule.instrument({
