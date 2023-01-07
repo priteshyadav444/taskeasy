@@ -63,8 +63,8 @@
               class="flex-row overflow-hidden"
               *ngFor="let item of projects"
             >
-              <a [routerLink]="['/home', item._id]">
-                <p-card class="ui-grid ui-grid-col-12 ui-grid-responsive"
+              
+                <p-card  [routerLink]="['/home', item._id]" class="ui-grid ui-grid-col-12 ui-grid-responsive"
                   [style]="{
                     'min-width': '16rem',
                     'max-width': '16rem',
@@ -78,7 +78,7 @@
                   <ng-template pTemplate="header">
                     <div class="d-flex justify-content-space-between">
                       <h3 class="">{{ item.project_title }}</h3>
-                      <div (click)="op.show($event)">
+                      <div (click)="op.shows($event)">
                         <i class="pi pi-ellipsis-v" style="font-size: 1rem"></i>
                       </div>
                     </div>
@@ -226,7 +226,7 @@
                       <button pButton type="button" label="Delete" icon="pi pi-trash" class="p-button-text"></button>
                     </ng-template>
                   </p-overlayPanel>
-              </a>
+              
             </div>
           </div>
 
