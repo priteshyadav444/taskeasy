@@ -64,7 +64,7 @@
               *ngFor="let item of projects"
             >
               
-                <p-card  [routerLink]="['/home', item._id]" class="ui-grid ui-grid-col-12 ui-grid-responsive"
+                <p-card [routerLink]="['/home', item._id]"  class="ui-grid ui-grid-col-12 ui-grid-responsive"
                   [style]="{
                     'min-width': '16rem',
                     'max-width': '16rem',
@@ -78,7 +78,7 @@
                   <ng-template pTemplate="header">
                     <div class="d-flex justify-content-space-between">
                       <h3 class="">{{ item.project_title }}</h3>
-                      <div (click)="op.shows($event)">
+                      <div (click)="op.toggle($event);$event.stopPropagation()">
                         <i class="pi pi-ellipsis-v" style="font-size: 1rem"></i>
                       </div>
                     </div>
@@ -91,19 +91,19 @@
                       >
                         <i
                           class="pi pi-tag pi-tag"
-                          style="font-size: 1rem; color: red"
+                          style="font-size: 1rem; color: #fff"
                         ></i>
-                        Label
+                        &nbsp; Tag
                       </div>
                     </div>
                   </ng-template>
 
-                  <ng-template pTemplate="footer">
+                  <ng-template pTemplate="footer" style="padding: 0;">
                     <div class="flex align-items-center flex-wrap">
                       <div
                         class="flex align-items-center justify-content-center mr-2"
                       >
-                        <i class="pi pi-list" style="font-size: 1rem">
+                        <i class="pi pi-list" style="font-size: 1.3rem">
                           {{ item.total_completed_tasks }}/{{
                             item.total_tasks
                           }}
@@ -223,7 +223,8 @@
                 </p-card>
                   <p-overlayPanel #op [dismissable]="true" [showCloseIcon]="true">
                     <ng-template pTemplate>
-                      <button pButton type="button" label="Delete" icon="pi pi-trash" class="p-button-text"></button>
+                      <button pButton type="button" label="Delete" icon="pi pi-trash" class="p-button-text"  class="p-button-info p-button-text"></button><br>
+                      <button pButton type="button" label="Update" icon="pi pi-pencil" class="p-button-text" class="p-button-info p-button-text"></button>
                     </ng-template>
                   </p-overlayPanel>
               
