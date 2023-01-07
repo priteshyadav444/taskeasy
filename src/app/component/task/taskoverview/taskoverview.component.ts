@@ -102,19 +102,19 @@ export class TaskoverviewComponent implements OnInit {
           type: 'bar',
           label: 'Active Tasks',
           backgroundColor: '#42A5F5',
-          data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, this.totalOngoingTasks, 0],
+          data: [this.totalOngoingTasks,0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         },
         {
           type: 'bar',
           label: 'Total Completed Tasks',
           backgroundColor: '#66BB6A',
-          data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, this.totalCompletedTask, 0],
+          data: [this.totalCompletedTask,0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         },
         {
           type: 'bar',
           label: 'Total Tasks',
           backgroundColor: '#FFA726',
-          data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, this.totalTasks, 0],
+          data: [this.totalTasks, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         },
       ],
     };
