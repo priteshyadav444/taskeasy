@@ -65,7 +65,6 @@
             >
               <a [routerLink]="['/home', item._id]">
                 <p-card class="ui-grid ui-grid-col-12 ui-grid-responsive"
-                  header="{{ item.project_title }}"
                   [style]="{
                     'min-width': '16rem',
                     'max-width': '16rem',
@@ -76,7 +75,15 @@
                     'background': item.theme_colour
                   }"
                 >
-                  <ng-template pTemplate="header"> </ng-template>
+                  <ng-template pTemplate="header">
+                    <div class="d-flex justify-content-space-between">
+                      <h3 class="">{{ item.project_title }}</h3>
+                      <div (click)="op.show($event)">
+                        <i class="pi pi-ellipsis-v" style="font-size: 1rem"></i>
+                      </div>
+                    </div>
+
+                  </ng-template>
                   <ng-template pTemplate="body">
                     <div class="flex align-items-center flex-wrap">
                       <div
@@ -214,6 +221,11 @@
                     </div> -->
                   </ng-template>
                 </p-card>
+                  <p-overlayPanel #op [dismissable]="true" [showCloseIcon]="true">
+                    <ng-template pTemplate>
+                      <button pButton type="button" label="Delete" icon="pi pi-trash" class="p-button-text"></button>
+                    </ng-template>
+                  </p-overlayPanel>
               </a>
             </div>
           </div>
