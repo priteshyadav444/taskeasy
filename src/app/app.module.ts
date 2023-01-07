@@ -39,6 +39,7 @@ import {PaginatorModule} from 'primeng/paginator';
 import {EditorModule} from 'primeng/editor';
 import {MessagesModule} from 'primeng/messages';
 import {MessageModule} from 'primeng/message';
+import {ColorPickerModule} from 'primeng/colorpicker';
 
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -130,6 +131,7 @@ import { MainComponent } from './component/lendingpage/main.component';
     EditorModule,
     MessagesModule,
     MessageModule,
+    ColorPickerModule,
     StoreModule.forRoot(appReducer),
     EffectsModule.forRoot([AuthEffects, ProjectEffects]),
     StoreDevtoolsModule.instrument({

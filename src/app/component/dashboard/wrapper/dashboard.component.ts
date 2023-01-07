@@ -5,7 +5,7 @@ import { Subscription } from 'rxjs';
 import { AppState } from 'src/app/app-store/app.state';
 import { Store } from '@ngrx/store';
 import { UiService } from 'src/app/service/ui.service';
-import { addProjectStart, loadAllProjects } from '../state/project.action';
+import { addProjectStart, deleteProjectStart, loadAllProjects } from '../state/project.action';
 import { Project } from 'src/app/models/projects.models';
 import { getAllProjects } from '../state/project.selector';
 import { setLoadingSpinner } from 'src/app/component/shared/state/Shared/shared.actions';
@@ -30,6 +30,7 @@ export class DashboardComponent {
   projects:any[]= [];
   first:number = 0;
   rows:number = 6;
+  theme_colour:string = "#1976D2";
   showLoading$:Observable<boolean> | undefined
   
   public menuInactiveDesktop!: boolean;
@@ -161,6 +162,7 @@ export class DashboardComponent {
   }
 
   addProject() {
+    //this.store.dispatch(deleteProjectStart({pid:"63b589fb8750af78daac8a50"}))
     this.uiService.toggleAddProject();
   }
   toggleMenu(event: Event) {
@@ -264,9 +266,9 @@ export class DashboardComponent {
     if(this.selectedDate=="" || this.selectedDate==null){
       return alert('Select Deadline');
     }
-
     const project :Project  = {
       project_title:this.title,
+      theme_colour:this.theme_colour,
       project_deadline:this.selectedDate,
       total_completed_tasks: 0,
       total_tasks:0.
