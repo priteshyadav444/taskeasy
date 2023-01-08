@@ -78,8 +78,8 @@
                   <ng-template pTemplate="header">
                     <div class="d-flex justify-content-space-between">
                       <h3 class="">{{ item.project_title }}</h3>
-                      <div (click)="op.toggle($event);$event.stopPropagation()">
-                        <i class="pi pi-ellipsis-v" style="font-size: 1rem"></i>
+                      <div (click)="cardClick($event, item);"> 
+                        <i class="pi pi-ellipsis-v" style="font-size: 1rem" #cardOption></i>
                       </div>
                     </div>
 
@@ -223,8 +223,8 @@
                 </p-card>
                   <p-overlayPanel #op [dismissable]="true" [showCloseIcon]="true">
                     <ng-template pTemplate>
-                      <button pButton type="button" label="Delete" icon="pi pi-trash" class="p-button-text"  class="p-button-info p-button-text"></button><br>
-                      <button pButton type="button" label="Update" icon="pi pi-pencil" class="p-button-text" class="p-button-info p-button-text"></button>
+                      <button pButton type="button" label="Delete" (click)="onClick('delete')" icon="pi pi-trash" class="p-button-text"  class="p-button-info p-button-text"></button><br>
+                      <button pButton type="button" label="Edit" (click)="onClick('edit')" icon="pi pi-pencil" class="p-button-text" class="p-button-info p-button-text"></button>
                     </ng-template>
                   </p-overlayPanel>
               
