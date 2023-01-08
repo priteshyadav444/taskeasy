@@ -14,7 +14,7 @@ export class ProjectService {
   reqHeader:any
 
   // apiUrl = 'http://localhost:3000/v1/users/project';
-  apiUrlProject = 'http://localhost:3000/v1/projects';
+  apiUrlProject = 'https://api-taskeasy.onrender.com/v1/projects';
   apiUrl = 'https://api-taskeasy.onrender.com/v1/users/project'
   constructor(private http: HttpClient, private store:Store<AppState>) {
     this.reqHeader = new HttpHeaders({

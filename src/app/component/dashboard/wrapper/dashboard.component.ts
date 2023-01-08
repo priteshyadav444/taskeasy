@@ -1,4 +1,4 @@
-import { Component, Renderer2 } from '@angular/core';
+import { Component, ElementRef, Renderer2, ViewChild } from '@angular/core';
 import { MenuItem } from 'primeng/api';
 import { AppComponent } from 'src/app/app.component';
 import { Subscription } from 'rxjs';
@@ -12,7 +12,7 @@ import { setLoadingSpinner } from 'src/app/component/shared/state/Shared/shared.
 import { Observable } from 'rxjs';
 import { getLoading } from 'src/app/component/shared/state/Shared/shared.selector';
 import { Title } from '@angular/platform-browser';
-import { stdout } from 'process';
+import { OverlayPanel } from 'primeng/overlaypanel';
 
 @Component({
   selector: 'app-dashboard',
@@ -31,6 +31,8 @@ export class DashboardComponent {
   first:number = 0;
   rows:number = 6;
   theme_colour:any = "#1976D2";
+  @ViewChild("op") op : OverlayPanel;
+  @ViewChild("cardOption") cardOption : ElementRef;
   showLoading$:Observable<boolean> | undefined
   
   public menuInactiveDesktop!: boolean;
@@ -61,7 +63,7 @@ export class DashboardComponent {
 
   subscription!: Subscription;
   public trackThickness: number;
-  
+  selectedItem!: any;
 
   constructor(
     private uiService: UiService,
@@ -162,7 +164,6 @@ export class DashboardComponent {
   }
 
   addProject() {
-    //this.store.dispatch(deleteProjectStart({pid:"63b589fb8750af78daac8a50"}))
     this.uiService.toggleAddProject();
   }
   toggleMenu(event: Event) {
@@ -280,6 +281,22 @@ export class DashboardComponent {
     this.clearProject();
     
   }
+
+  cardClick(event, selectedItem) {
+    event.stopPropagation();
+    this.op.toggle(event);
+    this.selectedItem = selectedItem;
+  }
+
+  onClick(type) {
+    if (type == 'edit') {
+
+    } else if (type == 'delete') {
+      this.store.dispatch(deleteProjectStart({pid: this.selectedItem?._id }));
+      this.op.hide();
+    }
+  }
+  
    getColor(totalCompletedTask, totalTasks): string {
     const value = this.calculatePercentage(totalCompletedTask, totalTasks)
     if (value < 25) {
