@@ -80,6 +80,7 @@ import { LogoutComponent } from './component/dashboard/logout/logout.component';
 import { ProjectEffects } from './component/dashboard/state/project.effects';
 import { MainwrapperComponent } from './wrapper/taskwrapper/wrapper/mainwrapper.component';
 import { MainComponent } from './component/lendingpage/main.component';
+import { TabMenuModule } from 'primeng/tabmenu';
 
 @NgModule({
   declarations: [
@@ -134,6 +135,7 @@ import { MainComponent } from './component/lendingpage/main.component';
     MessageModule,
     ColorPickerModule,
     OverlayPanelModule,
+    TabMenuModule,
     StoreModule.forRoot(appReducer),
     EffectsModule.forRoot([AuthEffects, ProjectEffects]),
     StoreDevtoolsModule.instrument({
