@@ -2,10 +2,21 @@
     <a class="p-link layout-menu-button layout-topbar-button" href="#" (click)="appMain.toggleMenu($event)">
         <i class="pi pi-bars"></i>
     </a>
-    <span class="layout-topbar-logo" >
+    <!-- <span class="layout-topbar-logo" >
         <img src="assets/layout/images/logo.svg" alt="logo" routerLink="/dashboard">
-    </span>
-
+    </span> -->
+    <div>
+        <h4>
+            Project name
+        </h4>
+        <div>
+            <p-tabMenu [model]="items" [styleClass]="'custom-menu'">
+                <ng-template pTemplate="item" let-item let-i="index">
+                    <i class="{{item?.icon}}"></i> <span class="mx-2">{{item.label}}</span>
+                </ng-template>
+            </p-tabMenu>
+        </div>
+    </div>
    
 
     <a class="p-link layout-topbar-menu-button layout-topbar-button" href="#" (click)="appMain.toggleTopMenu($event)">

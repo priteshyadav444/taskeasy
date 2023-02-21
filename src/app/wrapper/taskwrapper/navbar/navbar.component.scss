@@ -1,0 +1,11 @@
+.custom-menu {
+    &.p-tabmenu  {
+        .p-tabmenu-nav {
+            .p-tabmenuitem {
+                .p-menuitem-link {
+                    padding: 0.25rem !important;
+                }
+            } 
+        }
+    }   
+}
