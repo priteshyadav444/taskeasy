@@ -7,12 +7,15 @@
     </span> -->
     <div>
         <h4>
-            Project name
+            {{this.selectedProject?.project_title}}
         </h4>
         <div>
-            <p-tabMenu [model]="items" [styleClass]="'custom-menu'">
+            <p-tabMenu [model]="items" [styleClass]="'custom-menu'" [activeItem]="activeMenuItem">
                 <ng-template pTemplate="item" let-item let-i="index">
-                    <i class="{{item?.icon}}"></i> <span class="mx-2">{{item.label}}</span>
+                    <div [routerLink]="[this.selectedProject?._id, item?.link]">
+                        <i class="{{item?.icon}}"></i> 
+                        <span class="mx-2">{{item.label}}</span>
+                    </div>
                 </ng-template>
             </p-tabMenu>
         </div>
