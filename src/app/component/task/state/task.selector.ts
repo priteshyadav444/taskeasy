@@ -12,6 +12,10 @@ export const getTasks = createSelector(getTasksState, (state) => {
   return state.tasks;
 });
 
+export const getProjectDetails = createSelector(getTasksState, (state) => {
+  return state.projectDetails;
+});
+
 export const getPendingTasks = createSelector(getTasksState, (data) => {
   const tasks = data.tasks;
   const theme_colour = data.projectDetails.theme_colour;
@@ -38,3 +42,8 @@ export const getTodayCompletedTasks = createSelector(getTasks, (tasks) => {
       data.task_status == 'completed'
   );
 });
+
+// for getting selected Project details 
+export const getSelectdProjectDetails = createSelector(getProjectDetails, (selectedProject) => {
+  return selectedProject;
+})
