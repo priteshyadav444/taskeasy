@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
-import { map, mergeMap, tap } from 'rxjs';
+import { catchError, map, mergeMap, of, tap } from 'rxjs';
 import { AppState } from 'src/app/app-store/app.state';
 import { Project } from 'src/app/models/projects.models';
 import { Task } from 'src/app/models/task.models';
 import { TasksService } from 'src/app/service/task/task.services';
 import { TasksCardService } from 'src/app/service/task/taskcard.service';
-import { setErrorMessage } from '../../shared/state/Shared/shared.actions';
+import { setErrorMessage, setLoadingSpinner } from '../../shared/state/Shared/shared.actions';
 import { HomeComponent } from '../home/home.component';
 import {
   addTask,
@@ -50,7 +50,13 @@ export class TaskEffects {
             const messageData = { severity:'success', summary: 'Success', detail: 'Task Added!'}
             this.taskServices.showMessage(messageData);
             return addTaskSuccess({ task });
-          })
+          }),
+          catchError((errResp) => {
+            const messageData = { severity:'error', summary: 'Server Error', detail: 'Unexpected Error!'}
+            this.taskServices.showMessage(messageData);
+            return of();
+
+          }),
         );
       })
     );
@@ -67,7 +73,13 @@ export class TaskEffects {
             const messageData = { severity:'success', summary: action.task.title, detail: 'Task Updated!'}
             this.taskServices.showMessage(messageData);
             return updateTaskSuccess({ task });
-          })
+          }),
+          catchError((errResp) => {
+            const messageData = { severity:'error', summary: 'Server Error', detail: 'Unexpected Error!'}
+            this.taskServices.showMessage(messageData);
+            return of();
+
+          }),
         );
       })
     );
@@ -83,7 +95,12 @@ export class TaskEffects {
             const messageData = { severity:'error', summary: 'Success', detail: 'Task Deleted!'}
             this.taskServices.showMessage(messageData);
             return deleteTaskSuccess({ task });
-          })
+          }),
+          catchError((errResp) => {
+            const messageData = { severity:'error', summary: 'Server Error', detail: 'Unexpected Error!'}
+            this.taskServices.showMessage(messageData);
+            return of();
+          }),
         );
       })
     );
