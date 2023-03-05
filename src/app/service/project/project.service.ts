@@ -13,9 +13,9 @@ export class ProjectService {
   authToken:any
   reqHeader:any
 
-  // apiUrl = 'http://localhost:3000/v1/users/project';
+  // apiUrlProject = 'http://localhost:3000/v1/projects';
   apiUrlProject = 'https://api-taskeasy.onrender.com/v1/projects';
-  apiUrl = 'https://api-taskeasy.onrender.com/v1/users/project'
+
   constructor(private http: HttpClient, private store:Store<AppState>) {
     this.reqHeader = new HttpHeaders({
       'Content-Type': 'application/json',
@@ -32,10 +32,11 @@ export class ProjectService {
   }
 
   createProject(project:Project): Observable<Project> {
-    return this.http.post<Project>(this.apiUrl,project,{
+    return this.http.post<Project>(this.apiUrlProject,project,{
       headers: this.getToken()
     })
   }
+  
   deleteProject(pid:String):Observable<any>{
     return this.http.delete<any>(`${this.apiUrlProject}/${pid}`,{headers: this.getToken()}).pipe(map((data)=>{
       return data;
@@ -48,7 +49,7 @@ export class ProjectService {
   // }
   
   getAllProjects(): Observable<Project[]> {
-    return this.http.get<Project[]>(this.apiUrl,{
+    return this.http.get<Project[]>(this.apiUrlProject,{
       headers: this.getToken()
     }).pipe(
       map((data) => {
