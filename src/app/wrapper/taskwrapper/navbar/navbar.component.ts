@@ -31,7 +31,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private service: TasksCardService
   ) {
-    this.service.pid.subscribe(log=> {
+    this.service.pid.subscribe((log) => {
       this.pid = log;
       this.mapRouterlink();
     });
@@ -40,22 +40,29 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.items = [
-      { label: 'All Task', icon: 'pi pi-list', id: '?category=all' },
+      { label: 'All Task', icon: 'pi pi-list', id: 'board' },
       { label: 'Task Overview', icon: 'pi pi-chart-bar', id: 'taskoverview' },
       { label: 'Calender', icon: 'pi pi-calendar', id: 'calender' },
       { label: 'Notes', icon: 'pi pi-fw pi-file', id: 'notes' },
       { label: 'Remainder', icon: 'pi pi-fw pi-cog', id: 'remainder' },
-    ];  
+    ];
     this.activeMenuItem = this.items[0];
-
+    this.subscription = this.store
+      .select(getSelectdProjectDetails)
+      .pipe(distinctUntilChanged())
+      .subscribe((selectedProject) => {
+        if (selectedProject) {
+          this.selectedProject = selectedProject;
+        }
+      });
   }
-  
+
   mapRouterlink() {
     this.items.map((item) => {
       item['routerLink'] = `${this.pid}/${item.id}`;
     });
   }
-  
+
   addTask() {
     this.uiService.toggleAddTask();
   }

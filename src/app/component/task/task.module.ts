@@ -48,7 +48,7 @@ const routes: Routes = [
     component: HomeComponent,
   },
   {
-    path: '?category=all',
+    path: 'board',
     component: HomeComponent,
   },
   {
