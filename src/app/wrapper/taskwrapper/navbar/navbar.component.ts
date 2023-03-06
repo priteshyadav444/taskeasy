@@ -40,7 +40,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.items = [
-      { label: 'Board', icon: 'pi pi-list', id: 'board' },
+      { label: 'Board', icon: 'pi pi-microsoft', id: 'board' },
       { label: 'Task Overview', icon: 'pi pi-chart-bar', id: 'taskoverview' },
       { label: 'Calender', icon: 'pi pi-calendar', id: 'calender' },
       { label: 'Notes', icon: 'pi pi-fw pi-file', id: 'notes' },
