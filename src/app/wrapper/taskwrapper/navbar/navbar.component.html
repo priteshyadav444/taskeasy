@@ -12,7 +12,7 @@
         <div>
             <p-tabMenu [model]="items" [styleClass]="'custom-menu'" [activeItem]="activeMenuItem" (onTabChange)="mapRouterlink()">
                 <ng-template pTemplate="item" let-item let-i="index">
-                    <div [routerLink]="[pid, item?.id]">
+                    <div>
                         <i class="{{item?.icon}}"></i> 
                         <span class="mx-2">{{item.label}}</span>
                     </div>
