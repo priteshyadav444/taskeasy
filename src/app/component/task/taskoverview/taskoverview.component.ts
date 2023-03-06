@@ -33,6 +33,10 @@ export class TaskoverviewComponent implements OnInit {
   midPriorityTask: any = 0;
   highPriorityTask: any = 0;
 
+  activeDataSet: any = [];
+  completedDataSet: any = [];
+  totalTaskDataSet: any = [];
+
   constructor(
     public appMain: MainwrapperComponent,
     private store: Store<AppState>,
@@ -48,19 +52,34 @@ export class TaskoverviewComponent implements OnInit {
           this.totalOngoingTasks = 0;
           this.totalTasks = 0;
 
-          this.lowPriorityTask = 0;
-          this.midPriorityTask = 0;
-          this.highPriorityTask = 0;
+          const activeTasks = new Array(12).fill(0);
+          const completedTasks = new Array(12).fill(0);
+          const totalTask = new Array(12).fill(0);
 
           list.forEach((value) => {
-            if (value.task_status == 'active') this.totalOngoingTasks++;
-            if (value.task_status == 'done') this.totalCompletedTask++;
-
-            if (value.badge == 'low') this.lowPriorityTask++;
-            if (value.badge == 'medium') this.midPriorityTask++;
-            if (value.badge == 'high') this.highPriorityTask++;
+            if (value.badge === 'low') {
+              this.lowPriorityTask++;
+            }
+            if (value.badge === 'medium') {
+              this.midPriorityTask++;
+            }
+            if (value.badge === 'high') {
+              this.highPriorityTask++;
+            }
+            if (value.task_status == 'active') {
+              activeTasks[new Date(value.scheduled_date).getMonth()]++;
+            }
+            if (value.task_status == 'done') {
+              completedTasks[new Date(value.scheduled_date).getMonth()]++;
+            }
             this.totalTasks++;
+            totalTask[new Date(value.scheduled_date).getMonth()]++;
           });
+
+          // Update the data arrays for each dataset in the barData object
+          this.activeDataSet = activeTasks;
+          this.completedDataSet = completedTasks;
+          this.totalTaskDataSet = totalTask;
         });
       }
     });
@@ -102,19 +121,19 @@ export class TaskoverviewComponent implements OnInit {
           type: 'bar',
           label: 'Active Tasks',
           backgroundColor: '#42A5F5',
-          data: [this.totalOngoingTasks,0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          data: this.activeDataSet,
         },
         {
           type: 'bar',
           label: 'Total Completed Tasks',
           backgroundColor: '#66BB6A',
-          data: [this.totalCompletedTask,0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          data: this.completedDataSet,
         },
         {
           type: 'bar',
           label: 'Total Tasks',
           backgroundColor: '#FFA726',
-          data: [this.totalTasks, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          data: this.totalTaskDataSet,
         },
       ],
     };
