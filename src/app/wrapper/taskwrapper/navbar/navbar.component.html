@@ -10,9 +10,9 @@
             {{this.selectedProject?.project_title}}
         </h4>
         <div>
-            <p-tabMenu [model]="items" [styleClass]="'custom-menu'" [activeItem]="activeMenuItem">
+            <p-tabMenu [model]="items" [styleClass]="'custom-menu'" [activeItem]="activeMenuItem" (onTabChange)="mapRouterlink()">
                 <ng-template pTemplate="item" let-item let-i="index">
-                    <div [routerLink]="[this.selectedProject?._id, item?.link]">
+                    <div [routerLink]="[pid, item?.id]">
                         <i class="{{item?.icon}}"></i> 
                         <span class="mx-2">{{item.label}}</span>
                     </div>
