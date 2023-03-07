@@ -79,7 +79,7 @@
                   <ng-template pTemplate="header">
                     <div class="d-flex justify-content-space-between">
                       <h3 class="">{{ item.project_title }}</h3>
-                      <div (click)="cardClick($event, item);"> 
+                      <div (click)="cardClick($event, item, cardOption);"> 
                         <i class="pi pi-ellipsis-v" style="font-size: 1rem" #cardOption></i>
                       </div>
                     </div>

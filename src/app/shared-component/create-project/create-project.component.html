@@ -1,0 +1,30 @@
+<form (ngSubmit)="onAddProject()">
+    <div class="p-fluid p-0">
+      <div class="col-12 p-0">
+        <input
+          type="text"
+          class="inputtext"
+          placeholder="Enter Title"
+          [(ngModel)]="title"
+          name="title"
+          id="text"
+        />
+      </div>
+        <div class="col-12 p-0 mb-1">
+         <p-colorPicker type="color" [(ngModel)]="theme_colour" name="theme_colour" onChange="colorChange($event)" appendTo="body"></p-colorPicker> <label> : Select Theme Colour</label>
+        </div>
+      <hr class="m-0" />
+      <p-calendar
+        class="selectdate"
+        inputId="basic"
+        [(ngModel)]="selectedDate"
+        name="selectedDate"
+        placeholder="Selected Deadline Date"
+        appendTo="body"
+      ></p-calendar>
+      <!-- <input type="color" name="cardcolor" id=""> -->
+      <div class="w-100 mt-2">
+        <button pButton type="submit" label="Create Project"></button>
+      </div>
+    </div>
+  </form>

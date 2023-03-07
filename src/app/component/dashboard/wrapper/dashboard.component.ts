@@ -13,7 +13,9 @@ import { Observable } from 'rxjs';
 import { getLoading } from 'src/app/component/shared/state/Shared/shared.selector';
 import { Title } from '@angular/platform-browser';
 import { OverlayPanel } from 'primeng/overlaypanel';
-
+import { DialogService } from 'primeng/dynamicdialog';
+import { DynamicDialogRef } from 'primeng/dynamicdialog';
+import { CreateProjectComponent } from 'src/app/shared-component/create-project/create-project.component';
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
@@ -64,13 +66,15 @@ export class DashboardComponent {
   subscription!: Subscription;
   public trackThickness: number;
   selectedItem!: any;
+  ref: DynamicDialogRef;
 
   constructor(
-    private uiService: UiService,
     public renderer: Renderer2,
+    public dialogService: DialogService,
     public app: AppComponent,
+    private uiService: UiService,
     private store: Store<AppState>,
-    private titleService: Title
+    private titleService: Title,
   ) {
     this.uiService
     .onProjectToggle()
@@ -217,6 +221,20 @@ export class DashboardComponent {
     this.menuClick = true;
   }
 
+  show() {
+    this.ref = this.dialogService.open(CreateProjectComponent, {
+        header: 'Choose a Product',
+        width: '70%',
+        contentStyle: {"max-height": "500px", "overflow": "auto"},
+        baseZIndex: 10000
+    });
+
+    this.ref.onClose.subscribe((product: any) =>{
+        if (product) {
+        }
+    });
+}
+
   // onConfigClick(event) {
   //     this.configClick = true;
   // }
@@ -282,9 +300,9 @@ export class DashboardComponent {
     
   }
 
-  cardClick(event, selectedItem) {
+  cardClick(event, selectedItem, cardOption) {
     event.stopPropagation();
-    this.op.toggle(event);
+    this.op.toggle(event, cardOption);
     this.selectedItem = selectedItem;
   }
 
