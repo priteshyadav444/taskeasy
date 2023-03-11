@@ -25,44 +25,29 @@ export class DashboardComponent {
   showDailog: boolean = false;
   items: MenuItem[] = [];
   value: number = 10;
-  title!: string;
-  selectedDate:any = null
-  minimumDate:any = new Date();
   totalprojects:any[]= [];
   projects:any[]= [];
   first:number = 0;
   rows:number = 6;
-  theme_colour:any = "#1976D2";
   @ViewChild("op") op : OverlayPanel;
   @ViewChild("cardOption") cardOption : ElementRef;
   showLoading$:Observable<boolean> | undefined
   
   public menuInactiveDesktop!: boolean;
-
   public menuActiveMobile!: boolean;
-
   public overlayMenuActive!: boolean;
-
   public staticMenuInactive: boolean = false;
-
   public profileActive!: boolean;
-
   public topMenuActive!: boolean;
-
   public topMenuLeaving!: boolean;
-
   public theme!: string;
  
   documentClickListener!: () => void;
 
   menuClick!: boolean;
-
   topMenuButtonClick!: boolean;
-
   configActive!: boolean;
-
   configClick!: boolean;
-
   subscription!: Subscription;
   public trackThickness: number;
   selectedItem!: any;
@@ -85,10 +70,10 @@ export class DashboardComponent {
     this.trackThickness = 80;
     this.titleService.setTitle("Dashboard - TaskEasy.in");
     this.store.select(getLoading).pipe().forEach((value)=>{
-      if(value==true){
+      if (value==true) {
         this.titleService.setTitle("creating project..."); 
       }
-      else{
+      else {
         this.titleService.setTitle("Dashboard - TaskEasy.in");
       }
     })
@@ -168,7 +153,8 @@ export class DashboardComponent {
   }
 
   addProject() {
-    this.uiService.toggleAddProject();
+    // this.uiService.toggleAddProject();
+    this.showDynamicDialog()
   }
   toggleMenu(event: Event) {
     this.menuClick = true;
@@ -221,12 +207,13 @@ export class DashboardComponent {
     this.menuClick = true;
   }
 
-  show() {
+  showDynamicDialog(type?) {
     this.ref = this.dialogService.open(CreateProjectComponent, {
-        header: 'Choose a Product',
-        width: '70%',
-        contentStyle: {"max-height": "500px", "overflow": "auto"},
-        baseZIndex: 10000
+        header: type == 'edit' ? 'Edit Project' : 'Create Project',
+        width: '25%',
+        contentStyle: {"max-height": "30%", "overflow": "auto"},
+        baseZIndex: 10000,
+        data: { selectedItem: this.selectedItem }
     });
 
     this.ref.onClose.subscribe((product: any) =>{
@@ -272,33 +259,6 @@ export class DashboardComponent {
   close() {
      this.uiService.toggleAddProject()
   }
-  clearProject(){
-     this.title = ""
-     this.selectedDate = ""
-  }
-
-  onAddProject() { 
-    if(this.title=="" || this.title==null){
-      return alert('Enter Title');
-    }
-
-    if(this.selectedDate=="" || this.selectedDate==null){
-      return alert('Select Deadline');
-    }
-    const project :Project  = {
-      project_title:this.title,
-      theme_colour:this.theme_colour,
-      project_deadline:this.selectedDate,
-      total_completed_tasks: 0,
-      total_tasks:0.
-    }
-    
-    this.store.dispatch(setLoadingSpinner({ status: true }));
-    this.store.dispatch(addProjectStart({project}))
-    this.showDailog = false
-    this.clearProject();
-    
-  }
 
   cardClick(event, selectedItem, cardOption) {
     event.stopPropagation();
@@ -308,7 +268,7 @@ export class DashboardComponent {
 
   onClick(type) {
     if (type == 'edit') {
-
+      this.showDynamicDialog(type);
     } else if (type == 'delete') {
       this.store.dispatch(deleteProjectStart({pid: this.selectedItem?._id }));
       this.op.hide();

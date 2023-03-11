@@ -10,6 +10,8 @@ import {
   deleteProjectSuccess,
   loadAllProjects,
   loadProjectsSuccess,
+  updateProjectStart,
+  updateProjectSucess,
 } from './project.action';
 import { catchError, exhaustMap, map, mergeMap, tap } from 'rxjs';
 import { of } from 'rxjs';
@@ -84,6 +86,7 @@ export class ProjectEffects {
       })
     );
   });
+
   deleteProject$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(deleteProjectStart),
@@ -101,4 +104,21 @@ export class ProjectEffects {
       })
     );
   });
+
+  updateProject$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(updateProjectStart),
+      mergeMap((action) => {
+        return this.projectService.updateProject(action.project).pipe(
+          map((data) => {
+            return updateProjectSucess({project: action?.project});
+          }),
+          catchError((errRes) => {
+            this.store.dispatch(setLoadingSpinner({status:false}))
+            return of();
+          })
+        )
+      })
+      )
+  })
 }

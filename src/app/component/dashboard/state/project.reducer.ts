@@ -1,5 +1,5 @@
 import { createReducer, on } from '@ngrx/store';
-import { addProjectSucess, deleteProjectSuccess, loadProjectsSuccess } from './project.action';
+import { addProjectSucess, deleteProjectSuccess, loadProjectsSuccess, updateProjectStart, updateProjectSucess } from './project.action';
 import { initialState } from './project.state';
 
 const _projectReducer = createReducer(
@@ -28,7 +28,15 @@ const _projectReducer = createReducer(
         return project._id!=action.pid;
       })
     }
+  }),
+  on(updateProjectSucess, (state, action) => {
+    console.log("state -----------------",state)
+    console.log("action ---------",action)
+    return {
+      ...state
+    }
   })
+
 );
 
 export function ProjectReducer(state: any, action: any) {
