@@ -111,6 +111,7 @@ export class ProjectEffects {
       mergeMap((action) => {
         return this.projectService.updateProject(action.project).pipe(
           map((data) => {
+            this.store.dispatch(setLoadingSpinner({ status: false }));
             return updateProjectSucess({project: action?.project});
           }),
           catchError((errRes) => {
