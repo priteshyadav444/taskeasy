@@ -33,7 +33,7 @@ export class CreateProjectComponent implements OnInit {
     this.projectForm = this.fb.group({
       _id: [''  || data?._id],
       project_title: ['' || data?.project_title],
-      project_deadline: ['' || data?.deadline],
+      project_deadline: ['' || new Date(data?.project_deadline)],
       total_tasks: ['' || data?.total_tasks],
       total_completed_tasks: ['' || data?.total_completed_tasks],
       theme_colour: ['' || data?.theme_colour],
@@ -57,12 +57,12 @@ export class CreateProjectComponent implements OnInit {
     const project:Project = this.projectForm?.value;
     if (project?._id) {
       this.store.dispatch(setLoadingSpinner({ status: true }));
-      this.store.dispatch(updateProjectStart({project}))
+      this.store.dispatch(updateProjectStart({project}));
     } else {
       this.store.dispatch(setLoadingSpinner({ status: true }));
       this.store.dispatch(addProjectStart({project}))
+      this.projectForm.reset();
     }
-    this.projectForm.reset();
   }
 
   get projectData() {

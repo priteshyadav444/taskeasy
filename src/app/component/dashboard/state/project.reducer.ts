@@ -1,6 +1,4 @@
 import { createReducer, on } from '@ngrx/store';
-import { Project } from 'src/app/models/projects.models';
-import { ProjectService } from 'src/app/service/project/project.service';
 import {
   addProjectSucess,
   deleteProjectSuccess,
