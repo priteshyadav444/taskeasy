@@ -25,7 +25,7 @@ export class CreateProjectComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    const data = this.config?.data?.selectedItem;
+    const data = this.config?.data;
     this.initForm(data) 
   }
 
@@ -33,7 +33,7 @@ export class CreateProjectComponent implements OnInit {
     this.projectForm = this.fb.group({
       _id: [''  || data?._id],
       project_title: ['' || data?.project_title],
-      project_deadline: ['' || new Date(data?.project_deadline)],
+      project_deadline: [ null || new Date(data?.project_deadline)],
       total_tasks: ['' || data?.total_tasks],
       total_completed_tasks: ['' || data?.total_completed_tasks],
       theme_colour: ['' || data?.theme_colour],

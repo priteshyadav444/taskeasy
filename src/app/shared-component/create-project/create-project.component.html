@@ -25,7 +25,7 @@
       ></p-calendar>
       <!-- <input type="color" name="cardcolor" id=""> -->
       <div class="w-100 mt-2">
-        <button pButton type="submit" [label]="this.config?.data ? 'Update Project' : 'Create Project'"></button>
+        <button pButton type="submit" [label]="this.config?.data?.type == 'edit' ? 'Update Project' : 'Create Project'"></button>
       </div>
     </div>
   </form>
