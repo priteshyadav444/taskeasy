@@ -13,10 +13,9 @@ export class ProjectService {
   authToken:any
   reqHeader:any
 
-  apiUrlProject1 = 'http://localhost:3000/v1/projects';
+  // apiUrlProject = 'http://localhost:3000/v1/projects';
   apiUrlProject = 'https://api-taskeasy.onrender.com/v1/projects';
 
-  apiUpdateProject =  'http://api-taskeasy.onrender.com/v1/projects';
 
   constructor(private http: HttpClient, private store:Store<AppState>) {
     this.reqHeader = new HttpHeaders({
@@ -46,7 +45,7 @@ export class ProjectService {
   }
 
   updateProject(project:Project) {
-    return this.http.put<Project>(`${this.apiUrlProject1}/${project._id}`,project,{
+    return this.http.put<Project>(`${this.apiUrlProject}/${project._id}`,project,{
       headers: this.getToken()
     }).pipe(map((data) => {
       console.log(data)
