@@ -27,7 +27,12 @@ import { DropDownListComponent } from '@syncfusion/ej2-angular-dropdowns';
 import { Title } from '@angular/platform-browser';
 import { getAllProjects } from '../../dashboard/state/project.selector';
 import { tasksReducer } from '../state/task.reducers';
-import { addTask, deleteTask, loadAllData, updateTask } from '../state/task.action';
+import {
+  addTask,
+  deleteTask,
+  loadAllData,
+  updateTask,
+} from '../state/task.action';
 
 interface Status {
   task_status: string;
@@ -66,7 +71,7 @@ export class HomeComponent implements OnInit {
   temp!: Observable<Task[]>;
   pid!: any;
   category!: MenuItem[];
-  badge:Status;
+  badge: Status;
   selectedCategory: any;
   status: Status[];
   selectedStatus: Status;
@@ -82,7 +87,6 @@ export class HomeComponent implements OnInit {
     private titleService: Title
   ) {
     this.data = service;
-    
 
     this.status = [
       { task_status: 'Active', code: 'active' },
@@ -91,12 +95,11 @@ export class HomeComponent implements OnInit {
       { task_status: 'Unsheduled', code: 'unsheduled' },
     ];
 
-    this.badgeData= [
+    this.badgeData = [
       { code: 'low', badge: 'Low' },
       { code: 'medium', badge: 'Medium' },
       { code: 'high', badge: 'High' },
     ];
-
   }
 
   selectCategory(category: string) {
@@ -106,27 +109,24 @@ export class HomeComponent implements OnInit {
   public dataSourceChanged(state: DataSourceChangedEventArgs): void {
     if (state.requestType === 'cardCreated') {
       if (this.selectedCategory == undefined) {
-        this.selectedCategory = "low"
+        this.selectedCategory = 'low';
       }
       const task: Task = {
-        title: "",
-        scheduled_date: "",
-        category: "",
-        description: "",
+        title: '',
+        scheduled_date: '',
+        category: '',
+        description: '',
         subtasklist: this.subTask,
-        badge:this.selectedCategory,
-        ...state.addedRecords[0]
+        badge: this.selectedCategory,
+        ...state.addedRecords[0],
       };
-      
+
       if (task.title == undefined || task.title == '') {
         alert('Enter Title');
         return;
+      } else {
+        this.store.dispatch(addTask({ task, pid: this.pid }));
       }
-      else{
-        this.store.dispatch(addTask({task, pid:this.pid}));
-      }
-      
-
     } else if (state.requestType === 'cardChanged') {
       if (this.subTask.length > 0) {
         state.changedRecords[0] = {
@@ -170,25 +170,25 @@ export class HomeComponent implements OnInit {
           };
         }
       }
-      const task :any = {...state.changedRecords[0]}
+      const task: any = { ...state.changedRecords[0] };
       if (task.title == undefined || task.title == '') {
         alert('Enter Title');
         return;
       }
-      this.store.dispatch(updateTask({task, pid:this.pid}));
+      this.store.dispatch(updateTask({ task, pid: this.pid }));
       this.selectedStatus == undefined;
-      this.selectedCategory = undefined
+      this.selectedCategory = undefined;
       this.subTask = [];
     } else if (state.requestType === 'cardRemoved') {
-      const task :any = {...state.deletedRecords[0]}
-      this.store.dispatch(deleteTask({task, pid:this.pid}));
+      const task: any = { ...state.deletedRecords[0] };
+      this.store.dispatch(deleteTask({ task, pid: this.pid }));
     }
-  } 
+  }
   public dataStateChange(state: DataStateChangeEventArgs): void {
-    this.service.execute(state); 
+    this.service.execute(state);
   }
 
-  public update(): void { 
+  public update(): void {
     let state = { skip: 0, take: 10 };
     this.service.execute(state);
   }
@@ -226,7 +226,7 @@ export class HomeComponent implements OnInit {
   public sortSettings: SortSettingsModel = {
     sortBy: 'Custom',
     field: 'updatedAt',
-    direction:'Descending'
+    direction: 'Descending',
   };
 
   public priorityData: Object[] = [
@@ -241,10 +241,8 @@ export class HomeComponent implements OnInit {
     { Id: 'medium', Name: 'Medium' },
     { Id: 'high', Name: 'High' },
   ];
-  
-  addCard(data:any){
 
-  }
+  addCard(data: any) {}
   dialogOpen(args: DialogEventArgs): void {
     this.subTask = [];
     this.selectedStatus = null;
@@ -259,13 +257,13 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
     // this.titleService.setTitle(`${this.projecttitle} - TaskEasy.in`);
-    
+
     this.titleService.setTitle(`TaskEasy.in`);
     let state = { skip: 0, take: 10 };
 
     this.pid = this.route.snapshot.paramMap.get('id');
     this.service.activateRouter$.next(this.pid);
-    this.store.dispatch(loadAllData({ pid:this.pid }));
+    this.store.dispatch(loadAllData({ pid: this.pid }));
     this.service.execute(state);
     this.cardSettings = {
       headerField: '_id',
@@ -298,10 +296,12 @@ export class HomeComponent implements OnInit {
         command: () => {
           this.selectCategory('high');
         },
-      }
+      },
     ];
   }
-
+  transform(value: string): string {
+    return value.replace(/<img[^>]*>/g, '');
+  }
   calculateDiff(sentDate) {
     var date1: any = new Date(sentDate);
     var date2: any = new Date();
