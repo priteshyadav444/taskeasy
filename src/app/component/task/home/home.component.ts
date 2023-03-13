@@ -108,16 +108,15 @@ export class HomeComponent implements OnInit {
 
   public dataSourceChanged(state: DataSourceChangedEventArgs): void {
     if (state.requestType === 'cardCreated') {
-      if (this.selectedCategory == undefined) {
-        this.selectedCategory = 'low';
-      }
+      // if (this.selectedCategory == undefined) {
+      //   this.selectedCategory = 'low';
+      // }
       const task: Task = {
         title: '',
         scheduled_date: '',
         category: '',
         description: '',
         subtasklist: this.subTask,
-        badge: this.selectedCategory,
         ...state.addedRecords[0],
       };
 
@@ -138,19 +137,19 @@ export class HomeComponent implements OnInit {
         };
         this.subTask = [];
       }
-      if (this.selectedStatus != undefined) {
-        state.changedRecords[0] = {
-          ...state.changedRecords[0],
-          task_status: this.selectedStatus,
-        };
-      }
+      // if (this.selectedStatus != undefined) {
+      //   state.changedRecords[0] = {
+      //     ...state.changedRecords[0],
+      //     task_status: this.selectedStatus,
+      //   };
+      // }
 
-      if (this.selectedCategory != undefined) {
-        state.changedRecords[0] = {
-          ...state.changedRecords[0],
-          badge: this.selectedCategory,
-        };
-      }
+      // if (this.selectedCategory != undefined) {
+      //   state.changedRecords[0] = {
+      //     ...state.changedRecords[0],
+      //     badge: this.selectedCategory,
+      //   };
+      // }
 
       //if all suntask completed
       const subtasklistcopy = state.changedRecords[0]['subtasklist'];

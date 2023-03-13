@@ -296,7 +296,6 @@ export class DashboardComponent {
   }
 
   calculatePercentage(totalCompletedTask, totalTasks): number {
-    console.log("inside function");
     if (totalTasks == 0) return 0;
     if(totalCompletedTask==null) return 0;
     return Math.round((totalCompletedTask * 100) / totalTasks);
