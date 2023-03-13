@@ -10,6 +10,8 @@ import {
   deleteProjectSuccess,
   loadAllProjects,
   loadProjectsSuccess,
+  updateProjectStart,
+  updateProjectSucess,
 } from './project.action';
 import { catchError, exhaustMap, map, mergeMap, tap } from 'rxjs';
 import { of } from 'rxjs';
@@ -36,7 +38,10 @@ export class ProjectEffects {
       mergeMap((action) => {
         return this.projectService.createProject(action.project).pipe(
           map((data) => {
-            const project = { ...action.project, _id: data._id };
+            const project = {
+              ...action.project,
+              _id: data._id,
+            };
             this.store.dispatch(setLoadingSpinner({ status: false }));
             return addProjectSucess({ project });
           }),
@@ -55,7 +60,7 @@ export class ProjectEffects {
       mergeMap((action) => {
         return this.projectService.getAllProjects().pipe(
           map((projects) => {
-            this.data = []
+            this.data = [];
             if (projects != null) {
               projects.forEach((ele) => {
                 this.totalCompletedTask = 0;
@@ -77,23 +82,41 @@ export class ProjectEffects {
               });
             }
             this.idx = 0;
-            projects = this.data
+            projects = this.data;
             return loadProjectsSuccess({ projects });
           })
         );
       })
     );
   });
+
   deleteProject$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(deleteProjectStart),
       mergeMap((action) => {
         return this.projectService.deleteProject(action.pid).pipe(
           map((data) => {
-            return deleteProjectSuccess({ pid:action.pid });
+            return deleteProjectSuccess({ pid: action.pid });
           }),
           catchError((errResp) => {
-            
+            this.store.dispatch(setLoadingSpinner({ status: false }));
+            return of();
+          })
+        );
+      })
+    );
+  });
+
+  updateProject$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(updateProjectStart),
+      mergeMap((action) => {
+        return this.projectService.updateProject(action.project).pipe(
+          map((data) => {
+            this.store.dispatch(setLoadingSpinner({ status: false }));
+            return updateProjectSucess({ project: action?.project });
+          }),
+          catchError((errRes) => {
             this.store.dispatch(setLoadingSpinner({ status: false }));
             return of();
           })

@@ -1,0 +1,32 @@
+<form [formGroup]="projectForm" (ngSubmit)="onSubmit()" *ngIf="projectForm">
+    <div class="p-fluid p-0">
+      <div class="col-12 p-0">
+        <input
+          type="text"
+          class="inputtext"
+          placeholder="Enter Title"
+          formControlName="project_title"
+          name="title"
+          id="text"
+        />
+      </div>
+        <div class="col-12 p-0 mb-1">
+         <p-colorPicker type="color"  formControlName="theme_colour" name="theme_colour" onChange="colorChange($event)" appendTo="body"></p-colorPicker> <label> : Select Theme Colour</label>
+        </div>
+      <hr class="m-0" />
+      <p-calendar
+        class="selectdate"
+        inputId="basic"
+        name="project_deadline"
+        formControlName="project_deadline"
+        placeholder="Selected Deadline Date"
+        appendTo="body"
+        dateFormat="dd/mm/yy"
+        [minDate]="minDate"
+      ></p-calendar>
+      <!-- <input type="color" name="cardcolor" id=""> -->
+      <div class="w-100 mt-2">
+        <button pButton type="submit" [label]="this.config?.data?.type == 'edit' ? 'Update Project' : 'Create Project'"></button>
+      </div>
+    </div>
+  </form>

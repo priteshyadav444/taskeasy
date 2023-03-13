@@ -1,27 +1,13 @@
-.inputtext {
-    border: none;
-    width: 100%;
-    display: block;
-    outline: none;
-      font-size: 1rem;
-      padding: 0.75rem 0.75rem;
-  }
-
   .justify-content-space-between {
     display: flex;
     justify-content: space-between;
     padding: 5px !important;
   }
   
-  
-  .inputtext:focus {
-    outline: none;
-    border: none;
-  }
-
   .p-card .p-card-title{
     font-size: small;
   }
+  
  .circle-wrap .inside-circle {
   width: 30px;
   height: 30px;

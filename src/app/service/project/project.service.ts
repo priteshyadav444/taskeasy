@@ -16,6 +16,7 @@ export class ProjectService {
   // apiUrlProject = 'http://localhost:3000/v1/projects';
   apiUrlProject = 'https://api-taskeasy.onrender.com/v1/projects';
 
+
   constructor(private http: HttpClient, private store:Store<AppState>) {
     this.reqHeader = new HttpHeaders({
       'Content-Type': 'application/json',
@@ -43,6 +44,14 @@ export class ProjectService {
     }))
   }
 
+  updateProject(project:Project) {
+    return this.http.put<Project>(`${this.apiUrlProject}/${project._id}`,project,{
+      headers: this.getToken()
+    }).pipe(map((data) => {
+      console.log(data)
+      return data
+    }))
+  }
 
   // async getToken(): Promise < string > {
   //   return await localStorage.getItem('authToken');

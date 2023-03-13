@@ -5,7 +5,11 @@ import { Subscription } from 'rxjs';
 import { AppState } from 'src/app/app-store/app.state';
 import { Store } from '@ngrx/store';
 import { UiService } from 'src/app/service/ui.service';
-import { addProjectStart, deleteProjectStart, loadAllProjects } from '../state/project.action';
+import {
+  addProjectStart,
+  deleteProjectStart,
+  loadAllProjects,
+} from '../state/project.action';
 import { Project } from 'src/app/models/projects.models';
 import { getAllProjects } from '../state/project.selector';
 import { setLoadingSpinner } from 'src/app/component/shared/state/Shared/shared.actions';
@@ -13,7 +17,9 @@ import { Observable } from 'rxjs';
 import { getLoading } from 'src/app/component/shared/state/Shared/shared.selector';
 import { Title } from '@angular/platform-browser';
 import { OverlayPanel } from 'primeng/overlaypanel';
-
+import { DialogService } from 'primeng/dynamicdialog';
+import { DynamicDialogRef } from 'primeng/dynamicdialog';
+import { CreateProjectComponent } from 'src/app/shared-component/create-project/create-project.component';
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
@@ -23,81 +29,71 @@ export class DashboardComponent {
   showDailog: boolean = false;
   items: MenuItem[] = [];
   value: number = 10;
-  title!: string;
-  selectedDate:any = null
-  minimumDate:any = new Date();
-  totalprojects:any[]= [];
-  projects:any[]= [];
-  first:number = 0;
-  rows:number = 6;
-  theme_colour:any = "#1976D2";
-  @ViewChild("op") op : OverlayPanel;
-  @ViewChild("cardOption") cardOption : ElementRef;
-  showLoading$:Observable<boolean> | undefined
-  
+  totalprojects: any[] = [];
+  projects: any[] = [];
+  first: number = 0;
+  rows: number = 6;
+  @ViewChild('op') op: OverlayPanel;
+  @ViewChild('cardOption') cardOption: ElementRef;
+  showLoading$: Observable<boolean> | undefined;
+
   public menuInactiveDesktop!: boolean;
-
   public menuActiveMobile!: boolean;
-
   public overlayMenuActive!: boolean;
-
   public staticMenuInactive: boolean = false;
-
   public profileActive!: boolean;
-
   public topMenuActive!: boolean;
-
   public topMenuLeaving!: boolean;
-
   public theme!: string;
- 
+
   documentClickListener!: () => void;
 
   menuClick!: boolean;
-
   topMenuButtonClick!: boolean;
-
   configActive!: boolean;
-
   configClick!: boolean;
-
   subscription!: Subscription;
   public trackThickness: number;
   selectedItem!: any;
+  ref: DynamicDialogRef;
 
   constructor(
-    private uiService: UiService,
     public renderer: Renderer2,
+    public dialogService: DialogService,
     public app: AppComponent,
+    private uiService: UiService,
     private store: Store<AppState>,
     private titleService: Title
   ) {
-    this.uiService
-    .onProjectToggle()
-    .subscribe((value) => {this.showDailog = value;});
+    this.uiService.onProjectToggle().subscribe((value) => {
+      this.showDailog = value;
+    });
   }
-  
-  ngOnInit() {
+
+  ngOnInit() {    
     this.trackThickness = 80;
-    this.titleService.setTitle("Dashboard - TaskEasy.in");
-    this.store.select(getLoading).pipe().forEach((value)=>{
-      if(value==true){
-        this.titleService.setTitle("creating project..."); 
-      }
-      else{
-        this.titleService.setTitle("Dashboard - TaskEasy.in");
-      }
-    })
+    this.titleService.setTitle('Dashboard - TaskEasy.in');
+    this.store
+      .select(getLoading)
+      .pipe()
+      .forEach((value) => {
+        if (value == true) {
+          this.titleService.setTitle('creating project...');
+        } else {
+          this.titleService.setTitle('Dashboard - TaskEasy.in');
+        }
+      });
 
     this.store.dispatch(loadAllProjects());
-    this.store.select(getAllProjects).subscribe({next: (data) => {
-        this.totalprojects = data; 
-        this.onPageChange({first: this.first, rows: this.rows})
+    this.store.select(getAllProjects).subscribe({
+      next: (data) => {
+        this.totalprojects = data;
+        this.onPageChange({ first: this.first, rows: this.rows });
       },
       error: (error) => {
-        console.log("error",error);
-      }
-    })
+        console.log('error', error);
+      },
+    });
     this.showLoading$ = this.store.select(getLoading);
     this.items = [
       {
@@ -164,7 +160,8 @@ export class DashboardComponent {
   }
 
   addProject() {
-    this.uiService.toggleAddProject();
+    // this.uiService.toggleAddProject();
+    this.showDynamicDialog();
   }
   toggleMenu(event: Event) {
     this.menuClick = true;
@@ -217,9 +214,24 @@ export class DashboardComponent {
     this.menuClick = true;
   }
 
-  // onConfigClick(event) {
-  //     this.configClick = true;
-  // }
+  showDynamicDialog(type?) {
+    let selectedItem = type
+      ? this.selectedItem
+      : undefined;
+    let header = type ? 'Edit Project' : 'Create Project';
+    this.ref = this.dialogService.open(CreateProjectComponent, {
+      header: header,
+      width: '25%',
+      contentStyle: { 'max-height': '30%', overflow: 'auto' },
+      baseZIndex: 10000,
+      data: { ...selectedItem, type: type ? 'edit' : 'add' },
+    });
+    this.uiService.toggleAddProject(this.ref);
+    this.ref.onClose.subscribe((product: any) => {
+      if (product) {
+      }
+    });
+  }
 
   isStatic() {
     return this.app.menuMode === 'static';
@@ -252,53 +264,26 @@ export class DashboardComponent {
   }
 
   close() {
-     this.uiService.toggleAddProject()
-  }
-  clearProject(){
-     this.title = ""
-     this.selectedDate = ""
+    this.uiService.toggleAddProject(this.ref);
   }
 
-  onAddProject() { 
-    if(this.title=="" || this.title==null){
-      return alert('Enter Title');
-    }
-
-    if(this.selectedDate=="" || this.selectedDate==null){
-      return alert('Select Deadline');
-    }
-    const project :Project  = {
-      project_title:this.title,
-      theme_colour:this.theme_colour,
-      project_deadline:this.selectedDate,
-      total_completed_tasks: 0,
-      total_tasks:0.
-    }
-    
-    this.store.dispatch(setLoadingSpinner({ status: true }));
-    this.store.dispatch(addProjectStart({project}))
-    this.showDailog = false
-    this.clearProject();
-    
-  }
-
-  cardClick(event, selectedItem) {
+  cardClick(event, selectedItem, cardOption) {
     event.stopPropagation();
-    this.op.toggle(event);
+    this.op.toggle(event, cardOption);
     this.selectedItem = selectedItem;
   }
 
   onClick(type) {
     if (type == 'edit') {
-
+      this.showDynamicDialog(type);
     } else if (type == 'delete') {
-      this.store.dispatch(deleteProjectStart({pid: this.selectedItem?._id }));
+      this.store.dispatch(deleteProjectStart({ pid: this.selectedItem?._id }));
       this.op.hide();
     }
   }
-  
-   getColor(totalCompletedTask, totalTasks): string {
-    const value = this.calculatePercentage(totalCompletedTask, totalTasks)
+
+  getColor(totalCompletedTask, totalTasks): string {
+    const value = this.calculatePercentage(totalCompletedTask, totalTasks);
     if (value < 25) {
       return 'red';
     } else if (value < 50) {
@@ -310,11 +295,12 @@ export class DashboardComponent {
     }
   }
 
-  calculatePercentage(totalCompletedTask, totalTasks):number{
-    if(totalTasks==0) return 0;
-    return  Math.round(((totalCompletedTask*100)/totalTasks));
+  calculatePercentage(totalCompletedTask, totalTasks): number {
+    console.log("inside function");
+    if (totalTasks == 0) return 0;
+    if(totalCompletedTask==null) return 0;
+    return Math.round((totalCompletedTask * 100) / totalTasks);
   }
-  colorChange($event){
-    console.log($event);
+  colorChange($event) {
   }
 }

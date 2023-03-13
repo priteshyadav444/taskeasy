@@ -45,7 +45,7 @@ import {MessageModule} from 'primeng/message';
 const routes: Routes = [
   {
     path: '',
-    component: HomeComponent,
+    redirectTo: 'board',
   },
   {
     path: 'board',
