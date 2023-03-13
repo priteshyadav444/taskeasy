@@ -70,7 +70,7 @@ export class DashboardComponent {
     });
   }
 
-  ngOnInit() {
+  ngOnInit() {    
     this.trackThickness = 80;
     this.titleService.setTitle('Dashboard - TaskEasy.in');
     this.store
@@ -215,7 +215,9 @@ export class DashboardComponent {
   }
 
   showDynamicDialog(type?) {
-    let selectedItem = type ? this.selectedItem : undefined;
+    let selectedItem = type
+      ? this.selectedItem
+      : undefined;
     let header = type ? 'Edit Project' : 'Create Project';
     this.ref = this.dialogService.open(CreateProjectComponent, {
       header: header,
@@ -230,10 +232,6 @@ export class DashboardComponent {
       }
     });
   }
-
-  // onConfigClick(event) {
-  //     this.configClick = true;
-  // }
 
   isStatic() {
     return this.app.menuMode === 'static';
@@ -298,10 +296,11 @@ export class DashboardComponent {
   }
 
   calculatePercentage(totalCompletedTask, totalTasks): number {
+    console.log("inside function");
     if (totalTasks == 0) return 0;
+    if(totalCompletedTask==null) return 0;
     return Math.round((totalCompletedTask * 100) / totalTasks);
   }
   colorChange($event) {
-    console.log($event);
   }
 }
