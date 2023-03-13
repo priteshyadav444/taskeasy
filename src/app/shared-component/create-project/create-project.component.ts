@@ -41,11 +41,11 @@ export class CreateProjectComponent implements OnInit {
     this.projectForm = this.fb.group({
       _id: ['' || data?._id],
       project_title: ['' || data?.project_title],
-      total_tasks: [0 || data?.total_tasks],
-      total_completed_tasks: [0 || data?.total_completed_tasks],
+      total_tasks: [data?.total_tasks ||  0 ],
+      total_completed_tasks: [data?.total_completed_tasks || 0],
       theme_colour: ['#8F43EE' || data?.theme_colour],
       project_deadline: [data?.project_deadline ? new Date(data?.project_deadline) : ''],
-      task: ['' || data?.task],
+      task: [data?.task || '']
     });
   }
 
