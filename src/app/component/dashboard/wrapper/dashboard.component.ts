@@ -224,7 +224,7 @@ export class DashboardComponent {
       baseZIndex: 10000,
       data: { ...selectedItem, type: type ? 'edit' : 'add' },
     });
-
+    this.uiService.toggleAddProject(this.ref);
     this.ref.onClose.subscribe((product: any) => {
       if (product) {
       }
@@ -266,7 +266,7 @@ export class DashboardComponent {
   }
 
   close() {
-    this.uiService.toggleAddProject();
+    this.uiService.toggleAddProject(this.ref);
   }
 
   cardClick(event, selectedItem, cardOption) {
