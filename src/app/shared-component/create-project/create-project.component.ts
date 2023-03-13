@@ -20,7 +20,7 @@ export class CreateProjectComponent implements OnInit {
   theme_colour: any = '#1976D2';
   minimumDate: any = new Date();
   projectForm!: FormGroup;
-
+  minDate: Date = new Date();
   constructor(
     public config: DynamicDialogConfig,
     private store: Store<AppState>,
