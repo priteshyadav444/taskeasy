@@ -316,11 +316,14 @@ export class HomeComponent implements OnInit {
   calculateCompletionDiff(sentDate, fromDate) {
     var date1: any = new Date(sentDate);
     var date2: any = new Date(fromDate);
+    
     var diffMs = Math.floor(date2 - date1);
 
-    var diffDays: any = Math.floor(diffMs / (1000 * 60 * 60 * 24)); // days
-    var diffHrs = Math.floor((diffMs % 86400000) / 3600000); // hours
-    var diffMins = Math.round(((diffMs % 86400000) % 3600000) / 60000); //minuts
+    var diffDays: any = Math.abs(Math.floor(diffMs / (1000 * 60 * 60 * 24))); // days
+    var diffHrs = Math.abs(Math.floor((diffMs % 86400000) / 3600000)); // hours
+    var diffMins = Math.abs(
+      Math.round(((diffMs % 86400000) % 3600000) / 60000)
+    ); //minuts
 
     return diffDays + ' Days: ' + diffHrs + 'H';
   }
