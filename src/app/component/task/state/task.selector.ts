@@ -19,6 +19,7 @@ export const getProjectDetails = createSelector(getTasksState, (state) => {
 export const getPendingTasks = createSelector(getTasksState, (data) => {
   const tasks = data.tasks;
   const theme_colour = data.projectDetails.theme_colour;
+
   // tasks.forEach((data)=> console.log(date1 > formatDate(data.scheduled_date!,'yyyy-MM-dd','en_US')));
   let result = tasks.filter((data) => data.task_status == 'pending');
   result = result.map((data) => {
@@ -43,7 +44,10 @@ export const getTodayCompletedTasks = createSelector(getTasks, (tasks) => {
   );
 });
 
-// for getting selected Project details 
-export const getSelectdProjectDetails = createSelector(getProjectDetails, (selectedProject) => {
-  return selectedProject;
-})
+// for getting selected Project details
+export const getSelectdProjectDetails = createSelector(
+  getProjectDetails,
+  (selectedProject) => {
+    return selectedProject;
+  }
+);

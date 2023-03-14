@@ -38,7 +38,8 @@ const _projectReducer = createReducer(
   on(updateProjectSucess, (state, action) => {
     const updatedProject = action.project;
     const projects = state.projects.map((data) => {
-      if (data._id == action.project._id) return updatedProject;
+      if (data._id == action.project._id)
+        return { ...updatedProject, tasks: data.tasks };
       else return data;
     });
     return {
