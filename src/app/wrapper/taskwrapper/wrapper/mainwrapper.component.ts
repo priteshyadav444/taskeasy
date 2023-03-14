@@ -15,7 +15,7 @@ import {
 import { Subscription, Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/app-store/app.state';
-import { getLogoLoading } from 'src/app/component/shared/state/Shared/shared.selector';
+import { getLoading, getLogoLoading } from 'src/app/component/shared/state/Shared/shared.selector';
 import { autoLogin } from 'src/app/component/auth/state/auth.actions';
 import { setLogoLoading } from 'src/app/component/shared/state/Shared/shared.actions';
 import { ActivatedRoute } from '@angular/router';
@@ -52,6 +52,7 @@ import { AppComponent } from 'src/app/app.component';
 })
 export class MainwrapperComponent implements AfterViewInit, OnDestroy, OnInit {
   showLogoLoading$: Observable<boolean> | undefined;
+  showLoading$: Observable<boolean> | undefined;
 
   public menuInactiveDesktop!: boolean;
 
@@ -89,7 +90,10 @@ export class MainwrapperComponent implements AfterViewInit, OnDestroy, OnInit {
    
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.showLoading$ = this.store.select(getLoading);
+
+  }
 
   ngAfterViewInit() {
     this.showLogoLoading$ = this.store.select(getLogoLoading);
