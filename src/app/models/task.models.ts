@@ -3,6 +3,7 @@ export interface Task {
   title: string;
   description?: string;
   scheduled_date?: string;
+  completedAt?: string;
   category?: string;
   completed?: boolean,
   task_status?: string,

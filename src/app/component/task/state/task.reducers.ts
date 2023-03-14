@@ -27,10 +27,22 @@ const _tasksReducer = createReducer(
     };
   }),
   on(updateTaskSuccess, (state, action) => {
-    const updatedTask = action.task;
-    const tasks = state.tasks.map((data) =>
-      data._id == action.task._id ? { ...updatedTask } : data
-    );
+    let updatedTask = action.task;
+
+    const tasks = state.tasks.map((data) => {
+      if (data._id == action.task._id) {
+        if (action.task.task_status == 'done') {
+          let currentDate = new Date();
+          updatedTask = {
+            ...updatedTask,
+            completedAt: currentDate.toDateString(),
+          };
+        }
+        return updatedTask;
+      } else {
+        return data;
+      }
+    });
     return {
       ...state,
       tasks,
