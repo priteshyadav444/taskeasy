@@ -33,6 +33,7 @@ import {
   loadAllData,
   updateTask,
 } from '../state/task.action';
+import { ViewEncapsulation } from '@angular/core';
 
 interface Status {
   task_status: string;
@@ -42,7 +43,8 @@ interface Status {
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
-  styleUrls: ['./home.component.css'],
+  styleUrls: ['./home.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class HomeComponent implements OnInit {
   public data: Observable<DataStateChangeEventArgs>;
