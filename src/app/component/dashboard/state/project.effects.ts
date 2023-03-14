@@ -42,7 +42,6 @@ export class ProjectEffects {
               ...action.project,
               _id: data._id,
             };
-            this.store.dispatch(setLoadingSpinner({ status: false }));
             return addProjectSucess({ project });
           }),
           catchError((errResp) => {
@@ -113,7 +112,6 @@ export class ProjectEffects {
       mergeMap((action) => {
         return this.projectService.updateProject(action.project).pipe(
           map((data) => {
-            this.store.dispatch(setLoadingSpinner({ status: false }));
             return updateProjectSucess({ project: action?.project });
           }),
           catchError((errRes) => {
@@ -124,4 +122,16 @@ export class ProjectEffects {
       })
     );
   });
+
+  setLoader$ = createEffect(
+    () => {
+      return this.actions$.pipe(
+        ofType(...[deleteProjectSuccess, addProjectSucess, updateProjectSucess]),
+        tap((action) => {
+          this.store.dispatch(setLoadingSpinner({ status: false }));
+        })
+      );
+    },
+    { dispatch: false }
+  );
 }
