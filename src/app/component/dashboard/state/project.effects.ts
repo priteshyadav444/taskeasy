@@ -18,6 +18,7 @@ import { of } from 'rxjs';
 import { ProjectService } from 'src/app/service/project/project.service';
 import { Project } from 'src/app/models/projects.models';
 import { setLoadingSpinner } from 'src/app/component/shared/state/Shared/shared.actions';
+import { loadDataSuccess } from '../../task/state/task.action';
 
 @Injectable()
 export class ProjectEffects {
@@ -57,6 +58,7 @@ export class ProjectEffects {
     return this.actions$.pipe(
       ofType(loadAllProjects),
       mergeMap((action) => {
+        this.store.dispatch(setLoadingSpinner({ status: true }));
         return this.projectService.getAllProjects().pipe(
           map((projects) => {
             this.data = [];
@@ -126,7 +128,15 @@ export class ProjectEffects {
   setLoader$ = createEffect(
     () => {
       return this.actions$.pipe(
-        ofType(...[deleteProjectSuccess, addProjectSucess, updateProjectSucess]),
+        ofType(
+          ...[
+            deleteProjectSuccess,
+            addProjectSucess,
+            updateProjectSucess,
+            loadProjectsSuccess,
+            loadDataSuccess
+          ]
+        ),
         tap((action) => {
           this.store.dispatch(setLoadingSpinner({ status: false }));
         })
