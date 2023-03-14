@@ -30,20 +30,16 @@ export class CreateProjectComponent implements OnInit {
 
   ngOnInit(): void {
     const data = this.config?.data;
-    if (data) {
-      this.initForm(data);
-    } else {
-      this.initForm();
-    }
+    this.initForm(data);
   }
 
   initForm(data?) {
     this.projectForm = this.fb.group({
-      _id: ['' || data?._id],
-      project_title: ['' || data?.project_title],
+      _id: [data?._id || ''],
+      project_title: [data?.project_title || ''],
       total_tasks: [data?.total_tasks ||  0 ],
       total_completed_tasks: [data?.total_completed_tasks || 0],
-      theme_colour: ['#8F43EE' || data?.theme_colour],
+      theme_colour: [data?.theme_colour || '#8F43EE'],
       project_deadline: [data?.project_deadline ? new Date(data?.project_deadline) : ''],
       task: [data?.task || '']
     });
