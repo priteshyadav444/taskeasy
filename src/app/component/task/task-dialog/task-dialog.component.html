@@ -1,0 +1,159 @@
+<div class="field row p-0 mb-0 mt-1">
+  <div class="col-10 p-0">
+    <p-dropdown
+      [options]="status"
+      [(ngModel)]="data.task_status"
+      optionLabel="task_status"
+      placeholder="Update Status"
+      optionValue="code"
+      [styleClass]="'mr-3'"
+      [showClear]="true"
+    ></p-dropdown>
+
+    <p-dropdown
+      [options]="badgeData"
+      [(ngModel)]="data.badge"
+      optionLabel="badge"
+      placeholder="Update Priority"
+      optionValue="code"
+    ></p-dropdown>
+  </div>
+</div>
+
+<div class="p-fluid p-0">
+  <div class="col-12 p-0">
+    <input
+      type="text"
+      name="title"
+      id="title"
+      required="true"
+      class="e-field inputtext"
+      placeholder="Enter Title"
+      value="{{ data.title }}"
+    />
+  </div>
+  <hr class="m-0" />
+  <div class="col-12 p-0 mt-2">
+    <p-editor
+      [(ngModel)]="data.description"
+      [style]="{ height: '300px' }"
+    ></p-editor>
+  </div>
+
+  <div class="field col-12 mt-1 mb-0 p-0">
+    <div class="col-8 p-0">
+      <div style="display: flex; align-items: stretch; width: 100%">
+        <input
+          type="text"
+          class="e-field inputtextsubtask"
+          placeholder="Add Sub Task"
+          name="subtaskele"
+          [(ngModel)]="subtaskele"
+          style="border-bottom: 1px #dfe7ef solid; border-radius: 0px"
+        />
+        <button
+          type="button"
+          class="p-button-text p-button-plain"
+          pButton
+          pRipple
+          (click)="addSubTask(data.subtasklist, subtaskele)"
+          icon="pi pi-plus"
+        ></button>
+      </div>
+    </div>
+  </div>
+  <!-- Dailog SubTask -->
+  <div class="field col-12 mt-1">
+    <div class="example-list-create">
+      <p-accordion [multiple]="true">
+        <p-accordionTab header="Subtasks" [selected]="true">
+          <div *ngIf="data.subtasklist?.length != 0">
+            <!-- Remote UnChecked SubTask -->
+            <div *ngFor="let item of data.subtasklist">
+              <div *ngIf="item.checked == false" class="example-box">
+                <div class="example-box flex justify-content-between">
+                  <p-checkbox
+                    name="groupname"
+                    [(ngModel)]="item.checked"
+                    [binary]="true"
+                    (onChange)="onChange(item.checked)"
+                  ></p-checkbox>
+                </div>
+
+                <div class="example-td mr-auto">
+                  <span class="text-900 font-medium text-md example-title">
+                    {{ item.stitle }}
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Local UnChecked SubTask -->
+          <div *ngIf="subTask?.length != 0">
+            <div *ngFor="let item of subTask">
+              <div *ngIf="item.checked == false" class="example-box">
+                <div class="example-box flex justify-content-between">
+                  <p-checkbox
+                    name="groupname"
+                    [(ngModel)]="item.checked"
+                    [binary]="true"
+                  ></p-checkbox>
+                </div>
+
+                <div class="example-td mr-auto">
+                  <span class="text-900 font-medium text-md example-title">
+                    {{ item.stitle }}</span
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+        </p-accordionTab>
+
+        <p-accordionTab header="Completed" style="margin-top: 4px">
+          <!-- Remote Checked SubTask -->
+          <div *ngIf="data.subtasklist?.length != 0">
+            <div *ngFor="let item of data.subtasklist">
+              <div *ngIf="item.checked == true" class="example-box">
+                <div class="example-box flex justify-content-between">
+                  <p-checkbox
+                    name="groupname"
+                    [(ngModel)]="item.checked"
+                    [binary]="true"
+                    (onChange)="onChange(item.checked)"
+                  ></p-checkbox>
+                </div>
+
+                <div class="example-td mr-auto">
+                  <span class="text-900 font-medium text-md example-title">
+                    {{ item.stitle }}</span
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Remote Checked SubTask -->
+          <div *ngIf="subTask?.length != 0">
+            <div *ngFor="let item of subTask">
+              <div *ngIf="item.checked == true" class="example-box">
+                <div class="example-box flex justify-content-between">
+                  <p-checkbox
+                    name="groupname"
+                    [(ngModel)]="item.checked"
+                    [binary]="true"
+                  ></p-checkbox>
+                </div>
+
+                <div class="example-td mr-auto">
+                  <span class="text-900 font-medium text-md example-title">
+                    {{ item.stitle }}</span
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+        </p-accordionTab>
+      </p-accordion>
+    </div>
+  </div>
+</div>

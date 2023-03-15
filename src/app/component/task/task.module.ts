@@ -41,6 +41,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { ButtonModule } from 'primeng/button';
 import {MessagesModule} from 'primeng/messages';
 import {MessageModule} from 'primeng/message';
+import { TaskDialogComponent } from './task-dialog/task-dialog.component';
 
 const routes: Routes = [
   {
@@ -65,7 +66,7 @@ const routes: Routes = [
   }
 ];
 @NgModule({
-  declarations: [ HomeComponent, TaskoverviewComponent, CompletedComponent, CalenderComponent],
+  declarations: [ HomeComponent, TaskoverviewComponent, CompletedComponent, CalenderComponent, TaskDialogComponent],
   imports: [
     DialogModule,
     SplitButtonModule,

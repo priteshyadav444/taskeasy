@@ -379,7 +379,7 @@ e-kanban {
 }
 
 .p-accordion .p-accordion-header:not(.p-disabled).p-highlight .p-accordion-header-link {
-  background: #154e87;
+  // background: #154e87;
   border-color: #dee2e6;
   color: #343a40;
   border-bottom-right-radius: 0;
@@ -402,4 +402,14 @@ e-kanban {
 }
 .e-kanban .e-kanban-table .e-header-cells .e-header-text{
   font-weight: 500;
+}
+
+.p-accordion {
+  .p-accordion-header-link:focus {
+    box-shadow: none !important;
+  }
+}
+
+.p-accordion.custom-header .p-accordion-header:not(.p-disabled) .p-accordion-header-link:focus {
+  box-shadow: none !important;
 }
