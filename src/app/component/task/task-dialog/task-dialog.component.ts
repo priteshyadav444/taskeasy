@@ -19,6 +19,8 @@ export class TaskDialogComponent implements OnInit {
   @Input("data") data!:any;
   @Input("status") status!: Status[];
   @Input("subtaskele") subtaskele!: string;
+  selectedDate: any = new Date();
+  minimumDate: any = new Date();
 
   public badgeData: Object[] = [
     { code: 'low', badge: 'Low' },

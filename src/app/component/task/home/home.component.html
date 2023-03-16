@@ -13,7 +13,7 @@
 >
   <e-columns>
     <e-column
-      headerText="Unsheduled"
+      headerText="Unscheduled"
       keyField="unsheduled"
       allowToggle="true"
       showAddButton="true"
@@ -41,240 +41,22 @@
       showAddButton="true"
     ></e-column>
   </e-columns>
-  <e-stackedHeaders>
-    <e-stackedHeader
-      text="Pending Tasks"
-      keyFields="pending, unsheduled"
-    ></e-stackedHeader>
-    <e-stackedHeader text="In Progress" keyFields="active"></e-stackedHeader>
-    <e-stackedHeader text="Completed" keyFields="done"></e-stackedHeader>
-  </e-stackedHeaders>
 
   <ng-template
     #dialogSettingsTemplate
     let-data
     style="min-width: 500px; background-color: red"
   >
-    <app-task-dialog [data]="data" [status]="status" [subtaskele]="subtaskele"
-    [badgeData]="badgeData" [subTask]="subTask"></app-task-dialog>
+    <app-task-dialog
+      [data]="data"
+      [status]="status"
+      [subtaskele]="subtaskele"
+      [badgeData]="badgeData"
+      [subTask]="subTask"
+    ></app-task-dialog>
   </ng-template>
 
-  <ng-template #cardSettingsTemplate let-data>
-    <div class="e-card-content">
-      <div class="card-15">
-        <div class="card-15__colone">
-          <div class="card-15__title">
-            {{ data.title }}
-          </div>
-          <div class="card-15__date">
-            <div class="card-15__avatar">
-              <span
-                class="calender mt-2 mr-2"
-                *ngIf="data.scheduled_date != null"
-              >
-                <i
-                  class="pi pi-calendar-minus"
-                  style="font-size: 1.4rem"
-                  pTooltip="{{ data.scheduled_date | date: mediumDate }}"
-                ></i>
-              </span>
-              <div
-                *ngIf="
-                  data.badge === 'medium' ||
-                    data.badge === 'low' ||
-                    data.badge === 'high';
-                  else elseBlock
-                "
-              >
-                <div *ngIf="data.badge == 'low'">
-                  <p-message
-                    severity="success"
-                    text="{{ data.badge }}"
-                    styleClass="mr-2 mt-1"
-                    [style]="{ height: '6px', 'font-weight': 'bolder' }"
-                  ></p-message>
-                </div>
-
-                <div *ngIf="data.badge == 'medium'">
-                  <p-message
-                    severity="warn"
-                    text="{{ data.badge }}"
-                    styleClass="mr-2 mt-1"
-                    [style]="{ height: '6px', 'font-weight': 'bolder' }"
-                  ></p-message>
-                </div>
-
-                <div *ngIf="data.badge == 'high'">
-                  <p-message
-                    severity="error"
-                    text="{{ data.badge }}"
-                    styleClass="mr-2 mt-1"
-                    [style]="{ height: '6px', 'font-weight': 'bolder' }"
-                  ></p-message>
-                </div>
-              </div>
-              <ng-template #elseBlock
-                ><p-badge
-                  [value]="data.badge"
-                  severity="info"
-                  styleClass="mr-2"
-                ></p-badge
-              ></ng-template>
-
-              <i class="pi pi-ellipsis-v" style="font-size: 1rem"></i>
-            </div>
-          </div>
-        </div>
-
-        <div *ngIf="data.description?.length > 0" class="field mt-1">
-          <p-editor
-            [ngModel]="transform(data.description)"
-            [readonly]="true"
-            class="mt-2"
-            [style]="{ 'max-height': '200px', overflow: 'hidden' }"
-            [ngModelOptions]="{ standalone: true }"
-            name="fieldName"
-            ngDefaultControl
-          >
-            <ng-template pTemplate="header">
-              <span class="title font-small">
-                <span class="ql-format-button ql-bold">Description</span>
-              </span>
-            </ng-template>
-          </p-editor>
-        </div>
-
-        <div *ngIf="data.subtasklist?.length > 0" class="field col-12 p-0 mt-1">
-          <div class="example-list-create">
-            <p-accordion [multiple]="true">
-              <p-accordionTab
-                header="Subtasks - {{
-                  data.subtasklist?.length -
-                    calulateCompleteSubTask(data.subtasklist)
-                }}"
-                [selected]="false"
-              >
-                <div *ngIf="data.subtasklist?.length != 0">
-                  <div *ngFor="let item of data.subtasklist">
-                    <div *ngIf="item.checked == false" class="example-box">
-                      <div class="flex justify-content-between mr-1">
-                        <p-checkbox
-                          name="groupname"
-                          value="{{ item.checked }}"
-                          disabled="false"
-                        ></p-checkbox>
-                      </div>
-
-                      <div class="example-td mr-auto">
-                        <span class="font-medium text-md example-title">
-                          {{ item.stitle }}</span
-                        >
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </p-accordionTab>
-              <div *ngIf="calulateCompleteSubTask(data.subtasklist) != 0">
-                <p-accordionTab
-                  header="Completed - {{
-                    calulateCompleteSubTask(data.subtasklist)
-                  }}"
-                  style="margin-top: 4px"
-                >
-                  <div *ngIf="data.subtasklist?.length != 0">
-                    <div *ngFor="let item of data.subtasklist">
-                      <div *ngIf="item.checked == true" class="example-box">
-                        <div class="flex justify-content-between mr-1">
-                          <p-checkbox
-                            name="groupname"
-                            [(ngModel)]="item.checked"
-                            [binary]="true"
-                            disabled="true"
-                          ></p-checkbox>
-                        </div>
-
-                        <div class="example-td mr-auto">
-                          <span class="font-medium text-md example-title">
-                            {{ item.stitle }}</span
-                          >
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </p-accordionTab>
-              </div>
-            </p-accordion>
-          </div>
-        </div>
-
-        <div *ngIf="data.subtasklist?.length != 0">
-          <span>
-            <p-progressBar
-              [value]="calculatePercentage(data.subtasklist)"
-              [style]="{ height: '4px' }"
-              [showValue]="false"
-            ></p-progressBar>
-          </span>
-        </div>
-
-        <div class="card-15__colfive">
-          <div class="card-15__stat">
-            <div class="card-15__statinfo">
-              <span
-                *ngIf="
-                  data.task_status == 'active' || data.task_status == 'done';
-                  else elseBlock1
-                "
-              >
-                <span *ngIf="data.task_status == 'done'">
-                  <i
-                    class="pi pi-check-circle mr-1"
-                    style="color: greenyellow; font-weight: bolder"
-                  ></i>
-                  {{
-                    calculateCompletionDiff(data.startedAt, data.completedAt)
-                  }}
-                </span>
-
-                <span *ngIf="data.task_status == 'active'">
-                  <i
-                    class="pi pi-clock mr-1"
-                    style="color: #ffc107; font-weight: bolder"
-                  ></i>
-                  {{ calculateDiff(data.startedAt) }}
-                </span>
-              </span>
-              <ng-template #elseBlock1>
-                <span
-                  *ngIf="data.task_status == 'unsheduled'"
-                  style="font-size: 1rem"
-                >
-                  <i
-                    class="pi pi-tag pi-tag"
-                    style="
-                      font-size: 1rem;
-                      color: greenyellow;
-                      font-weight: bolder;
-                    "
-                  ></i>
-                  <b> Unsheduled </b>
-                </span>
-
-                <span
-                  *ngIf="data.task_status == 'pending'"
-                  style="font-size: 1rem"
-                >
-                  <i
-                    class="pi pi-tag pi-tag"
-                    style="font-size: 1rem; color: red; font-weight: bolder"
-                  ></i>
-                  <b> Not Started </b>
-                </span>
-              </ng-template>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+  <ng-template #cardSettingsTemplate let-data>  
+    <app-task-card [data]="data" [subtaskele]="subtaskele"> </app-task-card>
   </ng-template>
 </ejs-kanban>
