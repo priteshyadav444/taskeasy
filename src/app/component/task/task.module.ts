@@ -42,6 +42,7 @@ import { ButtonModule } from 'primeng/button';
 import {MessagesModule} from 'primeng/messages';
 import {MessageModule} from 'primeng/message';
 import { TaskDialogComponent } from './task-dialog/task-dialog.component';
+import { TaskCardComponent } from './task-card/task-card.component';
 
 const routes: Routes = [
   {
@@ -66,7 +67,7 @@ const routes: Routes = [
   }
 ];
 @NgModule({
-  declarations: [ HomeComponent, TaskoverviewComponent, CompletedComponent, CalenderComponent, TaskDialogComponent],
+  declarations: [ HomeComponent, TaskoverviewComponent, CompletedComponent, CalenderComponent, TaskDialogComponent, TaskCardComponent],
   imports: [
     DialogModule,
     SplitButtonModule,

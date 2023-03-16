@@ -1,5 +1,4 @@
-<p-toast >
-</p-toast>
+<p-toast> </p-toast>
 <app-loading-spinner *ngIf="showLoading$ | async"></app-loading-spinner>
 
 <div
@@ -11,11 +10,7 @@
     'layout-mobile-sidebar-active': menuActiveMobile
   }"
 >
-
- <app-navbar></app-navbar>
-  <!-- <div class="layout-sidebar">
-    <app-sidemenu> </app-sidemenu>
-  </div> -->
+  <app-navbar></app-navbar>
   <div class="layout-main-container">
     <div class="layout-main">
       <router-outlet></router-outlet>
