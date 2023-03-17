@@ -20,6 +20,7 @@ import {
   setLogoLoading,
 } from 'src/app/component/shared/state/Shared/shared.actions';
 import { Router } from '@angular/router';
+import { resetProjectState } from '../../dashboard/state/project.action';
 
 @Injectable()
 export class AuthEffects {
@@ -87,10 +88,11 @@ export class AuthEffects {
   loginRedirect$ = createEffect(
     () => {
       return this.actions$.pipe(
-        ofType(...[loginSuccess, signupSuccess,logoutSucess]),
+        ofType(...[loginSuccess, signupSuccess, logoutSucess]),
         tap((action) => {
           this.store.dispatch(setErrorMessage({ message: '' }));
           if (action.redirect) {
+            this.store.dispatch(setErrorMessage({ message: 'Login Success' }));
             this.router.navigate([this.defaultRedirect]);
           } else {
             this.router.navigate(['login']);
@@ -101,16 +103,6 @@ export class AuthEffects {
     { dispatch: false }
   );
 
-  // autoLogin$ = createEffect(() => {
-  //   return this.actions$.pipe(
-  //     ofType(autoLogin),
-  //     mergeMap((action) => {
-  //       const user = this.authService.getUserFromLocalStorage();
-  //       return of(loginSuccess({ user, redirect: false }));
-  //     })
-  //   );
-  // });
-
   autoLogin$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(autoLogin),
@@ -119,7 +111,7 @@ export class AuthEffects {
         return this.authService.getUserFromLocalStorage().pipe(
           map((data) => {
             this.store.dispatch(setLoadingSpinner({ status: false }));
-            this.store.dispatch(setErrorMessage({ message: '' }))
+            this.store.dispatch(setErrorMessage({ message: '' }));
             const user = this.authService.formatUser(data);
             this.authService.setUserInLocalStorage(user);
             return loginSuccess({ user, redirect: true });
@@ -128,7 +120,7 @@ export class AuthEffects {
             const errmsg = this.authService.getErrorMessage(errResp.error);
             this.store.dispatch(setLoadingSpinner({ status: false }));
             this.store.dispatch(setLogoLoading({ status: false }));
-            this.authService.showError(errmsg);
+            // this.authService.showError(errmsg);
             return of(setErrorMessage({ message: errmsg }));
           })
         );
@@ -144,20 +136,22 @@ export class AuthEffects {
         return this.authService.getUserFromLocalStorage().pipe(
           map((data) => {
             this.store.dispatch(setLoadingSpinner({ status: false }));
-            this.store.dispatch(setErrorMessage({ message: 'Logout Successful' }));
-
+            this.store.dispatch(
+              setErrorMessage({ message: 'Logout Successful' })
+            );
+            this.store.dispatch(resetProjectState());
             const user = this.authService.formatUser({
               authToken: '',
               user: {
-                _id: "",
-                firstname: "",
-                lastname: "",
-                email: "",
-              }
+                _id: '',
+                firstname: '',
+                lastname: '',
+                email: '',
+              },
             });
 
             this.authService.setUserInLocalStorage(user);
-            return loginSuccess({ user, redirect: false });
+            return logoutSucess({ user, redirect: false });
           }),
           catchError((errResp) => {
             const errmsg = this.authService.getErrorMessage(errResp.error);
