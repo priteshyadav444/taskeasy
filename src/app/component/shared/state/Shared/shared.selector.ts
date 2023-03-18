@@ -15,3 +15,8 @@ export const getLogoLoading = createSelector(getSharedState, (state) => {
 export const getErrorMessage = createSelector(getSharedState, (state) => {
   return state.errorMessage;
 });
+
+export const selectIsTaskLoaded = createSelector(
+  getSharedState,
+  (state: SharedState) => state.isTaskLoaded
+);
