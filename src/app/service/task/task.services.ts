@@ -60,7 +60,7 @@ export class TasksService {
         map((data) => {
           const tasks: Task[] = data.tasks;
           const projectDetails:Project = { ...data.projectDetails};
-          const result = { tasks, projectDetails };
+          const result = { tasks, projectDetails, taskLoaded:false };
           return result;
         })
       );

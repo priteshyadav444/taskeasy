@@ -40,7 +40,9 @@ export class TasksCardService extends Subject<DataStateChangeEventArgs> {
   public setId(id: any): void {
     this.pid.next(id);
   }
-  protected getData(state: DataStateChangeEventArgs): Observable<DataStateChangeEventArgs> {
+  protected getData(
+    state: DataStateChangeEventArgs
+  ): Observable<DataStateChangeEventArgs> {
     return this.store
       .select(getTasks)
       .pipe(
@@ -54,7 +56,7 @@ export class TasksCardService extends Subject<DataStateChangeEventArgs> {
       .pipe((data: any) => {
         return data;
       });
-    
+
     // return this.http
     //        .get(`${this.BASE_URL}/${this.pid.value}`, {
     //         headers:this.reqHeader
@@ -68,8 +70,15 @@ export class TasksCardService extends Subject<DataStateChangeEventArgs> {
     //     });
   }
 
-  public execute(state:any): void {
-    this.getData(state).subscribe((x) =>{ super.next(x)});
+  public execute(state: any): void {
+    console.log('execute');
+    this.getData(state).subscribe((x) => {
+      console.log(x);
+      // x['name'] = 'dataBinding';
+      // x['json'] = [];
+      // console.log(x);
+      super.next(x);
+    });
   }
 
   /** POST: add a new record  to the server */
