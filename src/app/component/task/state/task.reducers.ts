@@ -6,6 +6,7 @@ import {
   deleteTaskSuccess,
   loadDataSuccess,
   resetTasks,
+  taskPreloaded,
   updateTaskSuccess,
 } from './task.action';
 import { intialState } from './task.state';
@@ -24,6 +25,7 @@ const _tasksReducer = createReducer(
       ...state,
       tasks: action.tasks,
       projectDetails: action.projectDetails,
+      taskLoaded: true,
     };
   }),
   on(updateTaskSuccess, (state, action) => {
@@ -49,7 +51,6 @@ const _tasksReducer = createReducer(
     };
   }),
   on(deleteTaskSuccess, (state, action) => {
-    const updatedTask = action.task;
     const tasks = state.tasks.filter((data) => data._id != action.task._id);
     return {
       ...state,
@@ -57,7 +58,16 @@ const _tasksReducer = createReducer(
     };
   }),
   on(resetTasks, (state, action) => {
-    return { ...state, tasks: [] };
+    if (
+      state.projectDetails != null &&
+      state.projectDetails._id != action.projectId
+    ) {
+      return { ...state, tasks: [], projectDetails: null, taskLoaded: false };
+    } else {
+      return {
+        ...state,
+      };
+    }
   })
 );
 

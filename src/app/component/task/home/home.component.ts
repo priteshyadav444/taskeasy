@@ -7,9 +7,9 @@ import {
 } from '@angular/core';
 import { CdkDragDrop, transferArrayItem } from '@angular/cdk/drag-drop';
 import { MenuItem } from 'primeng/api';
-import { Store } from '@ngrx/store';
+import { select, Store } from '@ngrx/store';
 import { AppState } from 'src/app/app-store/app.state';
-import { Observable } from 'rxjs';
+import { Observable, ReplaySubject, Subscription } from 'rxjs';
 import { Task } from 'src/app/models/task.models';
 import { setLogoLoading } from 'src/app/component/shared/state/Shared/shared.actions';
 import {
@@ -31,8 +31,11 @@ import {
   addTask,
   deleteTask,
   loadAllData,
+  resetTasks,
   updateTask,
 } from '../state/task.action';
+import { selectIsTaskLoaded } from '../../shared/state/Shared/shared.selector';
+import { isTaskLoaded } from '../state/task.selector';
 
 interface Status {
   task_status: string;
@@ -79,15 +82,14 @@ export class HomeComponent implements OnInit {
   subtaskele!: string;
   @Output() messageEvent = new EventEmitter<string>();
   projecttitle: any;
-
+  private subscription: Subscription;
   constructor(
     private store: Store<AppState>,
     private service: TasksCardService,
     private route: ActivatedRoute,
     private titleService: Title
   ) {
-    this.data = service;
-
+    this.data = this.service;
     this.status = [
       { task_status: 'Active', code: 'active' },
       { task_status: 'Pending', code: 'pending' },
@@ -255,73 +257,43 @@ export class HomeComponent implements OnInit {
   public fields: Object = { text: 'Name', value: 'Id' };
 
   ngOnInit(): void {
-    // this.titleService.setTitle(`${this.projecttitle} - TaskEasy.in`);
-
     this.titleService.setTitle(`TaskEasy.in`);
     let state = { skip: 0, take: 10 };
 
     this.pid = this.route.snapshot.paramMap.get('id');
     this.service.activateRouter$.next(this.pid);
-    this.store.dispatch(loadAllData({ pid: this.pid }));
-    this.service.execute(state);
+
+    // only load tasks if isTaskload is false
+    this.subscription = this.store
+      .pipe(select(isTaskLoaded))
+      .subscribe((isTaskLoaded) => {
+        this.store.dispatch(resetTasks({ projectId: this.pid }));
+        console.log('outside' + isTaskLoaded);
+        if (!isTaskLoaded) {
+          console.log('inside call');
+          this.store.dispatch(loadAllData({ pid: this.pid }));
+        } else {
+          console.log("render kanban");
+          this.service.execute(state);
+        }
+      });
+    // this.service.execute(state);
+
     this.cardSettings = {
       headerField: '_id',
       selectionType: 'Single',
     };
-
-    this.items = [
-      { label: 'Mark As Done', icon: 'pi pi-refresh' },
-      { label: 'Partial Done', icon: 'pi pi-times' },
-      { label: 'Edit Task', icon: 'pi pi-times' },
-      { label: 'Delete Task', icon: 'pi pi-times' },
-      { label: 'Angular.io', icon: 'pi pi-info', url: 'http://angular.io' },
-    ];
-
-    this.category = [
-      {
-        label: 'low',
-        command: () => {
-          this.selectCategory('low');
-        },
-      },
-      {
-        label: 'medium',
-        command: () => {
-          this.selectCategory('medium');
-        },
-      },
-      {
-        label: 'high',
-        command: () => {
-          this.selectCategory('high');
-        },
-      },
-    ];
   }
-  
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
+  }
+
   showBasicDialog() {
     this.displayBasic = true;
   }
 
   showCreateDialog() {
     this.displayCategory = true;
-  }
-
-  drop(event: CdkDragDrop<any[]>) {
-    if (event.previousContainer === event.container) {
-      // moveItemInArray(
-      //   event.container.data,
-      //   event.previousIndex,
-      //   event.currentIndex
-      // );
-    } else {
-      transferArrayItem(
-        event.previousContainer.data,
-        event.container.data,
-        event.previousIndex,
-        event.currentIndex
-      );
-    }
   }
 
   save(severity: string) {
