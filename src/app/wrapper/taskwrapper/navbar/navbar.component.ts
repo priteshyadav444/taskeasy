@@ -9,6 +9,7 @@ import { Store } from '@ngrx/store';
 import { getSelectdProjectDetails } from 'src/app/component/task/state/task.selector';
 import { Project } from 'src/app/models/projects.models';
 import { TasksCardService } from 'src/app/service/task/taskcard.service';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-navbar',
@@ -29,7 +30,9 @@ export class NavbarComponent implements OnInit, OnDestroy {
     public appMain: MainwrapperComponent,
     private uiService: UiService,
     private route: ActivatedRoute,
-    private service: TasksCardService
+    private service: TasksCardService,
+    private titleService: Title
+
   ) {
     this.service.pid.subscribe((log) => {
       this.pid = log;
@@ -70,6 +73,5 @@ export class NavbarComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.subscription.unsubscribe();
   }
-  handleClick(){
-  }
+  handleClick() {}
 }
