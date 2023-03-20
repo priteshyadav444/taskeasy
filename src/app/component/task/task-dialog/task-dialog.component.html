@@ -76,7 +76,6 @@
                     name="groupname"
                     [(ngModel)]="item.checked"
                     [binary]="true"
-                    (onChange)="onChange(item.checked)"
                   ></p-checkbox>
                 </div>
 
@@ -85,26 +84,14 @@
                     {{ item.stitle }}
                   </span>
                 </div>
-              </div>
-            </div>
-          </div>
-          <!-- Local UnChecked SubTask -->
-          <div *ngIf="subTask?.length != 0">
-            <div *ngFor="let item of subTask">
-              <div *ngIf="item.checked == false" class="example-box">
-                <div class="example-box flex justify-content-between">
-                  <p-checkbox
-                    name="groupname"
-                    [(ngModel)]="item.checked"
-                    [binary]="true"
-                  ></p-checkbox>
-                </div>
-
-                <div class="example-td mr-auto">
-                  <span class="text-900 font-medium text-md example-title">
-                    {{ item.stitle }}</span
-                  >
-                </div>
+                <button
+                  type="button"
+                  class="p-button-text p-button-plain ml-auto"
+                  pButton
+                  pRipple
+                  (click)="removeSubTask(item._id)"
+                  icon="pi pi-times"
+                ></button>
               </div>
             </div>
           </div>
@@ -126,29 +113,17 @@
 
                 <div class="example-td mr-auto">
                   <span class="text-900 font-medium text-md example-title">
-                    {{ item.stitle }}</span
-                  >
+                    {{ item.stitle }}
+                  </span>
                 </div>
-              </div>
-            </div>
-          </div>
-          <!-- Remote Checked SubTask -->
-          <div *ngIf="subTask?.length != 0">
-            <div *ngFor="let item of subTask">
-              <div *ngIf="item.checked == true" class="example-box">
-                <div class="example-box flex justify-content-between">
-                  <p-checkbox
-                    name="groupname"
-                    [(ngModel)]="item.checked"
-                    [binary]="true"
-                  ></p-checkbox>
-                </div>
-
-                <div class="example-td mr-auto">
-                  <span class="text-900 font-medium text-md example-title">
-                    {{ item.stitle }}</span
-                  >
-                </div>
+                <button
+                  type="button"
+                  class="p-button-text p-button-plain ml-auto"
+                  pButton
+                  pRipple
+                  (click)="removeSubTask(item._id)"
+                  icon="pi pi-times"
+                ></button>
               </div>
             </div>
           </div>
