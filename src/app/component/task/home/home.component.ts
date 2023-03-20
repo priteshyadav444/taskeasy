@@ -2,31 +2,24 @@ import {
   Component,
   OnInit,
   Output,
-  ViewChild,
   EventEmitter,
 } from '@angular/core';
-import { CdkDragDrop, transferArrayItem } from '@angular/cdk/drag-drop';
 import { MenuItem } from 'primeng/api';
 import { select, Store } from '@ngrx/store';
 import { AppState } from 'src/app/app-store/app.state';
-import { Observable, ReplaySubject, Subscription } from 'rxjs';
+import { map, Observable,  Subscription } from 'rxjs';
 import { Task } from 'src/app/models/task.models';
-import { setLogoLoading } from 'src/app/component/shared/state/Shared/shared.actions';
-import {
+  import {
   CardSettingsModel,
   DataSourceChangedEventArgs,
   DataStateChangeEventArgs,
   DialogEventArgs,
   DialogSettingsModel,
-  KanbanComponent,
   SortSettingsModel,
 } from '@syncfusion/ej2-angular-kanban';
 import { TasksCardService } from 'src/app/service/task/taskcard.service';
 import { ActivatedRoute } from '@angular/router';
-import { DropDownListComponent } from '@syncfusion/ej2-angular-dropdowns';
 import { Title } from '@angular/platform-browser';
-import { getAllProjects } from '../../dashboard/state/project.selector';
-import { tasksReducer } from '../state/task.reducers';
 import {
   addTask,
   deleteTask,
@@ -34,8 +27,7 @@ import {
   resetTasks,
   updateTask,
 } from '../state/task.action';
-import { selectIsTaskLoaded } from '../../shared/state/Shared/shared.selector';
-import { isTaskLoaded } from '../state/task.selector';
+import { getTasks, isTaskLoaded } from '../state/task.selector';
 
 interface Status {
   task_status: string;
@@ -262,28 +254,31 @@ export class HomeComponent implements OnInit {
 
     this.pid = this.route.snapshot.paramMap.get('id');
     this.service.activateRouter$.next(this.pid);
-
     // only load tasks if isTaskload is false
     this.subscription = this.store
       .pipe(select(isTaskLoaded))
       .subscribe((isTaskLoaded) => {
         this.store.dispatch(resetTasks({ projectId: this.pid }));
-        console.log('outside' + isTaskLoaded);
         if (!isTaskLoaded) {
-          console.log('inside call');
           this.store.dispatch(loadAllData({ pid: this.pid }));
         } else {
-          console.log("render kanban");
-          this.service.execute(state);
+          this.store.select(getTasks).pipe(map(
+            (response: Task[]) =>
+              <any>{
+                result: response,
+              }
+          )).subscribe((data) => {
+            this.data = data
+          })
         }
       });
-    // this.service.execute(state);
 
     this.cardSettings = {
       headerField: '_id',
       selectionType: 'Single',
     };
   }
+
   ngOnDestroy() {
     this.subscription.unsubscribe();
   }

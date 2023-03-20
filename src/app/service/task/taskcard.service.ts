@@ -73,7 +73,6 @@ export class TasksCardService extends Subject<DataStateChangeEventArgs> {
   public execute(state: any): void {
     console.log('execute');
     this.getData(state).subscribe((x) => {
-      console.log(x);
       // x['name'] = 'dataBinding';
       // x['json'] = [];
       // console.log(x);
