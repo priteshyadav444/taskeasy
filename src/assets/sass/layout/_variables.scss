@@ -2,3 +2,37 @@
 $fontSize:10px;
 $borderRadius:12px;
 $transitionDuration:.2s;
+$text-color: #ffffff;
+$unScheduled : #3E54AC;
+$todo : #8F43EE;
+$inProgess : #E7B10A;
+$done : #32a838;
+
+th.e-header-cells.e-toggle-header {
+	&.e-header-cells {
+		.e-header-title {
+			.e-header-text {
+				color: #ffffff !important;
+			}
+		}
+	}
+}
+
+
+th.e-header-cells.e-toggle-header {
+	&:nth-child(1).e-header-cells {
+		background-color: $unScheduled !important;
+	}
+
+    &:nth-child(2).e-header-cells {
+		background-color: $todo !important;
+	}
+
+    &:nth-child(3).e-header-cells {
+		background-color: $inProgess !important;
+	}
+
+    &:nth-child(4).e-header-cells {
+		background-color: $done !important;
+	}
+}
