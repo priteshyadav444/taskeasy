@@ -5,14 +5,15 @@ export interface Task {
   scheduled_date?: string;
   completedAt?: string;
   category?: string;
-  completed?: boolean,
-  task_status?: string,
-  badge?: string,
-  scheduled_type?: string,
+  completed?: boolean;
+  task_status?: string;
+  badge?: string;
+  scheduled_type?: string;
   subtasklist: [
     {
       stitle?: string;
       checked?: boolean;
+      _id?: string;
     }
   ];
 }
