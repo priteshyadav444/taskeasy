@@ -17,8 +17,8 @@ import { catchError, exhaustMap, map, mergeMap, tap } from 'rxjs';
 import { of } from 'rxjs';
 import { ProjectService } from 'src/app/service/project/project.service';
 import { Project } from 'src/app/models/projects.models';
-import { setLoadingSpinner } from 'src/app/component/shared/state/Shared/shared.actions';
-import { loadDataSuccess } from '../../task/state/task.action';
+import { setLoadingSpinner, setTaskLoaded } from 'src/app/component/shared/state/Shared/shared.actions';
+import { loadDataSuccess, resetTasks } from '../../task/state/task.action';
 
 @Injectable()
 export class ProjectEffects {
@@ -84,6 +84,7 @@ export class ProjectEffects {
             }
             this.idx = 0;
             projects = this.data;
+            this.store.dispatch(setTaskLoaded({ status: false }));
             return loadProjectsSuccess({ projects });
           })
         );
@@ -134,7 +135,7 @@ export class ProjectEffects {
             addProjectSucess,
             updateProjectSucess,
             loadProjectsSuccess,
-            loadDataSuccess
+            loadDataSuccess,
           ]
         ),
         tap((action) => {

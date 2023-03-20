@@ -12,7 +12,6 @@ import {
 } from '../state/project.action';
 import { Project } from 'src/app/models/projects.models';
 import { getAllProjects } from '../state/project.selector';
-import { setLoadingSpinner } from 'src/app/component/shared/state/Shared/shared.actions';
 import { Observable } from 'rxjs';
 import { getLoading } from 'src/app/component/shared/state/Shared/shared.selector';
 import { Title } from '@angular/platform-browser';
@@ -20,6 +19,7 @@ import { OverlayPanel } from 'primeng/overlaypanel';
 import { DialogService } from 'primeng/dynamicdialog';
 import { DynamicDialogRef } from 'primeng/dynamicdialog';
 import { CreateProjectComponent } from 'src/app/shared-component/create-project/create-project.component';
+import { resetTasks } from '../../task/state/task.action';
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
@@ -68,23 +68,25 @@ export class DashboardComponent {
     this.uiService.onProjectToggle().subscribe((value) => {
       this.showDailog = value;
     });
+    // reseting taskloaded shared state value and reseting projects and tasks.
   }
 
-  ngOnInit() {    
+  ngOnInit() {
     this.trackThickness = 80;
-    this.titleService.setTitle('Dashboard - TaskEasy.in');
     this.store
       .select(getLoading)
       .pipe()
       .forEach((value) => {
         if (value == true) {
-          this.titleService.setTitle('creating project...');
+          this.titleService.setTitle('loading...');
         } else {
-          this.titleService.setTitle('Dashboard - TaskEasy.in');
+          this.titleService.setTitle('TaskEasy.in');
         }
       });
 
     this.store.dispatch(loadAllProjects());
+
+    
     this.store.select(getAllProjects).subscribe({
       next: (data) => {
         this.totalprojects = data;
@@ -215,9 +217,7 @@ export class DashboardComponent {
   }
 
   showDynamicDialog(type?) {
-    let selectedItem = type
-      ? this.selectedItem
-      : undefined;
+    let selectedItem = type ? this.selectedItem : undefined;
     let header = type ? 'Edit Project' : 'Create Project';
     this.ref = this.dialogService.open(CreateProjectComponent, {
       header: header,
@@ -297,9 +297,8 @@ export class DashboardComponent {
 
   calculatePercentage(totalCompletedTask, totalTasks): number {
     if (totalTasks == 0) return 0;
-    if(totalCompletedTask==null) return 0;
+    if (totalCompletedTask == null) return 0;
     return Math.round((totalCompletedTask * 100) / totalTasks);
   }
-  colorChange($event) {
-  }
+  colorChange($event) {}
 }

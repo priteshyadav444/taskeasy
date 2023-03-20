@@ -17,3 +17,8 @@ export const setErrorMessage = createAction(
   SET_ERROR_MESSAGE,
   props<{ message: string }>()
 );
+
+export const setTaskLoaded = createAction(
+  '[Shared] Set Is Task Loaded',
+  props<{ status: boolean }>()
+);

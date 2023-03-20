@@ -16,6 +16,10 @@ export const getProjectDetails = createSelector(getTasksState, (state) => {
   return state.projectDetails;
 });
 
+export const isTaskLoaded = createSelector(getTasksState, (state) => {
+  return state.taskLoaded;
+});
+
 export const getPendingTasks = createSelector(getTasksState, (data) => {
   const tasks = data.tasks;
   const theme_colour = data.projectDetails.theme_colour;

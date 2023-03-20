@@ -84,6 +84,8 @@ export class AuthServices {
         return 'Wrong Password';
       case 'LOGOUT':
           return 'Wrong Password';
+      case 'LOGOUT_SUCCESS':
+            return 'Logout Successfull';
       default:
         return 'Unknown error occurred. Please try again';
     }

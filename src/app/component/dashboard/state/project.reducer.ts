@@ -3,6 +3,7 @@ import {
   addProjectSucess,
   deleteProjectSuccess,
   loadProjectsSuccess,
+  resetProjectState,
   updateProjectStart,
   updateProjectSucess,
 } from './project.action';
@@ -45,6 +46,11 @@ const _projectReducer = createReducer(
     return {
       ...state,
       projects: [...projects],
+    };
+  }),
+  on(resetProjectState, (state) => {
+    return {
+      ...initialState
     };
   })
 );

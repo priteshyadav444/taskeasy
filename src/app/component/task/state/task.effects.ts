@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
-import { catchError, map, mergeMap, of, tap } from 'rxjs';
+import { catchError, map, mergeMap, of, take, tap } from 'rxjs';
 import { AppState } from 'src/app/app-store/app.state';
 import { Project } from 'src/app/models/projects.models';
 import { Task } from 'src/app/models/task.models';
@@ -10,6 +10,7 @@ import { TasksCardService } from 'src/app/service/task/taskcard.service';
 import {
   setErrorMessage,
   setLoadingSpinner,
+  setTaskLoaded,
 } from '../../shared/state/Shared/shared.actions';
 import { HomeComponent } from '../home/home.component';
 import {
@@ -19,9 +20,11 @@ import {
   deleteTaskSuccess,
   loadAllData,
   loadDataSuccess,
+  taskPreloaded,
   updateTask,
   updateTaskSuccess,
 } from './task.action';
+import { getTasks, isTaskLoaded } from './task.selector';
 
 @Injectable()
 export class TaskEffects {

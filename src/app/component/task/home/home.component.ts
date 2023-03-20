@@ -2,37 +2,32 @@ import {
   Component,
   OnInit,
   Output,
-  ViewChild,
   EventEmitter,
 } from '@angular/core';
-import { CdkDragDrop, transferArrayItem } from '@angular/cdk/drag-drop';
 import { MenuItem } from 'primeng/api';
-import { Store } from '@ngrx/store';
+import { select, Store } from '@ngrx/store';
 import { AppState } from 'src/app/app-store/app.state';
-import { Observable } from 'rxjs';
+import { map, Observable,  Subscription } from 'rxjs';
 import { Task } from 'src/app/models/task.models';
-import { setLogoLoading } from 'src/app/component/shared/state/Shared/shared.actions';
-import {
+  import {
   CardSettingsModel,
   DataSourceChangedEventArgs,
   DataStateChangeEventArgs,
   DialogEventArgs,
   DialogSettingsModel,
-  KanbanComponent,
   SortSettingsModel,
 } from '@syncfusion/ej2-angular-kanban';
 import { TasksCardService } from 'src/app/service/task/taskcard.service';
 import { ActivatedRoute } from '@angular/router';
-import { DropDownListComponent } from '@syncfusion/ej2-angular-dropdowns';
 import { Title } from '@angular/platform-browser';
-import { getAllProjects } from '../../dashboard/state/project.selector';
-import { tasksReducer } from '../state/task.reducers';
 import {
   addTask,
   deleteTask,
   loadAllData,
+  resetTasks,
   updateTask,
 } from '../state/task.action';
+import { getTasks, isTaskLoaded } from '../state/task.selector';
 
 interface Status {
   task_status: string;
@@ -79,15 +74,14 @@ export class HomeComponent implements OnInit {
   subtaskele!: string;
   @Output() messageEvent = new EventEmitter<string>();
   projecttitle: any;
-
+  private subscription: Subscription;
   constructor(
     private store: Store<AppState>,
     private service: TasksCardService,
     private route: ActivatedRoute,
     private titleService: Title
   ) {
-    this.data = service;
-
+    this.data = this.service;
     this.status = [
       { task_status: 'Active', code: 'active' },
       { task_status: 'Pending', code: 'pending' },
@@ -255,73 +249,46 @@ export class HomeComponent implements OnInit {
   public fields: Object = { text: 'Name', value: 'Id' };
 
   ngOnInit(): void {
-    // this.titleService.setTitle(`${this.projecttitle} - TaskEasy.in`);
-
     this.titleService.setTitle(`TaskEasy.in`);
     let state = { skip: 0, take: 10 };
 
     this.pid = this.route.snapshot.paramMap.get('id');
     this.service.activateRouter$.next(this.pid);
-    this.store.dispatch(loadAllData({ pid: this.pid }));
-    this.service.execute(state);
+    // only load tasks if isTaskload is false
+    this.subscription = this.store
+      .pipe(select(isTaskLoaded))
+      .subscribe((isTaskLoaded) => {
+        this.store.dispatch(resetTasks({ projectId: this.pid }));
+        if (!isTaskLoaded) {
+          this.store.dispatch(loadAllData({ pid: this.pid }));
+        } else {
+          this.store.select(getTasks).pipe(map(
+            (response: Task[]) =>
+              <any>{
+                result: response,
+              }
+          )).subscribe((data) => {
+            this.data = data
+          })
+        }
+      });
+
     this.cardSettings = {
       headerField: '_id',
       selectionType: 'Single',
     };
-
-    this.items = [
-      { label: 'Mark As Done', icon: 'pi pi-refresh' },
-      { label: 'Partial Done', icon: 'pi pi-times' },
-      { label: 'Edit Task', icon: 'pi pi-times' },
-      { label: 'Delete Task', icon: 'pi pi-times' },
-      { label: 'Angular.io', icon: 'pi pi-info', url: 'http://angular.io' },
-    ];
-
-    this.category = [
-      {
-        label: 'low',
-        command: () => {
-          this.selectCategory('low');
-        },
-      },
-      {
-        label: 'medium',
-        command: () => {
-          this.selectCategory('medium');
-        },
-      },
-      {
-        label: 'high',
-        command: () => {
-          this.selectCategory('high');
-        },
-      },
-    ];
   }
-  
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
+  }
+
   showBasicDialog() {
     this.displayBasic = true;
   }
 
   showCreateDialog() {
     this.displayCategory = true;
-  }
-
-  drop(event: CdkDragDrop<any[]>) {
-    if (event.previousContainer === event.container) {
-      // moveItemInArray(
-      //   event.container.data,
-      //   event.previousIndex,
-      //   event.currentIndex
-      // );
-    } else {
-      transferArrayItem(
-        event.previousContainer.data,
-        event.container.data,
-        event.previousIndex,
-        event.currentIndex
-      );
-    }
   }
 
   save(severity: string) {
