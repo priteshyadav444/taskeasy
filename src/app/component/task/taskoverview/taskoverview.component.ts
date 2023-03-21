@@ -1,14 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
-import { Store } from '@ngrx/store';
-import { Subscription } from 'rxjs';
+import { select, Store } from '@ngrx/store';
+import { map, Subscription } from 'rxjs';
 import { AppState } from 'src/app/app-store/app.state';
 import { MainwrapperComponent } from 'src/app/wrapper/taskwrapper/wrapper/mainwrapper.component';
 import { Task } from 'src/app/models/task.models';
 import { TasksCardService } from 'src/app/service/task/taskcard.service';
-import { loadAllData } from '../state/task.action';
-import { getTasks } from '../state/task.selector';
+import { loadAllData, resetTasks } from '../state/task.action';
+import { getTasks, isTaskLoaded } from '../state/task.selector';
 // import { AppConfig } from '../../../app/api/appconfig';
 // import { ConfigService } from 'src/app/service/app.config.service';
 
@@ -24,6 +24,8 @@ export class TaskoverviewComponent implements OnInit {
   doughnutOptions: any;
   pid!: any;
   subscription!: Subscription;
+  taskSubscription!: Subscription;
+  projectSubscription!: Subscription;
   rangeDates!: Date[];
   totalCompletedTask: any = 0;
   totalOngoingTasks: any = 0;
@@ -43,44 +45,57 @@ export class TaskoverviewComponent implements OnInit {
     private service: TasksCardService,
     private titleService: Title
   ) {
-    this.service.pid.subscribe((log) => {
+    this.projectSubscription = this.service.pid.subscribe((log) => {
       this.pid = log;
       if (this.pid != undefined) {
-        this.store.dispatch(loadAllData({ pid: this.pid }));
-        this.store.select(getTasks).subscribe((list) => {
-          this.totalCompletedTask = 0;
-          this.totalOngoingTasks = 0;
-          this.totalTasks = 0;
-
-          const activeTasks = new Array(12).fill(0);
-          const completedTasks = new Array(12).fill(0);
-          const totalTask = new Array(12).fill(0);
-
-          list.forEach((value) => {
-            if (value.badge === 'low') {
-              this.lowPriorityTask++;
+        this.subscription = this.store
+          .pipe(select(isTaskLoaded))
+          .subscribe((isTaskLoaded) => {
+            console.log(isTaskLoaded);
+            this.store.dispatch(resetTasks({ projectId: this.pid }));
+            if (!isTaskLoaded) {
+              this.store.dispatch(loadAllData({ pid: this.pid }));
             }
-            if (value.badge === 'medium') {
-              this.midPriorityTask++;
-            }
-            if (value.badge === 'high') {
-              this.highPriorityTask++;
-            }
-            if (value.task_status == 'active') {
-              activeTasks[new Date(value.scheduled_date).getMonth()]++;
-            }
-            if (value.task_status == 'done') {
-              completedTasks[new Date(value.scheduled_date).getMonth()]++;
-            }
-            this.totalTasks++;
-            totalTask[new Date(value.scheduled_date).getMonth()]++;
           });
 
-          // Update the data arrays for each dataset in the barData object
-          this.activeDataSet = activeTasks;
-          this.completedDataSet = completedTasks;
-          this.totalTaskDataSet = totalTask;
-        });
+        this.taskSubscription = this.store
+          .select(getTasks)
+          .subscribe((list) => {
+            this.totalCompletedTask = 0;
+            this.totalOngoingTasks = 0;
+            this.totalTasks = 0;
+
+            const activeTasks = new Array(12).fill(0);
+            const completedTasks = new Array(12).fill(0);
+            const totalTask = new Array(12).fill(0);
+
+            list.forEach((value) => {
+              if (value.badge === 'low') {
+                this.lowPriorityTask++;
+              }
+              if (value.badge === 'medium') {
+                this.midPriorityTask++;
+              }
+              if (value.badge === 'high') {
+                this.highPriorityTask++;
+              }
+              if (value.task_status == 'active') {
+                activeTasks[new Date(value.scheduled_date).getMonth()]++;
+                this.totalOngoingTasks++;
+              }
+              if (value.task_status == 'done') {
+                completedTasks[new Date(value.scheduled_date).getMonth()]++;
+                this.totalCompletedTask++;
+              }
+              this.totalTasks++;
+              totalTask[new Date(value.scheduled_date).getMonth()]++;
+            });
+
+            // Update the data arrays for each dataset in the barData object
+            this.activeDataSet = activeTasks;
+            this.completedDataSet = completedTasks;
+            this.totalTaskDataSet = totalTask;
+          });
       }
     });
   }
@@ -143,18 +158,7 @@ export class TaskoverviewComponent implements OnInit {
         intersect: false,
       },
       responsive: true,
-      scales: {
-        xAxes: [
-          {
-            stacked: true,
-          },
-        ],
-        yAxes: [
-          {
-            stacked: true,
-          },
-        ],
-      },
+  
     };
 
     // this.doughnutOptions = this.config && this.config.dark ? this.getDarkTheme() : this.getLightTheme()
@@ -165,6 +169,11 @@ export class TaskoverviewComponent implements OnInit {
     //       this.config = config;
     //       this.updateChartOptions();
     //     });
+  }
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
+    this.taskSubscription.unsubscribe();
+    this.projectSubscription.unsubscribe();
   }
   updateChartOptions() {
     this.applyLightTheme();

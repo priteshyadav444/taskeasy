@@ -10,7 +10,7 @@
   (dataSourceChanged)="dataSourceChanged($event)"
   (dialogOpen)="dialogOpen($event)"
   (dialogClose)="dialogClose($event)"
-  enablePersistence='true'
+  enablePersistence="true"
 >
   <e-columns>
     <e-column
@@ -51,13 +51,11 @@
     <app-task-dialog
       [data]="data"
       [status]="status"
-      [subtaskele]="subtaskele"
       [badgeData]="badgeData"
-      [subTask]="subTask"
     ></app-task-dialog>
   </ng-template>
 
-  <ng-template #cardSettingsTemplate let-data>  
-    <app-task-card [data]="data" [subtaskele]="subtaskele"> </app-task-card>
+  <ng-template #cardSettingsTemplate let-data>
+    <app-task-card [data]="data"> </app-task-card>
   </ng-template>
 </ejs-kanban>
