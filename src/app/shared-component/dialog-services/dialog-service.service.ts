@@ -8,11 +8,13 @@ export class DialogServiceService {
 
   constructor(public dialogService: DialogService) { }
 
-  showDialog(component:any) {
-    const ref = this.dialogService.open(component, {
-        header: 'Add new Card',
-        width: '70%',
-    });
+  showDialog(component:any, configData?:any) {
+    const data =  {
+      header: 'Add new Card',
+      width: '70%',
+      data: ''
+    }
+    const ref = this.dialogService.open(component, data);
 }
 
 }
