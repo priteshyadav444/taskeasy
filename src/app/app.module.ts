@@ -8,7 +8,6 @@ import { SidemenuComponent } from './wrapper/taskwrapper/sidemenu/sidemenu.compo
 import { AppMenuitemComponent } from './wrapper/taskwrapper/sidemenu/app.menuitem.component';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from 'src/environments/environment';
-import { CreateTaskComponent } from './component/task/create-task/create-task.component';
 import { EffectsModule } from '@ngrx/effects';
 
 import { AuthwrapperComponent } from './wrapper/authwrapper/authwrapper/authwrapper.component';
@@ -44,7 +43,6 @@ import { sharedModules } from './shared-component/shared.module';
     MainwrapperComponent,
     SidemenuComponent,
     AppMenuitemComponent,
-    CreateTaskComponent,
     AuthwrapperComponent,
     LoadingSpinnerComponent,
     MainComponent,
