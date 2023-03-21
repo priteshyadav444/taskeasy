@@ -1,4 +1,5 @@
-import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, SimpleChanges, ViewEncapsulation } from '@angular/core';
+import { DynamicDialogConfig } from 'primeng/dynamicdialog';
 
 interface Status {
   task_status: string;
@@ -11,7 +12,8 @@ interface Status {
   styleUrls: ['./task-dialog.component.scss'],
   encapsulation: ViewEncapsulation.None,
 })
-export class TaskDialogComponent implements OnInit {
+
+export class TaskDialogComponent implements OnInit, OnChanges {
   @Input('data') data!: any;
   @Input('status') status!: Status[];
   @Input('subtaskele') subtaskele!: string;
@@ -25,9 +27,28 @@ export class TaskDialogComponent implements OnInit {
   ];
   subTask: any = [];
 
-  constructor() {}
+  constructor(public config: DynamicDialogConfig) { }
+  
+  ngOnInit(): void {
+    this.status = [
+      { task_status: 'Active', code: 'active' },
+      { task_status: 'Pending', code: 'pending' },
+      { task_status: 'Done', code: 'done' },
+      { task_status: 'Unsheduled', code: 'unsheduled' },
+    ];
 
-  ngOnInit(): void {}
+    if (!this.data) {
+      this.data = {
+        "task_status": "unsheduled"
+      };
+      this.status = [
+        { task_status: 'Active', code: 'active' },
+        { task_status: 'Pending', code: 'pending' },
+        { task_status: 'Done', code: 'done' },
+        { task_status: 'Unsheduled', code: 'unsheduled' },
+      ];
+    }
+  }
   newObjectId() {
     const timestamp = Math.floor(new Date().getTime() / 1000).toString(16);
     const objectId =
@@ -57,5 +78,8 @@ export class TaskDialogComponent implements OnInit {
     this.data.subtasklist = this.data.subtasklist.filter(
       (subTask) => subtaskId != subTask._id
     );
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
   }
 }

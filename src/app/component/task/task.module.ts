@@ -43,6 +43,7 @@ import {MessagesModule} from 'primeng/messages';
 import {MessageModule} from 'primeng/message';
 import { TaskDialogComponent } from './task-dialog/task-dialog.component';
 import { TaskCardComponent } from './task-card/task-card.component';
+import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 
 const routes: Routes = [
   {
@@ -102,6 +103,6 @@ const routes: Routes = [
     StoreModule.forFeature('tasks', tasksReducer),
     EffectsModule.forFeature([TaskEffects]),
   ],
-  providers: [HomeComponent]
+  providers: [HomeComponent,DynamicDialogRef,DynamicDialogConfig]
 })
 export class TaskModule {}

@@ -4,8 +4,10 @@
   cssClass="schedule-event-template"
   [selectedDate]="selectedDate"
   currentView="Month"
-  [readonly]="readonly"
+  [readonly]="false"
   [eventSettings]="eventSettings"
+  (cellClick)="onClick($event)"
+  (popupOpen)="onPopupOpen($event)"
 >
   <ng-template #eventSettingsTemplate let-data>
     <div class="template-wrap" [style.background]="data.theme_colour">

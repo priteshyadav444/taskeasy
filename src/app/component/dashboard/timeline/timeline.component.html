@@ -6,6 +6,8 @@
   currentView="Month"
   [readonly]="readonly"
   [eventSettings]="eventSettings"
+  (cellClick)="onClick($event)"
+  (popupOpen)="onPopupOpen($event)"
 >
   <ng-template #eventSettingsTemplate let-data>
     <div class="template-wrap" [style.background]="data.theme_colour">

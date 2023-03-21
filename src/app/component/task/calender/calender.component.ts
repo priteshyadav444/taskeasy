@@ -6,11 +6,15 @@ import {
   MonthService,
   AgendaService,
   EventSettingsModel,
+  CellClickEventArgs,
+  PopupOpenEventArgs,
 } from '@syncfusion/ej2-angular-schedule';
 import { DataManager, ODataV4Adaptor, Query } from '@syncfusion/ej2-data';
 import { AppState } from 'src/app/app-store/app.state';
 import { TasksCardService } from 'src/app/service/task/taskcard.service';
+import { DialogServiceService } from 'src/app/shared-component/dialog-services/dialog-service.service';
 import { getPendingTasks } from '../state/task.selector';
+import { TaskDialogComponent } from '../task-dialog/task-dialog.component';
 
 @Component({
   selector: 'app-calender',
@@ -33,9 +37,7 @@ export class CalenderComponent implements OnInit {
       }];
 
   private dataManager: DataManager = new DataManager();
- 
-  
-  constructor(private service:TasksCardService, private titleService: Title,  private store: Store<AppState>,) {
+  constructor(private service:TasksCardService, private titleService: Title,  private store: Store<AppState>, private dialogServiceService : DialogServiceService) {
     this.service.pid.subscribe(log=> {
       this.pid = log
       this.url = `https://api-taskeasy.onrender.com/v1/tasks/calender/${this.pid}`
@@ -64,6 +66,15 @@ export class CalenderComponent implements OnInit {
       enableIndicator:true,
   };
   }
- 
+
+  onClick(event: CellClickEventArgs) {
+    this.dialogServiceService.showDialog(TaskDialogComponent)
+  }
+
+  onPopupOpen(args: PopupOpenEventArgs): void {
+      if (args.type === 'Editor' || args.type === 'QuickInfo')  {
+          args.cancel = true;
+      }
+  }
 
 }
