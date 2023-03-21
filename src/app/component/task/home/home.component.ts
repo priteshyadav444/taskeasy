@@ -1,15 +1,10 @@
-import {
-  Component,
-  OnInit,
-  Output,
-  EventEmitter,
-} from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { MenuItem } from 'primeng/api';
 import { select, Store } from '@ngrx/store';
 import { AppState } from 'src/app/app-store/app.state';
-import { map, Observable,  Subscription } from 'rxjs';
+import { map, Observable, Subscription } from 'rxjs';
 import { Task } from 'src/app/models/task.models';
-  import {
+import {
   CardSettingsModel,
   DataSourceChangedEventArgs,
   DataStateChangeEventArgs,
@@ -254,22 +249,27 @@ export class HomeComponent implements OnInit {
 
     this.pid = this.route.snapshot.paramMap.get('id');
     this.service.activateRouter$.next(this.pid);
-    // only load tasks if isTaskload is false
     this.subscription = this.store
       .pipe(select(isTaskLoaded))
       .subscribe((isTaskLoaded) => {
-        this.store.dispatch(resetTasks({ projectId: this.pid }));
+        // console.log(isTaskLoaded);
         if (!isTaskLoaded) {
           this.store.dispatch(loadAllData({ pid: this.pid }));
         } else {
-          this.store.select(getTasks).pipe(map(
-            (response: Task[]) =>
-              <any>{
-                result: response,
-              }
-          )).subscribe((data) => {
-            this.data = data
-          })
+          this.store.dispatch(resetTasks({ projectId: this.pid }));
+          this.store
+            .select(getTasks)
+            .pipe(
+              map(
+                (response: Task[]) =>
+                  <any>{
+                    result: response,
+                  }
+              )
+            )
+            .subscribe((data) => {
+              this.data = data;
+            });
         }
       });
 
