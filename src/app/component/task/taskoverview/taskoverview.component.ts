@@ -51,7 +51,7 @@ export class TaskoverviewComponent implements OnInit {
         this.subscription = this.store
           .pipe(select(isTaskLoaded))
           .subscribe((isTaskLoaded) => {
-            console.log(isTaskLoaded);
+            // console.log(isTaskLoaded);
             this.store.dispatch(resetTasks({ projectId: this.pid }));
             if (!isTaskLoaded) {
               this.store.dispatch(loadAllData({ pid: this.pid }));

@@ -4,6 +4,7 @@ import {
   OnDestroy,
   Renderer2,
   OnInit,
+  ChangeDetectorRef,
 } from '@angular/core';
 import {
   trigger,
@@ -51,8 +52,7 @@ import { AppComponent } from 'src/app/app.component';
   ],
 })
 export class MainwrapperComponent implements AfterViewInit, OnDestroy, OnInit {
-  showLogoLoading$: Observable<boolean> | undefined;
-  showLoading$: Observable<boolean> | undefined;
+  showLoading$: Observable<boolean>;
 
   public menuInactiveDesktop!: boolean;
 
@@ -86,17 +86,18 @@ export class MainwrapperComponent implements AfterViewInit, OnDestroy, OnInit {
     public renderer: Renderer2,
     public app: AppComponent,
     private store: Store<AppState>,
+    private cdr: ChangeDetectorRef
   ) {
    
   }
 
   ngOnInit() {
     this.showLoading$ = this.store.select(getLoading);
+    this.cdr.detectChanges(); // manually trigger change detection
 
   }
 
   ngAfterViewInit() {
-    this.showLogoLoading$ = this.store.select(getLogoLoading);
 
     // hides the overlay menu and top menu if outside is clicked
     this.documentClickListener = this.renderer.listen(

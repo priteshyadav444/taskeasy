@@ -43,6 +43,8 @@ import {MessagesModule} from 'primeng/messages';
 import {MessageModule} from 'primeng/message';
 import { TaskDialogComponent } from './task-dialog/task-dialog.component';
 import { TaskCardComponent } from './task-card/task-card.component';
+import {AvatarModule} from 'primeng/avatar';
+import {AvatarGroupModule} from 'primeng/avatargroup';
 
 const routes: Routes = [
   {
@@ -98,6 +100,8 @@ const routes: Routes = [
     ButtonModule,
     MessagesModule,
     MessageModule,
+    AvatarModule,
+    AvatarGroupModule,
     RouterModule.forChild(routes),
     StoreModule.forFeature('tasks', tasksReducer),
     EffectsModule.forFeature([TaskEffects]),

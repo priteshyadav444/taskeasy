@@ -8,8 +8,6 @@ import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
 })
 export class TaskCardComponent implements OnInit {
   @Input('data') data!: any;
-  @Input('subtaskele') subtaskele!: string;
-
   constructor() {}
 
   ngOnInit(): void {}
