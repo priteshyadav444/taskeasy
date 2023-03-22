@@ -1,10 +1,11 @@
-import { Project } from "src/app/models/projects.models";
+import { Project } from 'src/app/models/projects.models';
 
 export interface ProjectState {
-    projects: Project[] ;
+  projects: Project[];
+  isProjectLoaded: boolean;
 }
-  
+
 export const initialState: ProjectState = {
-    projects: null,
+  projects: null,
+  isProjectLoaded: false,
 };
-  

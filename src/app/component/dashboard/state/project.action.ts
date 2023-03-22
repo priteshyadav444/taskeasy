@@ -46,4 +46,7 @@ export const updateProjectSucess = createAction(
   props<{ project: Project }>()
 );
 
-export const resetProjectState = createAction('[Project] Reset State');
+export const resetProjectState = createAction(
+  '[Project] Reset State',
+  props<{ resetProjectLoadedState: boolean }>()
+);

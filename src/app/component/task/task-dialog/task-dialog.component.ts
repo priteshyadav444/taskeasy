@@ -34,9 +34,7 @@ export class TaskDialogComponent implements OnInit, OnChanges {
     createdAt: undefined
   }
   @Input('status') status!: Status[];
-  @Input('subtaskele') subtaskele!: string;
-  selectedDate: any = new Date();
-  minimumDate: any = new Date();
+  subtaskele!: string;
 
   public badgeData: Object[] = [
     { code: 'low', badge: 'Low' },
@@ -67,6 +65,8 @@ export class TaskDialogComponent implements OnInit, OnChanges {
     }
     this.data["subtasklist"] =  this.data?.subtasklist?.length ? this.data.subtasklist : [];
     console.log(this.config)
+    this.data.scheduled_date = new Date(this.data.scheduled_date);
+    this.data.createdAt = new Date(this.data.createdAt);
   }
   newObjectId() {
     const timestamp = Math.floor(new Date().getTime() / 1000).toString(16);
