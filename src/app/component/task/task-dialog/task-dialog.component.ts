@@ -1,6 +1,11 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges, ViewEncapsulation } from '@angular/core';
+import { Store } from '@ngrx/store';
 import { DynamicDialogConfig } from 'primeng/dynamicdialog';
-
+import { AppState } from 'src/app/app-store/app.state';
+import { Task } from 'src/app/models/task.models'
+import { TasksService } from 'src/app/service/task/task.services';
+import { TasksCardService } from 'src/app/service/task/taskcard.service';
+import { addTask } from '../state/task.action';
 interface Status {
   task_status: string;
   code: string;
@@ -14,9 +19,22 @@ interface Status {
 })
 
 export class TaskDialogComponent implements OnInit, OnChanges {
-  @Input('data') data!: any;
+  @Input('data') data: Task = {
+    _id: undefined,
+    title: undefined,
+    description: undefined,
+    scheduled_date: undefined,
+    completedAt: undefined,
+    category: undefined,
+    completed: false,
+    task_status: undefined,
+    badge: undefined,
+    scheduled_type: undefined,
+    subtasklist:[],
+    createdAt: undefined
+  }
   @Input('status') status!: Status[];
-  subtaskele!: string;
+  @Input('subtaskele') subtaskele!: string;
   selectedDate: any = new Date();
   minimumDate: any = new Date();
 
@@ -27,7 +45,9 @@ export class TaskDialogComponent implements OnInit, OnChanges {
   ];
   subTask: any = [];
 
-  constructor(public config: DynamicDialogConfig) { }
+  constructor(public config: DynamicDialogConfig, private tasksService: TasksService,
+    private store: Store<AppState>,
+    ) { }
   
   ngOnInit(): void {
     this.status = [
@@ -36,11 +56,8 @@ export class TaskDialogComponent implements OnInit, OnChanges {
       { task_status: 'Done', code: 'done' },
       { task_status: 'Unsheduled', code: 'unsheduled' },
     ];
-
-    if (!this.data) {
-      this.data = {
-        "task_status": "unsheduled"
-      };
+    if (!this.data?.task_status) {
+      this.data["task_status"]=  this.status[3]?.task_status;
       this.status = [
         { task_status: 'Active', code: 'active' },
         { task_status: 'Pending', code: 'pending' },
@@ -48,6 +65,8 @@ export class TaskDialogComponent implements OnInit, OnChanges {
         { task_status: 'Unsheduled', code: 'unsheduled' },
       ];
     }
+    this.data["subtasklist"] =  this.data?.subtasklist?.length ? this.data.subtasklist : [];
+    console.log(this.config)
   }
   newObjectId() {
     const timestamp = Math.floor(new Date().getTime() / 1000).toString(16);
@@ -70,12 +89,8 @@ export class TaskDialogComponent implements OnInit, OnChanges {
         checked: false,
         _id: this.newObjectId(),
       };
-      // if task list is undefined than intializing with empty array
-      if (this.data.subtasklist == undefined) {
-        this.data.subtasklist = [newstask];
-      } else {
-        this.data.subtasklist = [...this.data.subtasklist, newstask];
-      }
+      console.log(this.data );
+      this.data["subtasklist"].push(newstask);
       this.subtaskele = '';
     }
   }
@@ -83,6 +98,12 @@ export class TaskDialogComponent implements OnInit, OnChanges {
     this.data.subtasklist = this.data.subtasklist.filter(
       (subTask) => subtaskId != subTask._id
     );
+  }
+
+  addNewTask() {
+    const task = this.data;
+    const pid = this.config?.data?.pid;
+    this.store.dispatch(addTask({task, pid:pid}));
   }
 
   ngOnChanges(changes: SimpleChanges): void {

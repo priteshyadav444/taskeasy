@@ -12,7 +12,7 @@ export class DialogServiceService {
     const data =  {
       header: 'Add new Card',
       width: '70%',
-      data: ''
+      data: configData,
     }
     const ref = this.dialogService.open(component, data);
 }

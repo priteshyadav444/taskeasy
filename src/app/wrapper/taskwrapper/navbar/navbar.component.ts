@@ -71,7 +71,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
   addTask() {
     // this.uiServic  e.toggleAddTask();
-    this.dialogServiceService.showDialog(TaskDialogComponent)
+    this.dialogServiceService.showDialog(TaskDialogComponent, {pid: this.pid})
   }
 
   ngOnDestroy() {

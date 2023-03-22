@@ -402,3 +402,13 @@ e-kanban {
 .p-accordion.custom-header .p-accordion-header:not(.p-disabled) .p-accordion-header-link:focus {
   box-shadow: none !important;
 }
+
+.e-footer-content {
+  display: flex;
+  justify-content: flex-end;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 100%;
+  padding: 10px;
+}
