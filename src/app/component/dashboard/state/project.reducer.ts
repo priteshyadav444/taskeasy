@@ -22,6 +22,7 @@ const _projectReducer = createReducer(
     return {
       ...state,
       projects: action.projects,
+      isProjectLoaded:true
     };
   }),
   on(deleteProjectSuccess, (state, action) => {
@@ -48,9 +49,10 @@ const _projectReducer = createReducer(
       projects: [...projects],
     };
   }),
-  on(resetProjectState, (state) => {
+  on(resetProjectState, (state,action) => {
     return {
-      ...initialState
+      ...initialState,
+      isProjectLoaded: action.resetProjectLoadedState
     };
   })
 );

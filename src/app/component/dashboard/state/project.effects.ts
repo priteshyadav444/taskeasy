@@ -42,6 +42,7 @@ export class ProjectEffects {
             const project = {
               ...action.project,
               _id: data._id,
+              ...data
             };
             return addProjectSucess({ project });
           }),
@@ -115,7 +116,7 @@ export class ProjectEffects {
       mergeMap((action) => {
         return this.projectService.updateProject(action.project).pipe(
           map((data) => {
-            return updateProjectSucess({ project: action?.project });
+            return updateProjectSucess({ project: { ...action?.project, ...data }});
           }),
           catchError((errRes) => {
             this.store.dispatch(setLoadingSpinner({ status: false }));
