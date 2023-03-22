@@ -40,6 +40,7 @@ export class CreateProjectComponent implements OnInit {
       total_tasks: [data?.total_tasks ||  0 ],
       total_completed_tasks: [data?.total_completed_tasks || 0],
       theme_colour: [data?.theme_colour || '#8F43EE'],
+      project_start: [data?.project_start ? new Date(data?.project_start) : ''],
       project_deadline: [data?.project_deadline ? new Date(data?.project_deadline) : ''],
       task: [data?.task || '']
     });
@@ -56,6 +57,7 @@ export class CreateProjectComponent implements OnInit {
     if (deadline == '' || deadline == null) {
       return alert('Select Deadline');
     }
+    
     const project: Project = this.projectForm?.value;
     if (project?._id) {
       this.store.dispatch(setLoadingSpinner({ status: true }));

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable,map } from 'rxjs';
+import { Observable, map } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Project } from 'src/app/models/projects.models';
 import { getToken } from 'src/app/component/auth/state/auth.selector';
@@ -10,64 +10,71 @@ import { Store } from '@ngrx/store';
   providedIn: 'root',
 })
 export class ProjectService {
-  authToken:any
-  reqHeader:any
+  authToken: any;
+  reqHeader: any;
 
-  // apiUrlProject = 'http://localhost:3000/v1/projects';
-  apiUrlProject = 'https://api-taskeasy.onrender.com/v1/projects';
+  apiUrlProject = 'http://localhost:3000/v1/projects';
+  // apiUrlProject = 'https://api-taskeasy.onrender.com/v1/projects';
 
-
-  constructor(private http: HttpClient, private store:Store<AppState>) {
+  constructor(private http: HttpClient, private store: Store<AppState>) {
     this.reqHeader = new HttpHeaders({
       'Content-Type': 'application/json',
       'x-auth-token': JSON.parse(localStorage.getItem('authToken')),
     });
   }
 
-
   getToken() {
-    return this.reqHeader = new HttpHeaders({
+    return (this.reqHeader = new HttpHeaders({
       'Content-Type': 'application/json',
       'x-auth-token': JSON.parse(localStorage.getItem('authToken')),
+    }));
+  }
+
+  createProject(project: Project): Observable<Project> {
+    return this.http.post<Project>(this.apiUrlProject, project, {
+      headers: this.getToken(),
     });
   }
 
-  createProject(project:Project): Observable<Project> {
-    return this.http.post<Project>(this.apiUrlProject,project,{
-      headers: this.getToken()
-    })
-  }
-  
-  deleteProject(pid:String):Observable<any>{
-    return this.http.delete<any>(`${this.apiUrlProject}/${pid}`,{headers: this.getToken()}).pipe(map((data)=>{
-      return data;
-    }))
+  deleteProject(pid: String): Observable<any> {
+    return this.http
+      .delete<any>(`${this.apiUrlProject}/${pid}`, { headers: this.getToken() })
+      .pipe(
+        map((data) => {
+          return data;
+        })
+      );
   }
 
-  updateProject(project:Project) {
-    return this.http.put<Project>(`${this.apiUrlProject}/${project._id}`,project,{
-      headers: this.getToken()
-    }).pipe(map((data) => {
-      console.log(data)
-      return data
-    }))
+  updateProject(project: Project) {
+    return this.http
+      .put<Project>(`${this.apiUrlProject}/${project._id}`, project, {
+        headers: this.getToken(),
+      })
+      .pipe(
+        map((data) => {
+          return data;
+        })
+      );
   }
 
   // async getToken(): Promise < string > {
   //   return await localStorage.getItem('authToken');
   // }
-  
+
   getAllProjects(): Observable<Project[]> {
-    return this.http.get<Project[]>(this.apiUrlProject,{
-      headers: this.getToken()
-    }).pipe(
-      map((data) => {
-        const projects: Project[] = [];
-        for (let key in data) {
-          projects.push({ ...data[key] });
-        }
-        return projects;
+    return this.http
+      .get<Project[]>(this.apiUrlProject, {
+        headers: this.getToken(),
       })
-    );
+      .pipe(
+        map((data) => {
+          const projects: Project[] = [];
+          for (let key in data) {
+            projects.push({ ...data[key] });
+          }
+          return projects;
+        })
+      );
   }
 }

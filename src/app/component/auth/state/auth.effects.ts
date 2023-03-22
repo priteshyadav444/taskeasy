@@ -139,7 +139,9 @@ export class AuthEffects {
             this.store.dispatch(
               setErrorMessage({ message: 'Logout Successful' })
             );
-            this.store.dispatch(resetProjectState());
+            this.store.dispatch(
+              resetProjectState({ resetProjectLoadedState: false })
+            );
             const user = this.authService.formatUser({
               authToken: '',
               user: {

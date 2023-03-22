@@ -22,10 +22,14 @@ export const isTaskLoaded = createSelector(getTasksState, (state) => {
 
 export const getPendingTasks = createSelector(getTasksState, (data) => {
   const tasks = data.tasks;
-  const theme_colour = data.projectDetails.theme_colour;
+  let theme_colour;
+  if (data.projectDetails.theme_colour != undefined)
+    theme_colour = data.projectDetails.theme_colour;
 
   // tasks.forEach((data)=> console.log(date1 > formatDate(data.scheduled_date!,'yyyy-MM-dd','en_US')));
-  let result = tasks.filter((data) => data.task_status == 'pending' || data.task_status == 'unsheduled');
+  let result = tasks.filter(
+    (data) => data.task_status == 'pending' || data.task_status == 'unsheduled'
+  );
   result = result.map((data) => {
     return { ...data, theme_colour: theme_colour };
   });
