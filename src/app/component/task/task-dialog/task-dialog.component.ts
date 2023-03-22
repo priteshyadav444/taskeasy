@@ -16,7 +16,7 @@ interface Status {
 export class TaskDialogComponent implements OnInit, OnChanges {
   @Input('data') data!: any;
   @Input('status') status!: Status[];
-  @Input('subtaskele') subtaskele!: string;
+  subtaskele!: string;
   selectedDate: any = new Date();
   minimumDate: any = new Date();
 
@@ -61,7 +61,7 @@ export class TaskDialogComponent implements OnInit, OnChanges {
 
     return objectId;
   }
-  addSubTask(data: any, stask: any) {
+  addSubTask(stask: any) {
     if (stask == '' || stask == null) {
       return;
     } else {
@@ -70,7 +70,12 @@ export class TaskDialogComponent implements OnInit, OnChanges {
         checked: false,
         _id: this.newObjectId(),
       };
-      this.data.subtasklist = [...this.data.subtasklist, newstask];
+      // if task list is undefined than intializing with empty array
+      if (this.data.subtasklist == undefined) {
+        this.data.subtasklist = [newstask];
+      } else {
+        this.data.subtasklist = [...this.data.subtasklist, newstask];
+      }
       this.subtaskele = '';
     }
   }

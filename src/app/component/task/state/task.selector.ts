@@ -25,7 +25,7 @@ export const getPendingTasks = createSelector(getTasksState, (data) => {
   const theme_colour = data.projectDetails.theme_colour;
 
   // tasks.forEach((data)=> console.log(date1 > formatDate(data.scheduled_date!,'yyyy-MM-dd','en_US')));
-  let result = tasks.filter((data) => data.task_status == 'pending');
+  let result = tasks.filter((data) => data.task_status == 'pending' || data.task_status == 'unsheduled');
   result = result.map((data) => {
     return { ...data, theme_colour: theme_colour };
   });

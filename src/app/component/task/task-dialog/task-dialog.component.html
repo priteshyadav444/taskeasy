@@ -4,7 +4,7 @@
       [options]="status"
       [(ngModel)]="data.task_status"
       optionLabel="task_status"
-      placeholder="Update Status"
+      placeholder="Select Status"
       optionValue="code"
       [styleClass]="'mr-3'"
       [showClear]="true"
@@ -14,7 +14,7 @@
       [options]="badgeData"
       [(ngModel)]="data.badge"
       optionLabel="badge"
-      placeholder="Update Priority"
+      placeholder="Select Priority"
       optionValue="code"
     ></p-dropdown>
   </div>
@@ -46,7 +46,7 @@
         <input
           type="text"
           class="e-field inputtextsubtask"
-          placeholder="Add Sub Task"
+          placeholder="Add SubTask"
           name="subtaskele"
           [(ngModel)]="subtaskele"
           style="border-bottom: 1px #dfe7ef solid; border-radius: 0px"
@@ -56,7 +56,7 @@
           class="p-button-text p-button-plain"
           pButton
           pRipple
-          (click)="addSubTask(data.subtasklist, subtaskele)"
+          (click)="addSubTask(subtaskele)"
           icon="pi pi-plus"
         ></button>
       </div>
@@ -107,7 +107,6 @@
                     name="groupname"
                     [(ngModel)]="item.checked"
                     [binary]="true"
-                    (onChange)="onChange(item.checked)"
                   ></p-checkbox>
                 </div>
 
@@ -133,17 +132,26 @@
   </div>
 </div>
 
-<div class="p-fluid p-0">
-  <div class="col-4 p-0">
+<div class="p-fluid row p-0">
+  <div class="col-10 p-0">
+    <p-calendar
+      inputId="basic"
+      [showIcon]="true"
+      class="selectedDateCalender"
+      [showButtonBar]="true"
+      [(ngModel)]="data.createdAt"
+      name="startdate"
+      [minDate]="minimumDate"
+      placeholder="Start Date"
+    ></p-calendar>
     <p-calendar
       inputId="basic"
       [showIcon]="true"
       class="selectedDateCalender"
       [showButtonBar]="true"
       [(ngModel)]="data.scheduled_date"
-      name="selectedDate1"
-      [minDate]="minimumDate"
-      placeholder="Scheduled Date"
+      name="duedate"
+      placeholder="Due Date"
     ></p-calendar>
   </div>
 </div>

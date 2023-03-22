@@ -66,7 +66,7 @@
         [ngModel]="transform(data.description)"
         [readonly]="true"
         class="mt-2"
-        [style]="{ 'max-height': '200px', overflow: 'hidden' }"
+        [style]="{ 'max-height': '160px', overflow: 'hidden' }"
         [ngModelOptions]="{ standalone: true }"
         name="fieldName"
         ngDefaultControl
@@ -199,6 +199,31 @@
           </ng-template>
         </div>
       </div>
+      <p-avatarGroup styleClass="ml-5">
+        <p-avatar
+          image="https://primefaces.org/cdn/primeng/images/demo/avatar/amyelsner.png"
+          shape="circle"
+        ></p-avatar>
+        <p-avatar
+          image="https://primefaces.org/cdn/primeng/images/demo/avatar/asiyajavayant.png"
+          shape="circle"
+        ></p-avatar>
+        <p-avatar
+          image="https://primefaces.org/cdn/primeng/images/demo/avatar/ionibowcher.png"
+          shape="circle"
+        ></p-avatar>
+        <p-avatar
+          image="https://primefaces.org/cdn/primeng/images/demo/avatar/xuxuefeng.png"
+          shape="circle"
+        ></p-avatar>
+        <p-avatar
+          image="https://primefaces.org/cdn/primeng/images/demo/avatar/onyamalimba.png"
+          label="P"
+          size="large"
+          shape="circle"
+          [style]="{ 'background-color': '#9c27b0', color: '#ffffff' }"
+        ></p-avatar>
+      </p-avatarGroup>
     </div>
   </div>
 </div>
