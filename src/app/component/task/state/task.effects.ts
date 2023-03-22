@@ -7,6 +7,7 @@ import { Project } from 'src/app/models/projects.models';
 import { Task } from 'src/app/models/task.models';
 import { TasksService } from 'src/app/service/task/task.services';
 import { TasksCardService } from 'src/app/service/task/taskcard.service';
+import { resetProjectState } from '../../dashboard/state/project.action';
 import {
   setErrorMessage,
   setLoadingSpinner,
@@ -145,6 +146,8 @@ export class TaskEffects {
         ofType(...[addTaskSuccess, updateTaskSuccess, deleteTaskSuccess]),
         tap((action) => {
           this.home.update();
+          // reset to reload project on dashboard page
+          this.store.dispatch(resetProjectState({ resetProjectLoadedState: false }));
         })
       );
     },

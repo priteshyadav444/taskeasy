@@ -3,7 +3,7 @@ import { MenuItem } from 'primeng/api';
 import { AppComponent } from 'src/app/app.component';
 import { Subscription } from 'rxjs';
 import { AppState } from 'src/app/app-store/app.state';
-import { Store } from '@ngrx/store';
+import { select, Store } from '@ngrx/store';
 import { UiService } from 'src/app/service/ui.service';
 import {
   addProjectStart,
@@ -11,7 +11,7 @@ import {
   loadAllProjects,
 } from '../state/project.action';
 import { Project } from 'src/app/models/projects.models';
-import { getAllProjects } from '../state/project.selector';
+import { getAllProjects, isProjectLoaded } from '../state/project.selector';
 import { Observable } from 'rxjs';
 import { getLoading } from 'src/app/component/shared/state/Shared/shared.selector';
 import { Title } from '@angular/platform-browser';
@@ -53,10 +53,10 @@ export class DashboardComponent {
   configActive!: boolean;
   configClick!: boolean;
   subscription!: Subscription;
+  subscriptionIntial!: Subscription;
   public trackThickness: number;
   selectedItem!: any;
   ref: DynamicDialogRef;
-
   constructor(
     public renderer: Renderer2,
     public dialogService: DialogService,
@@ -84,19 +84,24 @@ export class DashboardComponent {
         }
       });
 
-    this.store.dispatch(loadAllProjects());
+    this.subscriptionIntial = this.store
+      .pipe(select(isProjectLoaded))
+      .subscribe((isProjectLoaded) => {
+        if (!isProjectLoaded) {
+          this.store.dispatch(loadAllProjects());
+        }
+        this.store.select(getAllProjects).subscribe({
+          next: (data) => {
+            this.totalprojects = data;
+            this.onPageChange({ first: this.first, rows: this.rows });
+          },
+          error: (error) => {
+            console.log('error', error);
+          },
+        });
+        this.showLoading$ = this.store.select(getLoading);
+      });
 
-    
-    this.store.select(getAllProjects).subscribe({
-      next: (data) => {
-        this.totalprojects = data;
-        this.onPageChange({ first: this.first, rows: this.rows });
-      },
-      error: (error) => {
-        console.log('error', error);
-      },
-    });
-    this.showLoading$ = this.store.select(getLoading);
     this.items = [
       {
         label: 'File',
@@ -261,6 +266,7 @@ export class DashboardComponent {
     if (this.subscription) {
       this.subscription.unsubscribe();
     }
+    this.subscriptionIntial.unsubscribe();
   }
 
   close() {
