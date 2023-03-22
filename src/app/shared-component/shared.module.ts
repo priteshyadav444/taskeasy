@@ -3,6 +3,7 @@ import { CreateProjectComponent } from '../shared-component/create-project/creat
 import { customMaterialModule} from '../custom-material.module'
 import { FormsModule } from "@angular/forms";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
+
 @NgModule({
   declarations: [ 
     CreateProjectComponent
