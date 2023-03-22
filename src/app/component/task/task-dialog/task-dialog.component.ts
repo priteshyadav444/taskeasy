@@ -15,8 +15,6 @@ export class TaskDialogComponent implements OnInit {
   @Input('data') data!: any;
   @Input('status') status!: Status[];
   subtaskele!: string;
-  selectedDate: any = new Date();
-  minimumDate: any = new Date();
 
   public badgeData: Object[] = [
     { code: 'low', badge: 'Low' },
@@ -27,7 +25,10 @@ export class TaskDialogComponent implements OnInit {
 
   constructor() {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.data.scheduled_date = new Date(this.data.scheduled_date);
+    this.data.createdAt = new Date(this.data.createdAt);
+  }
   newObjectId() {
     const timestamp = Math.floor(new Date().getTime() / 1000).toString(16);
     const objectId =

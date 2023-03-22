@@ -135,21 +135,20 @@
 <div class="p-fluid row p-0">
   <div class="col-10 p-0">
     <p-calendar
+      [(ngModel)]="data.createdAt"
       inputId="basic"
       [showIcon]="true"
       class="selectedDateCalender"
       [showButtonBar]="true"
-      [(ngModel)]="data.createdAt"
       name="startdate"
-      [minDate]="minimumDate"
       placeholder="Start Date"
     ></p-calendar>
     <p-calendar
+      [(ngModel)]="data.scheduled_date"
       inputId="basic"
       [showIcon]="true"
-      class="selectedDateCalender"
       [showButtonBar]="true"
-      [(ngModel)]="data.scheduled_date"
+      class="selectedDateCalender"
       name="duedate"
       placeholder="Due Date"
     ></p-calendar>
