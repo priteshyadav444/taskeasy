@@ -2,7 +2,7 @@ export interface Task {
   _id?: string;
   title: string;
   description?: string;
-  scheduled_date?: string;
+  scheduled_date?: string | Date;
   completedAt?: string;
   category?: string;
   completed?: boolean;
@@ -16,5 +16,5 @@ export interface Task {
   }[
    
   ];
-  createdAt?:string
+  createdAt?:string | Date
 }
