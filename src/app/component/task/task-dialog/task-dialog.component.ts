@@ -28,7 +28,7 @@ export class TaskDialogComponent implements OnInit, OnChanges {
     _id: undefined,
     title: undefined,
     description: undefined,
-    scheduled_date: undefined,
+    scheduled_date: new Date(),
     completedAt: undefined,
     category: undefined,
     completed: false,
@@ -36,7 +36,7 @@ export class TaskDialogComponent implements OnInit, OnChanges {
     badge: undefined,
     scheduled_type: undefined,
     subtasklist: [],
-    createdAt: undefined,
+    createdAt: new Date(),
   };
   @Input('status') status!: Status[];
   subtaskele!: string;
@@ -112,6 +112,5 @@ export class TaskDialogComponent implements OnInit, OnChanges {
     const pid = this.config?.data?.pid;
     this.store.dispatch(addTask({ task, pid: pid }));
   }
-
   ngOnChanges(changes: SimpleChanges): void {}
 }

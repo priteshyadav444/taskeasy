@@ -428,3 +428,8 @@ e-kanban {
   display: flex !important;
   flex-direction: column-reverse !important;
 }
+
+
+::ng-deep .ql-toolbar.ql-snow{
+  display :block;
+}
