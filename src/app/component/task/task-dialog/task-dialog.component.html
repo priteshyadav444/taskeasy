@@ -29,7 +29,7 @@
       required="true"
       class="e-field inputtext"
       placeholder="Enter Title"
-      value="{{ data.title }}"
+      [(ngModel)]="data.title"
     />
   </div>
   <hr class="m-0" />
@@ -132,8 +132,8 @@
   </div>
 </div>
 
-<div class="p-fluid row p-0">
-  <div class="col-10 p-0">
+<div class="p-fluid row p-0 mb-5">
+  <div class="col-12 p-0 flex">
     <p-calendar
       [(ngModel)]="data.createdAt"
       inputId="basic"
@@ -142,6 +142,7 @@
       [showButtonBar]="true"
       name="startdate"
       placeholder="Start Date"
+      [styleClass]="'col-12'"
     ></p-calendar>
     <p-calendar
       [(ngModel)]="data.scheduled_date"
@@ -151,6 +152,22 @@
       class="selectedDateCalender"
       name="duedate"
       placeholder="Due Date"
+      [styleClass]="'col-12'"
     ></p-calendar>
   </div>
+    <div class="e-footer-content" >
+      <button
+        class="e-kanban-dialog e-control e-btn e-lib e-flat e-dialog-add e-primary"
+        type="button" (click)="addNewTask()"
+      >
+        Save</button
+      ><button
+        class="e-kanban-dialog e-control e-btn e-lib e-flat e-dialog-cancel"
+        type="button" (click)="onCancel()"
+      >
+        Cancel
+      </button>
+    </div>
 </div>
+
+

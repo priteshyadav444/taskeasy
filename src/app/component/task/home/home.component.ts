@@ -23,12 +23,7 @@ import {
   updateTask,
 } from '../state/task.action';
 import { getTasks, isTaskLoaded } from '../state/task.selector';
-
-interface Status {
-  task_status: string;
-  code: string;
-}
-
+import  { Status } from 'src/app/shared-intefaces/Status'
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -63,7 +58,6 @@ export class HomeComponent implements OnInit {
   category!: MenuItem[];
   badge: Status;
   selectedCategory: any;
-  status: Status[];
   selectedStatus: Status;
   subTask: any = [];
   subtaskele!: string;
@@ -77,12 +71,6 @@ export class HomeComponent implements OnInit {
     private titleService: Title
   ) {
     this.data = this.service;
-    this.status = [
-      { task_status: 'Active', code: 'active' },
-      { task_status: 'Pending', code: 'pending' },
-      { task_status: 'Done', code: 'done' },
-      { task_status: 'Unsheduled', code: 'unsheduled' },
-    ];
 
     this.badgeData = [
       { code: 'low', badge: 'Low' },
@@ -244,7 +232,8 @@ export class HomeComponent implements OnInit {
   public fields: Object = { text: 'Name', value: 'Id' };
 
   ngOnInit(): void {
-    this.titleService.setTitle(`TaskEasy.in`);
+    this.titleService.setTitle(`${this.projecttitle} - TaskEasy.in`);
+
     let state = { skip: 0, take: 10 };
 
     this.pid = this.route.snapshot.paramMap.get('id');

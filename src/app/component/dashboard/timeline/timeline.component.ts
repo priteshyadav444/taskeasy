@@ -5,6 +5,9 @@ import {
   MonthService,
   AgendaService,
   EventSettingsModel,
+  CellClickEventArgs,
+  ActionEventArgs,
+  PopupOpenEventArgs,
 } from '@syncfusion/ej2-angular-schedule';
 import { DataManager, ODataV4Adaptor, Query } from '@syncfusion/ej2-data';
 import { AppState } from 'src/app/app-store/app.state';
@@ -20,7 +23,7 @@ import { getAllPendingTasks } from '../state/project.selector';
 })
 export class TimelineComponent implements OnInit {
   public selectedDate: Date = new Date();
-  public readonly: boolean = true;
+  public readonly: boolean = false;
   public eventSettings: EventSettingsModel;
   public pendingtasks:any[] = []
   public url:any = "https://api-taskeasy.onrender.com/v1/tasks/calender/all"
@@ -62,5 +65,14 @@ export class TimelineComponent implements OnInit {
       enableIndicator:true,
   };
   }
+
+  onClick(event: CellClickEventArgs) {
+  }
+
+    onPopupOpen(args: PopupOpenEventArgs): void {
+        if (args.type === 'Editor' || args.type === 'QuickInfo')  {
+            args.cancel = true;
+        }
+    }
   
 }

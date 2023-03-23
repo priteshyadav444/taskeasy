@@ -20,7 +20,7 @@ export class UiService {
     this.dialogRef.close();
   }
 
-  toggleAddProject(ref: DynamicDialogRef): void {
+  toggleDialog(ref: DynamicDialogRef): void {
     this.dialogRef = ref;
   }
   onToggle(): Observable<any> {

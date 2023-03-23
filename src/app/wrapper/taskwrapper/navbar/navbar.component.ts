@@ -10,6 +10,8 @@ import { getSelectdProjectDetails } from 'src/app/component/task/state/task.sele
 import { Project } from 'src/app/models/projects.models';
 import { TasksCardService } from 'src/app/service/task/taskcard.service';
 import { Title } from '@angular/platform-browser';
+import { DialogServiceService } from 'src/app/shared-component/dialog-services/dialog-service.service';
+import { TaskDialogComponent } from 'src/app/component/task/task-dialog/task-dialog.component';
 
 @Component({
   selector: 'app-navbar',
@@ -31,7 +33,8 @@ export class NavbarComponent implements OnInit, OnDestroy {
     private uiService: UiService,
     private route: ActivatedRoute,
     private service: TasksCardService,
-    private titleService: Title
+    private titleService: Title,
+    private dialogServiceService: DialogServiceService
 
   ) {
     this.service.pid.subscribe((log) => {
@@ -67,7 +70,8 @@ export class NavbarComponent implements OnInit, OnDestroy {
   }
 
   addTask() {
-    this.uiService.toggleAddTask();
+    // this.uiServic  e.toggleAddTask();
+    this.dialogServiceService.showDialog(TaskDialogComponent, {pid: this.pid})
   }
 
   ngOnDestroy() {

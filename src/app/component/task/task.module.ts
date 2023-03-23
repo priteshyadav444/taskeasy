@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { EffectsModule } from '@ngrx/effects';
-import { StoreModule } from '@ngrx/store';
+import { StoreModule,  } from '@ngrx/store';
 import { HomeComponent } from './home/home.component';
 import { TaskEffects } from './state/task.effects';
 import { tasksReducer } from './state/task.reducers';
@@ -45,6 +45,7 @@ import { TaskDialogComponent } from './task-dialog/task-dialog.component';
 import { TaskCardComponent } from './task-card/task-card.component';
 import {AvatarModule} from 'primeng/avatar';
 import {AvatarGroupModule} from 'primeng/avatargroup';
+import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 
 const routes: Routes = [
   {
@@ -104,8 +105,8 @@ const routes: Routes = [
     AvatarGroupModule,
     RouterModule.forChild(routes),
     StoreModule.forFeature('tasks', tasksReducer),
-    EffectsModule.forFeature([TaskEffects]),
+    EffectsModule.forFeature([TaskEffects])
   ],
-  providers: [HomeComponent]
+  providers: [HomeComponent,DynamicDialogRef,DynamicDialogConfig]
 })
 export class TaskModule {}
