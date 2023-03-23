@@ -167,7 +167,7 @@ export class DashboardComponent {
   }
 
   addProject() {
-    // this.uiService.toggleAddProject();
+    // this.uiService.toggleDialog();
     this.showDynamicDialog();
   }
   toggleMenu(event: Event) {
@@ -231,7 +231,7 @@ export class DashboardComponent {
       baseZIndex: 10000,
       data: { ...selectedItem, type: type ? 'edit' : 'add' },
     });
-    this.uiService.toggleAddProject(this.ref);
+    this.uiService.toggleDialog(this.ref);
     this.ref.onClose.subscribe((product: any) => {
       if (product) {
       }
@@ -270,7 +270,7 @@ export class DashboardComponent {
   }
 
   close() {
-    this.uiService.toggleAddProject(this.ref);
+    this.uiService.toggleDialog(this.ref);
   }
 
   cardClick(event, selectedItem, cardOption) {

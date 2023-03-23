@@ -11,6 +11,7 @@ import { DynamicDialogConfig } from 'primeng/dynamicdialog';
 import { AppState } from 'src/app/app-store/app.state';
 import { Task } from 'src/app/models/task.models';
 import { TasksService } from 'src/app/service/task/task.services';
+import { UiService } from 'src/app/service/ui.service';
 import { addTask } from '../state/task.action';
 interface Status {
   task_status: string;
@@ -51,7 +52,8 @@ export class TaskDialogComponent implements OnInit, OnChanges {
   constructor(
     public config: DynamicDialogConfig,
     private tasksService: TasksService,
-    private store: Store<AppState>
+    private store: Store<AppState>,
+    private uiService: UiService
   ) {}
 
   ngOnInit(): void {
@@ -111,6 +113,11 @@ export class TaskDialogComponent implements OnInit, OnChanges {
     const task = this.data;
     const pid = this.config?.data?.pid;
     this.store.dispatch(addTask({ task, pid: pid }));
+    this.uiService.closeDialog();
+  }
+
+  onCancel() {
+    this.uiService.closeDialog();
   }
   ngOnChanges(changes: SimpleChanges): void {}
 }
