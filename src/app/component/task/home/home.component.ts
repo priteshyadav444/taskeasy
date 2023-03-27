@@ -22,8 +22,12 @@ import {
   resetTasks,
   updateTask,
 } from '../state/task.action';
-import { getTasks, isTaskLoaded } from '../state/task.selector';
-import  { Status } from 'src/app/shared-intefaces/Status'
+import {
+  getSelectdProjectDetails,
+  getTasks,
+  isTaskLoaded,
+} from '../state/task.selector';
+import { Status } from 'src/app/shared-intefaces/Status';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -65,6 +69,7 @@ export class HomeComponent implements OnInit {
   projecttitle: any;
   private subscription: Subscription;
   private getTaskSubscription: Subscription;
+  private titleSubscription: Subscription;
   constructor(
     private store: Store<AppState>,
     private service: TasksCardService,
@@ -86,9 +91,6 @@ export class HomeComponent implements OnInit {
 
   public dataSourceChanged(state: DataSourceChangedEventArgs): void {
     if (state.requestType === 'cardCreated') {
-      // if (this.selectedCategory == undefined) {
-      //   this.selectedCategory = 'low';
-      // }
       const task: Task = {
         title: '',
         scheduled_date: '',
@@ -234,12 +236,11 @@ export class HomeComponent implements OnInit {
   public fields: Object = { text: 'Name', value: 'Id' };
 
   ngOnInit(): void {
-    this.titleService.setTitle(`${this.projecttitle} - TaskEasy.in`);
-
     let state = { skip: 0, take: 10 };
 
     this.pid = this.route.snapshot.paramMap.get('id');
     this.service.activateRouter$.next(this.pid);
+
     this.subscription = this.store
       .pipe(select(isTaskLoaded))
       .subscribe((isTaskLoaded) => {
@@ -247,7 +248,9 @@ export class HomeComponent implements OnInit {
         if (!isTaskLoaded) {
           this.store.dispatch(loadAllData({ pid: this.pid }));
         } else {
+          // it will reset task state if project is diffrent
           this.store.dispatch(resetTasks({ projectId: this.pid }));
+
           this.getTaskSubscription = this.store
             .select(getTasks)
             .pipe(
@@ -260,6 +263,16 @@ export class HomeComponent implements OnInit {
             )
             .subscribe((data) => {
               this.data = data;
+              this.titleSubscription = this.store
+                .select(getSelectdProjectDetails)
+                .pipe()
+                .subscribe((selectedProject) => {
+                  if (selectedProject) {
+                    this.titleService.setTitle(
+                      `${selectedProject.project_title} - TaskEasy.in`
+                    );
+                  }
+                });
             });
         }
       });
@@ -273,6 +286,7 @@ export class HomeComponent implements OnInit {
   ngOnDestroy() {
     this.subscription.unsubscribe();
     this.getTaskSubscription.unsubscribe();
+    this.titleSubscription.unsubscribe();
   }
 
   // showBasicDialog() {
@@ -297,6 +311,6 @@ export class HomeComponent implements OnInit {
   //   }
   // }
   // onChange(item: any) {
-    //console.log("item",item)
+  //console.log("item",item)
   // }
 }
