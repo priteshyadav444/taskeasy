@@ -131,13 +131,13 @@
     </div>
   </div>
 </div>
-
 <div class="p-fluid row p-0 mb-5">
   <div class="col-12 p-0 flex">
     <p-calendar
       [(ngModel)]="data.createdAt"
       inputId="basic"
       [showIcon]="true"
+      dateFormat="dd/mm/yy"
       class="selectedDateCalender"
       [showButtonBar]="true"
       name="startdate"
@@ -147,6 +147,7 @@
     <p-calendar
       [(ngModel)]="data.scheduled_date"
       inputId="basic"
+      dateFormat="dd/mm/yy"
       [showIcon]="true"
       [showButtonBar]="true"
       class="selectedDateCalender"

@@ -29,7 +29,7 @@ export class TaskDialogComponent implements OnInit, OnChanges {
     _id: undefined,
     title: undefined,
     description: undefined,
-    scheduled_date: new Date(),
+    scheduled_date: null,
     completedAt: undefined,
     category: undefined,
     completed: false,
@@ -37,7 +37,7 @@ export class TaskDialogComponent implements OnInit, OnChanges {
     badge: undefined,
     scheduled_type: undefined,
     subtasklist: [],
-    createdAt: new Date(),
+    createdAt: null,
   };
   @Input('status') status!: Status[];
   subtaskele!: string;
@@ -47,11 +47,11 @@ export class TaskDialogComponent implements OnInit, OnChanges {
     { code: 'medium', badge: 'Medium' },
     { code: 'high', badge: 'High' },
   ];
+
   subTask: any = [];
 
   constructor(
     public config: DynamicDialogConfig,
-    private tasksService: TasksService,
     private store: Store<AppState>,
     private uiService: UiService
   ) {}
@@ -64,7 +64,6 @@ export class TaskDialogComponent implements OnInit, OnChanges {
       { task_status: 'Unsheduled', code: 'unsheduled' },
     ];
     if (!this.data?.task_status) {
-      this.data['task_status'] = this.status[3]?.task_status;
       this.status = [
         { task_status: 'Active', code: 'active' },
         { task_status: 'Pending', code: 'pending' },
@@ -75,9 +74,23 @@ export class TaskDialogComponent implements OnInit, OnChanges {
     this.data['subtasklist'] = this.data?.subtasklist?.length
       ? this.data.subtasklist
       : [];
-    this.data.scheduled_date = new Date(this.data.scheduled_date);
-    this.data.createdAt = new Date(this.data.createdAt);
+    console.log(this.data);
+
+    if (
+      this.data.scheduled_date != null &&
+      this.data.scheduled_date != '' &&
+      this.data.scheduled_date != undefined
+    )
+      this.data.scheduled_date = new Date(this.data.scheduled_date);
+
+    if (
+      this.data.createdAt != null &&
+      this.data.createdAt != '' &&
+      this.data.createdAt != undefined
+    )
+      this.data.createdAt = new Date(this.data.createdAt);
   }
+  // Generates a new Object Id to create a tasks.
   newObjectId() {
     const timestamp = Math.floor(new Date().getTime() / 1000).toString(16);
     const objectId =
@@ -90,6 +103,7 @@ export class TaskDialogComponent implements OnInit, OnChanges {
 
     return objectId;
   }
+  // Function add a Subtask directly inside input data
   addSubTask(stask: any) {
     if (stask == '' || stask == null) {
       return;
@@ -103,14 +117,30 @@ export class TaskDialogComponent implements OnInit, OnChanges {
       this.subtaskele = '';
     }
   }
+  // removes a subtasks
   removeSubTask(subtaskId) {
     this.data.subtasklist = this.data.subtasklist.filter(
       (subTask) => subtaskId != subTask._id
     );
   }
-
+  // add a new Task by calling addTask action
   addNewTask() {
+    // if badge and staus not provided set default values as (low and unseduled)
+    if (
+      this.data.badge != null ||
+      this.data.badge != '' ||
+      this.data.badge != undefined
+    )
+      this.data.badge = 'low';
+    if (
+      this.data.task_status != null ||
+      this.data.task_status != '' ||
+      this.data.task_status != undefined
+    )
+      this.data.task_status = 'unsheduled';
+
     const task = this.data;
+    console.log(this.data);
     const pid = this.config?.data?.pid;
     this.store.dispatch(addTask({ task, pid: pid }));
     this.uiService.closeDialog();
