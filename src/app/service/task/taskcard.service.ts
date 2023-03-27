@@ -78,30 +78,30 @@ export class TasksCardService extends Subject<DataStateChangeEventArgs> {
   }
 
   /** POST: add a new record  to the server */
-  addCard(state: DataSourceChangedEventArgs, pid: string): Observable<Task> {
-    return this.http.post<any>(this.BASE_URL, state.addedRecords[0], {
-      headers: this.reqHeader,
-    });
-  }
+  // addCard(state: DataSourceChangedEventArgs, pid: string): Observable<Task> {
+  //   return this.http.post<any>(this.BASE_URL, state.addedRecords[0], {
+  //     headers: this.reqHeader,
+  //   });
+  // }
 
   /** DELETE: delete the record from the server */
-  deleteCard(state: any, pid: string): Observable<any> {
-    const id = state.deletedRecords[0]._id;
-    const url = `${this.BASE_URL}/${pid}/${id}`;
-    return this.http.delete<any>(url, {
-      headers: this.reqHeader,
-    });
-  }
+  // deleteCard(state: any, pid: string): Observable<any> {
+  //   const id = state.deletedRecords[0]._id;
+  //   const url = `${this.BASE_URL}/${pid}/${id}`;
+  //   return this.http.delete<any>(url, {
+  //     headers: this.reqHeader,
+  //   });
+  // }
 
   /** PUT: update the record on the server */
-  updateCard(state: DataSourceChangedEventArgs, pid: string): Observable<any> {
-    //console.log(state.changedRecords[0]);
-    return this.http.put(
-      `${this.BASE_URL}/update/${pid}`,
-      state.changedRecords[0],
-      {
-        headers: this.reqHeader,
-      }
-    );
-  }
+  // updateCard(state: DataSourceChangedEventArgs, pid: string): Observable<any> {
+  //   //console.log(state.changedRecords[0]);
+  //   return this.http.put(
+  //     `${this.BASE_URL}/update/${pid}`,
+  //     state.changedRecords[0],
+  //     {
+  //       headers: this.reqHeader,
+  //     }
+  //   );
+  // }
 }

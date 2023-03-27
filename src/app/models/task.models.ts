@@ -9,12 +9,10 @@ export interface Task {
   task_status?: string;
   badge?: string;
   scheduled_type?: string;
-  subtasklist:  {
+  subtasklist: {
     stitle?: string;
     checked?: boolean;
     _id?: string;
-  }[
-   
-  ];
-  createdAt?:string | Date
+  }[];
+  createdAt?: string | Date;
 }

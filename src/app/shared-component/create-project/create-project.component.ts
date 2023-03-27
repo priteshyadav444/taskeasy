@@ -51,12 +51,12 @@ export class CreateProjectComponent implements OnInit {
   onSubmit() {
     const title = this.projectForm.controls['project_title'].value;
     const deadline = this.projectForm.controls['project_deadline'].value;
-    if (title == '' || title == null) {
-      return alert('Enter Title');
-    }
-    if (deadline == '' || deadline == null) {
-      return alert('Select Deadline');
-    }
+    // if (title == '' || title == null) {
+    //   return alert('Enter Title');
+    // }
+    // if (deadline == '' || deadline == null) {
+    //   return alert('Select Deadline');
+    // }
     
     const project: Project = this.projectForm?.value;
     if (project?._id) {

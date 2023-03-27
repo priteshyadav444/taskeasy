@@ -30,10 +30,8 @@ export class NavbarComponent implements OnInit, OnDestroy {
   constructor(
     private store: Store<TaskState>,
     public appMain: MainwrapperComponent,
-    private uiService: UiService,
     private route: ActivatedRoute,
     private service: TasksCardService,
-    private titleService: Title,
     private dialogServiceService: DialogServiceService
 
   ) {

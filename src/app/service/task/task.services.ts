@@ -31,26 +31,6 @@ export class TasksService {
     });
   }
 
-  // addTask(task: Task, pid: string): Observable<Task> {
-  //   return this.http.post<Task>(`${this.BASE_URL}/${pid}`, task, {
-  //     headers: this.reqHeader,
-  //   });
-  // }
-
-  // get Data from store
-  // getAll(pid: string): Observable<TaskState> {
-  //   return this.store.pipe(
-  //     select(getAllProjects),
-  //     map(projects => projects.filter(project => project._id === pid)),
-  //     map(filteredProjects => {
-  //       const projectData = filteredProjects[0];
-  //       const tasks: any[] = projectData.tasks;
-  //       const projectDetails: Project = { ...projectData };
-  //       return { tasks, projectDetails };
-  //     })
-  //   )
-  // }
-
   getAll(pid: string): Observable<TaskState> {
     return this.http
       .get<TaskState>(`${this.apiUrl}/${pid}`, {
@@ -87,8 +67,4 @@ export class TasksService {
   showMessage(data: any) {
     this.messageService.add(data);
   }
-
-  
-
-
 }

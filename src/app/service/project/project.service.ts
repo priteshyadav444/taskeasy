@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { Observable, map } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Project } from 'src/app/models/projects.models';
-import { getToken } from 'src/app/component/auth/state/auth.selector';
 import { AppState } from 'src/app/app-store/app.state';
 import { Store } from '@ngrx/store';
 
