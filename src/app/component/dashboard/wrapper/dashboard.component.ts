@@ -46,7 +46,6 @@ export class DashboardComponent {
   public topMenuActive!: boolean;
   public topMenuLeaving!: boolean;
   public theme!: string;
-
   documentClickListener!: () => void;
 
   menuClick!: boolean;
@@ -74,16 +73,6 @@ export class DashboardComponent {
 
   ngOnInit() {
     this.trackThickness = 80;
-    this.store
-      .select(getLoading)
-      .pipe()
-      .forEach((value) => {
-        if (value == true) {
-          this.titleService.setTitle('loading...');
-        } else {
-          this.titleService.setTitle('TaskEasy.in');
-        }
-      });
 
     this.subscriptionIntial = this.store
       .pipe(select(isProjectLoaded))
@@ -134,7 +123,17 @@ export class DashboardComponent {
   }
 
   ngAfterViewInit() {
-    // hides the overlay menu and top menu if outside is clicked
+    this.store
+      .select(getLoading)
+      .pipe()
+      .forEach((value) => {
+        if (value == true) {
+          this.titleService.setTitle('loading...');
+        } else {
+          this.titleService.setTitle('TaskEasy.in');
+        }
+      });
+    // Hides the Overlay menu and top menu if outside is clicked
     this.documentClickListener = this.renderer.listen(
       'body',
       'click',
@@ -174,7 +173,6 @@ export class DashboardComponent {
   }
 
   addProject() {
-    // this.uiService.toggleDialog();
     this.showDynamicDialog();
   }
   toggleMenu(event: Event) {
@@ -234,7 +232,7 @@ export class DashboardComponent {
     this.ref = this.dialogService.open(CreateProjectComponent, {
       header: header,
       width: '25%',
-      contentStyle: { 'max-height': '30%', overflow: 'auto' },
+      contentStyle: { 'max-heighte': '30%', overflow: 'auto' },
       baseZIndex: 10000,
       data: { ...selectedItem, type: type ? 'edit' : 'add' },
     });

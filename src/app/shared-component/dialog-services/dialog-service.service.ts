@@ -13,7 +13,7 @@ export class DialogServiceService {
 
   showDialog(component:any, configData?:any) {
     const data =  {
-      header: 'Add new Card',
+      header: 'Add Task',
       width: '70%',
       data: configData,
     }

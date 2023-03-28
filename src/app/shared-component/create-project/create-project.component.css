@@ -1,13 +1,13 @@
 .inputtext {
-    border: none;
-    width: 100%;
-    display: block;
-    outline: none;
-    font-size: 1rem;
-    padding: 0.75rem 0.75rem;
+  width: 100%;
+  display: block;
+  font-size: 1rem;
+  padding: 0.75rem 0.75rem;
+  outline: 0;
+  border-width: 0 0 2px;
+  border-color: red;
+  margin-bottom: 4px;
 }
-
 .inputtext:focus {
-    outline: none;
-    border: none;
+  outline: 0 0 1px solid green;
 }

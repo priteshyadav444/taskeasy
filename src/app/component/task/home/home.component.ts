@@ -22,8 +22,12 @@ import {
   resetTasks,
   updateTask,
 } from '../state/task.action';
-import { getTasks, isTaskLoaded } from '../state/task.selector';
-import  { Status } from 'src/app/shared-intefaces/Status'
+import {
+  getSelectdProjectDetails,
+  getTasks,
+  isTaskLoaded,
+} from '../state/task.selector';
+import { Status } from 'src/app/shared-intefaces/Status';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -64,6 +68,8 @@ export class HomeComponent implements OnInit {
   @Output() messageEvent = new EventEmitter<string>();
   projecttitle: any;
   private subscription: Subscription;
+  private getTaskSubscription: Subscription;
+  private titleSubscription: Subscription;
   constructor(
     private store: Store<AppState>,
     private service: TasksCardService,
@@ -85,14 +91,12 @@ export class HomeComponent implements OnInit {
 
   public dataSourceChanged(state: DataSourceChangedEventArgs): void {
     if (state.requestType === 'cardCreated') {
-      // if (this.selectedCategory == undefined) {
-      //   this.selectedCategory = 'low';
-      // }
       const task: Task = {
         title: '',
         scheduled_date: '',
         category: '',
         description: '',
+        badge:'low',
         subtasklist: this.subTask,
         ...state.addedRecords[0],
       };
@@ -205,12 +209,12 @@ export class HomeComponent implements OnInit {
     direction: 'Descending',
   };
 
-  public priorityData: Object[] = [
-    { Id: 'active', Name: 'Active' },
-    { Id: 'done', Name: 'Done' },
-    { Id: 'pending', Name: 'Pending' },
-    { Id: 'unsheduled', Name: 'Unsheduled' },
-  ];
+  // public priorityData: Object[] = [
+  //   { Id: 'active', Name: 'Active' },
+  //   { Id: 'done', Name: 'Done' },
+  //   { Id: 'pending', Name: 'Pending' },
+  //   { Id: 'unsheduled', Name: 'Unsheduled' },
+  // ];
 
   public badgeData: Object[] = [
     { Id: 'low', Name: 'Low' },
@@ -229,15 +233,15 @@ export class HomeComponent implements OnInit {
     this.service.execute({});
     this.subtaskele = '';
   }
+
   public fields: Object = { text: 'Name', value: 'Id' };
 
   ngOnInit(): void {
-    this.titleService.setTitle(`${this.projecttitle} - TaskEasy.in`);
-
     let state = { skip: 0, take: 10 };
 
     this.pid = this.route.snapshot.paramMap.get('id');
     this.service.activateRouter$.next(this.pid);
+
     this.subscription = this.store
       .pipe(select(isTaskLoaded))
       .subscribe((isTaskLoaded) => {
@@ -245,8 +249,10 @@ export class HomeComponent implements OnInit {
         if (!isTaskLoaded) {
           this.store.dispatch(loadAllData({ pid: this.pid }));
         } else {
+          // it will reset task state if project is diffrent
           this.store.dispatch(resetTasks({ projectId: this.pid }));
-          this.store
+
+          this.getTaskSubscription = this.store
             .select(getTasks)
             .pipe(
               map(
@@ -258,6 +264,16 @@ export class HomeComponent implements OnInit {
             )
             .subscribe((data) => {
               this.data = data;
+              this.titleSubscription = this.store
+                .select(getSelectdProjectDetails)
+                .pipe()
+                .subscribe((selectedProject) => {
+                  if (selectedProject) {
+                    this.titleService.setTitle(
+                      `${selectedProject.project_title} - TaskEasy.in`
+                    );
+                  }
+                });
             });
         }
       });
@@ -270,30 +286,32 @@ export class HomeComponent implements OnInit {
 
   ngOnDestroy() {
     this.subscription.unsubscribe();
+    this.getTaskSubscription.unsubscribe();
+    this.titleSubscription.unsubscribe();
   }
 
-  showBasicDialog() {
-    this.displayBasic = true;
-  }
+  // showBasicDialog() {
+  //   this.displayBasic = true;
+  // }
 
-  showCreateDialog() {
-    this.displayCategory = true;
-  }
+  // showCreateDialog() {
+  //   this.displayCategory = true;
+  // }
 
-  save(severity: string) {
-    this.displayCategory = true;
-  }
+  // save(severity: string) {
+  //   this.displayCategory = true;
+  // }
 
-  addSubTask(data: any, stask: any) {
-    if (stask == '' || stask == null) {
-      return;
-    } else {
-      const newstask = { stitle: stask, checked: false };
-      this.subTask = [...this.subTask, newstask];
-      this.subtaskele = '';
-    }
-  }
-  onChange(item: any) {
-    //console.log("item",item)
-  }
+  // addSubTask(data: any, stask: any) {
+  //   if (stask == '' || stask == null) {
+  //     return;
+  //   } else {
+  //     const newstask = { stitle: stask, checked: false };
+  //     this.subTask = [...this.subTask, newstask];
+  //     this.subtaskele = '';
+  //   }
+  // }
+  // onChange(item: any) {
+  //console.log("item",item)
+  // }
 }

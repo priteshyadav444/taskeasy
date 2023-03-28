@@ -21,7 +21,17 @@ export const getAllPendingTasks = createSelector(getProjectsState, (state) => {
   if (result) {
     for (let key in result) {
       let project = result[key];
-      const theme_colour = project.theme_colour;
+      let theme_colour = '';
+      if (
+        project.theme_colour == '' ||
+        project.theme_colour == undefined ||
+        project.theme_colour == null
+      ) {
+        // deafault theme_colour
+        theme_colour = '#8F43EE';
+      } else {
+        theme_colour = project.theme_colour;
+      }
       let updatedtasks = project.tasks?.filter(
         (data) =>
           data.task_status == 'unsheduled' || data.task_status == 'pending'

@@ -29,7 +29,6 @@ const _projectReducer = createReducer(
     const filtertedData = state.projects.filter((project) => {
       return project._id != action.pid;
     });
-    console.log(filtertedData);
     return {
       ...state,
       projects: state.projects.filter((project) => {

@@ -21,6 +21,7 @@ export class CreateProjectComponent implements OnInit {
   minimumDate: any = new Date();
   projectForm!: FormGroup;
   minDate: Date = new Date();
+  isStartedDateCalenderDisable:boolean = false
   constructor(
     public config: DynamicDialogConfig,
     private store: Store<AppState>,
@@ -30,6 +31,9 @@ export class CreateProjectComponent implements OnInit {
 
   ngOnInit(): void {
     const data = this.config?.data;
+    if(data.project_start){
+      this.isStartedDateCalenderDisable = true;
+    }
     this.initForm(data);
   }
 
@@ -51,6 +55,7 @@ export class CreateProjectComponent implements OnInit {
   onSubmit() {
     const title = this.projectForm.controls['project_title'].value;
     const deadline = this.projectForm.controls['project_deadline'].value;
+    // title Validation will be removed after Server Side Error handling and Toast Config
     if (title == '' || title == null) {
       return alert('Enter Title');
     }
@@ -71,7 +76,6 @@ export class CreateProjectComponent implements OnInit {
   }
 
   get projectData() {
-    console.log(this.projectForm.value);
     return this.projectForm.value;
   }
 }

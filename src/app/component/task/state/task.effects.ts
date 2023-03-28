@@ -6,12 +6,9 @@ import { AppState } from 'src/app/app-store/app.state';
 import { Project } from 'src/app/models/projects.models';
 import { Task } from 'src/app/models/task.models';
 import { TasksService } from 'src/app/service/task/task.services';
-import { TasksCardService } from 'src/app/service/task/taskcard.service';
 import { resetProjectState } from '../../dashboard/state/project.action';
 import {
-  setErrorMessage,
   setLoadingSpinner,
-  setTaskLoaded,
 } from '../../shared/state/Shared/shared.actions';
 import { HomeComponent } from '../home/home.component';
 import {
@@ -21,18 +18,15 @@ import {
   deleteTaskSuccess,
   loadAllData,
   loadDataSuccess,
-  taskPreloaded,
   updateTask,
   updateTaskSuccess,
 } from './task.action';
-import { getTasks, isTaskLoaded } from './task.selector';
 
 @Injectable()
 export class TaskEffects {
   constructor(
     private actions$: Actions,
     private taskServices: TasksService,
-    private service: TasksCardService,
     private home: HomeComponent,
     private store: Store<AppState>
   ) {}
