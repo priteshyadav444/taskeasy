@@ -41,7 +41,7 @@
   <div class="layout-main-container">
     <div class="grid">
       <div class="col-12">
-        <div class="card">
+        <div class="">
           <div class="flex card-container blue-container overflow-hidden">
             <div
               class="flex-none flex align-items-center justify-content-center font-bold m-1 px-5"
@@ -63,126 +63,122 @@
             </div>
           </div>
 
-          <div class="flex align-items-center flex-column sm:flex-row mt-1">
-            <div class="flex-row overflow-hidden" *ngFor="let item of projects">
-              <p-card
-                [routerLink]="['/home', item._id, 'board']"
-                class="ui-grid ui-grid-col-12 ui-grid-responsive"
-                [style]="{
-                  'min-width': '16rem',
-                  'max-width': '16rem',
-                  height: '16rem',
-                  'margin-left': '1em',
-                  'margin-bottom': '0.5rem',
-                  padding: '2px',
-                  color: '#fff',
-                  background: item.theme_colour
-                }"
-              >
-                <ng-template pTemplate="header">
-                  <div class="d-flex justify-content-space-between">
-                    <h3 class="">{{ item.project_title }}</h3>
-                    <div (click)="cardClick($event, item, cardOption)">
+          <div class="grid">
+            <p-card
+              [style]=""
+              styleClass="customize-card shadow-2 p-4"
+              class="col-12 md:col-4 lg:col-3 sm:col-6"
+              *ngFor="let item of projects"
+            >
+              <ng-template pTemplate="header">
+                <div class="flex flex-row card-header">
+                  <h4 class="card-header-width">{{ item.project_title }}</h4>
+                  <span class="my-auto text-4xl display-icon">
+                    <i class="pi icon-size" [ngClass]="true ? 'pi-angle-right': 'pi-angle-down' "></i>
+                  </span>
+                </div>
+                <p-chip styleClass="border-radius" label="ONGOING"></p-chip>
+              </ng-template>
+              <div class="py-2">
+                <div class="py-2">
+                  <span class="pr-2">
+                    <b>
                       <i
-                        class="pi pi-ellipsis-v"
-                        style="font-size: 1rem"
-                        #cardOption
+                        class="pi pi-user font-size"
+                        style="font-size: 2rem"
                       ></i>
-                    </div>
-                  </div>
-                </ng-template>
-                <ng-template pTemplate="body">
-                  <div class="flex align-items-center flex-wrap">
-                    <div
-                      class="flex align-items-center justify-content-center mr-2"
-                    >
-                      <i
-                        class="pi pi-tag pi-tag"
-                        style="font-size: 1rem; color: #fff"
-                      ></i>
-                      &nbsp; Tag
-                    </div>
-                  </div>
-                </ng-template>
-
-                <ng-template pTemplate="footer" style="padding: 0">
-                  <div class="flex align-items-center flex-wrap">
-                    <div
-                      class="flex align-items-center justify-content-center mr-2"
-                    >
-                      <i class="pi pi-list" style="font-size: 1.3rem">
-                        {{ item.total_completed_tasks }}/{{ item.total_tasks }}
-                      </i>
-                    </div>
-
-                    <div class="single-chart">
-                      <svg
-                        viewBox="0 0 36 36"
-                        class="circular-chart {{
-                          getColor(item.total_completed_tasks, item.total_tasks)
-                        }}"
-                      >
-                        <path
-                          class="circle-bg"
-                          d="M18 2.0845
-                                  a 15.9155 15.9155 0 0 1 0 31.831
-                                  a 15.9155 15.9155 0 0 1 0 -31.831"
-                        />
-                        <path
-                          class="circle"
-                          style.stroke-dasharray=" {{
-                            calculatePercentage(
-                              item.total_completed_tasks,
-                              item.total_tasks
-                            )
-                          }},100"
-                          d="M18 2.0845
-                                  a 15.9155 15.9155 0 0 1 0 31.831
-                                  a 15.9155 15.9155 0 0 1 0 -31.831"
-                        />
-                        <text x="18" y="20.35" class="percentage">
-                          {{
-                            calculatePercentage(
-                              item.total_completed_tasks,
-                              item.total_tasks
-                            )
-                          }}%
-                        </text>
-                      </svg>
-                    </div>
-                  </div>
-                </ng-template>
-              </p-card>
-              <p-overlayPanel #op [dismissable]="true" [showCloseIcon]="true">
-                <ng-template pTemplate>
-                  <button
-                    pButton
-                    type="button"
-                    label="Delete"
-                    (click)="onClick('delete')"
-                    icon="pi pi-trash"
-                    class="p-button-text"
-                    class="p-button-info p-button-text"
-                  ></button
-                  ><br />
-                  <button
-                    pButton
-                    type="button"
-                    label="Edit"
-                    (click)="onClick('edit')"
-                    icon="pi pi-pencil"
-                    class="p-button-text"
-                    class="p-button-info p-button-text"
-                  ></button>
-                </ng-template>
-              </p-overlayPanel>
-            </div>
+                    </b>
+                  </span>
+                  <b>Client:</b> "Pritesh Yadav"
+                </div>
+              </div>
+              <div>
+                <div
+                  class="flex justify-content-between flex-wrap card-container purple-container py-1"
+                >
+                  <div>Progress</div>
+                  <div>{{item?.progress_data?.progress_percent}}%</div>
+                </div>
+                <p-progressBar
+                  [value]="item?.progress_data?.progress_percent"
+                  [style]="{ height: '4px'}"
+                  [showValue]="false"
+                ></p-progressBar>
+              </div>
+              <div class="mt-3">
+                <p class="py-1 mb-0 fw-bold fs--1">
+                  <span class="font-bold" >
+                    Started at :
+                  </span><span class="fw-semi-bold text-600 ms-1">
+                    {{ item?.createdAt | date }}</span
+                  >
+                </p>
+                <p class="py-1 mb-0 fw-bold fs--1">
+                  <span class="font-bold">
+                    Deadline :
+                  </span>
+                  <span class="fw-semi-bold text-600 ms-1">
+                    {{ item?.project_deadline | date }}</span
+                  >
+                </p>
+              </div>
+              <ng-template pTemplate="footer">
+                <p-avatarGroup styleClass="mb-3">
+                  <p-avatar
+                    image="https://e7.pngegg.com/pngimages/799/987/png-clipart-computer-icons-avatar-icon-design-avatar-heroes-computer-wallpaper-thumbnail.png"
+                    size="large"
+                    shape="circle"
+                  ></p-avatar>
+                  <p-avatar
+                    image="https://e7.pngegg.com/pngimages/799/987/png-clipart-computer-icons-avatar-icon-design-avatar-heroes-computer-wallpaper-thumbnail.png"
+                    size="large"
+                    shape="circle"
+                  ></p-avatar>
+                  <p-avatar
+                    label="+2"
+                    shape="circle"
+                    size="large"
+                    [style]="{
+                      'background-color': '#9c27b0',
+                      color: '#ffffff'
+                    }"
+                  ></p-avatar>
+                </p-avatarGroup>
+                <span class="project-info">
+                  <i class="pi pi-list list-icon"></i>
+                  {{item?.total_tasks}} Task
+                </span>
+              </ng-template>
+            </p-card>
           </div>
-
-          <div class="flex align-items-center mt-5" style="height: 110%">
-            <app-timeline></app-timeline>
-          </div>
+          <p-overlayPanel #op [dismissable]="true" [showCloseIcon]="true">
+            <ng-template pTemplate>
+              <button
+                pButton
+                type="button"
+                label="Delete"
+                (click)="onClick('delete')"
+                icon="pi pi-trash"
+                class="p-button-text"
+                class="p-button-info p-button-text"
+              ></button
+              ><br />
+              <button
+                pButton
+                type="button"
+                label="Edit"
+                (click)="onClick('edit')"
+                icon="pi pi-pencil"
+                class="p-button-text"
+                class="p-button-info p-button-text"
+              ></button>
+            </ng-template>
+          </p-overlayPanel>
         </div>
+      </div>
+
+      <div class="flex align-items-center mt-5" style="height: 110%">
+        <app-timeline></app-timeline>
       </div>
     </div>
   </div>

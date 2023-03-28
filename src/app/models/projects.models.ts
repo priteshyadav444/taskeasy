@@ -6,6 +6,7 @@ export interface Project {
     theme_colour?:string,
     tasks?:[ {task_status?:string, badge?:string }],
     total_completed_tasks :Number,
-    total_tasks?:Number
+    total_tasks?:Number,
+    total_percent?:Number
   }
   

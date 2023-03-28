@@ -1,4 +1,4 @@
-import { Component, ElementRef, Renderer2, ViewChild } from '@angular/core';
+import { Component, ElementRef, Renderer2, ViewChild, ViewEncapsulation } from '@angular/core';
 import { MenuItem } from 'primeng/api';
 import { AppComponent } from 'src/app/app.component';
 import { Subscription } from 'rxjs';
@@ -24,6 +24,7 @@ import { resetTasks } from '../../task/state/task.action';
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.css'],
+  encapsulation: ViewEncapsulation.None
 })
 export class DashboardComponent {
   showDailog: boolean = false;
@@ -32,7 +33,7 @@ export class DashboardComponent {
   totalprojects: any[] = [];
   projects: any[] = [];
   first: number = 0;
-  rows: number = 6;
+  rows: number = 4;
   @ViewChild('op') op: OverlayPanel;
   @ViewChild('cardOption') cardOption: ElementRef;
   showLoading$: Observable<boolean> | undefined;
@@ -80,9 +81,15 @@ export class DashboardComponent {
           this.store.dispatch(loadAllProjects());
         }
         this.store.select(getAllProjects).subscribe({
-          next: (data) => {
-            this.totalprojects = data;
-            this.onPageChange({ first: this.first, rows: this.rows });
+          next: (projectData:Project[]) => {
+            if (projectData?.length) {
+              this.totalprojects = projectData;
+              this.totalprojects = this.totalprojects?.map((data) => {
+                const progressData = this.calculatePercentage(data?.total_completed_tasks, data?.total_tasks);
+                return { ...data, progress_data : progressData };
+              })
+              this.onPageChange({ first: this.first, rows: this.rows });
+            }
           },
           error: (error) => {
             console.log('error', error);
@@ -286,23 +293,24 @@ export class DashboardComponent {
     }
   }
 
-  getColor(totalCompletedTask, totalTasks): string {
-    const value = this.calculatePercentage(totalCompletedTask, totalTasks);
-    if (value < 25) {
+  getColor(progressPercent): string {
+    if (progressPercent < 25) {
       return 'red';
-    } else if (value < 50) {
+    } else if (progressPercent < 50) {
       return 'orange';
-    } else if (value < 75) {
+    } else if (progressPercent < 75) {
       return 'blue';
     } else {
       return 'green';
     }
   }
 
-  calculatePercentage(totalCompletedTask, totalTasks): number {
+  calculatePercentage(totalCompletedTask, totalTasks): any {
     if (totalTasks == 0) return 0;
     if (totalCompletedTask == null) return 0;
-    return Math.round((totalCompletedTask * 100) / totalTasks);
+    const progress_percent:number = Math.round((totalCompletedTask * 100) / totalTasks)
+    const progress_color: string  =  this.getColor(progress_percent)
+    return { progress_percent: progress_percent, progress_color:progress_color };
   }
   colorChange($event) {}
 }
