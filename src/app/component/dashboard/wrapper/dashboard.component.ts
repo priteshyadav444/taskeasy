@@ -166,7 +166,6 @@ export class DashboardComponent {
   }
 
   addProject() {
-    // this.uiService.toggleDialog();
     this.showDynamicDialog();
   }
   toggleMenu(event: Event) {
