@@ -96,6 +96,7 @@ export class HomeComponent implements OnInit {
         scheduled_date: '',
         category: '',
         description: '',
+        badge:'low',
         subtasklist: this.subTask,
         ...state.addedRecords[0],
       };

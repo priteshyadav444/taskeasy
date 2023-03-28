@@ -32,7 +32,6 @@ export class CreateProjectComponent implements OnInit {
   ngOnInit(): void {
     const data = this.config?.data;
     if(data.project_start){
-      console.log(this.isStartedDateCalenderDisable);
       this.isStartedDateCalenderDisable = true;
     }
     this.initForm(data);

@@ -59,8 +59,8 @@ export class TaskDialogComponent implements OnInit, OnChanges {
 
   ngOnInit(): void {
     // set started date in dailog fox using calender passed data
-    if(this.config.data.createdAt){
-      this.data.createdAt = this.config.data.createdAt;
+    if(typeof this.config?.data?.createdAt!=undefined){
+      this.data.createdAt = this.config?.data?.createdAt;
     }
     this.status = [
       { task_status: 'Active', code: 'active' },
@@ -142,7 +142,7 @@ export class TaskDialogComponent implements OnInit, OnChanges {
       this.data.task_status != undefined
     )
       this.data.task_status = 'unsheduled';
-
+    console.log(this.data);
     const task = this.data;
     const pid = this.config?.data?.pid;
     this.store.dispatch(addTask({ task, pid: pid }));
