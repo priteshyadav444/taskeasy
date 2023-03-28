@@ -97,8 +97,14 @@
 }
 
 .customize-card.p-card {
-  max-height: 360px !important;
-  min-height: 360px !important;
+  max-height: 285px !important;
+  min-height: 285px !important;
+}
+
+.customize-card.p-card .p-card-body .p-card-footer {
+  display: flex !important;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .border-radius.p-chip {
@@ -118,4 +124,24 @@
 
 .font-size{
   font-size:14px !important
+}
+
+.project-info {
+  font-size: large;
+    bottom: 0;
+    margin-bottom: 16px;
+    font-weight: 700;
+}
+
+.list-icon {
+  font-size: large;
+    font-weight: 900;
+}
+
+.card-header-width {
+  width: 90% !important;
+}
+
+.icon-size {
+  font-size: 18px;
 }
