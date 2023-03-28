@@ -62,7 +62,6 @@ export class SignupComponent implements OnInit {
   }
 
   onSignUpSubmit() {
-    console.log('SignUp');
     const firstname = this.signUpForm.value.firstname.trim();
     const lastname = this.signUpForm.value.lastname.trim();
     const email = this.signUpForm.value.email.trim();
@@ -72,7 +71,6 @@ export class SignupComponent implements OnInit {
     }
     this.store.dispatch(setLogoLoading({ status: true }));
     this.store.dispatch(signupStart({ firstname, lastname, email, password }));
-    console.log('SignUp');
   }
   onSignInClick(this: any) {
     this.router.navigateByUrl('/login');

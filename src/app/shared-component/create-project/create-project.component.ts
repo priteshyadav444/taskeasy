@@ -71,7 +71,6 @@ export class CreateProjectComponent implements OnInit {
   }
 
   get projectData() {
-    console.log(this.projectForm.value);
     return this.projectForm.value;
   }
 }

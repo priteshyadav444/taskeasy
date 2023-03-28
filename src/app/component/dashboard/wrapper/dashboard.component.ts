@@ -226,7 +226,7 @@ export class DashboardComponent {
     this.ref = this.dialogService.open(CreateProjectComponent, {
       header: header,
       width: '25%',
-      contentStyle: { 'max-height': '30%', overflow: 'auto' },
+      contentStyle: { 'max-heighte': '30%', overflow: 'auto' },
       baseZIndex: 10000,
       data: { ...selectedItem, type: type ? 'edit' : 'add' },
     });

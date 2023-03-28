@@ -53,10 +53,15 @@ export class TaskDialogComponent implements OnInit, OnChanges {
   constructor(
     public config: DynamicDialogConfig,
     private store: Store<AppState>,
-    private uiService: UiService
+    private uiService: UiService,
+
   ) {}
 
   ngOnInit(): void {
+    // set started date in dailog fox using calender passed data
+    if(this.config.data.createdAt){
+      this.data.createdAt = this.config.data.createdAt;
+    }
     this.status = [
       { task_status: 'Active', code: 'active' },
       { task_status: 'Pending', code: 'pending' },
@@ -74,7 +79,6 @@ export class TaskDialogComponent implements OnInit, OnChanges {
     this.data['subtasklist'] = this.data?.subtasklist?.length
       ? this.data.subtasklist
       : [];
-    console.log(this.data);
 
     if (
       this.data.scheduled_date != null &&
@@ -140,7 +144,6 @@ export class TaskDialogComponent implements OnInit, OnChanges {
       this.data.task_status = 'unsheduled';
 
     const task = this.data;
-    console.log(this.data);
     const pid = this.config?.data?.pid;
     this.store.dispatch(addTask({ task, pid: pid }));
     this.uiService.closeDialog();
