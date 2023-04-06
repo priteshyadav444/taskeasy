@@ -18,6 +18,7 @@ import { OverlayPanel } from 'primeng/overlaypanel';
 import { DialogService } from 'primeng/dynamicdialog';
 import { DynamicDialogRef } from 'primeng/dynamicdialog';
 import { CreateProjectComponent } from 'src/app/shared-component/create-project/create-project.component';
+import { selectUserName } from '../../auth/state/auth.selector';
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
@@ -55,6 +56,7 @@ export class DashboardComponent {
   public trackThickness: number;
   selectedItem!: any;
   ref: DynamicDialogRef;
+  managerName$ = this.store.select(selectUserName);
   constructor(
     public renderer: Renderer2,
     public dialogService: DialogService,

@@ -101,7 +101,7 @@
                       ></i>
                     </b>
                   </span>
-                  <b>Manager:</b> "Pritesh Yadav"
+                  <b>Manager:</b> {{ managerName$ | async}}
                 </div>
               </div>
               <div>
@@ -149,16 +149,20 @@
                     image="https://primefaces.org/cdn/primeng/images/demo/avatar/xuxuefeng.png"
                     shape="circle"
                   ></p-avatar>
-                  <p-avatar
-                    image="https://primefaces.org/cdn/primeng/images/demo/avatar/onyamalimba.png"
-                    label="P"
-                    size="medium"
-                    shape="circle"
-                    [style]="{
-                      'background-color': '#9c27b0',
-                      color: '#ffffff'
-                    }"
-                  ></p-avatar>
+                  <ng-container *ngIf="(managerName$ | async) as userName">
+                    <p-avatar
+                      image="https://primefaces.org/cdn/primeng/images/demo/avatar/onyamalimba.png"
+                      label="{{userName[0]}}"
+                      size="large"
+                      shape="circle"
+                      [style]="{
+                        'background-color': '#9c27b0',
+                        'color': '#ffffff',
+                         'size':'2rem'
+
+                      }"
+                    ></p-avatar>
+                  </ng-container>
                 </p-avatarGroup>
                 <span class="project-info">
                   <i class="pi pi-list list-icon"></i>

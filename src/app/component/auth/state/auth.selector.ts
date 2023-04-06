@@ -11,3 +11,14 @@ export const isAuthenticated = createSelector(getAuthState, (state) => {
 export const getToken = createSelector(getAuthState, (state) => {
   return state.user ? state.user.userToken : null;
 });
+
+
+export const selectUserName = createSelector(
+  getAuthState,
+  (authState: any) => {
+    if (authState.user) {
+      return `${authState.user.firstname} ${authState.user.lastname}`;
+    }
+    return '';
+  }
+);
