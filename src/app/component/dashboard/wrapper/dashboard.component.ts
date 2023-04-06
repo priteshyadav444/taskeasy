@@ -6,7 +6,6 @@ import { AppState } from 'src/app/app-store/app.state';
 import { select, Store } from '@ngrx/store';
 import { UiService } from 'src/app/service/ui.service';
 import {
-  addProjectStart,
   deleteProjectStart,
   loadAllProjects,
 } from '../state/project.action';
@@ -19,7 +18,6 @@ import { OverlayPanel } from 'primeng/overlaypanel';
 import { DialogService } from 'primeng/dynamicdialog';
 import { DynamicDialogRef } from 'primeng/dynamicdialog';
 import { CreateProjectComponent } from 'src/app/shared-component/create-project/create-project.component';
-import { resetTasks } from '../../task/state/task.action';
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
@@ -97,6 +95,7 @@ export class DashboardComponent {
         });
         this.showLoading$ = this.store.select(getLoading);
       });
+    
 
     this.items = [
       {
