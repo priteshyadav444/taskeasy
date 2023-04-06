@@ -145,3 +145,12 @@
 .icon-size {
   font-size: 18px;
 }
+
+.border-radius.p-chip {
+  text-transform: uppercase;
+  padding: 2px 6px;
+  background-color: #e5edff;
+  color: #003cc7;
+  border-radius: 4px;
+  border: 1px solid #adc5ff;
+}

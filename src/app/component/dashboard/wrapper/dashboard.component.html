@@ -69,12 +69,24 @@
               styleClass="customize-card shadow-2 p-4"
               class="col-12 md:col-4 lg:col-3 sm:col-6"
               *ngFor="let item of projects"
+              [routerLink]="['/home', item._id, 'board']"
             >
               <ng-template pTemplate="header">
                 <div class="flex flex-row card-header">
                   <h4 class="card-header-width">{{ item.project_title }}</h4>
-                  <span class="my-auto text-4xl display-icon">
-                    <i class="pi icon-size" [ngClass]="true ? 'pi-angle-right': 'pi-angle-down' "></i>
+                  <span
+                    class="my-auto text-4xl display-icon"
+                    (click)="cardClick($event, item, cardOption)"
+                  >
+                    <i
+                      #cardOption
+                      class="pi icon-size"
+                      [ngClass]="
+                        this.op.overlayVisible && selectedItem._id == item._id
+                          ? 'pi-angle-rigt'
+                          : 'pi-angle-down'
+                      "
+                    ></i>
                   </span>
                 </div>
                 <p-chip styleClass="border-radius" label="ONGOING"></p-chip>
@@ -89,7 +101,7 @@
                       ></i>
                     </b>
                   </span>
-                  <b>Client:</b> "Pritesh Yadav"
+                  <b>Manager:</b> {{ managerName$ | async}}
                 </div>
               </div>
               <div>
@@ -97,56 +109,64 @@
                   class="flex justify-content-between flex-wrap card-container purple-container py-1"
                 >
                   <div>Progress</div>
-                  <div>{{item?.progress_data?.progress_percent}}%</div>
+                  <div>{{ item?.progress_data?.progress_percent }}%</div>
                 </div>
                 <p-progressBar
                   [value]="item?.progress_data?.progress_percent"
-                  [style]="{ height: '4px'}"
+                  [style]="{ height: '4px' }"
                   [showValue]="false"
                 ></p-progressBar>
               </div>
               <div class="mt-3">
                 <p class="py-1 mb-0 fw-bold fs--1">
-                  <span class="font-bold" >
-                    Started at :
-                  </span><span class="fw-semi-bold text-600 ms-1">
+                  <span class="font-bold"> Started at : </span
+                  ><span class="fw-semi-bold text-600 ms-1">
                     {{ item?.createdAt | date }}</span
                   >
                 </p>
                 <p class="py-1 mb-0 fw-bold fs--1">
-                  <span class="font-bold">
-                    Deadline :
-                  </span>
+                  <span class="font-bold"> Deadline : </span>
                   <span class="fw-semi-bold text-600 ms-1">
                     {{ item?.project_deadline | date }}</span
                   >
                 </p>
               </div>
               <ng-template pTemplate="footer">
-                <p-avatarGroup styleClass="mb-3">
+                <p-avatarGroup styleClass="ml-1">
                   <p-avatar
-                    image="https://e7.pngegg.com/pngimages/799/987/png-clipart-computer-icons-avatar-icon-design-avatar-heroes-computer-wallpaper-thumbnail.png"
-                    size="large"
+                    image="https://primefaces.org/cdn/primeng/images/demo/avatar/amyelsner.png"
                     shape="circle"
                   ></p-avatar>
                   <p-avatar
-                    image="https://e7.pngegg.com/pngimages/799/987/png-clipart-computer-icons-avatar-icon-design-avatar-heroes-computer-wallpaper-thumbnail.png"
-                    size="large"
+                    image="https://primefaces.org/cdn/primeng/images/demo/avatar/asiyajavayant.png"
                     shape="circle"
                   ></p-avatar>
                   <p-avatar
-                    label="+2"
+                    image="https://primefaces.org/cdn/primeng/images/demo/avatar/ionibowcher.png"
                     shape="circle"
-                    size="large"
-                    [style]="{
-                      'background-color': '#9c27b0',
-                      color: '#ffffff'
-                    }"
                   ></p-avatar>
+                  <p-avatar
+                    image="https://primefaces.org/cdn/primeng/images/demo/avatar/xuxuefeng.png"
+                    shape="circle"
+                  ></p-avatar>
+                  <ng-container *ngIf="(managerName$ | async) as userName">
+                    <p-avatar
+                      image="https://primefaces.org/cdn/primeng/images/demo/avatar/onyamalimba.png"
+                      label="{{userName[0]}}"
+                      size="large"
+                      shape="circle"
+                      [style]="{
+                        'background-color': '#9c27b0',
+                        'color': '#ffffff',
+                         'size':'2rem'
+
+                      }"
+                    ></p-avatar>
+                  </ng-container>
                 </p-avatarGroup>
                 <span class="project-info">
                   <i class="pi pi-list list-icon"></i>
-                  {{item?.total_tasks}} Task
+                  {{ item?.total_tasks }} Task
                 </span>
               </ng-template>
             </p-card>

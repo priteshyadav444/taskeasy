@@ -2,13 +2,11 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Task } from 'src/app/models/task.models';
 import { map, Observable } from 'rxjs';
-import { select, Store } from '@ngrx/store';
+import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/app-store/app.state';
-import { DataStateChangeEventArgs } from '@syncfusion/ej2-angular-kanban';
 import { Project } from 'src/app/models/projects.models';
 import { TaskState } from 'src/app/component/task/state/task.state';
 import { MessageService } from 'primeng/api';
-import { getAllProjects } from 'src/app/component/dashboard/state/project.selector';
 
 @Injectable({ providedIn: 'root' })
 export class TasksService {

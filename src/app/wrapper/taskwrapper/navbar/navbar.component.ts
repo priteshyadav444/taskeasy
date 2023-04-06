@@ -1,6 +1,5 @@
 import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { distinctUntilChanged, Subscription } from 'rxjs';
-import { UiService } from '../../../service/ui.service';
 import { ActivatedRoute } from '@angular/router';
 import { MainwrapperComponent } from '../wrapper/mainwrapper.component';
 import { MenuItem } from 'primeng/api';

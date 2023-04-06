@@ -10,7 +10,6 @@ import { Store } from '@ngrx/store';
 import { DynamicDialogConfig } from 'primeng/dynamicdialog';
 import { AppState } from 'src/app/app-store/app.state';
 import { Task } from 'src/app/models/task.models';
-import { TasksService } from 'src/app/service/task/task.services';
 import { UiService } from 'src/app/service/ui.service';
 import { addTask } from '../state/task.action';
 interface Status {

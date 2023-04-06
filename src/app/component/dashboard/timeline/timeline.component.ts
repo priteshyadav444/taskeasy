@@ -10,6 +10,7 @@ import {
   PopupOpenEventArgs,
 } from '@syncfusion/ej2-angular-schedule';
 import { DataManager, ODataV4Adaptor, Query } from '@syncfusion/ej2-data';
+import { Subscription } from 'rxjs';
 import { AppState } from 'src/app/app-store/app.state';
 import { getAllPendingTasks } from '../state/project.selector';
 
@@ -19,37 +20,31 @@ import { getAllPendingTasks } from '../state/project.selector';
   providers: [DayService, MonthService, AgendaService],
   // templateUrl: './timeline.component.html',
   styleUrls: ['./timeline.component.css'],
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None,
 })
 export class TimelineComponent implements OnInit {
   public selectedDate: Date = new Date();
   public readonly: boolean = false;
   public eventSettings: EventSettingsModel;
-  public pendingtasks:any[] = []
-  public url:any = "https://api-taskeasy.onrender.com/v1/tasks/calender/all"
-  // public url:any = "http://127.0.0.1:3000/v1/tasks/calender/all"
-  authToken = localStorage.getItem('authToken');
-  reqHeader =[{
-        'Content-Type': 'application/json',
-        'x-auth-token': JSON.parse(this.authToken!),
-      }];
+  public pendingtasks: any[] = [];
+  public url: any = 'https://api-taskeasy.onrender.com/v1/tasks/calender/all';
+  private calenderSubscription: Subscription;
 
-  private dataManager: DataManager = new DataManager({
-    url: this.url,
-    adaptor: new ODataV4Adaptor(),
-    headers: this.reqHeader
-  });
- 
-  
-  constructor(private store: Store<AppState>) {
-  }
-  
+
+
+  constructor(private store: Store<AppState>) {}
+
   ngOnInit(): void {
-    this.store.select(getAllPendingTasks).subscribe((data)=>{ 
-    if (data) {
-      this.bindSetting(data)
-    }
-  })
+    this.calenderSubscription = this.store
+      .select(getAllPendingTasks)
+      .subscribe((data) => {
+        if (data) {
+          this.bindSetting(data);
+        }
+      });
+  }
+  ngOnDestroy() {
+    this.calenderSubscription.unsubscribe();
   }
 
   bindSetting(data) {
@@ -61,18 +56,16 @@ export class TimelineComponent implements OnInit {
         startTime: { title: 'From', name: 'createdAt' },
         endTime: { title: 'To', name: 'scheduled_date' },
       },
-      enableTooltip:true,
-      enableIndicator:true,
-  };
+      enableTooltip: true,
+      enableIndicator: true,
+    };
   }
 
-  onClick(event: CellClickEventArgs) {
-  }
+  onClick(event: CellClickEventArgs) {}
 
-    onPopupOpen(args: PopupOpenEventArgs): void {
-        if (args.type === 'Editor' || args.type === 'QuickInfo')  {
-            args.cancel = true;
-        }
+  onPopupOpen(args: PopupOpenEventArgs): void {
+    if (args.type === 'Editor' || args.type === 'QuickInfo') {
+      args.cancel = true;
     }
-  
+  }
 }
