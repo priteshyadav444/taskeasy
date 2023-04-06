@@ -69,12 +69,13 @@
               styleClass="customize-card shadow-2 p-4"
               class="col-12 md:col-4 lg:col-3 sm:col-6"
               *ngFor="let item of projects"
+              [routerLink]="['/home', item._id, 'board']" 
             >
               <ng-template pTemplate="header">
                 <div class="flex flex-row card-header">
                   <h4 class="card-header-width">{{ item.project_title }}</h4>
-                  <span class="my-auto text-4xl display-icon">
-                    <i class="pi icon-size" [ngClass]="true ? 'pi-angle-right': 'pi-angle-down' "></i>
+                  <span class="my-auto text-4xl display-icon" (click)="cardClick($event,item, cardOption)">
+                    <i #cardOption class="pi icon-size" [ngClass]="(this.op.overlayVisible && selectedItem._id==item._id) ? 'pi-angle-rigt': 'pi-angle-down'" ></i>
                   </span>
                 </div>
                 <p-chip styleClass="border-radius" label="ONGOING"></p-chip>

@@ -10,6 +10,7 @@ import {
   PopupOpenEventArgs,
 } from '@syncfusion/ej2-angular-schedule';
 import { DataManager, ODataV4Adaptor, Query } from '@syncfusion/ej2-data';
+import { Subscription } from 'rxjs';
 import { AppState } from 'src/app/app-store/app.state';
 import { TasksCardService } from 'src/app/service/task/taskcard.service';
 import { DialogServiceService } from 'src/app/shared-component/dialog-services/dialog-service.service';
@@ -28,8 +29,8 @@ export class CalenderComponent implements OnInit {
   public eventSettings: EventSettingsModel;
   public pendingtasks: any[] = [];
   pid!: any;
-  // public url:any = `https://api-taskeasy.onrender.com/v1/tasks/calender/${this.pid}`
-  public url: any = `http://127.0.0.1:3000/v1/tasks/calender/${this.pid}`;
+  public url:any = `https://api-taskeasy.onrender.com/v1/tasks/calender/${this.pid}`
+  // public url: any = `http://127.0.0.1:3000/v1/tasks/calender/${this.pid}`;
   authToken = localStorage.getItem('authToken');
   reqHeader = [
     {
@@ -37,6 +38,7 @@ export class CalenderComponent implements OnInit {
       'x-auth-token': JSON.parse(this.authToken!),
     },
   ];
+  private calenderSubscription: Subscription;
 
   private dataManager: DataManager = new DataManager();
   constructor(
@@ -59,7 +61,7 @@ export class CalenderComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.store.select(getPendingTasks).subscribe((data) => {
+    this.calenderSubscription = this.store.select(getPendingTasks).subscribe((data) => {
       this.pendingtasks = data;
     });
     this.titleService.setTitle(`Calender - TaskEasy.in`);
@@ -75,6 +77,9 @@ export class CalenderComponent implements OnInit {
       enableIndicator: true,
     };
   }
+  ngOnDestroy() {
+    this.calenderSubscription.unsubscribe();
+  }
   dateConvert(str) {
     var date = new Date(str),
       mnth = ('0' + (date.getMonth() + 1)).slice(-2),
@@ -83,6 +88,7 @@ export class CalenderComponent implements OnInit {
   }
   onClick(event: CellClickEventArgs) {
     this.dialogServiceService.showDialog(TaskDialogComponent, {
+      'pid':this.pid,
       createdAt: this.dateConvert(event.startTime),
     });
   }
