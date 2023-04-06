@@ -29,18 +29,9 @@ export class CalenderComponent implements OnInit {
   public eventSettings: EventSettingsModel;
   public pendingtasks: any[] = [];
   pid!: any;
-  public url:any = `https://api-taskeasy.onrender.com/v1/tasks/calender/${this.pid}`
-  // public url: any = `http://127.0.0.1:3000/v1/tasks/calender/${this.pid}`;
-  authToken = localStorage.getItem('authToken');
-  reqHeader = [
-    {
-      'Content-Type': 'application/json',
-      'x-auth-token': JSON.parse(this.authToken!),
-    },
-  ];
+
   private calenderSubscription: Subscription;
 
-  private dataManager: DataManager = new DataManager();
   constructor(
     private service: TasksCardService,
     private titleService: Title,
@@ -49,33 +40,19 @@ export class CalenderComponent implements OnInit {
   ) {
     this.service.pid.subscribe((log) => {
       this.pid = log;
-      this.url = `https://api-taskeasy.onrender.com/v1/tasks/calender/${this.pid}`;
-      // this.url = `http://127.0.0.1:3000/v1/tasks/calender/${this.pid}`
     });
 
-    this.dataManager = new DataManager({
-      url: this.url,
-      adaptor: new ODataV4Adaptor(),
-      headers: this.reqHeader,
-    });
   }
 
   ngOnInit(): void {
-    this.calenderSubscription = this.store.select(getPendingTasks).subscribe((data) => {
-      this.pendingtasks = data;
-    });
+    this.calenderSubscription = this.store
+      .select(getPendingTasks)
+      .subscribe((data) => {
+        if (data) {
+          this.bindSetting(data);
+        }
+      });
     this.titleService.setTitle(`Calender - TaskEasy.in`);
-    this.eventSettings = {
-      dataSource: this.pendingtasks,
-      fields: {
-        subject: { title: 'Event Name', name: 'title', default: 'Add Name' },
-        description: { title: 'Summary', name: 'description' },
-        startTime: { title: 'From', name: 'createdAt' },
-        endTime: { title: 'To', name: 'scheduled_date' },
-      },
-      enableTooltip: true,
-      enableIndicator: true,
-    };
   }
   ngOnDestroy() {
     this.calenderSubscription.unsubscribe();
@@ -86,9 +63,22 @@ export class CalenderComponent implements OnInit {
       day = ('0' + date.getDate()).slice(-2);
     return [date.getFullYear(), mnth, day].join('-');
   }
+  bindSetting(data) {
+    this.eventSettings = {
+      dataSource: data,
+      fields: {
+        subject: { title: 'Event Name', name: 'title', default: 'Add Name' },
+        description: { title: 'Summary', name: 'description' },
+        startTime: { title: 'From', name: 'createdAt' },
+        endTime: { title: 'To', name: 'scheduled_date' },
+      },
+      enableTooltip: true,
+      enableIndicator: true,
+    };
+  }
   onClick(event: CellClickEventArgs) {
     this.dialogServiceService.showDialog(TaskDialogComponent, {
-      'pid':this.pid,
+      pid: this.pid,
       createdAt: this.dateConvert(event.startTime),
     });
   }
