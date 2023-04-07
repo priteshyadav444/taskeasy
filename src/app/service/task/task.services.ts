@@ -12,7 +12,7 @@ import { MessageService } from 'primeng/api';
 export class TasksService {
 
   // apiUrl = 'http://localhost:3000/v1/tasks';
-   apiUrl = 'https://api-taskeasy.onrender.com/v1/tasks';
+   apiUrl = 'api/v1/tasks';
 
   authToken = localStorage.getItem('authToken');
   constructor(private http: HttpClient, private store: Store<AppState>, private messageService: MessageService) {}
