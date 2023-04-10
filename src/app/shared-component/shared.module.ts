@@ -3,10 +3,12 @@ import { CreateProjectComponent } from '../shared-component/create-project/creat
 import { customMaterialModule} from '../custom-material.module'
 import { FormsModule } from "@angular/forms";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
+import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component';
 
 @NgModule({
   declarations: [ 
-    CreateProjectComponent,
+    CreateProjectComponent, 
+    ConfirmDialogComponent
   ],
   imports: [
     customMaterialModule,
@@ -16,6 +18,7 @@ import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
   exports:[
     customMaterialModule,
     CreateProjectComponent,
+    ConfirmDialogComponent
   ],
   providers: [
 ]

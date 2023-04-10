@@ -19,6 +19,9 @@ import { DialogService } from 'primeng/dynamicdialog';
 import { DynamicDialogRef } from 'primeng/dynamicdialog';
 import { CreateProjectComponent } from 'src/app/shared-component/create-project/create-project.component';
 import { selectUserName } from '../../auth/state/auth.selector';
+import { ConfirmationService } from 'primeng/api';
+import { PrimeNGConfig } from 'primeng/api';
+
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
@@ -63,7 +66,9 @@ export class DashboardComponent {
     public app: AppComponent,
     private uiService: UiService,
     private store: Store<AppState>,
-    private titleService: Title
+    private titleService: Title,
+    private ConfirmationService: ConfirmationService,
+    private primengConfig: PrimeNGConfig
   ) {
     this.uiService.onProjectToggle().subscribe((value) => {
       this.showDailog = value;
@@ -289,7 +294,13 @@ export class DashboardComponent {
     if (type == 'edit') {
       this.showDynamicDialog(type);
     } else if (type == 'delete') {
-      this.store.dispatch(deleteProjectStart({ pid: this.selectedItem?._id }));
+      this.ConfirmationService.confirm({
+          message: 'Are you sure that you want to perform this action?',
+          header: 'Confirmation',
+          accept: () => {
+            this.store.dispatch(deleteProjectStart({ pid: this.selectedItem?._id }));
+          }
+      })
       this.op.hide();
     }
   }
