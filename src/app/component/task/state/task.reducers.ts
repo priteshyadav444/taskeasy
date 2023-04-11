@@ -6,6 +6,7 @@ import {
   deleteTaskSuccess,
   loadDataSuccess,
   resetTasks,
+  resetTaskState,
   taskPreloaded,
   updateTaskSuccess,
 } from './task.action';
@@ -68,7 +69,13 @@ const _tasksReducer = createReducer(
         ...state,
       };
     }
+  }),
+  on(resetTaskState, (state,action) => {
+    return {
+      ...intialState,
+    }
   })
+
 );
 
 export function tasksReducer(state: any, action: any) {

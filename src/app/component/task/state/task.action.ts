@@ -16,6 +16,8 @@ export const LOAD_DATA_SUCCESS = '[Task] all data loaded';
 export const RESET_TASKS = '[Task] reset tasks success';
 
 export const TASK_PRELOADED = '[Task] task preloaded';
+export const TASK_STATE_RESET =   '[Task] Whole task state data deleted';
+
 
 export const addTask = createAction(
   ADD_TASK_INITIATE,
@@ -57,3 +59,4 @@ export const resetTasks = createAction(
 );
 
 export const taskPreloaded = createAction(TASK_PRELOADED);
+export const resetTaskState = createAction(TASK_STATE_RESET);
