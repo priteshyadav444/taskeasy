@@ -295,8 +295,8 @@ export class DashboardComponent {
       this.showDynamicDialog(type);
     } else if (type == 'delete') {
       this.ConfirmationService.confirm({
-          message: 'Are you sure that you want to perform this action?',
-          header: 'Confirmation',
+          message: 'This action will permanently delete all project data, including files, tasks, and associated information. </br> </br> <b color="red">Are you sure you want to proceed ?</b>',
+          header: 'Confirm Project Deletion',
           accept: () => {
             this.store.dispatch(deleteProjectStart({ pid: this.selectedItem?._id }));
           }
