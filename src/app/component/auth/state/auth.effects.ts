@@ -21,6 +21,8 @@ import {
 } from 'src/app/component/shared/state/Shared/shared.actions';
 import { Router } from '@angular/router';
 import { resetProjectState } from '../../dashboard/state/project.action';
+import { resetTaskState } from '../../task/state/task.action';
+import { User } from 'src/app/models/user.models';
 
 @Injectable()
 export class AuthEffects {
@@ -135,13 +137,15 @@ export class AuthEffects {
         this.store.dispatch(setLogoLoading({ status: true }));
         return this.authService.getUserFromLocalStorage().pipe(
           map((data) => {
-            this.store.dispatch(setLoadingSpinner({ status: false }));
-            this.store.dispatch(
-              setErrorMessage({ message: 'Logout Successful' })
-            );
+            // resetting Project State
             this.store.dispatch(
               resetProjectState({ resetProjectLoadedState: false })
             );
+            // resetting Task State
+            this.store.dispatch(resetTaskState());
+            // removing token from storage
+
+            // removing data from state
             const user = this.authService.formatUser({
               authToken: '',
               user: {
@@ -152,6 +156,11 @@ export class AuthEffects {
               },
             });
 
+            this.store.dispatch(setLoadingSpinner({ status: false }));
+
+            this.store.dispatch(
+              setErrorMessage({ message: 'Logout Successful' })
+            );
             this.authService.setUserInLocalStorage(user);
             return logoutSucess({ user, redirect: false });
           }),
@@ -160,6 +169,8 @@ export class AuthEffects {
             this.store.dispatch(setLoadingSpinner({ status: false }));
             this.store.dispatch(setLogoLoading({ status: false }));
             this.authService.showError(errmsg);
+            const user = new User('', '', '', '', '');
+            this.store.dispatch(logoutSucess({ user, redirect: false }));
             return of(setErrorMessage({ message: errmsg }));
           })
         );
