@@ -19,6 +19,9 @@ import { DialogService } from 'primeng/dynamicdialog';
 import { DynamicDialogRef } from 'primeng/dynamicdialog';
 import { CreateProjectComponent } from 'src/app/shared-component/create-project/create-project.component';
 import { selectUserName } from '../../auth/state/auth.selector';
+import { ConfirmationService } from 'primeng/api';
+import { PrimeNGConfig } from 'primeng/api';
+
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
@@ -63,7 +66,9 @@ export class DashboardComponent {
     public app: AppComponent,
     private uiService: UiService,
     private store: Store<AppState>,
-    private titleService: Title
+    private titleService: Title,
+    private ConfirmationService: ConfirmationService,
+    private primengConfig: PrimeNGConfig
   ) {
     this.uiService.onProjectToggle().subscribe((value) => {
       this.showDailog = value;
@@ -289,7 +294,13 @@ export class DashboardComponent {
     if (type == 'edit') {
       this.showDynamicDialog(type);
     } else if (type == 'delete') {
-      this.store.dispatch(deleteProjectStart({ pid: this.selectedItem?._id }));
+      this.ConfirmationService.confirm({
+          message: 'This action will permanently delete all project data, including files, tasks, and associated information. </br> </br> <b color="red">Are you sure you want to proceed ?</b>',
+          header: 'Confirm Project Deletion',
+          accept: () => {
+            this.store.dispatch(deleteProjectStart({ pid: this.selectedItem?._id }));
+          }
+      })
       this.op.hide();
     }
   }

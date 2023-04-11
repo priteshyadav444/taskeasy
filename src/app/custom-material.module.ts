@@ -32,9 +32,9 @@ import { AvatarModule } from "primeng/avatar";
 import { AvatarGroupModule } from "primeng/avatargroup";
 import { CardModule } from "primeng/card";
 import { TabMenuModule } from "primeng/tabmenu";
-import { MessageService } from 'primeng/api';
+import { ConfirmationService, MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogModule } from "primeng/dynamicdialog";
-
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
 @NgModule({
   declarations: [ 
   ],
@@ -76,11 +76,14 @@ import { DialogService, DynamicDialogModule } from "primeng/dynamicdialog";
     AvatarGroupModule,
     DialogModule,
     PaginatorModule,
-    CardModule
+    CardModule,
+    ConfirmDialogModule
+
   ],
   providers: [
     MessageService,
-    DialogService
+    DialogService,
+    ConfirmationService
 ]
 })
 export class customMaterialModule {}
