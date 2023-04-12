@@ -1,0 +1,77 @@
+<div>
+  <div class="grid">
+    <div class="col-4">
+      <div class="card">
+        <p-image src="https://picsum.photos/seed/picsum/200/300" alt="Image" width="50%" height="25%"></p-image>
+      </div>
+    </div>
+
+    <div class="col-8">
+      <div class="card">
+        <h3>Profile</h3>
+        <p-divider align="left">
+          <h5><b>The information can be edited</b></h5>
+        </p-divider>
+        <form (ngSubmit)="onFormSubmit()" [formGroup]="profileForm">
+          <div class="formgrid grid">
+            <div class="field col py-4">
+              <span class="p-float-label">
+                <input id="float-input"
+                  class="p-inputtext-lg border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"
+                  type="text" pInputText formControlName="firstName" />
+                <label for="float-input">First Name</label>
+              </span>
+            </div>
+            <div class="field col py-4">
+              <span class="p-float-label">
+                <input id="float-input"
+                  class="p-inputtext-lg border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"
+                  type="text" pInputText formControlName="lastName" />
+                <label for="float-input">Last Name</label>
+              </span>
+            </div>
+          </div>
+          <div class="formgrid grid">
+            <div class="field col py-4">
+              <span class="p-float-label">
+                <input id="float-input"
+                  class="p-inputtext-lg p-inputtext-lg border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"
+                  type="text" pInputText formControlName="emailAddress" />
+                <label for="float-input">Email Address</label>
+              </span>
+            </div>
+            <div class="field col py-4">
+              <span class="p-float-label">
+                <input id="float-input"
+                  class="p-inputtext-lg border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"
+                  type="text" pInputText formControlName="mobileNo" />
+                <label for="float-input">Mobile No.</label>
+              </span>
+            </div>
+          </div>
+          <div class="formgrid grid">
+            <div class="field col py-4">
+              <span class="p-float-label">
+                <input id="float-input"
+                  class="p-inputtext-lg border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"
+                  type="text" pInputText formControlName="country" />
+                <label for="float-input">Country</label>
+              </span>
+            </div>
+            <div class="field col py-4">
+              <span class="p-float-label">
+                <input id="float-input"
+                  class="p-inputtext-lg border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"
+                  type="text" pInputText />
+                <label for="float-input">State</label>
+              </span>
+            </div>
+          </div>
+          <div>
+            <p-button type="submit" label="SAVE DETAILS" [disabled]="profileForm.invalid"></p-button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

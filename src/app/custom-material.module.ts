@@ -35,6 +35,13 @@ import { TabMenuModule } from "primeng/tabmenu";
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogModule } from "primeng/dynamicdialog";
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { DropdownModule } from "primeng/dropdown";
+import { DragDropModule } from "@angular/cdk/drag-drop";
+import { KanbanAllModule } from "@syncfusion/ej2-angular-kanban";
+import { AccordionModule } from "primeng/accordion";
+import { TooltipModule } from "primeng/tooltip";
+import { ImageModule } from 'primeng/image';
+
 @NgModule({
   declarations: [ 
   ],
@@ -77,8 +84,30 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
     DialogModule,
     PaginatorModule,
     CardModule,
-    ConfirmDialogModule
-
+    ConfirmDialogModule,
+    SplitButtonModule,
+    CheckboxModule,
+    FormsModule,
+    TagModule,
+    MenuModule,
+    ChipModule,
+    KnobModule,
+    DividerModule,
+    CardModule,
+    DropdownModule,
+    DragDropModule,
+    CalendarModule,
+    CommonModule,
+    KanbanAllModule,
+    BadgeModule,
+    AccordionModule,
+    TimelineModule,
+    ChartModule,
+    ScheduleModule,
+    TooltipModule,
+    EditorModule,
+    MessagesModule,
+    ImageModule
   ],
   providers: [
     MessageService,
