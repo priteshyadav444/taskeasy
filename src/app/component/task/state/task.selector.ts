@@ -30,6 +30,7 @@ export const getPendingTasks = createSelector(getTasksState, (data) => {
   let result = tasks.filter(
     (data) => data.task_status == 'pending' || data.task_status == 'unsheduled'
   );
+  
   result = result.map((data) => {
     return { ...data, theme_colour: theme_colour };
   });

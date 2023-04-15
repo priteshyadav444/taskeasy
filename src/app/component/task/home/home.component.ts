@@ -94,7 +94,6 @@ export class HomeComponent implements OnInit {
       const task: Task = {
         title: '',
         scheduled_date: '',
-        category: '',
         description: '',
         badge:'low',
         subtasklist: this.subTask,
@@ -108,7 +107,7 @@ export class HomeComponent implements OnInit {
         this.store.dispatch(addTask({ task, pid: this.pid }));
       }
     } else if (state.requestType === 'cardChanged') {
-      if (this.subTask.length > 0) {
+      if (this.subTask?.length > 0) {
         state.changedRecords[0] = {
           ...state.changedRecords[0],
           subtasklist: [
@@ -134,7 +133,7 @@ export class HomeComponent implements OnInit {
 
       //if all suntask completed
       const subtasklistcopy = state.changedRecords[0]['subtasklist'];
-      if (subtasklistcopy.length > 0) {
+      if (subtasklistcopy?.length > 0) {
         var cnt = 0;
 
         subtasklistcopy.forEach((element) => {
@@ -143,7 +142,7 @@ export class HomeComponent implements OnInit {
           }
         });
 
-        if (cnt == subtasklistcopy.length) {
+        if (cnt == subtasklistcopy?.length) {
           state.changedRecords[0] = {
             ...state.changedRecords[0],
             task_status: 'done',
@@ -208,13 +207,6 @@ export class HomeComponent implements OnInit {
     field: 'updatedAt',
     direction: 'Descending',
   };
-
-  // public priorityData: Object[] = [
-  //   { Id: 'active', Name: 'Active' },
-  //   { Id: 'done', Name: 'Done' },
-  //   { Id: 'pending', Name: 'Pending' },
-  //   { Id: 'unsheduled', Name: 'Unsheduled' },
-  // ];
 
   public badgeData: Object[] = [
     { Id: 'low', Name: 'Low' },
@@ -289,29 +281,4 @@ export class HomeComponent implements OnInit {
     this.getTaskSubscription.unsubscribe();
     this.titleSubscription.unsubscribe();
   }
-
-  // showBasicDialog() {
-  //   this.displayBasic = true;
-  // }
-
-  // showCreateDialog() {
-  //   this.displayCategory = true;
-  // }
-
-  // save(severity: string) {
-  //   this.displayCategory = true;
-  // }
-
-  // addSubTask(data: any, stask: any) {
-  //   if (stask == '' || stask == null) {
-  //     return;
-  //   } else {
-  //     const newstask = { stitle: stask, checked: false };
-  //     this.subTask = [...this.subTask, newstask];
-  //     this.subtaskele = '';
-  //   }
-  // }
-  // onChange(item: any) {
-  //console.log("item",item)
-  // }
 }

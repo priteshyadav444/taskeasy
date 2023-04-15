@@ -1,4 +1,5 @@
 import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
+import { Console } from 'console';
 
 @Component({
   selector: 'app-task-card',
@@ -10,7 +11,8 @@ export class TaskCardComponent implements OnInit {
   @Input('data') data!: any;
   constructor() {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+  }
   calculateDiff(sentDate) {
     var date1: any = new Date(sentDate);
     var date2: any = new Date();
@@ -34,7 +36,7 @@ export class TaskCardComponent implements OnInit {
   }
 
   calculatePercentage(data) {
-    return Math.round((this.calulateCompleteSubTask(data) * 100) / data.length);
+    return Math.round((this.calulateCompleteSubTask(data) * 100) / data?.length);
   }
   calculateCompletionDiff(sentDate, fromDate) {
     var date1: any = new Date(sentDate);

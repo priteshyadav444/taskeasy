@@ -69,7 +69,7 @@
         <p-accordionTab header="Subtasks" [selected]="true">
           <div *ngIf="data.subtasklist?.length != 0">
             <!-- Remote UnChecked SubTask -->
-            <div *ngFor="let item of data.subtasklist">
+            <div *ngFor="let item of data?.subtasklist">
               <div *ngIf="item.checked == false" class="example-box">
                 <div class="example-box flex justify-content-between">
                   <p-checkbox
@@ -100,7 +100,7 @@
         <p-accordionTab header="Completed" style="margin-top: 4px">
           <!-- Remote Checked SubTask -->
           <div *ngIf="data.subtasklist?.length != 0">
-            <div *ngFor="let item of data.subtasklist">
+            <div *ngFor="let item of data?.subtasklist">
               <div *ngIf="item.checked == true" class="example-box">
                 <div class="example-box flex justify-content-between">
                   <p-checkbox

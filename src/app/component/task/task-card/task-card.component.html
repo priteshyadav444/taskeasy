@@ -79,7 +79,7 @@
       </p-editor>
     </div>
 
-    <div *ngIf="data.subtasklist?.length > 0" class="field col-12 p-0 mt-1">
+    <div *ngIf="data?.subtasklist?.length > 0" class="field col-12 p-0 mt-1">
       <div class="example-list-create">
         <p-accordion [multiple]="true">
           <p-accordionTab
@@ -145,7 +145,7 @@
     <div *ngIf="data.subtasklist?.length != 0">
       <span>
         <p-progressBar
-          [value]="calculatePercentage(data.subtasklist)"
+          [value]="calculatePercentage(data?.subtasklist)"
           [style]="{ height: '4px' }"
           [showValue]="false"
         ></p-progressBar>
