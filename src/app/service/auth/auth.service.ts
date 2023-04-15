@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/app-store/app.state';
 import { AuthResponseData } from '../../models/authResponses';
 import { User } from '../../models/user.models';
 import { MessageService } from 'primeng/api';
+import { UserInfo } from 'src/app/state/profile/profile.model';
 
 @Injectable({ providedIn: 'root' })
 export class AuthServices {
@@ -16,7 +17,9 @@ export class AuthServices {
 
   apiUrlSignUp = 'https://api-taskeasy.onrender.com/v1/users/signup';
   apiUrlSignIn = 'https://api-taskeasy.onrender.com/v1/users/signin';
+  apiUrl = 'http://localhost:3000/v1/users/';
   apiUrlUserLoad = 'https://api-taskeasy.onrender.com/v1/users/load';
+  reqHeader!:HttpHeaders;
 
   constructor(
     private messageService: MessageService,
@@ -91,22 +94,33 @@ export class AuthServices {
     }
   }
 
-  getUserFromLocalStorage() {
-    const authToken = localStorage.getItem('authToken');
-    
-    var reqHeader = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'x-auth-token': JSON.parse(authToken!),
-    });
-
-    if (authToken) {
-      return this.http.get<AuthResponseData>(this.apiUrlUserLoad, {
-        headers: reqHeader,
-      });
+  getUserInfo(): Observable<UserInfo> {
+    const user:UserInfo = {
+      firstname: 'Prabhat',
+      lastname:'Thakur',
+      email: 'abhi046@gmail.com',
+      imgurl: ''
     }
+    return of(user)
+  }
 
+  getToken() {
+    if(!this.reqHeader) {
+      this.reqHeader = new HttpHeaders({
+        'Content-Type': 'application/json',
+        'x-auth-token': JSON.parse(localStorage.getItem('authToken')),
+      })
+    } 
+    return this.reqHeader;
+  }
+
+  setUserInfo(userInfo:UserInfo): Observable<any> {
+    return this.http.put(`${'http://localhost:3000/v1/users/updateProfile'}`, userInfo, { headers: this.getToken()} );
+  }
+
+  getUserFromLocalStorage() {
     return this.http.get<AuthResponseData>(this.apiUrlUserLoad, {
-      headers: reqHeader,
+      headers: this.getToken(),
     });
   }
 }
