@@ -1,4 +1,4 @@
-import { setLoadingSpinner, setErrorMessage, setLogoLoading, setTaskLoaded } from './shared.actions';
+import { setLoadingSpinner, setErrorMessage, setLogoLoading } from './shared.actions';
 import { createReducer, on } from '@ngrx/store';
 import { initialState } from './shared.state';
 
@@ -20,12 +20,6 @@ const _sharedReducer = createReducer(
     return {
       ...state,
       showLogoLoading: action.status,
-    };
-  }),
-  on(setTaskLoaded, (state, action) => {
-    return {
-      ...state,
-      isTaskLoaded: action.status,
     };
   })
 );

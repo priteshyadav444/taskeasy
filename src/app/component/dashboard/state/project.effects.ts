@@ -19,7 +19,6 @@ import { ProjectService } from 'src/app/service/project/project.service';
 import { Project } from 'src/app/models/projects.models';
 import {
   setLoadingSpinner,
-  setTaskLoaded,
 } from 'src/app/component/shared/state/Shared/shared.actions';
 import { loadDataSuccess, resetTasks } from '../../task/state/task.action';
 
@@ -67,7 +66,6 @@ export class ProjectEffects {
           map((projects) => {
             this.data = [];
             if (projects != null) {
-              
               projects.forEach((ele) => {
                 this.totalCompletedTask = 0;
                 this.totalTasks = 0;
@@ -89,7 +87,6 @@ export class ProjectEffects {
             }
             this.idx = 0;
             projects = this.data;
-            this.store.dispatch(setTaskLoaded({ status: false }));
             return loadProjectsSuccess({ projects });
           })
         );
