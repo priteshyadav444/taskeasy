@@ -110,7 +110,7 @@ export class AuthEffects {
       ofType(autoLogin),
       exhaustMap((action) => {
         this.store.dispatch(setLogoLoading({ status: true }));
-        return this.authService.getUserFromLocalStorage().pipe(
+        return this.authService.loadUser().pipe(
           map((data) => {
             this.store.dispatch(setLoadingSpinner({ status: false }));
             this.store.dispatch(setErrorMessage({ message: '' }));
@@ -135,7 +135,7 @@ export class AuthEffects {
       ofType(logOut),
       exhaustMap((action) => {
         this.store.dispatch(setLogoLoading({ status: true }));
-        return this.authService.getUserFromLocalStorage().pipe(
+        return this.authService.loadUser().pipe(
           map((data) => {
             // resetting Project State
             this.store.dispatch(

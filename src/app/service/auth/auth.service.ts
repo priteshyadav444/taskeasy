@@ -120,7 +120,7 @@ export class AuthServices {
   }
 
   // update user function
-  updateUser(userInfo: UserInfo): Observable<any> {
+  update(userInfo: UserInfo): Observable<any> {
     return this.http.put<UserInfo>(
       `${this.apiUrl}/updateProfile`,
       { ...userInfo },
