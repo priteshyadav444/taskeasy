@@ -1,8 +1,7 @@
 <!-- Todo : Need to remove and make common navbar on later stage -->
 <div class="layout-wrapper layout-static layout-static-sidebar-inactive">
-
   <div class="layout-topbar">
-    <a class="p-link  layout-topbar-button" [routerLink]="['/dashboard']">
+    <a class="p-link layout-topbar-button" [routerLink]="['/dashboard']">
       <i class="pi pi-chevron-left"></i>
     </a>
     <span class="layout-topbar-logo">
@@ -20,11 +19,23 @@
   <div class="grid py-8 mx-5">
     <div class="col-12 lg:col-4 md:col-4 sm:col-12">
       <div class="card p-6">
-        <p-image src="https://picsum.photos/seed/picsum/200/300" alt="Image" width="100%" height="250px"></p-image>
+        <p-image
+          src="https://picsum.photos/seed/picsum/200/300"
+          alt="Image"
+          width="100%"
+          height="250px"
+        ></p-image>
+        <div class="col-12">
+          <p-button
+            label="Upload Picture"
+            class="flex-grow-1 grid"
+            [style]="{ width: '100%' }"
+          ></p-button>
+        </div>
       </div>
     </div>
 
-    <div class="lg:col-8 md:col-8 sm:col-12">
+    <div class="lg:col-8 md: col-8 sm:col-12">
       <div class="card">
         <h3>Profile</h3>
         <p-divider align="left">
@@ -34,17 +45,25 @@
           <div class="formgrid grid">
             <div class="field col py-4">
               <span class="p-float-label">
-                <input id="float-input"
+                <input
+                  id="float-input"
                   class="p-inputtext-lg border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"
-                  type="text" pInputText formControlName="firstName" />
+                  type="text"
+                  pInputText
+                  formControlName="firstName"
+                />
                 <label for="float-input">First Name</label>
               </span>
             </div>
             <div class="field col py-4">
               <span class="p-float-label">
-                <input id="float-input"
+                <input
+                  id="float-input"
                   class="p-inputtext-lg border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"
-                  type="text" pInputText formControlName="lastName" />
+                  type="text"
+                  pInputText
+                  formControlName="lastName"
+                />
                 <label for="float-input">Last Name</label>
               </span>
             </div>
@@ -52,17 +71,25 @@
           <div class="formgrid grid">
             <div class="field col py-4">
               <span class="p-float-label">
-                <input id="float-input"
+                <input
+                  id="float-input"
                   class="p-inputtext-lg p-inputtext-lg border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"
-                  type="text" pInputText formControlName="emailAddress" />
+                  type="text"
+                  pInputText
+                  formControlName="emailAddress"
+                />
                 <label for="float-input">Email Address</label>
               </span>
             </div>
             <div class="field col py-4">
               <span class="p-float-label">
-                <input id="float-input"
+                <input
+                  id="float-input"
                   class="p-inputtext-lg border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"
-                  type="text" pInputText formControlName="mobileNo" />
+                  type="text"
+                  pInputText
+                  formControlName="mobileNo"
+                />
                 <label for="float-input">Mobile No.</label>
               </span>
             </div>
@@ -70,23 +97,34 @@
           <div class="formgrid grid">
             <div class="field col py-4">
               <span class="p-float-label">
-                <input id="float-input"
+                <input
+                  id="float-input"
                   class="p-inputtext-lg border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"
-                  type="text" pInputText formControlName="country" />
+                  type="text"
+                  pInputText
+                  formControlName="country"
+                />
                 <label for="float-input">Country</label>
               </span>
             </div>
             <div class="field col py-4">
               <span class="p-float-label">
-                <input id="float-input"
+                <input
+                  id="float-input"
                   class="p-inputtext-lg border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"
-                  type="text" pInputText />
+                  type="text"
+                  pInputText
+                />
                 <label for="float-input">State</label>
               </span>
             </div>
           </div>
           <div>
-            <p-button type="submit" label="SAVE DETAILS" [disabled]="profileForm.invalid"></p-button>
+            <p-button
+              type="submit"
+              label="SAVE DETAILS"
+              [disabled]="profileForm.invalid"
+            ></p-button>
           </div>
         </form>
       </div>
