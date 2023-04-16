@@ -1,12 +1,30 @@
-<div>
-  <div class="grid">
-    <div class="col-4">
-      <div class="card">
-        <p-image src="https://picsum.photos/seed/picsum/200/300" alt="Image" width="50%" height="25%"></p-image>
+<!-- Todo : Need to remove and make common navbar on later stage -->
+<div class="layout-wrapper layout-static layout-static-sidebar-inactive">
+
+  <div class="layout-topbar">
+    <a class="p-link  layout-topbar-button" [routerLink]="['/dashboard']">
+      <i class="pi pi-chevron-left"></i>
+    </a>
+    <span class="layout-topbar-logo">
+      <img
+        src="assets/layout/images/logo.svg"
+        alt="logo"
+        routerLink="/dashboard"
+      />
+    </span>
+  </div>
+</div>
+
+<!-- Profile  section -->
+<div class="mt-8">
+  <div class="grid py-8 mx-5">
+    <div class="col-12 lg:col-4 md:col-4 sm:col-12">
+      <div class="card p-6">
+        <p-image src="https://picsum.photos/seed/picsum/200/300" alt="Image" width="100%" height="250px"></p-image>
       </div>
     </div>
 
-    <div class="col-8">
+    <div class="lg:col-8 md:col-8 sm:col-12">
       <div class="card">
         <h3>Profile</h3>
         <p-divider align="left">
@@ -75,3 +93,4 @@
     </div>
   </div>
 </div>
+<!-- Profile section end -->
