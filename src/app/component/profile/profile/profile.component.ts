@@ -34,14 +34,14 @@ export class ProfileComponent implements OnInit {
       firstName: [userinfo?.firstname || '', Validators.required],
       lastName: [userinfo?.lastname || ''],
       emailAddress: [userinfo?.email || '', Validators.compose([Validators.required, Validators.email])],
-      mobileNo: [''],
-      country: ['']
+      mobileNo: [ userinfo?.mobileNo || ''],
+      country: [ userinfo?.country || '']
     })
   }
 
   onFormSubmit() {
-    const { firstName, lastName, emailAddress } = this.profileForm.value
-    this.store.dispatch(profileActions.updateUserInfo({userInfo: { firstname:firstName, lastname:lastName, email: emailAddress, imgurl: undefined }}))
+    const { firstName, lastName, emailAddress, country, mobileNo } = this.profileForm.value
+    this.store.dispatch(profileActions.updateUserInfo({userInfo: { firstname:firstName, lastname:lastName, email: emailAddress, imgurl: undefined, country, phone_no: mobileNo }}))
   }
 
 }

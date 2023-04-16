@@ -29,10 +29,9 @@ export class ProfileEffects {
     this.actions$.pipe(
       ofType(profileActions.updateUserInfo),
       exhaustMap((action) => {
-        return this.authService.setUserInfo(action.userInfo).pipe(
+        return this.authService.update(action.userInfo).pipe(
           map((userInfo) => profileActions.updateUserInfoSuccess({ userInfo })),
           tap((userInfo) => this.toastService.showMessage({ userInfo })),
-          catchError((error) => of(profileActions.handleError({ error })))
         );
       })
     )
