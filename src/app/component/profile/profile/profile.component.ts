@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import * as profileActions from '../../../state/profile/profile.action';
+import { selectProfileState } from '../../../state/profile/profile.selector';
 
 @Component({
   selector: 'app-profile',
@@ -16,15 +17,23 @@ export class ProfileComponent implements OnInit {
   constructor(private fb:FormBuilder, private store:Store) { }
 
   ngOnInit(): void {
-    this.initform();
     this.store.dispatch(profileActions.getUserInfo())
+    this.store.select(selectProfileState).subscribe({
+      next: (data) => {
+        this.initform(data)
+      },
+      error: (error) => {
+        console.log('error', error);
+      }
+    })
+
   }
 
-  initform() {
+  initform(userinfo?:any) {
     this.profileForm = this.fb.group({
-      firstName: ['', Validators.required],
-      lastName: [''],
-      emailAddress: ['', Validators.compose([Validators.required, Validators.email])],
+      firstName: [userinfo?.firstname || '', Validators.required],
+      lastName: [userinfo?.lastname || ''],
+      emailAddress: [userinfo?.email || '', Validators.compose([Validators.required, Validators.email])],
       mobileNo: [''],
       country: ['']
     })
