@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Store } from '@ngrx/store';
 import {MessageService} from 'primeng/api';
 
 @Injectable({
@@ -6,9 +7,11 @@ import {MessageService} from 'primeng/api';
   })
 
 export class ToastService {
-  constructor(private messageService: MessageService) {}
+  constructor(private messageService: MessageService, private store:Store) {
+  }
 
   showMessage(messageConfig:any) {
-    this.messageService.add({severity:'success', summary:'Service Message', detail:'Via MessageService'});
+    const msg: string | undefined = messageConfig?.errorMessage?.error?.error?.errors?.[0]?.msg 
+    this.messageService.add({severity: messageConfig?.severity, summary: messageConfig?.summary , detail: msg});
     }
 }
