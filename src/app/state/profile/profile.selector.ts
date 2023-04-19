@@ -9,3 +9,10 @@ export const selectProfileState = createSelector(
       return state?.userInfo?.userInfo
   }
 );
+
+export const selectProfileError = createSelector(
+  selectFeature,
+  (state: ProfileState) => {
+      return state.errorMessage
+  }
+);
