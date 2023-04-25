@@ -15,6 +15,7 @@ import { ToastService } from 'src/app/service/toast.service';
 })
 export class ProfileComponent implements OnInit {
   profileForm!: FormGroup;
+  passwordForm!: FormGroup;
 
   constructor(
     private fb: FormBuilder,
@@ -44,6 +45,7 @@ export class ProfileComponent implements OnInit {
           console.log('error', error);
         },
       });
+      this.initPasswordForm();
   }
 
   initform(userinfo?: any) {
@@ -57,6 +59,14 @@ export class ProfileComponent implements OnInit {
       mobileNo: [userinfo?.mobileNo || ''],
       country: [userinfo?.country || ''],
     });
+  }
+
+  initPasswordForm() {
+    this.passwordForm = this.fb.group({
+      oldPassward: ['', Validators.required ],
+      newPassword: ['', Validators.required],
+      confirmPassword: ['', Validators.required]
+    })
   }
 
   onFormSubmit() {
@@ -74,6 +84,15 @@ export class ProfileComponent implements OnInit {
         },
       })
     );
+  }
+
+  onChangePassword() {
+    const password = this.passwordForm.controls['oldPassward'].value;
+    const new_password = this.passwordForm.controls['newPassword'].value;
+    const confirm_password = this.passwordForm.controls['confirmPassword'].value;
+    if (new_password == confirm_password) {
+      this.store.dispatch(profileActions.updateUserPassowrdInfo({ userPassword: { password, new_password, confirm_password}}))
+    }
   }
 
 }

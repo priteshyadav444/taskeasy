@@ -6,7 +6,7 @@ import { AppState } from 'src/app/app-store/app.state';
 import { AuthResponseData } from '../../models/authResponses';
 import { User } from '../../models/user.models';
 import { MessageService } from 'primeng/api';
-import { UserInfo } from 'src/app/state/profile/profile.model';
+import { UserInfo, UserPassword } from 'src/app/state/profile/profile.model';
 import { AnyCatcher } from 'rxjs/internal/AnyCatcher';
 import { getToken } from 'src/app/component/auth/state/auth.selector';
 
@@ -135,5 +135,15 @@ export class AuthServices {
     return this.http.get<AuthResponseData>(`${this.apiUrl}/load`, {
       headers: this.getHeader(),
     });
+  }
+
+  updatePassword(userPassword:UserPassword) {
+    return this.http.put<UserPassword>(
+      `${this.apiUrl}/updatePassword`,
+      { ...userPassword },
+      {
+        headers: this.getHeader(),
+      }
+    );
   }
 }

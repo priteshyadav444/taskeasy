@@ -6,3 +6,9 @@ export interface UserInfo {
   phone_no: string | undefined;
   imgurl: string | undefined;
 }
+
+export interface UserPassword {
+  password: string;
+  new_password: string;
+  confirm_password: string;
+}
