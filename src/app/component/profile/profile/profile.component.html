@@ -120,11 +120,62 @@
             </div>
           </div>
           <div>
-            <p-button
-              type="submit"
-              label="SAVE DETAILS"
-              [disabled]="profileForm.invalid"
-            ></p-button>
+            <div class="flex justify-content-between">
+              <p-button
+                type="submit"
+                label="SAVE DETAILS"
+                [disabled]="profileForm.invalid"
+              ></p-button>
+              <button pButton pRipple type="button" label="Change Password" class="p-button-outlined"></button>
+            </div>
+            <p-divider align="left">
+              <h5><b>Change Password</b></h5>
+            </p-divider>
+            <div class="formgrid grid">
+              <div class="field col py-4">
+                <span class="p-float-label">
+                  <input
+                    id="float-input"
+                    class="p-inputtext-lg p-inputtext-lg border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"
+                    type="text"
+                    pInputText
+                    formControlName="emailAddress"
+                  />
+                  <label for="float-input">Password</label>
+                </span>
+              </div>
+              <div class="field col py-4">
+                <span class="p-float-label">
+                  <input
+                    id="float-input"
+                    class="p-inputtext-lg border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"
+                    type="text"
+                    pInputText
+                    formControlName="mobileNo"
+                  />
+                  <label for="float-input">New Password</label>
+                </span>
+              </div>
+            </div>
+            <div class="formgrid grid">
+              <div class="field col py-4">
+                <span class="p-float-label">
+                  <input
+                    id="float-input"
+                    class="p-inputtext-lg p-inputtext-lg border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"
+                    type="text"
+                    pInputText
+                    formControlName="emailAddress"
+                  />
+                  <label for="float-input">Confirm Password</label>
+                </span>
+              </div>
+              <div class="field col py-4">
+                <button pButton pRipple type="button" label="Update Password" class="p-button-outlined"
+                [style]="{'width':'100%', 'padding':'12px'}"
+                ></button>
+              </div>
+            </div>
           </div>
         </form>
       </div>

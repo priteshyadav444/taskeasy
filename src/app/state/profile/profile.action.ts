@@ -26,3 +26,8 @@ export const handleError = createAction(
     GET_USER.GET_ERROR,
     props<{error:any}>()
 );
+
+export const setHandleError = createAction(
+    GET_USER.SET_ERROR,
+    props<{errorMessage:any}>()
+);

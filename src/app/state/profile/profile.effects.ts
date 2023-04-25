@@ -4,8 +4,7 @@ import { of } from 'rxjs';
 import { catchError, exhaustMap, map, tap } from 'rxjs/operators';
 import * as profileActions from './profile.action';
 import { AuthServices } from 'src/app/service/auth/auth.service';
-import { ToastService } from 'src/app/service/toast.service';
-import { UserInfo } from './profile.model'
+import { UserInfo } from './profile.model';
 
 @Injectable()
 export class ProfileEffects {
@@ -31,7 +30,7 @@ export class ProfileEffects {
       exhaustMap((action) => {
         return this.authService.update(action.userInfo).pipe(
           map((userInfo) => profileActions.updateUserInfoSuccess({ userInfo })),
-          tap((userInfo) => this.toastService.showMessage({ userInfo })),
+          catchError((error) => of(profileActions.handleError({ error })))
         );
       })
     )
@@ -40,13 +39,9 @@ export class ProfileEffects {
   handleError$ = createEffect(() =>
     this.actions$.pipe(
       ofType(profileActions.handleError),
-      tap((error) => this.toastService.showMessage({ error }))
+      map((errorMessage) => profileActions.setHandleError({ errorMessage }))
     )
   );
 
-  constructor(
-    private actions$: Actions,
-    private authService: AuthServices,
-    private toastService: ToastService
-  ) {}
+  constructor(private actions$: Actions, private authService: AuthServices) {}
 }
