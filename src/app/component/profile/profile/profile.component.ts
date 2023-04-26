@@ -16,6 +16,7 @@ import { ToastService } from 'src/app/service/toast.service';
 export class ProfileComponent implements OnInit {
   profileForm!: FormGroup;
   passwordForm!: FormGroup;
+  wantToChangePassword: boolean = false;
 
   constructor(
     private fb: FormBuilder,
@@ -93,6 +94,10 @@ export class ProfileComponent implements OnInit {
     if (new_password == confirm_password) {
       this.store.dispatch(profileActions.updateUserPassowrdInfo({ userPassword: { password, new_password, confirm_password}}))
     }
+  }
+
+  changePwdRequest() {
+    this.wantToChangePassword = !this.wantToChangePassword;
   }
 
 }
