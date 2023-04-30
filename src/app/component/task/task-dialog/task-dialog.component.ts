@@ -30,7 +30,6 @@ export class TaskDialogComponent implements OnInit, OnChanges {
     description: undefined,
     scheduled_date: null,
     completedAt: undefined,
-    completed: false,
     task_status: undefined,
     badge: undefined,
     scheduled_type: undefined,

@@ -4,7 +4,6 @@ export interface Task {
   description?: string;
   scheduled_date?: string | Date;
   completedAt?: string;
-  completed?: boolean;
   task_status?: string;
   badge?: string;
   scheduled_type?: string;

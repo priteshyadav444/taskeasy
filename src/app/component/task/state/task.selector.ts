@@ -48,8 +48,7 @@ export const getTodayCompletedTasks = createSelector(getTasks, (tasks) => {
   // tasks.forEach((data)=> console.log(date1 > formatDate(data.scheduled_date!,'yyyy-MM-dd','en_US')));
   return tasks.filter(
     (data) =>
-      formatDate(data.scheduled_date!, 'yyyy-MM-dd', 'en_US') == date1 &&
-      data.task_status == 'completed'
+      formatDate(data.scheduled_date!, 'yyyy-MM-dd', 'en_US') == date1
   );
 });
 
