@@ -101,7 +101,7 @@
                       ></i>
                     </b>
                   </span>
-                  <b>Manager:</b> {{ managerName$ | async}}
+                  <b>Manager:</b> {{ managerName$ | async }}
                 </div>
               </div>
               <div>
@@ -133,33 +133,16 @@
               </div>
               <ng-template pTemplate="footer">
                 <p-avatarGroup styleClass="ml-1">
-                  <p-avatar
-                    image="https://primefaces.org/cdn/primeng/images/demo/avatar/amyelsner.png"
-                    shape="circle"
-                  ></p-avatar>
-                  <p-avatar
-                    image="https://primefaces.org/cdn/primeng/images/demo/avatar/asiyajavayant.png"
-                    shape="circle"
-                  ></p-avatar>
-                  <p-avatar
-                    image="https://primefaces.org/cdn/primeng/images/demo/avatar/ionibowcher.png"
-                    shape="circle"
-                  ></p-avatar>
-                  <p-avatar
-                    image="https://primefaces.org/cdn/primeng/images/demo/avatar/xuxuefeng.png"
-                    shape="circle"
-                  ></p-avatar>
-                  <ng-container *ngIf="(managerName$ | async) as userName">
+                  <ng-container *ngIf="managerName$ | async as userName">
                     <p-avatar
                       image="https://primefaces.org/cdn/primeng/images/demo/avatar/onyamalimba.png"
-                      label="{{userName[0]}}"
+                      label="{{ userName[0] }}"
                       size="large"
                       shape="circle"
                       [style]="{
                         'background-color': '#9c27b0',
-                        'color': '#ffffff',
-                         'size':'2rem'
-
+                        color: '#ffffff',
+                        size: '2rem'
                       }"
                     ></p-avatar>
                   </ng-container>
