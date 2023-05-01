@@ -10,7 +10,7 @@
             <i
               class="pi pi-calendar-minus"
               style="font-size: 1.4rem"
-              pTooltip="{{ data.scheduled_date | date: mediumDate }}"
+              pTooltip="{{ data?.scheduled_date | date: mediumDate }}"
             ></i>
           </span>
           <div
@@ -55,7 +55,6 @@
               styleClass="mr-2"
             ></p-badge
           ></ng-template>
-
           <i class="pi pi-ellipsis-v" style="font-size: 1rem"></i>
         </div>
       </div>
@@ -63,7 +62,7 @@
 
     <div *ngIf="data.description?.length > 0" class="field mt-1">
       <p-editor
-        [ngModel]="transform(data.description)"
+        [ngModel]="data?.description"
         [readonly]="true"
         class="mt-2"
         [style]="{ 'max-height': '160px', overflow: 'hidden' }"
@@ -84,8 +83,7 @@
         <p-accordion [multiple]="true">
           <p-accordionTab
             header="Subtasks - {{
-              data.subtasklist?.length -
-                calulateCompleteSubTask(data.subtasklist)
+              data?.subtasklist?.length - data?.totalSubCompletedTask
             }}"
             [selected]="false"
           >
@@ -99,7 +97,6 @@
                       disabled="false"
                     ></p-checkbox>
                   </div>
-
                   <div class="example-td mr-auto">
                     <span class="font-medium text-md example-title">
                       {{ item.stitle }}</span
@@ -109,11 +106,9 @@
               </div>
             </div>
           </p-accordionTab>
-          <div *ngIf="calulateCompleteSubTask(data.subtasklist) != 0">
+          <div *ngIf="this.data?.totalSubCompletedTask != 0">
             <p-accordionTab
-              header="Completed - {{
-                calulateCompleteSubTask(data.subtasklist)
-              }}"
+              header="Completed - {{ this.data?.totalSubCompletedTask }}"
               style="margin-top: 4px"
             >
               <div *ngIf="data.subtasklist?.length != 0">
@@ -145,7 +140,7 @@
     <div *ngIf="data.subtasklist?.length != 0">
       <span>
         <p-progressBar
-          [value]="calculatePercentage(data?.subtasklist)"
+          [value]="this.data?.subTaskListPercentage"
           [style]="{ height: '4px' }"
           [showValue]="false"
         ></p-progressBar>
@@ -166,7 +161,6 @@
                 class="pi pi-check-circle mr-1"
                 style="color: greenyellow; font-weight: bolder"
               ></i>
-              {{ calculateCompletionDiff(data.startedAt, data.completedAt) }}
             </span>
 
             <span *ngIf="data.task_status == 'active'">
@@ -174,7 +168,6 @@
                 class="pi pi-clock mr-1"
                 style="color: #ffc107; font-weight: bolder"
               ></i>
-              {{ calculateDiff(data.startedAt) }}
             </span>
           </span>
           <ng-template #elseBlock1>
@@ -201,28 +194,13 @@
       </div>
       <p-avatarGroup styleClass="ml-5">
         <p-avatar
-          image="https://primefaces.org/cdn/primeng/images/demo/avatar/amyelsner.png"
-          shape="circle"
-        ></p-avatar>
-        <p-avatar
-          image="https://primefaces.org/cdn/primeng/images/demo/avatar/asiyajavayant.png"
-          shape="circle"
-        ></p-avatar>
-        <p-avatar
-          image="https://primefaces.org/cdn/primeng/images/demo/avatar/ionibowcher.png"
-          shape="circle"
-        ></p-avatar>
-        <p-avatar
-          image="https://primefaces.org/cdn/primeng/images/demo/avatar/xuxuefeng.png"
-          shape="circle"
-        ></p-avatar>
-        <p-avatar
           image="https://primefaces.org/cdn/primeng/images/demo/avatar/onyamalimba.png"
           label="P"
           size="large"
           shape="circle"
           [style]="{ 'background-color': '#9c27b0', color: '#ffffff' }"
-        ></p-avatar>
+        >
+        </p-avatar>
       </p-avatarGroup>
     </div>
   </div>

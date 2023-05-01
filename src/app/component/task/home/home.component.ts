@@ -76,8 +76,8 @@ export class HomeComponent implements OnInit {
     private route: ActivatedRoute,
     private titleService: Title
   ) {
+    
     this.data = this.service;
-
     this.badgeData = [
       { code: 'low', badge: 'Low' },
       { code: 'medium', badge: 'Medium' },
