@@ -8,11 +8,28 @@ import { Console } from 'console';
   encapsulation: ViewEncapsulation.None,
 })
 export class TaskCardComponent implements OnInit {
-  @Input('data') data!: any;
+  @Input('data') data: any = {
+    _id: undefined,
+    title: undefined,
+    description: '',
+    task_status: undefined,
+    badge: undefined,
+    scheduled_type: undefined,
+    subtasklist: [],
+    scheduled_date: null,
+    completedAt: undefined,
+    startedAt: undefined,
+    createdAt: null,
+  };
   constructor() {}
 
   ngOnInit(): void {
+    this.data.description = this.transform(this.data.description);
+    this.data.dayDiff = this.calculateDiff(this.data.startedAt);
+    this.data.totalSubCompletedTask = this.calulateCompleteSubTask(this.data.subtasklist);
+    this.data.subTaskListPercentage = this.calculatePercentage(this.data.subtasklist);
   }
+
   calculateDiff(sentDate) {
     var date1: any = new Date(sentDate);
     var date2: any = new Date();
@@ -36,8 +53,11 @@ export class TaskCardComponent implements OnInit {
   }
 
   calculatePercentage(data) {
-    return Math.round((this.calulateCompleteSubTask(data) * 100) / data?.length);
+    return Math.round(
+      (this.calulateCompleteSubTask(data) * 100) / data?.length
+    );
   }
+
   calculateCompletionDiff(sentDate, fromDate) {
     var date1: any = new Date(sentDate);
     var date2: any = new Date(fromDate);
@@ -53,7 +73,8 @@ export class TaskCardComponent implements OnInit {
     return diffDays + ' Days: ' + diffHrs + 'H';
   }
   // remove images from description in card
-  transform(value: string): string {
+  transform(value: string = ''): string {
+    if (value == undefined || value == null) value = '';
     return value.replace(/<img[^>]*>/g, '');
   }
 }
