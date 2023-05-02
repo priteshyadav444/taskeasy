@@ -3,16 +3,12 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Title } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { MessageService } from 'primeng/api';
 import { Observable } from 'rxjs';
 import { AppState } from 'src/app/app-store/app.state';
 import {
-  setLoadingSpinner,
   setLogoLoading,
 } from 'src/app/component/shared/state/Shared/shared.actions';
 import {
-  getErrorMessage,
-  getLoading,
   getLogoLoading,
 } from 'src/app/component/shared/state/Shared/shared.selector';
 import { signupStart } from '../state/auth.actions';

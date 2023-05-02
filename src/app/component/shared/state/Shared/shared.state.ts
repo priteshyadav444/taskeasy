@@ -1,7 +1,7 @@
 export interface SharedState {
   showLoading: boolean;
   showLogoLoading:boolean;
-  errorMessage: string; 
+  errorMessage: any; 
   isTaskLoaded:boolean
 }
 

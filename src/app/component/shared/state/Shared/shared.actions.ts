@@ -15,7 +15,7 @@ export const setLogoLoading = createAction(
 
 export const setErrorMessage = createAction(
   SET_ERROR_MESSAGE,
-  props<{ message: string }>()
+  props<{ error: any }>()
 );
 
 export const setTaskLoaded = createAction(

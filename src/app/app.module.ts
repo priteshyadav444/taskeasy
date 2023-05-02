@@ -38,6 +38,7 @@ import { sharedModules } from './shared-component/shared.module';
 import { ToastService } from './service/toast.service';
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { ProfileEffects } from './state/profile/profile.effects';
+import { SharedEffects } from './component/shared/state/Shared/shared.effects';
 
 @NgModule({
   declarations: [
@@ -60,7 +61,7 @@ import { ProfileEffects } from './state/profile/profile.effects';
     sharedModules,
     StoreModule.forRoot(appReducer),
     BrowserAnimationsModule,
-    EffectsModule.forRoot([AuthEffects, ProjectEffects, ProfileEffects]),
+    EffectsModule.forRoot([AuthEffects, ProjectEffects, ProfileEffects, SharedEffects]),
     StoreDevtoolsModule.instrument({
       logOnly: environment.production, // Restrict extension to log-only mode
     }),

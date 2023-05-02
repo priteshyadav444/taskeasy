@@ -11,7 +11,6 @@ export class ToastService {
   }
 
   showMessage(messageConfig:any) {
-    const msg: string | undefined = messageConfig?.errorMessage?.error?.error?.errors?.[0]?.msg 
-    this.messageService.add({severity: messageConfig?.severity, summary: messageConfig?.summary , detail: msg});
-    }
+    this.messageService.add({severity: messageConfig?.severity, summary: messageConfig?.summary , detail: messageConfig.detail});
+  }
 }

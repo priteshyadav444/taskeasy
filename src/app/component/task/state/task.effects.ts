@@ -21,6 +21,7 @@ import {
   updateTask,
   updateTaskSuccess,
 } from './task.action';
+import * as sharedActions from 'src/app/component/shared/state/Shared/shared.actions';
 
 @Injectable()
 export class TaskEffects {
@@ -43,6 +44,10 @@ export class TaskEffects {
             return loadDataSuccess({ tasks, projectDetails });
           })
         );
+      }),
+      catchError((errResp) => {
+        const errMsg =  errResp?.error?.errors?.[0]?.msg;
+        return of(sharedActions.setErrorMessage({ error: errMsg}));
       })
     );
   });
@@ -63,13 +68,8 @@ export class TaskEffects {
             return addTaskSuccess({ task });
           }),
           catchError((errResp) => {
-            const messageData = {
-              severity: 'error',
-              summary: 'Server Error',
-              detail: 'Unexpected Error!',
-            };
-            this.taskServices.showMessage(messageData);
-            return of();
+            const errMsg =  errResp?.error?.errors?.[0]?.msg;
+            return of(sharedActions.setErrorMessage({ error: errMsg}));
           })
         );
       })
@@ -92,13 +92,8 @@ export class TaskEffects {
             return updateTaskSuccess({ task });
           }),
           catchError((errResp) => {
-            const messageData = {
-              severity: 'error',
-              summary: 'Server Error',
-              detail: 'Unexpected Error!',
-            };
-            this.taskServices.showMessage(messageData);
-            return of();
+            const errMsg =  errResp?.error?.errors?.[0]?.msg;
+            return of(sharedActions.setErrorMessage({ error: errMsg}));
           })
         );
       })
@@ -121,13 +116,8 @@ export class TaskEffects {
             return deleteTaskSuccess({ task });
           }),
           catchError((errResp) => {
-            const messageData = {
-              severity: 'error',
-              summary: 'Server Error',
-              detail: 'Unexpected Error!',
-            };
-            this.taskServices.showMessage(messageData);
-            return of();
+            const errMsg =  errResp?.error?.errors?.[0]?.msg;
+            return of(sharedActions.setErrorMessage({ error: errMsg}));
           })
         );
       })

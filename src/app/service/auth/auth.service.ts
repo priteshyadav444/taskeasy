@@ -40,13 +40,6 @@ export class AuthServices {
     localStorage.setItem('authToken', JSON.stringify(user.userToken));
   }
 
-  showError(errmsg: string) {
-    this.messageService.add({
-      severity: 'error',
-      summary: 'Error',
-      detail: errmsg,
-    });
-  }
 
   getErrorMessage(message: string) {
     switch (message) {

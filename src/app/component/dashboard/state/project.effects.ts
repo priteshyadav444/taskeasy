@@ -22,6 +22,7 @@ import {
   setTaskLoaded,
 } from 'src/app/component/shared/state/Shared/shared.actions';
 import { loadDataSuccess, resetTasks } from '../../task/state/task.action';
+import * as sharedActions from 'src/app/component/shared/state/Shared/shared.actions';
 
 @Injectable()
 export class ProjectEffects {
@@ -50,8 +51,8 @@ export class ProjectEffects {
             return addProjectSucess({ project });
           }),
           catchError((errResp) => {
-            this.store.dispatch(setLoadingSpinner({ status: false }));
-            return of();
+            const errMsg =  errResp?.error?.errors?.[0]?.msg;
+            return of(sharedActions.setErrorMessage({ error: errMsg}));
           })
         );
       })
@@ -106,8 +107,8 @@ export class ProjectEffects {
             return deleteProjectSuccess({ pid: action.pid });
           }),
           catchError((errResp) => {
-            this.store.dispatch(setLoadingSpinner({ status: false }));
-            return of();
+            const errMsg =  errResp?.error?.errors?.[0]?.msg;
+            return of(sharedActions.setErrorMessage({ error: errMsg}));
           })
         );
       })
@@ -124,9 +125,9 @@ export class ProjectEffects {
               project: { ...action?.project, ...data },
             });
           }),
-          catchError((errRes) => {
-            this.store.dispatch(setLoadingSpinner({ status: false }));
-            return of();
+          catchError((errResp) => {
+            const errMsg =  errResp?.error?.errors?.[0]?.msg;
+            return of(sharedActions.setErrorMessage({ error: errMsg}));
           })
         );
       })
