@@ -65,7 +65,6 @@ export class SignupComponent implements OnInit {
     if (this.signUpForm.invalid) {
       return;
     }
-    this.store.dispatch(setLogoLoading({ status: true }));
     this.store.dispatch(signupStart({ firstname, lastname, email, password }));
   }
   onSignInClick(this: any) {
