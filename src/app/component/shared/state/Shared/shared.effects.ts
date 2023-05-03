@@ -22,20 +22,39 @@ export class SharedEffects {
       takeUntil(this.destroyer$),
       distinctUntilChanged(),
       tap((error: any) => {
-        this.toastService.showMessage({
-          severity: 'error',
-          summary: 'Error',
-          detail: error?.error,
-        });
+        const msg = error.error;
+        if (msg != '') {
+          this.toastService.showMessage({
+            severity: 'error',
+            summary: 'Error',
+            detail: msg,
+          });
+        }
         exhaustMap(() => null);
       })
     );
   });
 
-  constructor(
-    private actions$: Actions,
-    private toastService: ToastService
-  ) {}
+  handleSuccess$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(sharedActions.setSuccessMessage),
+      takeUntil(this.destroyer$),
+      distinctUntilChanged(),
+      tap((success: any) => {
+        const msg = success.message;
+        if (msg != '') {
+          this.toastService.showMessage({
+            severity: 'success',
+            summary: 'Success',
+            detail: msg,
+          });
+        }
+        exhaustMap(() => null);
+      })
+    );
+  });
+
+  constructor(private actions$: Actions, private toastService: ToastService) {}
 
   ngOnDestroy(): void {
     this.destroyer$.next(true);
