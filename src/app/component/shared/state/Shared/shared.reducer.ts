@@ -13,7 +13,7 @@ const _sharedReducer = createReducer(
   on(setErrorMessage, (state, action) => {
     return {
       ...state,
-      errorMessage: action.message,
+      errorMessage: action.error,
     };
   }),
   on(setLogoLoading, (state, action) => {
