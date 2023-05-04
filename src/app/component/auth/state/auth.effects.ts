@@ -19,6 +19,7 @@ import { Router } from '@angular/router';
 import { resetProjectState } from '../../dashboard/state/project.action';
 import { resetTaskState } from '../../task/state/task.action';
 import { User } from 'src/app/models/user.models';
+import { UiService } from 'src/app/service/ui.service';
 
 @Injectable()
 export class AuthEffects {
@@ -26,14 +27,15 @@ export class AuthEffects {
     private router: Router,
     private actions$: Actions,
     private store: Store<AppState>,
-    private authService: AuthServices
+    private authService: AuthServices,
+    private uiService: UiService
   ) {}
 
   signUp$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(signupStart),
       exhaustMap((action) => {
-        this.dispatchLoadingSpinner(true);
+        this.uiService.dispatchLoadingSpinner(true);
         return this.authService
           .signUp(
             action.firstname,
@@ -45,13 +47,15 @@ export class AuthEffects {
             map((data) => {
               const user = this.authService.formatUser(data);
               this.authService.setUserInLocalStorage(user);
-              this.dispatchLoadingSpinner(false);
-              this.dispatchSuccessMessage('Thank you for signing up!');
+              this.uiService.dispatchLoadingSpinner(false);
+              this.uiService.dispatchSuccessMessage(
+                'Thank you for signing up!'
+              );
               return signupSuccess({ user, redirect: true });
             }),
             catchError((err) => {
-              const errMsg = this.parseErrorMessage(err);
-              this.dispatchLoadingSpinner(false);
+              const errMsg = this.uiService.parseErrorMessage(err);
+              this.uiService.dispatchLoadingSpinner(false);
               return of(sharedActions.setErrorMessage({ error: errMsg }));
             })
           );
@@ -66,39 +70,21 @@ export class AuthEffects {
         const { email, password } = action;
         return this.authService.login(email, password).pipe(
           map((data) => {
-            this.dispatchLoadingSpinner(false);
+            this.uiService.dispatchLoadingSpinner(false);
             const user = this.authService.formatUser(data);
             this.authService.setUserInLocalStorage(user);
-            this.dispatchSuccessMessage('Welcome back!');
+            this.uiService.dispatchSuccessMessage('Welcome back!');
             return loginSuccess({ user, redirect: true });
           }),
           catchError((err) => {
-            const errMsg = this.parseErrorMessage(err);
-            this.dispatchLoadingSpinner(false);
+            const errMsg = this.uiService.parseErrorMessage(err);
+            this.uiService.dispatchLoadingSpinner(false);
             return of(sharedActions.setErrorMessage({ error: errMsg }));
           })
         );
       })
     );
   });
-
-  private parseErrorMessage(err: any): string {
-    if (err.error?.errors?.length) {
-      return err.error.errors[0].msg;
-    }
-    return 'An error occurred. Please try again later.';
-  }
-
-  private dispatchLoadingSpinner(status: boolean): void {
-    this.store.dispatch(sharedActions.setLoadingSpinner({ status }));
-  }
-
-  private dispatchSuccessMessage(message) {
-    this.store.dispatch(sharedActions.setSuccessMessage({ message }));
-  }
-  private dispatchLogoLoading(status: boolean): void {
-    this.store.dispatch(sharedActions.setLogoLoading({ status }));
-  }
 
   defaultRedirect = '/dashboard';
   loginRedirect$ = createEffect(
@@ -121,22 +107,22 @@ export class AuthEffects {
     return this.actions$.pipe(
       ofType(autoLogin),
       exhaustMap((action) => {
-        this.dispatchLoadingSpinner(true);
-        this.dispatchLogoLoading(true);
+        this.uiService.dispatchLoadingSpinner(true);
+        this.uiService.dispatchLogoLoading(true);
         return this.authService.loadUser().pipe(
           map((data) => {
-            this.dispatchLoadingSpinner(false);
-            this.dispatchLogoLoading(true);
+            this.uiService.dispatchLoadingSpinner(false);
+            this.uiService.dispatchLogoLoading(true);
 
             const user = this.authService.formatUser(data);
             this.authService.setUserInLocalStorage(user);
-            this.dispatchSuccessMessage('Welcome back!');
+            // this.uiService.dispatchSuccessMessage('Welcome back!');
             return loginSuccess({ user, redirect: true });
           }),
           catchError((err) => {
-            let errMsg = this.parseErrorMessage(err);
-            this.dispatchLoadingSpinner(false);
-            this.dispatchLogoLoading(false);
+            let errMsg = this.uiService.parseErrorMessage(err);
+            this.uiService.dispatchLoadingSpinner(false);
+            this.uiService.dispatchLogoLoading(false);
 
             // on intial login page auth_denied message
             if (err?.error?.errors?.[0]?.error_code == 'AUTH_DENAID')
@@ -153,7 +139,7 @@ export class AuthEffects {
     return this.actions$.pipe(
       ofType(logOut),
       exhaustMap((action) => {
-        this.dispatchLogoLoading(true);
+        this.uiService.dispatchLogoLoading(true);
         return this.authService.loadUser().pipe(
           map((data) => {
             // resetting Project State
@@ -175,17 +161,17 @@ export class AuthEffects {
               },
             });
 
-            this.dispatchLoadingSpinner(false);
-            this.dispatchLogoLoading(false);
-            this.dispatchSuccessMessage('Logged out. See you later');
+            this.uiService.dispatchLoadingSpinner(false);
+            this.uiService.dispatchLogoLoading(false);
+            this.uiService.dispatchSuccessMessage('Logged out. See you later');
 
             this.authService.setUserInLocalStorage(user);
             return logoutSucess({ user, redirect: false });
           }),
           catchError((err) => {
-            const errMsg = this.parseErrorMessage(err);
-            this.dispatchLoadingSpinner(false);
-            this.dispatchLogoLoading(false);
+            const errMsg = this.uiService.parseErrorMessage(err);
+            this.uiService.dispatchLoadingSpinner(false);
+            this.uiService.dispatchLogoLoading(false);
             const user = new User('', '', '', '', '');
             this.store.dispatch(logoutSucess({ user, redirect: false }));
             return of(sharedActions.setErrorMessage({ error: errMsg }));
