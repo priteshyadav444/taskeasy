@@ -12,8 +12,8 @@ import { getToken } from 'src/app/component/auth/state/auth.selector';
 
 @Injectable({ providedIn: 'root' })
 export class AuthServices {
-  apiUrl = 'http://localhost:3000/v1/users';
-  // apiUrl= 'https://api-taskeasy.onrender.com/v1/users';
+  // apiUrl = 'http://localhost:3000/v1/users';
+  apiUrl= 'https://api-taskeasy.onrender.com/v1/users';
 
   reqHeader!: HttpHeaders;
 
