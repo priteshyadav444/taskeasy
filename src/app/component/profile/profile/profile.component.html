@@ -37,7 +37,7 @@
 
     <div class="lg:col-8 md: col-8 sm:col-12">
       <div class="card">
-        <h3>{{ wantToChangePassword ? 'Change Password' : 'Profile' }}</h3>
+        <h3>{{ wantToChangePassword ? "Change Password" : "Profile" }}</h3>
         <p-divider align="left" *ngIf="!wantToChangePassword">
           <h5><b>The information can be edited</b></h5>
         </p-divider>
@@ -123,14 +123,29 @@
               </div>
               <div>
                 <div class="flex justify-content-end">
-                  <button pButton pRipple type="button" label="Back" class="p-button-secondary" label="BACK" (click)="changePwdRequest()"></button>
+                  <button
+                    pButton
+                    pRipple
+                    type="button"
+                    label="Back"
+                    class="p-button-secondary"
+                    label="BACK"
+                    [routerLink]="['/dashboard']"
+                  ></button>
                   <p-button
                     type="submit"
                     label="SAVE DETAILS"
                     [disabled]="profileForm.invalid"
                     class="ml-2"
                   ></p-button>
-                  <button pButton pRipple type="button" label="CHANGE PASSWORD" class="p-button-help ml-2" (click)="changePwdRequest()"></button>
+                  <button
+                    pButton
+                    pRipple
+                    type="button"
+                    label="CHANGE PASSWORD"
+                    class="p-button-help ml-2"
+                    (click)="changePwdRequest()"
+                  ></button>
                 </div>
               </div>
             </form>
@@ -142,11 +157,11 @@
               <div class="field col py-4">
                 <span class="p-float-label">
                   <input
-                  id="float-input"
-                  class="p-inputtext-lg p-inputtext-lg border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"
-                  type="password"
-                  pInputText
-                  formControlName="oldPassward"
+                    id="float-input"
+                    class="p-inputtext-lg p-inputtext-lg border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"
+                    type="password"
+                    pInputText
+                    formControlName="oldPassward"
                   />
                   <label for="float-input">Password</label>
                 </span>
@@ -154,11 +169,11 @@
               <div class="field col py-4">
                 <span class="p-float-label">
                   <input
-                  id="float-input"
-                  class="p-inputtext-lg border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"
-                  type="password"
-                  pInputText
-                  formControlName="newPassword"
+                    id="float-input"
+                    class="p-inputtext-lg border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"
+                    type="password"
+                    pInputText
+                    formControlName="newPassword"
                   />
                   <label for="float-input">New Password</label>
                 </span>
@@ -168,18 +183,23 @@
               <div class="field col py-4">
                 <span class="p-float-label">
                   <input
-                  id="float-input"
-                  class="p-inputtext-lg p-inputtext-lg border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"
-                  type="password"
-                  pInputText
-                  formControlName="confirmPassword"
+                    id="float-input"
+                    class="p-inputtext-lg p-inputtext-lg border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"
+                    type="password"
+                    pInputText
+                    formControlName="conformPassword"
                   />
                   <label for="float-input">Confirm Password</label>
                 </span>
               </div>
               <div class="field col py-4">
-                <button pButton pRipple type="submit" label="Update Password" class="p-button-outlined"
-                [style]="{'width':'100%', 'padding':'12px'}"
+                <button
+                  pButton
+                  pRipple
+                  type="submit"
+                  label="Update Password"
+                  class="p-button-outlined"
+                  [style]="{ width: '100%', padding: '12px' }"
                 ></button>
               </div>
             </div>
