@@ -16,10 +16,7 @@ import {
 import { Subscription, Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/app-store/app.state';
-import { getLoading, getLogoLoading } from 'src/app/component/shared/state/Shared/shared.selector';
-import { autoLogin } from 'src/app/component/auth/state/auth.actions';
-import { setLogoLoading } from 'src/app/component/shared/state/Shared/shared.actions';
-import { ActivatedRoute } from '@angular/router';
+import { getLoading } from 'src/app/component/shared/state/Shared/shared.selector';
 import { AppComponent } from 'src/app/app.component';
 
 @Component({

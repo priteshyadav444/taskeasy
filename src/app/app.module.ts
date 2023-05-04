@@ -35,6 +35,10 @@ import { MainComponent } from './component/lendingpage/main.component';
 import { StoreModule } from '@ngrx/store';
 import { appReducer } from './app-store/app.state';
 import { sharedModules } from './shared-component/shared.module';
+import { ToastService } from './service/toast.service';
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
+import { ProfileEffects } from './state/profile/profile.effects';
+import { SharedEffects } from './component/shared/state/Shared/shared.effects';
 
 @NgModule({
   declarations: [
@@ -56,7 +60,8 @@ import { sharedModules } from './shared-component/shared.module';
     AppRoutingModule,
     sharedModules,
     StoreModule.forRoot(appReducer),
-    EffectsModule.forRoot([AuthEffects, ProjectEffects]),
+    BrowserAnimationsModule,
+    EffectsModule.forRoot([AuthEffects, ProjectEffects, ProfileEffects, SharedEffects]),
     StoreDevtoolsModule.instrument({
       logOnly: environment.production, // Restrict extension to log-only mode
     }),
@@ -64,7 +69,7 @@ import { sharedModules } from './shared-component/shared.module';
   exports:[ 
     sharedModules
   ],
-  providers: [UiService,TasksService, MenuService,TasksCardService, Title],
+  providers: [UiService,TasksService, MenuService,TasksCardService, Title, ToastService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

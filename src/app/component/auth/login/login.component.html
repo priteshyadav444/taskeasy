@@ -1,17 +1,30 @@
-<div class="surface-0 flex align-items-center justify-content-center min-h-screen min-w-screen overflow-hidden">
-    <div class="grid justify-content-center p-2 lg:p-0" style="min-width:80%">
-        <div class="col-12 mt-5 xl:mt-0 text-center">
+<div
+  class="surface-0 flex align-items-center justify-content-center min-h-screen min-w-screen overflow-hidden"
+>
+  <div class="grid justify-content-center p-2 lg:p-0" style="min-width: 80%">
+    <div class="col-12 mt-5 xl:mt-0 text-center"></div>
+    <div class="col-12 xl:col-6" style="border-radius: 56px; padding: 0.3rem">
+      <div
+        class="h-full w-full m-0 py-7 px-4"
+        style="
+          border-radius: 53px;
+          background: linear-gradient(
+            180deg,
+            var(--surface-100) 38.9%,
+            var(--surface-0)
+          );
+        "
+      >
+        <div class="text-center mb-5">
+          <div class="text-900 text-3xl font-medium mb-3">
+            Welcome,to TaskEasy.in
+          </div>
+          <span class="text-600 font-medium">Sign in to continue</span>
         </div>
-        <div class="col-12 xl:col-6" style="border-radius:56px; padding:0.3rem;">
-            <div class="h-full w-full m-0 py-7 px-4" style="border-radius:53px; background: linear-gradient(180deg, var(--surface-100) 38.9%, var(--surface-0));">
-                <div class="text-center mb-5">
-                    <div class="text-900 text-3xl font-medium mb-3">Welcome,to TaskEasy.in </div>
-                    <span class="text-600 font-medium">Sign in to continue</span>
-                </div>
-            
-                <form [formGroup]="loginForm" (ngSubmit)="onSignInSubmit()">
-                <div class="w-full md:w-10 mx-auto">
-                    <label for="email1" class="block text-900 text-xl font-medium mb-2"
+
+        <form [formGroup]="loginForm" (ngSubmit)="onSignInSubmit()">
+          <div class="w-full md:w-10 mx-auto">
+            <label for="email1" class="block text-900 text-xl font-medium mb-2"
               >Email</label
             >
             <input
@@ -57,26 +70,40 @@
               >*Password Required</small
             >
             <small
-            *ngIf="loginForm.get('password')!.hasError('minlength')"
-            class="p-error block mb-3"
-            >*Password Length not valid</small
-          >
-            
-                    <div class="flex align-items-center justify-content-between mb-5">
-                        <div class="flex align-items-center">
-                          
-                        </div>
-                        <a class="font-medium no-underline ml-2 text-right cursor-pointer" style="color: var(--primary-color)">Forgot password?</a>
-                    </div>
-                    <button pButton pRipple type="submit" label="Sign In" class="p-button-outlined w-full mb-3"></button>
-                    <p-divider align="center">
-                      <b>OR</b>
-                    </p-divider>
-                    <button pButton pRipple type="button" label="Sign Up" class="w-full mb-3" (click)="onSignUpClick()"></button>
-                </div>
-            </form>
+              *ngIf="loginForm.get('password')!.hasError('minlength')"
+              class="p-error block mb-3"
+              >*Password Length not valid</small
+            >
+
+            <div class="flex align-items-center justify-content-between mb-5">
+              <div class="flex align-items-center"></div>
+              <a
+                class="font-medium no-underline ml-2 text-right cursor-pointer"
+                style="color: var(--primary-color)"
+                >Forgot password?</a
+              >
             </div>
-       
-        </div>
+            <button
+              pButton
+              pRipple
+              type="submit"
+              label="Sign In"
+              class="p-button-outlined w-full mb-3"
+            ></button>
+            <p-divider align="center">
+              <b>OR</b>
+            </p-divider>
+            <button
+              pButton
+              pRipple
+              type="button"
+              label="Sign Up"
+              class="w-full mb-3"
+              (click)="onSignUpClick()"
+            ></button>
+          </div>
+        </form>
+      </div>
     </div>
+  </div>
 </div>
