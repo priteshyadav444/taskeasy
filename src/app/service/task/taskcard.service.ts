@@ -9,7 +9,6 @@ import { Observable, BehaviorSubject, of } from 'rxjs';
 import { Subject } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { AppState } from 'src/app/app-store/app.state';
-import { addTask } from 'src/app/component/task/state/task.action';
 import { getTasks } from 'src/app/component/task/state/task.selector';
 import { Task } from 'src/app/models/task.models';
 

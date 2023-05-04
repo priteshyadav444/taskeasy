@@ -7,6 +7,7 @@ import { TaskState } from '../component/task/state/task.state';
 import { SharedReducer } from '../component/shared/state/Shared/shared.reducer';
 import { SHARED_STATE_NAME } from '../component/shared/state/Shared/shared.selector';
 import { SharedState } from '../component/shared/state/Shared/shared.state';
+import { userInfoReducer } from '../state/profile/profile.reducer';
 
 export interface AppState {
   tasks: TaskState;
@@ -19,5 +20,6 @@ export const appReducer = {
   tasks: tasksReducer,
   auth: AuthReducer,
   projects: ProjectReducer,
+  userInfo: userInfoReducer,
   [SHARED_STATE_NAME]: SharedReducer,
 };

@@ -18,7 +18,7 @@ export class AuthwrapperComponent implements OnInit {
   constructor(private store:Store<AppState>) { }
 
   ngOnInit(): void {
-    this.store.dispatch(autoLogin())
+    this.store.dispatch(autoLogin());
     this.showLogoLoading$ = this.store.select(getLogoLoading);
     this.showLoading$ = this.store.select(getLoading);
   }

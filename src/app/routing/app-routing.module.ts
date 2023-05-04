@@ -44,6 +44,11 @@ const routes: Routes = [
   {
     path:'logout',
     component:LogoutComponent
+  },
+  {
+    path:'profile',
+    loadChildren: () => import("../component/profile/profile.module").then((m) => m.ProfileModule), 
+    canActivate: [AuthGuard]
   }
  
 ];

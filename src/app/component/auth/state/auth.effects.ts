@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
-import { catchError, exhaustMap, map, mergeMap, tap } from 'rxjs';
+import { catchError, exhaustMap, map, mergeMap, switchMap, tap } from 'rxjs';
 import { AppState } from 'src/app/app-store/app.state';
 import { AuthServices } from 'src/app/service/auth/auth.service';
 import {
@@ -14,11 +14,7 @@ import {
   signupSuccess,
 } from './auth.actions';
 import { of } from 'rxjs';
-import {
-  setErrorMessage,
-  setLoadingSpinner,
-  setLogoLoading,
-} from 'src/app/component/shared/state/Shared/shared.actions';
+import * as sharedActions from 'src/app/component/shared/state/Shared/shared.actions';
 import { Router } from '@angular/router';
 import { resetProjectState } from '../../dashboard/state/project.action';
 import { resetTaskState } from '../../task/state/task.action';
@@ -37,6 +33,7 @@ export class AuthEffects {
     return this.actions$.pipe(
       ofType(signupStart),
       exhaustMap((action) => {
+        this.dispatchLoadingSpinner(true);
         return this.authService
           .signUp(
             action.firstname,
@@ -48,43 +45,60 @@ export class AuthEffects {
             map((data) => {
               const user = this.authService.formatUser(data);
               this.authService.setUserInLocalStorage(user);
+              this.dispatchLoadingSpinner(false);
+              this.dispatchSuccessMessage('Thank you for signing up!');
               return signupSuccess({ user, redirect: true });
             }),
-            catchError((errResp) => {
-              const errmsg = this.authService.getErrorMessage(
-                errResp.error.msg
-              );
-              this.store.dispatch(setLogoLoading({ status: false }));
-              this.authService.showError(errmsg);
-              return of(setErrorMessage({ message: errmsg }));
+            catchError((err) => {
+              const errMsg = this.parseErrorMessage(err);
+              this.dispatchLoadingSpinner(false);
+              return of(sharedActions.setErrorMessage({ error: errMsg }));
             })
           );
       })
     );
   });
 
-  login$ = createEffect(() => {
+  signIn$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(loginStart),
-      exhaustMap((action) => {
-        return this.authService.login(action.email, action.password).pipe(
+      switchMap((action) => {
+        const { email, password } = action;
+        return this.authService.login(email, password).pipe(
           map((data) => {
-            this.store.dispatch(setLoadingSpinner({ status: false }));
-            this.store.dispatch(setErrorMessage({ message: '' }));
+            this.dispatchLoadingSpinner(false);
             const user = this.authService.formatUser(data);
             this.authService.setUserInLocalStorage(user);
+            this.dispatchSuccessMessage('Welcome back!');
             return loginSuccess({ user, redirect: true });
           }),
-          catchError((errResp) => {
-            const errmsg = this.authService.getErrorMessage(errResp.error.msg);
-            this.store.dispatch(setLoadingSpinner({ status: false }));
-            this.authService.showError(errmsg);
-            return of(setErrorMessage({ message: errmsg }));
+          catchError((err) => {
+            const errMsg = this.parseErrorMessage(err);
+            this.dispatchLoadingSpinner(false);
+            return of(sharedActions.setErrorMessage({ error: errMsg }));
           })
         );
       })
     );
   });
+
+  private parseErrorMessage(err: any): string {
+    if (err.error?.errors?.length) {
+      return err.error.errors[0].msg;
+    }
+    return 'An error occurred. Please try again later.';
+  }
+
+  private dispatchLoadingSpinner(status: boolean): void {
+    this.store.dispatch(sharedActions.setLoadingSpinner({ status }));
+  }
+
+  private dispatchSuccessMessage(message) {
+    this.store.dispatch(sharedActions.setSuccessMessage({ message }));
+  }
+  private dispatchLogoLoading(status: boolean): void {
+    this.store.dispatch(sharedActions.setLogoLoading({ status }));
+  }
 
   defaultRedirect = '/dashboard';
   loginRedirect$ = createEffect(
@@ -92,9 +106,7 @@ export class AuthEffects {
       return this.actions$.pipe(
         ofType(...[loginSuccess, signupSuccess, logoutSucess]),
         tap((action) => {
-          this.store.dispatch(setErrorMessage({ message: '' }));
           if (action.redirect) {
-            this.store.dispatch(setErrorMessage({ message: 'Login Success' }));
             this.router.navigate([this.defaultRedirect]);
           } else {
             this.router.navigate(['login']);
@@ -109,21 +121,28 @@ export class AuthEffects {
     return this.actions$.pipe(
       ofType(autoLogin),
       exhaustMap((action) => {
-        this.store.dispatch(setLogoLoading({ status: true }));
-        return this.authService.getUserFromLocalStorage().pipe(
+        this.dispatchLoadingSpinner(true);
+        this.dispatchLogoLoading(true);
+        return this.authService.loadUser().pipe(
           map((data) => {
-            this.store.dispatch(setLoadingSpinner({ status: false }));
-            this.store.dispatch(setErrorMessage({ message: '' }));
+            this.dispatchLoadingSpinner(false);
+            this.dispatchLogoLoading(true);
+
             const user = this.authService.formatUser(data);
             this.authService.setUserInLocalStorage(user);
+            this.dispatchSuccessMessage('Welcome back!');
             return loginSuccess({ user, redirect: true });
           }),
-          catchError((errResp) => {
-            const errmsg = this.authService.getErrorMessage(errResp.error);
-            this.store.dispatch(setLoadingSpinner({ status: false }));
-            this.store.dispatch(setLogoLoading({ status: false }));
-            // this.authService.showError(errmsg);
-            return of(setErrorMessage({ message: errmsg }));
+          catchError((err) => {
+            let errMsg = this.parseErrorMessage(err);
+            this.dispatchLoadingSpinner(false);
+            this.dispatchLogoLoading(false);
+
+            // on intial login page auth_denied message
+            if (err?.error?.errors?.[0]?.error_code == 'AUTH_DENAID')
+              errMsg = '';
+
+            return of(sharedActions.setErrorMessage({ error: errMsg }));
           })
         );
       })
@@ -134,8 +153,8 @@ export class AuthEffects {
     return this.actions$.pipe(
       ofType(logOut),
       exhaustMap((action) => {
-        this.store.dispatch(setLogoLoading({ status: true }));
-        return this.authService.getUserFromLocalStorage().pipe(
+        this.dispatchLogoLoading(true);
+        return this.authService.loadUser().pipe(
           map((data) => {
             // resetting Project State
             this.store.dispatch(
@@ -156,22 +175,20 @@ export class AuthEffects {
               },
             });
 
-            this.store.dispatch(setLoadingSpinner({ status: false }));
+            this.dispatchLoadingSpinner(false);
+            this.dispatchLogoLoading(false);
+            this.dispatchSuccessMessage('Logged out. See you later');
 
-            this.store.dispatch(
-              setErrorMessage({ message: 'Logout Successful' })
-            );
             this.authService.setUserInLocalStorage(user);
             return logoutSucess({ user, redirect: false });
           }),
-          catchError((errResp) => {
-            const errmsg = this.authService.getErrorMessage(errResp.error);
-            this.store.dispatch(setLoadingSpinner({ status: false }));
-            this.store.dispatch(setLogoLoading({ status: false }));
-            this.authService.showError(errmsg);
+          catchError((err) => {
+            const errMsg = this.parseErrorMessage(err);
+            this.dispatchLoadingSpinner(false);
+            this.dispatchLogoLoading(false);
             const user = new User('', '', '', '', '');
             this.store.dispatch(logoutSucess({ user, redirect: false }));
-            return of(setErrorMessage({ message: errmsg }));
+            return of(sharedActions.setErrorMessage({ error: errMsg }));
           })
         );
       })
