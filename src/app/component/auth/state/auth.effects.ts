@@ -122,9 +122,12 @@ export class AuthEffects {
       ofType(autoLogin),
       exhaustMap((action) => {
         this.dispatchLoadingSpinner(true);
+        this.dispatchLogoLoading(true);
         return this.authService.loadUser().pipe(
           map((data) => {
             this.dispatchLoadingSpinner(false);
+            this.dispatchLogoLoading(true);
+
             const user = this.authService.formatUser(data);
             this.authService.setUserInLocalStorage(user);
             this.dispatchSuccessMessage('Welcome back!');
@@ -133,6 +136,7 @@ export class AuthEffects {
           catchError((err) => {
             let errMsg = this.parseErrorMessage(err);
             this.dispatchLoadingSpinner(false);
+            this.dispatchLogoLoading(false);
 
             // on intial login page auth_denied message
             if (err?.error?.errors?.[0]?.error_code == 'AUTH_DENAID')
