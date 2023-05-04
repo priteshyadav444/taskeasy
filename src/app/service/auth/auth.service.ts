@@ -40,7 +40,6 @@ export class AuthServices {
     localStorage.setItem('authToken', JSON.stringify(user.userToken));
   }
 
-
   getErrorMessage(message: string) {
     switch (message) {
       case 'ALL_FIELD_REQUIRED':
@@ -130,7 +129,7 @@ export class AuthServices {
     });
   }
 
-  updatePassword(userPassword:UserPassword) {
+  updatePassword(userPassword: UserPassword) {
     return this.http.put<UserPassword>(
       `${this.apiUrl}/updatePassword`,
       { ...userPassword },
@@ -139,4 +138,12 @@ export class AuthServices {
       }
     );
   }
+
+  private parseErrorMessage(err: any): string {
+    if (err.error?.errors?.length) {
+      return err.error.errors[0].msg;
+    }
+    return 'An error occurred. Please try again later.';
+  }
+
 }
