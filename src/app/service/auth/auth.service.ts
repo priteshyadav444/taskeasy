@@ -1,22 +1,21 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { catchError, Observable, of } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/app-store/app.state';
 import { AuthResponseData } from '../../models/authResponses';
 import { User } from '../../models/user.models';
 import { MessageService } from 'primeng/api';
+import { UserInfo, UserPassword } from 'src/app/state/profile/profile.model';
+import { AnyCatcher } from 'rxjs/internal/AnyCatcher';
+import { getToken } from 'src/app/component/auth/state/auth.selector';
 
 @Injectable({ providedIn: 'root' })
 export class AuthServices {
+  apiUrl = 'http://localhost:3000/v1/users';
+  // apiUrl= 'https://api-taskeasy.onrender.com/v1/users';
 
-  // apiUrlSignUp = 'http://localhost:3000/v1/users/signup';
-  // apiUrlSignIn = 'http://localhost:3000/v1/users/signin';
-  apiUrlUserLoad = 'http://localhost:3000/v1/users/load';
-
-  apiUrlSignUp = 'https://api-taskeasy.onrender.com/v1/users/signup';
-  apiUrlSignIn = 'https://api-taskeasy.onrender.com/v1/users/signin';
-  // apiUrlUserLoad = 'https://api-taskeasy.onrender.com/v1/users/load';
+  reqHeader!: HttpHeaders;
 
   constructor(
     private messageService: MessageService,
@@ -24,29 +23,7 @@ export class AuthServices {
     private store: Store<AppState>
   ) {}
 
-  signUp(
-    firstname: string,
-    lastname: string,
-    email: string,
-    password: string
-  ): Observable<AuthResponseData> {
-    return this.http.post<AuthResponseData>(this.apiUrlSignUp, {
-      firstname,
-      lastname,
-      email,
-      password,
-    });
-  }
-
-  login(email: string, password: string): Observable<AuthResponseData> {
-    return this.http.post<AuthResponseData>(this.apiUrlSignIn, {
-      email,
-      password,
-    });
-  }
-
- 
-
+  // format user response for state
   formatUser(data: AuthResponseData) {
     const user = new User(
       data.authToken,
@@ -58,17 +35,11 @@ export class AuthServices {
     return user;
   }
 
+  // set tokem inside local storage
   setUserInLocalStorage(user: User) {
     localStorage.setItem('authToken', JSON.stringify(user.userToken));
   }
 
-  showError(errmsg: string) {
-    this.messageService.add({
-      severity: 'error',
-      summary: 'Error',
-      detail: errmsg,
-    });
-  }
 
   getErrorMessage(message: string) {
     switch (message) {
@@ -83,30 +54,89 @@ export class AuthServices {
       case 'WRONG_PASSWORD':
         return 'Wrong Password';
       case 'LOGOUT':
-          return 'Wrong Password';
+        return 'Wrong Password';
       case 'LOGOUT_SUCCESS':
-            return 'Logout Successfull';
+        return 'Logout Successfull';
       default:
         return 'Unknown error occurred. Please try again';
     }
   }
 
-  getUserFromLocalStorage() {
-    const authToken = localStorage.getItem('authToken');
-    
-    var reqHeader = new HttpHeaders({
+  // get header with token token
+  getHeader() {
+    const reqHeader = new HttpHeaders({
       'Content-Type': 'application/json',
-      'x-auth-token': JSON.parse(authToken!),
+      'x-auth-token': this.getToken(),
     });
 
-    if (authToken) {
-      return this.http.get<AuthResponseData>(this.apiUrlUserLoad, {
-        headers: reqHeader,
-      });
-    }
+    return reqHeader;
+  }
 
-    return this.http.get<AuthResponseData>(this.apiUrlUserLoad, {
-      headers: reqHeader,
+  // return a auth token
+  getToken() {
+    return JSON.parse(localStorage.getItem('authToken'));
+  }
+
+  getUserInfo(): Observable<UserInfo> {
+    const user: UserInfo = {
+      firstname: 'Prabhat',
+      lastname: 'Thakur',
+      email: 'abhi046@gmail.com',
+      country: 'USA',
+      phone_no: '98989898',
+      imgurl: '',
+    };
+    return of(user);
+  }
+
+  // sign up function
+  signUp(
+    firstname: string,
+    lastname: string,
+    email: string,
+    password: string
+  ): Observable<AuthResponseData> {
+    return this.http.post<AuthResponseData>(`${this.apiUrl}/signup`, {
+      firstname,
+      lastname,
+      email,
+      password,
     });
+  }
+
+  // login function
+  login(email: string, password: string): Observable<AuthResponseData> {
+    return this.http.post<AuthResponseData>(`${this.apiUrl}/signin`, {
+      email,
+      password,
+    });
+  }
+
+  // update user function
+  update(userInfo: UserInfo): Observable<any> {
+    return this.http.put<UserInfo>(
+      `${this.apiUrl}/updateProfile`,
+      { ...userInfo },
+      {
+        headers: this.getHeader(),
+      }
+    );
+  }
+
+  // load user form using token from local storage
+  loadUser() {
+    return this.http.get<AuthResponseData>(`${this.apiUrl}/load`, {
+      headers: this.getHeader(),
+    });
+  }
+
+  updatePassword(userPassword:UserPassword) {
+    return this.http.put<UserPassword>(
+      `${this.apiUrl}/updatePassword`,
+      { ...userPassword },
+      {
+        headers: this.getHeader(),
+      }
+    );
   }
 }
