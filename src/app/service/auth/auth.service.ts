@@ -12,8 +12,8 @@ import { getToken } from 'src/app/component/auth/state/auth.selector';
 
 @Injectable({ providedIn: 'root' })
 export class AuthServices {
-  apiUrl = 'http://localhost:3000/v1/users';
-  // apiUrl= 'https://api-taskeasy.onrender.com/v1/users';
+  // apiUrl = 'http://localhost:3000/v1/users';
+  apiUrl= 'https://api-taskeasy.onrender.com/v1/users';
 
   reqHeader!: HttpHeaders;
 
@@ -39,7 +39,6 @@ export class AuthServices {
   setUserInLocalStorage(user: User) {
     localStorage.setItem('authToken', JSON.stringify(user.userToken));
   }
-
 
   getErrorMessage(message: string) {
     switch (message) {
@@ -130,7 +129,7 @@ export class AuthServices {
     });
   }
 
-  updatePassword(userPassword:UserPassword) {
+  updatePassword(userPassword: UserPassword) {
     return this.http.put<UserPassword>(
       `${this.apiUrl}/updatePassword`,
       { ...userPassword },
@@ -139,4 +138,12 @@ export class AuthServices {
       }
     );
   }
+
+  private parseErrorMessage(err: any): string {
+    if (err.error?.errors?.length) {
+      return err.error.errors[0].msg;
+    }
+    return 'An error occurred. Please try again later.';
+  }
+
 }

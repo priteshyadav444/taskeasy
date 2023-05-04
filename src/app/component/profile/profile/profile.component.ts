@@ -31,22 +31,11 @@ export class ProfileComponent implements OnInit {
         this.initform(data);
       },
       error: (error) => {
-        console.log('error', error);
+        // console.log('error', error);
       },
     });
 
-    this.store
-      .select(selectProfileError)
-      .pipe()
-      .subscribe({
-        next: (data) => {
-          this.toastService.showMessage({ ...data, severity: 'error', summary: 'Error' });
-        },
-        error: (error) => {
-          console.log('error', error);
-        },
-      });
-      this.initPasswordForm();
+    this.initPasswordForm();
   }
 
   initform(userinfo?: any) {
@@ -64,10 +53,10 @@ export class ProfileComponent implements OnInit {
 
   initPasswordForm() {
     this.passwordForm = this.fb.group({
-      oldPassward: ['', Validators.required ],
+      oldPassward: ['', Validators.required],
       newPassword: ['', Validators.required],
-      confirmPassword: ['', Validators.required]
-    })
+      conformPassword: ['', Validators.required],
+    });
   }
 
   onFormSubmit() {
@@ -90,9 +79,14 @@ export class ProfileComponent implements OnInit {
   onChangePassword() {
     const password = this.passwordForm.controls['oldPassward'].value;
     const new_password = this.passwordForm.controls['newPassword'].value;
-    const confirm_password = this.passwordForm.controls['confirmPassword'].value;
+    const confirm_password =
+      this.passwordForm.controls['conformPassword'].value;
     if (new_password == confirm_password) {
-      this.store.dispatch(profileActions.updateUserPassowrdInfo({ userPassword: { password, new_password, confirm_password}}))
+      this.store.dispatch(
+        profileActions.updateUserPassowrdInfo({
+          userPassword: { password, new_password, confirm_password },
+        })
+      );
     }
   }
 
@@ -100,4 +94,5 @@ export class ProfileComponent implements OnInit {
     this.wantToChangePassword = !this.wantToChangePassword;
   }
 
+  backButtonClick() {}
 }

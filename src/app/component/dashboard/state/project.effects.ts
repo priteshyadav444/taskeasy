@@ -13,15 +13,14 @@ import {
   updateProjectStart,
   updateProjectSucess,
 } from './project.action';
-import { catchError, exhaustMap, map, mergeMap, tap } from 'rxjs';
+import { catchError, map, mergeMap, tap } from 'rxjs';
 import { of } from 'rxjs';
 import { ProjectService } from 'src/app/service/project/project.service';
 import { Project } from 'src/app/models/projects.models';
-import {
-  setLoadingSpinner,
-} from 'src/app/component/shared/state/Shared/shared.actions';
+import { setLoadingSpinner } from 'src/app/component/shared/state/Shared/shared.actions';
 import { loadDataSuccess, resetTasks } from '../../task/state/task.action';
 import * as sharedActions from 'src/app/component/shared/state/Shared/shared.actions';
+import { UiService } from 'src/app/service/ui.service';
 
 @Injectable()
 export class ProjectEffects {
@@ -33,7 +32,8 @@ export class ProjectEffects {
     private router: Router,
     private actions$: Actions,
     private store: Store<AppState>,
-    private projectService: ProjectService
+    private projectService: ProjectService,
+    private uiService: UiService
   ) {}
 
   projectCreate$ = createEffect(() => {
@@ -47,11 +47,15 @@ export class ProjectEffects {
               _id: data._id,
               ...data,
             };
+            this.uiService.dispatchSuccessMessage(
+              'Woohoo! Your project has officially created.'
+            );
             return addProjectSucess({ project });
           }),
-          catchError((errResp) => {
-            const errMsg =  errResp?.error?.errors?.[0]?.msg;
-            return of(sharedActions.setErrorMessage({ error: errMsg}));
+          catchError((err) => {
+            const errMsg = this.uiService.parseErrorMessage(err);
+            this.uiService.dispatchLoadingSpinner(false);
+            return of(sharedActions.setErrorMessage({ error: errMsg }));
           })
         );
       })
@@ -88,6 +92,11 @@ export class ProjectEffects {
             }
             this.idx = 0;
             projects = this.data;
+            if (this.data?.length > 0) {
+              this.uiService.dispatchSuccessMessage(
+                'Hooray! Your all project has been loaded.'
+              );
+            }
             return loadProjectsSuccess({ projects });
           })
         );
@@ -101,11 +110,15 @@ export class ProjectEffects {
       mergeMap((action) => {
         return this.projectService.deleteProject(action.pid).pipe(
           map((data) => {
+            this.uiService.dispatchSuccessMessage(
+              'Project deleted successfully!'
+            );
             return deleteProjectSuccess({ pid: action.pid });
           }),
-          catchError((errResp) => {
-            const errMsg =  errResp?.error?.errors?.[0]?.msg;
-            return of(sharedActions.setErrorMessage({ error: errMsg}));
+          catchError((err) => {
+            const errMsg = this.uiService.parseErrorMessage(err);
+            this.uiService.dispatchLoadingSpinner(false);
+            return of(sharedActions.setErrorMessage({ error: errMsg }));
           })
         );
       })
@@ -118,13 +131,17 @@ export class ProjectEffects {
       mergeMap((action) => {
         return this.projectService.updateProject(action.project).pipe(
           map((data) => {
+            this.uiService.dispatchSuccessMessage(
+              'Bravo! Your project has been updated flawlessly.'
+            );
             return updateProjectSucess({
               project: { ...action?.project, ...data },
             });
           }),
-          catchError((errResp) => {
-            const errMsg =  errResp?.error?.errors?.[0]?.msg;
-            return of(sharedActions.setErrorMessage({ error: errMsg}));
+          catchError((err) => {
+            const errMsg = this.uiService.parseErrorMessage(err);
+            this.uiService.dispatchLoadingSpinner(false);
+            return of(sharedActions.setErrorMessage({ error: errMsg }));
           })
         );
       })
@@ -144,7 +161,7 @@ export class ProjectEffects {
           ]
         ),
         tap((action) => {
-          this.store.dispatch(setLoadingSpinner({ status: false }));
+          this.uiService.dispatchLoadingSpinner(false);
         })
       );
     },

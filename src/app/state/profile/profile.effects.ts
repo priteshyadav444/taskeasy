@@ -5,8 +5,8 @@ import { catchError, exhaustMap, map, tap } from 'rxjs/operators';
 import * as profileActions from './profile.action';
 import { AuthServices } from 'src/app/service/auth/auth.service';
 import { UserInfo } from './profile.model';
-import { Toast } from 'primeng/toast';
-import { ToastService } from 'src/app/service/toast.service';
+import * as sharedActions from 'src/app/component/shared/state/Shared/shared.actions';
+import { UiService } from 'src/app/service/ui.service';
 
 @Injectable()
 export class ProfileEffects {
@@ -14,13 +14,19 @@ export class ProfileEffects {
     return this.actions$.pipe(
       ofType(profileActions.getUserInfo),
       exhaustMap(() => {
+        this.uiService.dispatchLoadingSpinner(true);
         return this.authService.getUserInfo().pipe(
           map((userInfo: UserInfo) => {
+            this.uiService.dispatchLoadingSpinner(false);
             return profileActions.getUserInfoSuccess({
               userInfo: userInfo,
             });
           }),
-          catchError((error) => of(profileActions.handleError({ error })))
+          catchError((err) => {
+            const errMsg = this.uiService.parseErrorMessage(err);
+            this.uiService.dispatchLoadingSpinner(false);
+            return of(sharedActions.setErrorMessage({ error: errMsg }));
+          })
         );
       })
     );
@@ -30,34 +36,58 @@ export class ProfileEffects {
     this.actions$.pipe(
       ofType(profileActions.updateUserInfo),
       exhaustMap((action) => {
+        this.uiService.dispatchLoadingSpinner(true);
         return this.authService.update(action.userInfo).pipe(
-          map((userInfo) => profileActions.updateUserInfoSuccess({ userInfo })),
-          catchError((error) => of(profileActions.handleError({ error })))
+          map((userInfo) => {
+            this.uiService.dispatchLoadingSpinner(false);
+            this.uiService.dispatchSuccessMessage(
+              'Woohoo! Your profile updated'
+            );
+            return profileActions.updateUserInfoSuccess({ userInfo });
+          }),
+          catchError((err) => {
+            const errMsg = this.uiService.parseErrorMessage(err);
+            this.uiService.dispatchLoadingSpinner(false);
+            return of(sharedActions.setErrorMessage({ error: errMsg }));
+          })
         );
       })
     )
   );
 
   updateUserPasswordInfo$ = createEffect(() =>
-  this.actions$.pipe(
-    ofType(profileActions.updateUserPassowrdInfo),
-    exhaustMap((action) => {
-      return this.authService.updatePassword(action.userPassword).pipe(
-        map((userPassword) => { 
-          return profileActions.updateUserPasswordSuccess({ userPassword })
-      }),
-        catchError((error) => of(profileActions.handleError({ error })))
-      );
-    })
-  )
-);
-
-  handleError$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(profileActions.handleError),
-      map((errorMessage) => profileActions.setHandleError({ errorMessage }))
+      ofType(profileActions.updateUserPassowrdInfo),
+      exhaustMap((action) => {
+        this.uiService.dispatchLoadingSpinner(true);
+        return this.authService.updatePassword(action.userPassword).pipe(
+          map((userPassword) => {
+            this.uiService.dispatchSuccessMessage(
+              'Woohoo! Your Password updated'
+            );
+            this.uiService.dispatchLoadingSpinner(false);
+            return profileActions.updateUserPasswordSuccess({ userPassword });
+          }),
+          catchError((err) => {
+            const errMsg = this.uiService.parseErrorMessage(err);
+            this.uiService.dispatchLoadingSpinner(false);
+            return of(sharedActions.setErrorMessage({ error: errMsg }));
+          })
+        );
+      })
     )
   );
 
-  constructor(private actions$: Actions, private authService: AuthServices, private toastService : ToastService) {}
+  // handleError$ = createEffect(() =>
+  //   this.actions$.pipe(
+  //     ofType(profileActions.handleError),
+  //     map((errorMessage) => this.uiService.)
+  //   )
+  // );
+
+  constructor(
+    private actions$: Actions,
+    private authService: AuthServices,
+    private uiService: UiService
+  ) {}
 }

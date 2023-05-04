@@ -27,7 +27,7 @@ export class SignupComponent implements OnInit {
     private titleService: Title
   ) {}
 
-  confirmPassword(signUpForm: FormGroup) {
+  conformPassword(signUpForm: FormGroup) {
     return signUpForm.controls['newPassword'].value ===
       signUpForm.controls['repeatNewPassword'].value
       ? null

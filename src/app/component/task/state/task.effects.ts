@@ -7,9 +7,7 @@ import { Project } from 'src/app/models/projects.models';
 import { Task } from 'src/app/models/task.models';
 import { TasksService } from 'src/app/service/task/task.services';
 import { resetProjectState } from '../../dashboard/state/project.action';
-import {
-  setLoadingSpinner,
-} from '../../shared/state/Shared/shared.actions';
+import { setLoadingSpinner } from '../../shared/state/Shared/shared.actions';
 import { HomeComponent } from '../home/home.component';
 import {
   addTask,
@@ -22,6 +20,7 @@ import {
   updateTaskSuccess,
 } from './task.action';
 import * as sharedActions from 'src/app/component/shared/state/Shared/shared.actions';
+import { UiService } from 'src/app/service/ui.service';
 
 @Injectable()
 export class TaskEffects {
@@ -29,7 +28,8 @@ export class TaskEffects {
     private actions$: Actions,
     private taskServices: TasksService,
     private home: HomeComponent,
-    private store: Store<AppState>
+    private store: Store<AppState>,
+    private uiService: UiService
   ) {}
 
   loadAllData$ = createEffect(() => {
@@ -45,9 +45,9 @@ export class TaskEffects {
           })
         );
       }),
-      catchError((errResp) => {
-        const errMsg =  errResp?.error?.errors?.[0]?.msg;
-        return of(sharedActions.setErrorMessage({ error: errMsg}));
+      catchError((err) => {
+        const errMsg = this.uiService.parseErrorMessage(err);
+        return of(sharedActions.setErrorMessage({ error: errMsg }));
       })
     );
   });
@@ -61,15 +61,15 @@ export class TaskEffects {
             const task = { ...data };
             const messageData = {
               severity: 'success',
-              summary: 'Success',
+              summary: task?.title,
               detail: 'Task Added!',
             };
             this.taskServices.showMessage(messageData);
             return addTaskSuccess({ task });
           }),
-          catchError((errResp) => {
-            const errMsg =  errResp?.error?.errors?.[0]?.msg;
-            return of(sharedActions.setErrorMessage({ error: errMsg}));
+          catchError((err) => {
+            const errMsg = this.uiService.parseErrorMessage(err);
+            return of(sharedActions.setErrorMessage({ error: errMsg }));
           })
         );
       })
@@ -91,9 +91,9 @@ export class TaskEffects {
             this.taskServices.showMessage(messageData);
             return updateTaskSuccess({ task });
           }),
-          catchError((errResp) => {
-            const errMsg =  errResp?.error?.errors?.[0]?.msg;
-            return of(sharedActions.setErrorMessage({ error: errMsg}));
+          catchError((err) => {
+            const errMsg = this.uiService.parseErrorMessage(err);
+            return of(sharedActions.setErrorMessage({ error: errMsg }));
           })
         );
       })
@@ -108,16 +108,16 @@ export class TaskEffects {
           map((data) => {
             const task = { ...action.task };
             const messageData = {
-              severity: 'error',
-              summary: 'Success',
-              detail: 'Task Deleted!',
+              severity: 'success',
+              summary: action.task.title,
+              detail: data?.success[0].msg,
             };
             this.taskServices.showMessage(messageData);
             return deleteTaskSuccess({ task });
           }),
-          catchError((errResp) => {
-            const errMsg =  errResp?.error?.errors?.[0]?.msg;
-            return of(sharedActions.setErrorMessage({ error: errMsg}));
+          catchError((err) => {
+            const errMsg = this.uiService.parseErrorMessage(err);
+            return of(sharedActions.setErrorMessage({ error: errMsg }));
           })
         );
       })
@@ -131,7 +131,9 @@ export class TaskEffects {
         tap((action) => {
           this.home.update();
           // reset to reload project on dashboard page
-          this.store.dispatch(resetProjectState({ resetProjectLoadedState: false }));
+          this.store.dispatch(
+            resetProjectState({ resetProjectLoadedState: false })
+          );
         })
       );
     },
