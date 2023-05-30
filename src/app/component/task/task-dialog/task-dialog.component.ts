@@ -63,14 +63,14 @@ export class TaskDialogComponent implements OnInit, OnChanges {
       { task_status: 'Active', code: 'active' },
       { task_status: 'Pending', code: 'pending' },
       { task_status: 'Done', code: 'done' },
-      { task_status: 'Unsheduled', code: 'unsheduled' },
+      { task_status: 'unschedule', code: 'unschedule' },
     ];
     if (!this.data?.task_status) {
       this.status = [
         { task_status: 'Active', code: 'active' },
         { task_status: 'Pending', code: 'pending' },
         { task_status: 'Done', code: 'done' },
-        { task_status: 'Unsheduled', code: 'unsheduled' },
+        { task_status: 'unschedule', code: 'unschedule' },
       ];
     }
     this.data['subtasklist'] = this.data?.subtasklist?.length
@@ -127,18 +127,12 @@ export class TaskDialogComponent implements OnInit, OnChanges {
   // add a new Task by calling addTask action
   addNewTask() {
     // if badge and staus not provided set default values as (low and unseduled)
-    if (
-      this.data.badge != null ||
-      this.data.badge != '' ||
-      this.data.badge != undefined
-    )
-      this.data.badge = 'low';
-    if (
-      this.data.task_status != null ||
-      this.data.task_status != '' ||
-      this.data.task_status != undefined
-    )
-      this.data.task_status = 'unsheduled';
+    if (typeof this.data.badge == 'undefined' && this.data.badge) {
+        this.data.badge = 'low';
+      }
+    if (typeof this.data.task_status == 'undefined' && this.data.task_status) {
+      this.data.task_status = 'unschedule';
+    }
 
     const task = this.data;
     const pid = this.config?.data?.pid;

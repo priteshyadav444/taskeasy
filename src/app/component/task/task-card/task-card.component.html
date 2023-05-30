@@ -172,14 +172,14 @@
           </span>
           <ng-template #elseBlock1>
             <span
-              *ngIf="data.task_status == 'unsheduled'"
+              *ngIf="data.task_status == 'unschedule'"
               style="font-size: 1rem"
             >
               <i
                 class="pi pi-tag pi-tag"
                 style="font-size: 1rem; color: greenyellow; font-weight: bolder"
               ></i>
-              <b> Unsheduled </b>
+              <b> unschedule </b>
             </span>
 
             <span *ngIf="data.task_status == 'pending'" style="font-size: 1rem">

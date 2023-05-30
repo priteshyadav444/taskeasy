@@ -28,7 +28,7 @@ export const getPendingTasks = createSelector(getTasksState, (data) => {
 
   // tasks.forEach((data)=> console.log(date1 > formatDate(data.scheduled_date!,'yyyy-MM-dd','en_US')));
   let result = tasks.filter(
-    (data) => data.task_status == 'pending' || data.task_status == 'unsheduled'
+    (data) => data.task_status == 'pending' || data.task_status == 'unschedule'
   );
   
   result = result.map((data) => {

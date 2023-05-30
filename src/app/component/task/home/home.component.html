@@ -1,23 +1,18 @@
+<!-- [dataSource]="data | async" -->
 <ejs-kanban
-  class="ejs-element"
-  height="100%"
-  weight="95%"
+  #kanbanObj
   keyField="task_status"
-  [sortSettings]="sortSettings"
   [dataSource]="data"
   [cardSettings]="cardSettings"
   (dataStateChange)="dataStateChange($event)"
   (dataSourceChanged)="dataSourceChanged($event)"
-  (dialogOpen)="dialogOpen($event)"
-  (dialogClose)="dialogClose($event)"
 >
   <e-columns>
     <e-column
       headerText="Unscheduled"
-      keyField="unsheduled"
+      keyField="unschedule"
       allowToggle="true"
       showAddButton="true"
-      allowDrag="false"
     >
     </e-column>
     <e-column

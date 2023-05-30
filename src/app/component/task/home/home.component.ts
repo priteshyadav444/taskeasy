@@ -44,18 +44,7 @@ export class HomeComponent implements OnInit {
     'Pick up groceries',
   ];
   done = ['Get up', 'Brush teeth'];
-
-  pending!: any;
-  active!: any;
-  today!: any;
-  todaycompleted!: any;
-  scheduled!: any;
-  unsheduled!: any;
-  displayBasic!: boolean;
-  displayCategory!: boolean;
-
   knobvalue: number = 50;
-  value2!: string;
 
   temp!: Observable<Task[]>;
   pid!: any;
@@ -70,13 +59,13 @@ export class HomeComponent implements OnInit {
   private subscription: Subscription;
   private getTaskSubscription: Subscription;
   private titleSubscription: Subscription;
+
   constructor(
     private store: Store<AppState>,
     private service: TasksCardService,
     private route: ActivatedRoute,
     private titleService: Title
   ) {
-    
     this.data = this.service;
     this.badgeData = [
       { code: 'low', badge: 'Low' },
@@ -95,7 +84,7 @@ export class HomeComponent implements OnInit {
         title: '',
         scheduled_date: '',
         description: '',
-        badge:'low',
+        badge: 'low',
         subtasklist: this.subTask,
         ...state.addedRecords[0],
       };
@@ -117,19 +106,6 @@ export class HomeComponent implements OnInit {
         };
         this.subTask = [];
       }
-      // if (this.selectedStatus != undefined) {
-      //   state.changedRecords[0] = {
-      //     ...state.changedRecords[0],
-      //     task_status: this.selectedStatus,
-      //   };
-      // }
-
-      // if (this.selectedCategory != undefined) {
-      //   state.changedRecords[0] = {
-      //     ...state.changedRecords[0],
-      //     badge: this.selectedCategory,
-      //   };
-      // }
 
       //if all suntask completed
       const subtasklistcopy = state.changedRecords[0]['subtasklist'];
@@ -233,17 +209,16 @@ export class HomeComponent implements OnInit {
 
     this.pid = this.route.snapshot.paramMap.get('id');
     this.service.activateRouter$.next(this.pid);
-
+    // this.store.dispatch(loadAllData({ pid: this.pid }));
+    // this.service.execute(state);
     this.subscription = this.store
       .pipe(select(isTaskLoaded))
       .subscribe((isTaskLoaded) => {
-        // console.log(isTaskLoaded);
         if (!isTaskLoaded) {
           this.store.dispatch(loadAllData({ pid: this.pid }));
         } else {
           // it will reset task state if project is diffrent
           this.store.dispatch(resetTasks({ projectId: this.pid }));
-
           this.getTaskSubscription = this.store
             .select(getTasks)
             .pipe(
@@ -256,6 +231,7 @@ export class HomeComponent implements OnInit {
             )
             .subscribe((data) => {
               this.data = data;
+              // this.service.execute(state);
               this.titleSubscription = this.store
                 .select(getSelectdProjectDetails)
                 .pipe()

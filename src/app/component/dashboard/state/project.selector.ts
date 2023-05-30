@@ -34,7 +34,7 @@ export const getAllPendingTasks = createSelector(getProjectsState, (state) => {
       }
       let updatedtasks = project.tasks?.filter(
         (data) =>
-          data.task_status == 'unsheduled' || data.task_status == 'pending'
+          data.task_status == 'unschedule' || data.task_status == 'pending'
       );
       updatedtasks = updatedtasks?.map((data) => {
         return { ...data, theme_colour };
